@@ -1,0 +1,85 @@
+{
+  "name": "api",
+  "description": "API Gateway",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "transpile": "babel src --out-dir dist",
+    "start:prod": "npm run transpile && node dist/server.js | ./node_modules/.bin/pino-elasticsearch --node http://kibana.bluenove.com:9200",
+    "start:prod:nologger": "npm run transpile && node dist/server.js",
+    "start:dev": "nodemon --exec babel-node src/server.js",
+    "lint": "eslint .",
+    "format": "eslint --fix . && prettier --write '**/*.js' '**/*.jsx' && echo 'format done.'",
+    "test": "jest --ci --reporters=default --reporters=jest-junit --runInBand --detectOpenHandles --forceExit --coverage --verbose=false",
+    "sonar-scanner": "./node_modules/sonar-scanner/bin/sonar-scanner"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*"
+    ],
+    "delay": "1500"
+  },
+  "dependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/node": "7.5.5",
+    "@babel/plugin-syntax-class-properties": "7.2.0",
+    "@babel/preset-env": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "babel-preset-airbnb": "4.0.1",
+    "core-js": "3.2.1",
+    "fastify": "2.7.1",
+    "fastify-blipp": "2.0.0",
+    "fastify-circuit-breaker": "0.1.0",
+    "fastify-helmet": "3.0.1",
+    "fastify-http-client": "1.0.0",
+    "fastify-http-proxy": "2.2.0",
+    "fastify-mongodb": "1.0.1",
+    "fastify-plugin": "1.6.0",
+    "fastify-swagger": "2.4.0",
+    "jsonwebtoken": "8.5.1",
+    "lodash": "4.17.15",
+    "make-promises-safe": "5.0.0",
+    "moment-timezone": "0.5.26",
+    "mongodb": "3.3.5",
+    "pino-elasticsearch": "4.1.0",
+    "regenerator-runtime": "0.13.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-imports": "^2.0.0",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-jest": "^22.15.1",
+    "jest": "~24.8.0",
+    "jest-junit": "~7.0.0",
+    "nodemon": "1.19.1",
+    "sonar-scanner": "^3.1.0",
+    "prettier": "^1.18.2"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "setupFiles": [
+      "./test/bootstrap.js"
+    ]
+  },
+  "transform": {
+    "^.+\\.[t|j]sx?$": "babel-jest"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "SelectLanguage": {
+    "a11yTitle": "Open language dropdown"
+  },
+  "AuthForm": {
+    "signupTerms": "I certify that I have read and accept the terms and conditions",
+    "signupTermsLabel": "Terms and conditions",
+    "lastNameLabel": "Last name",
+    "firstNameLabel": "First name"
+  }
+}

@@ -1,2 +1,4 @@
 # simpatico
-Collective Intelligence Platform
+Mono-repo, clean-architecture based, collective intelligence platform
+
+# description
