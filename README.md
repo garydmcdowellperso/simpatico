@@ -1,0 +1,2 @@
+# simpatico
+Collective Intelligence Platform
