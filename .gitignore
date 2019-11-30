@@ -3,3 +3,4 @@ api/node_modules
 api/junit.xml
 
 interfaces/web/node_modules
+interfaces/web/src/.next

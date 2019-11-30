@@ -295,6 +295,185 @@ module.exports = _interopRequireWildcard;
 
 /***/ }),
 
+/***/ "../node_modules/@babel/runtime/helpers/assertThisInitialized.js":
+/*!***********************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/classCallCheck.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/classCallCheck.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/createClass.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/createClass.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/inherits.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/inherits.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "../node_modules/@babel/runtime/helpers/setPrototypeOf.js");
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":
+/*!***************************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! ../helpers/typeof */ "../node_modules/@babel/runtime/helpers/typeof.js");
+
+var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "../node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/setPrototypeOf.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/setPrototypeOf.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/typeof.js":
+/*!********************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/typeof.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+
 /***/ "../node_modules/next/dist/client/link.js":
 /*!************************************************!*\
   !*** ../node_modules/next/dist/client/link.js ***!
@@ -1828,6 +2007,47 @@ module.exports = __webpack_require__(/*! ./dist/client/link */ "../node_modules/
 
 /***/ }),
 
+/***/ "./actions/post.js":
+/*!*************************!*\
+  !*** ./actions/post.js ***!
+  \*************************/
+/*! exports provided: CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CREATE_POST_FAILURE, createPostRequest, createPostSuccess, createPostFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_POST_REQUEST", function() { return CREATE_POST_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_POST_SUCCESS", function() { return CREATE_POST_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_POST_FAILURE", function() { return CREATE_POST_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPostRequest", function() { return createPostRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPostSuccess", function() { return createPostSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPostFailure", function() { return createPostFailure; });
+var CREATE_POST_REQUEST = "CREATE_POST_REQUEST";
+var CREATE_POST_SUCCESS = "CREATE_POST_SUCCESS";
+var CREATE_POST_FAILURE = "CREATE_POST_FAILURE";
+function createPostRequest(title, contents, user) {
+  return {
+    type: CREATE_POST_REQUEST,
+    title: title,
+    contents: contents,
+    user: user
+  };
+}
+function createPostSuccess(post) {
+  return {
+    type: CREATE_POST_SUCCESS,
+    post: post
+  };
+}
+function createPostFailure(error) {
+  return {
+    type: CREATE_POST_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
 /***/ "./components/nav.js":
 /*!***************************!*\
   !*** ./components/nav.js ***!
@@ -1875,62 +2095,117 @@ var Nav = function Nav() {
 
 /***/ }),
 
-/***/ "./pages/index.js":
-/*!************************!*\
-  !*** ./pages/index.js ***!
-  \************************/
+/***/ "./pages/index.jsx":
+/*!*************************!*\
+  !*** ./pages/index.jsx ***!
+  \*************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/head */ "next/head");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/nav */ "./components/nav.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "../node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "../node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "../node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! next/head */ "next/head");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_nav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/nav */ "./components/nav.js");
+/* harmony import */ var _actions_post__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../actions/post */ "./actions/post.js");
 
 
 
 
-var Home = function Home() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("title", null, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("link", {
-    rel: "icon",
-    href: "/favicon.ico"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "hero"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "title"
-  }, "Welcome to Next.js!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "description"
-  }, "To get started, edit ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "pages/index.js"), " and save to reload."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "https://nextjs.org/docs",
-    className: "card"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Documentation \u2192"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Learn more about Next.js in the documentation.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "https://nextjs.org/learn",
-    className: "card"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Next.js Learn \u2192"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Learn about Next.js by following an interactive tutorial!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "https://github.com/zeit/next.js/tree/master/examples",
-    className: "card"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Examples \u2192"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Find other example boilerplates on the Next.js GitHub.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("style", {
-    jsx: true
-  }, "\n      .hero {\n        width: 100%;\n        color: #333;\n      }\n      .title {\n        margin: 0;\n        width: 100%;\n        padding-top: 80px;\n        line-height: 1.15;\n        font-size: 48px;\n      }\n      .title,\n      .description {\n        text-align: center;\n      }\n      .row {\n        max-width: 880px;\n        margin: 80px auto 40px;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-around;\n      }\n      .card {\n        padding: 18px 18px 24px;\n        width: 220px;\n        text-align: left;\n        text-decoration: none;\n        color: #434343;\n        border: 1px solid #9b9b9b;\n      }\n      .card:hover {\n        border-color: #067df7;\n      }\n      .card h3 {\n        margin: 0;\n        color: #067df7;\n        font-size: 18px;\n      }\n      .card p {\n        margin: 0;\n        padding: 12px 0 0;\n        font-size: 13px;\n        color: #333;\n      }\n    "));
-};
 
-/* harmony default export */ __webpack_exports__["default"] = (Home);
+
+
+
+
+
+
+var Home =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(Home, _Component);
+
+  function Home() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Home);
+
+    return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(Home).apply(this, arguments));
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Home, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(next_head__WEBPACK_IMPORTED_MODULE_6___default.a, null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("title", null, "Home"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("link", {
+        rel: "icon",
+        href: "/favicon.ico"
+      })), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_components_nav__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "hero"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h1", {
+        className: "title"
+      }, "Welcome to Next.js!"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", {
+        className: "description"
+      }, "To get started, edit ", react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("code", null, "pages/index.js"), " and save to reload."), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("a", {
+        href: "https://nextjs.org/docs",
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h3", null, "Documentation \u2192"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Learn more about Next.js in the documentation.")), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("a", {
+        href: "https://nextjs.org/learn",
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h3", null, "Next.js Learn \u2192"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Learn about Next.js by following an interactive tutorial!")), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("a", {
+        href: "https://github.com/zeit/next.js/tree/master/examples",
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h3", null, "Examples \u2192"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Find other example boilerplates on the Next.js GitHub.")))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("style", {
+        jsx: true
+      }, "\n          .hero {\n            width: 100%;\n            color: #333;\n          }\n          .title {\n            margin: 0;\n            width: 100%;\n            padding-top: 80px;\n            line-height: 1.15;\n            font-size: 48px;\n          }\n          .title,\n          .description {\n            text-align: center;\n          }\n          .row {\n            max-width: 880px;\n            margin: 80px auto 40px;\n            display: flex;\n            flex-direction: row;\n            justify-content: space-around;\n          }\n          .card {\n            padding: 18px 18px 24px;\n            width: 220px;\n            text-align: left;\n            text-decoration: none;\n            color: #434343;\n            border: 1px solid #9b9b9b;\n          }\n          .card:hover {\n            border-color: #067df7;\n          }\n          .card h3 {\n            margin: 0;\n            color: #067df7;\n            font-size: 18px;\n          }\n          .card p {\n            margin: 0;\n            padding: 12px 0 0;\n            font-size: 13px;\n            color: #333;\n          }\n        "));
+    }
+  }], [{
+    key: "getInitialProps",
+    value: function getInitialProps(_ref) {
+      var store = _ref.store,
+          isServer = _ref.isServer,
+          pathname = _ref.pathname,
+          query = _ref.query;
+      store.dispatch(Object(_actions_post__WEBPACK_IMPORTED_MODULE_9__["createPostRequest"])({
+        title: "FOO",
+        contentds: "foo",
+        user: ""
+      }));
+      return {
+        custom: "custom"
+      }; // you can pass some custom props to component from here
+    }
+  }]);
+
+  return Home;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["connect"])(function (state) {
+  return state;
+})(Home));
 
 /***/ }),
 
 /***/ 3:
-/*!******************************!*\
-  !*** multi ./pages/index.js ***!
-  \******************************/
+/*!*******************************!*\
+  !*** multi ./pages/index.jsx ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/gary/dev/simpatico/interfaces/web/src/pages/index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! /Users/gary/dev/simpatico/interfaces/web/src/pages/index.jsx */"./pages/index.jsx");
 
 
 /***/ }),
@@ -2075,6 +2350,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-is");
+
+/***/ }),
+
+/***/ "react-redux":
+/*!******************************!*\
+  !*** external "react-redux" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-redux");
 
 /***/ }),
 
