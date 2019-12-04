@@ -7,7 +7,6 @@ import {
 import { post } from "../lib/api";
 
 function* createPostRequest(action) {
-  console.log('HERE');
   const r = yield post(
     "v1/createPost",
     JSON.stringify({
@@ -16,7 +15,7 @@ function* createPostRequest(action) {
       user: action.user
     })
   )
-    .then(json => put(createPostSuccess(json.token)))
+    .then(json => put(createPostSuccess(json)))
     .catch(err => put(createPostFailure(err)));
   yield r;
 }

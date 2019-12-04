@@ -1,19 +1,17 @@
+import fetch from 'isomorphic-unfetch';
+
 let store;
 
 export const callApi = (route, method, body, options) => {
-  const isFormData = body instanceof FormData;
-
   options = {
     method,
     body,
     headers: {},
     ...options
   };
-  if (!isFormData) {
-    options.headers["Content-Type"] = "application/json; charset=UTF-8";
-  }
+  options.headers["Content-Type"] = "application/json; charset=UTF-8";
 
-  return fetch(`/${route}`, options).then(response => {
+  return fetch(`/api/${route}`, options).then(response => {
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         // Log the user out

@@ -1,6 +1,6 @@
 export default {
   api: {
-    host: process.env.STARGATE_HOST || 'http://localhost:5000'
+    host: process.env.API_HOST || 'http://localhost:5000'
   },
   server: {
     host: process.env.SERVER_HOST || 'http://localhost',
