@@ -1,4 +1,4 @@
-import fp from 'fastify-plugin';
+import fp from "fastify-plugin";
 
 const appPlugin = fp(async fastify => {
   let health;

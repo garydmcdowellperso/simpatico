@@ -5,19 +5,16 @@ async function CreateOrLogin(
   lastName,
   email,
   password,
-  { userRepository, accessTokenManager },
+  { userRepository, accessTokenManager }
 ) {
   if (!firstName) {
-    throw new Error('No First Name');
+    throw new Error("No First Name");
   }
   if (!lastName) {
-    throw new Error('No Last Name');
+    throw new Error("No Last Name");
   }
   if (!email) {
-    throw new Error('No Emal');
-  }
-  if (!password) {
-    throw new Error('No Password');
+    throw new Error("No Emal");
   }
 
   const user = new User(null, firstName, lastName, email, password);
@@ -25,16 +22,17 @@ async function CreateOrLogin(
   // Check if the user exists
   const existingUser = await userRepository.getByEmail(email);
 
+  let data;
   // User exists so check password
   if (existingUser) {
-    console.log('here', existingUser);
+    data = existingUser;
   }
 
   // User doesn't exist but validated elsewhere so create
-  let data;
   if (!existingUser) {
     data = await userRepository.persist(user);
   }
+
   return accessTokenManager.generate({ uid: data.id });
 }
 

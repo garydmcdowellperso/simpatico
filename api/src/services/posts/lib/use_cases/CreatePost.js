@@ -4,19 +4,27 @@ async function CreatePost(
   title,
   contents,
   user,
-  { postRepository },
+  timestamp,
+  thread,
+  { postRepository }
 ) {
   if (!title) {
-    throw new Error('No Title');
+    throw new Error("No Title");
   }
   if (!contents) {
-    throw new Error('No Contents');
+    throw new Error("No Contents");
   }
   if (!user) {
-    throw new Error('No User');
+    throw new Error("No User");
+  }
+  if (!timestamp) {
+    throw new Error("No timestamp");
+  }
+  if (!thread) {
+    throw new Error("No thread");
   }
 
-  const post = new Post(null, title, contents, user);
+  const post = new Post(null, title, contents, user, timestamp, thread);
 
   return postRepository.persist(post);
 }

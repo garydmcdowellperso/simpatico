@@ -19,8 +19,8 @@ class PostRepository {
     return this.repository.get(postId);
   }
 
-  getAllPosts() {
-    return this.repository.getAllPosts();
+  fetchPostsForThread(thread) {
+    return this.repository.fetchPostsForThread(thread);
   }
 
   find() {

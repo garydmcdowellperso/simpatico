@@ -1,29 +1,46 @@
-import PostSerializer from '../serializers/PostSerializer';
-import CreatePost from '../use_cases/CreatePost';
-import GetAllPosts from '../use_cases/GetAllPosts';
-import PostRepository from '../repositories/PostRepository';
+import PostSerializer from "../serializers/PostSerializer";
+import CreatePost from "../use_cases/CreatePost";
+import ReplyPost from "../use_cases/ReplyPost";
+import FetchPostsForThread from "../use_cases/FetchPostsForThread";
+import PostRepository from "../repositories/PostRepository";
 
-import PostRepositoryInMemory from '../interface_adapters/storage/PostRepositoryInMemory';
+import PostRepositoryMongo from "../interface_adapters/storage/PostRepositoryMongo";
 
-const postRepository = new PostRepository(new PostRepositoryInMemory())
+const postRepository = new PostRepository(new PostRepositoryMongo());
 
-async function createPost(request) {
-  // Input
-  const { title, contents, user } = request.body;
+async function createPost(inputs) {
+  // Inputs
+  const { title, contents, user, timestamp, thread } = inputs;
 
   // Treatment
-  const response = await CreatePost(title, contents, user, {
-    postRepository,
+  const response = await CreatePost(title, contents, user, timestamp, thread, {
+    postRepository
   });
 
   const postSerializer = new PostSerializer();
   return postSerializer.serialize(response);
 }
 
-async function getAllPosts(request) {
+async function replyPost(inputs) {
+  // Inputs
+  const { id, contents, user, timestamp } = inputs;
+
   // Treatment
-  const response = await GetAllPosts({
-    postRepository,
+  const response = await ReplyPost(id, contents, user, timestamp, {
+    postRepository
+  });
+
+  const postSerializer = new PostSerializer();
+  return postSerializer.serialize(response);
+}
+
+async function fetchPostsForThread(inputs) {
+  // Inputs
+  const { thread } = inputs;
+
+  // Treatment
+  const response = await FetchPostsForThread(thread, {
+    postRepository
   });
 
   const postSerializer = new PostSerializer();
@@ -32,5 +49,6 @@ async function getAllPosts(request) {
 
 module.exports = {
   createPost,
-  getAllPosts
+  replyPost,
+  fetchPostsForThread
 };

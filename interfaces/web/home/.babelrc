@@ -1,0 +1,15 @@
+{
+  "presets": ["airbnb"],
+  "plugins": [
+    "@babel/plugin-syntax-class-properties",
+    "transform-class-properties",
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}

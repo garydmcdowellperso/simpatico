@@ -1,10 +1,9 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET_KEY = 'shhhhhh!';
+const JWT_SECRET_KEY = "shhhhhh!";
 
 class JwtAccessTokenManager {
   generate(payload) {
-    console.log('here', payload)
     return jwt.sign(payload, JWT_SECRET_KEY);
   }
 

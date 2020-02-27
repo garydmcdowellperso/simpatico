@@ -12,12 +12,12 @@ class PostRepositoryInMemory {
     const row = { ...postEntity };
     const rowId = (this.index += 1);
     row.id = rowId;
-    this.data[rowId-1] = row;
+    this.data[rowId - 1] = row;
     return Promise.resolve(row);
   }
 
   merge(postEntity) {
-    const row = this.data[postEntity.id];
+    const row = this.data[postEntity.id - 1];
     Object.assign(row, postEntity);
     return Promise.resolve(row);
   }
@@ -28,11 +28,7 @@ class PostRepositoryInMemory {
   }
 
   get(postId) {
-    return Promise.resolve(this.data[postId]);
-  }
-
-  getAllPosts() {
-    return Promise.resolve(this.data);
+    return Promise.resolve(this.data[postId - 1]);
   }
 
   find() {
