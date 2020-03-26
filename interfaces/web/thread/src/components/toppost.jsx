@@ -4,11 +4,17 @@ import { Formik } from "formik";
 import { connect } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import flowRight from 'lodash/flowRight';
 
 import { createPostRequest } from "../actions/post";
+import nextI18NextInstance from '../../i18n';
+
+const { withTranslation } = nextI18NextInstance;
 
 class TopPost extends Component {
   render() {
+    const { t } = this.props;
+  
     return (
       <Box direction="row">
         <Box width="xlarge">
@@ -17,10 +23,10 @@ class TopPost extends Component {
             validate={values => {
               const errors = {};
               if (!values.title) {
-                errors.title = "Required";
+                errors.title = t('required');
               }
               if (!values.contents) {
-                errors.contents = "Required";
+                errors.contents = t('required');
               }
               return errors;
             }}
@@ -54,7 +60,7 @@ class TopPost extends Component {
                   <Form.Input
                     type="title"
                     name="title"
-                    placeholder="title"
+                    placeholder={t('title')}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.title}
@@ -65,7 +71,7 @@ class TopPost extends Component {
                   <Form.TextArea
                     type="textarea"
                     name="contents"
-                    placeholder="contents"
+                    placeholder={t('contents')}
                     value={values.contents}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -73,7 +79,7 @@ class TopPost extends Component {
                   {errors.contents && touched.contents && errors.contents}
                 </Form.Field>
                 <Button type="submit" disabled={isSubmitting}>
-                  Submit
+                  {t('submit')}
                 </Button>
               </Form>
             )}
@@ -85,7 +91,11 @@ class TopPost extends Component {
 }
 
 TopPost.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export default connect(state => state)(TopPost);
+export default flowRight(
+  connect(state => state),
+  withTranslation(['common'])
+)(TopPost);

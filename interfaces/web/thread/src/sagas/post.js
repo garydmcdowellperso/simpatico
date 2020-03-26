@@ -8,7 +8,13 @@ import {
   replyPostFailure,
   FETCH_POSTS_FOR_THREAD_REQUEST,
   fetchPostsForThreadSuccess,
-  fetchPostsForThreadFailure
+  fetchPostsForThreadFailure,
+  LIKE_POST_REQUEST,
+  likePostSuccess,
+  likePostFailure,
+  DISLIKE_POST_REQUEST,
+  dislikePostSuccess,
+  dislikePostFailure
 } from "../actions/post";
 import { get, post } from "../lib/api";
 
@@ -40,9 +46,33 @@ function* replyPostRequest(action) {
 }
 
 function* fetchPostsForThread(action) {
-  const r = yield get(`v1/fetchPostsForThread?thread=${action.thread}`)
+  const r = yield get(`v1/fetchPostsForThread?thread=${action.thread}&page=${action.page}`)
     .then(json => put(fetchPostsForThreadSuccess(json)))
     .catch(err => put(fetchPostsForThreadFailure(err)));
+  yield r;
+}
+
+function* likePost(action) {
+  const r = yield post(
+    "v1/likePost",
+    JSON.stringify({
+      id: action.id
+    })
+  )
+    .then(json => put(likePostSuccess(json)))
+    .catch(err => put(likePostFailure(err)));
+  yield r;
+}
+
+function* dislikePost(action) {
+  const r = yield post(
+    "v1/dislikePost",
+    JSON.stringify({
+      id: action.id
+    })
+  )
+    .then(json => put(dislikePostSuccess(json)))
+    .catch(err => put(ldisikePostFailure(err)));
   yield r;
 }
 
@@ -50,4 +80,6 @@ export default function* postSaga() {
   yield takeLatest(CREATE_POST_REQUEST, createPostRequest);
   yield takeLatest(REPLY_POST_REQUEST, replyPostRequest);
   yield takeLatest(FETCH_POSTS_FOR_THREAD_REQUEST, fetchPostsForThread);
+  yield takeLatest(LIKE_POST_REQUEST, likePost);
+  yield takeLatest(DISLIKE_POST_REQUEST, dislikePost);
 }

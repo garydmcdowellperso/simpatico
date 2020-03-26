@@ -785,7 +785,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_10___default()();
 var store;
 
@@ -819,7 +818,6 @@ function (_App) {
       // Check if token passed in - validate it and use the response to populate local storage
       if (window.location.search.includes("token")) {
         // Ask server to verify and set cookie
-        console.log('window token', getUrlParameter("token"));
         store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
           token: getUrlParameter("token")
         }));
@@ -829,7 +827,6 @@ function (_App) {
         // Not on the URL so check the localStorage
         if (localStorage.getItem("token")) {
           // Ask server to verify and set cookie
-          console.log('localStorage token', localStorage.getItem("token"));
           store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
             token: localStorage.getItem("token")
           }));
@@ -935,7 +932,6 @@ function auth() {
       });
 
     case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["FETCH_USER_INFO_REQUEST_SUCCESS"]:
-      // Parse out json and update the store
       return _objectSpread({}, state, {
         processing: false,
         error: "",

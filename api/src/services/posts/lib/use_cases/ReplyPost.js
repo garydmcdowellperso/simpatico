@@ -21,7 +21,7 @@ async function ReplyPost(
   }
 
   // Find exiting post
-  const parent = await postRepository.get(id);
+  const parent = await postRepository.get(parseInt(id, 10));
 
   if (!parent) {
     throw new Error("Post does not exist");

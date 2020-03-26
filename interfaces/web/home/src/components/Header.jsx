@@ -37,7 +37,7 @@ export default function Header(props) {
   const dispatch = useDispatch();
   let firstNameLocalStorage;
 
-  const { isValidToken, firstName } = useSelector(state => state.auth);
+  const { firstName, lastName, id, isValidToken, token } = useSelector(state => state.auth);
 
   if (typeof window !== 'undefined') {
     // Server side rendering protection
@@ -62,13 +62,18 @@ export default function Header(props) {
    }
    // Sorry token no longer valid, get rid of display name for login
    if (isValidToken) {
-     setFirstNameDisplay();
+     if (firstNameLocalStorage) {
+      setFirstNameDisplay();
+     }
    }
+   localStorage.setItem("token", token);
   }, [isValidToken]);
 
   useEffect(() => {
     // Set localstorage for other apps but also update our local state to force render
     localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("uid", id);
     setFirstNameDisplay(firstName);
   }, [firstName]);
 

@@ -4,11 +4,14 @@ import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import createSagaMiddleware from "redux-saga";
+import flowRight from 'lodash/flowRight';
 
 import sagas from "../sagas";
 import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
+import i18n from '../../i18n';
 
+const { withTranslation } = i18n;
 const sagaMiddleware = createSagaMiddleware();
 
 let store;
@@ -72,4 +75,10 @@ class Simpatico extends App {
   }
 }
 
-export default withRedux(makeStore)(Simpatico);
+const { appWithTranslation } = i18n;
+
+export default flowRight(
+  withRedux(makeStore),
+  appWithTranslation,
+  withTranslation([`common`])
+)(Simpatico);

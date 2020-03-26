@@ -55,7 +55,6 @@ export default function auth(state = initialState, action) {
         id: null
       };
     case FETCH_USER_INFO_REQUEST_SUCCESS:
-      // Parse out json and update the store
       return {
         ...state,
         processing: false,

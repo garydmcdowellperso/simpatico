@@ -1,6 +1,23 @@
 {
   "account": "Mon compte",
+  "add-comment": "Ajoutez une commentaire",
+  "advice": "Consigne",
+  "are-you-sure": "vous êtes sûr?",
+  "cancel": "Annule",
+  "comments": "Commentaires",
+  "connect": "Se connecter",
+  "contents": "Message",
+  "dislikes": "Ne pas aimer",
+  "filter": "Filtre",
+  "home": "Accueil",
+  "langSelectLabel": "Langue",
+  "likes": "Aimer",
   "login": "Se connecter",
   "logout": "Se déconnecter",
-  "langSelectLabel": "Langue"
+  "ok": "Ok",
+  "required": "Obligatoire",
+  "selectlanguage": "Lang",
+  "sort": "Trier",
+  "submit": "Soumettre",
+  "title": "Titre"
 }

@@ -1,6 +1,23 @@
 {
   "account": "My account",
+  "add-comment": "Add comment",
+  "advice": "Advice",
+  "are-you-sure": "Are you sure?",
+  "cancel": "Cancel",
+  "comments": "Comments",
+  "connect": "Connect",
+  "contents": "Contents",
+  "dislikes": "Dislikes",
+  "filter": "Filter",
+  "home": "Home",
+  "langSelectLabel": "Language",
+  "likes": "Likes",
   "login": "Login",
   "logout": "Logout",
-  "langSelectLabel": "Language"
+  "ok": "Ok",
+  "required": "Required",
+  "selectlanguage": "Language",
+  "sort": "Sort",
+  "submit": "Submit",
+  "title": "Title"
 }

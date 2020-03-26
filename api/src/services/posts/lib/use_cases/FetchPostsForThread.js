@@ -1,5 +1,5 @@
-async function FetchPostsForThread(thread, { postRepository }) {
-  return postRepository.fetchPostsForThread(thread);
+async function FetchPostsForThread(thread, page, { postRepository }) {
+  return postRepository.fetchPostsForThread(thread, page);
 }
 
 export default FetchPostsForThread;

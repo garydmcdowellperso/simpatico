@@ -8,7 +8,6 @@ import createSagaMiddleware from "redux-saga";
 import sagas from "../sagas";
 import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
-import { fetchUserInfo } from "../actions/auth";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -47,7 +46,6 @@ class Simpatico extends App {
     // Check if token passed in - validate it and use the response to populate local storage
     if (window.location.search.includes("token")) {
       // Ask server to verify and set cookie
-      console.log('window token', getUrlParameter("token"))
       store.dispatch(
         verifyTokenRequest({
           token: getUrlParameter("token")
@@ -59,7 +57,6 @@ class Simpatico extends App {
       // Not on the URL so check the localStorage
       if (localStorage.getItem("token")) {
         // Ask server to verify and set cookie
-        console.log('localStorage token', localStorage.getItem("token"))
         store.dispatch(
           verifyTokenRequest({
             token: localStorage.getItem("token")

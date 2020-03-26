@@ -42,8 +42,8 @@ class PostRepositoryMongo {
     return augmentedEntity;
   }
 
-  merge() {
-    throw new Error("Post not found");
+  merge(post) {
+    return this.collection.replaceOne({ id: post.id }, post);
   }
 
   remove(postId) {
@@ -54,8 +54,8 @@ class PostRepositoryMongo {
     return this.collection.findOne({ id: postId });
   }
 
-  fetchPostsForThread(thread) {
-    return this.collection.find({ thread }).toArray();
+  fetchPostsForThread(thread, page) {
+    return this.collection.find({ thread }).skip((page-1) * 5).limit(5).toArray();
   }
 
   find() {

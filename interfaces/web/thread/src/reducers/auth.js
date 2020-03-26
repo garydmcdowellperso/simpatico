@@ -1,3 +1,6 @@
+const jwt = require('jwt-simple');
+const JWT_SECRET_KEY = "shhhhhh!";
+
 import {
   VERIFY_TOKEN_REQUEST,
   VERIFY_TOKEN_REQUEST_SUCCESS,
@@ -30,6 +33,8 @@ export default function auth(state = initialState, action) {
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:
       // Parse out json and update the store
+      const decoded = jwt.decode(localStorage.getItem("token"), JWT_SECRET_KEY);
+      console.log('decoded', decoded)
       return {
         ...state,
         processing: false,

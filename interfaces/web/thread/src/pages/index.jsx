@@ -5,8 +5,11 @@ import { Grommet } from "grommet";
 import PropTypes from "prop-types";
 
 import SlideOutSidebar from "../components/slideoutsidebar";
-import { fetchUserInfo } from "../actions/auth";
 import { fetchPostsForThread } from "../actions/post";
+import { fetchThreadRequest } from "../actions/thread";
+
+import 'react-flags-select/css/react-flags-select.css';
+
 
 class Home extends Component {
   static async getInitialProps({ ctx }) {
@@ -17,38 +20,24 @@ class Home extends Component {
     return { pageProps };
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      auth: { isValidToken, firstName, lastName, email, token },
-      dispatch
-    } = this.props;
-
-    if (!prevProps.auth.isValidToken && isValidToken) {
-      // Transfer to local storage
-      localStorage.setItem("token", token);
-      history.pushState(
-        {
-          id: "homepage"
-        },
-        "Home",
-        "https://f84bf21a.ngrok.io/"
-      );
-      dispatch(fetchUserInfo());
-      dispatch(fetchPostsForThread(localStorage.getItem("thread")));
+  componentDidMount() {
+    const { dispatch } = this.props;    
+    const thread = localStorage.getItem("thread");
+    if (!thread) {
+      return
     }
+    
+    dispatch(
+      fetchPostsForThread(thread, 1)
+    );
 
-    if (!prevProps.auth.firstName && firstName) {
-      // Transfer to local storage
-      localStorage.setItem("firstName", firstName);
-      localStorage.setItem("lastName", lastName);
-      localStorage.setItem("email", email);
-    }
+    dispatch(
+      fetchThreadRequest(thread)
+    );
   }
 
   render() {
-    const {
-      auth: { isValidToken }
-    } = this.props;
+    const { auth: { isValidToken } } = this.props;
 
     return (
       <div>
@@ -61,7 +50,7 @@ class Home extends Component {
           />
         </Head>
         <Grommet>
-          {isValidToken ? <SlideOutSidebar /> : <p>Processing</p>}
+          <SlideOutSidebar isValidToken={isValidToken} />
         </Grommet>
       </div>
     );

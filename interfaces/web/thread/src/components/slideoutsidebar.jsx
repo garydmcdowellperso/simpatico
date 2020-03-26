@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { Button, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import flowRight from 'lodash/flowRight';
+import PropTypes from "prop-types";
 
 import Main from "./main";
+import nextI18NextInstance from '../../i18n';
 
-const SlideOutSidebar = () => {
+const { withTranslation } = nextI18NextInstance;
+
+const SlideOutSidebar = ({ isValidToken, t }) => {
   const [visible, setVisible] = useState(false);
 
   const onClick = () => {
@@ -32,23 +37,37 @@ const SlideOutSidebar = () => {
               window.location = "/";
             }}
           />
-          <a href="/">Home</a>
+          <a href="/">{t('home')}</a>
         </Menu.Item>
-        <Menu.Item>
-          <Link href="/profile">
+        {isValidToken ?
+        (<Menu.Item>
+          <Link href="/profile/">
             <Icon link name="user" />
           </Link>
-          {localStorage.getItem("firstName")}
-        </Menu.Item>
+          {(typeof window !== 'undefined') ? localStorage.getItem("firstName") : ''}
+        </Menu.Item>) : 
+        (<Menu.Item>
+          <Link href="/connect/">
+            <Icon link name="user" />
+          </Link>
+          {t('connect')}
+        </Menu.Item>)
+        }
       </Sidebar>
 
       <Sidebar.Pusher dimmed={visible}>
         <Segment basic>
-          <Main onClick={onClick} />
+          <Main onClick={onClick} isValidToken={isValidToken}/>
         </Segment>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
   );
 }
 
-export default SlideOutSidebar
+SlideOutSidebar.propTypes = {
+  t: PropTypes.func.isRequired
+};
+
+export default flowRight(
+  withTranslation(['common'])
+)(SlideOutSidebar);

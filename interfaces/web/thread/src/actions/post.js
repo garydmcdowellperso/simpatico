@@ -10,6 +10,14 @@ export const FETCH_POSTS_FOR_THREAD_REQUEST = "FETCH_POSTS_FOR_THREAD_REQUEST";
 export const FETCH_POSTS_FOR_THREAD_SUCCESS = "FETCH_POSTS_FOR_THREAD_SUCCESS";
 export const FETCH_POSTS_FOR_THREAD_FAILURE = "FETCH_POSTS_FOR_THREAD_FAILURE";
 
+export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
+export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
+export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
+
+export const DISLIKE_POST_REQUEST = "DISLIKE_POST_REQUEST";
+export const DISLIKE_POST_SUCCESS = "DISLIKE_POST_SUCCESS";
+export const DISLIKE_POST_FAILURE = "DISLIKE_POST_FAILURE";
+
 export function createPostRequest({ title, contents, thread }) {
   return {
     type: CREATE_POST_REQUEST,
@@ -55,10 +63,11 @@ export function replyPostFailure(error) {
   };
 }
 
-export function fetchPostsForThread(thread) {
+export function fetchPostsForThread(thread, page) {
   return {
     type: FETCH_POSTS_FOR_THREAD_REQUEST,
-    thread
+    thread,
+    page
   };
 }
 
@@ -72,6 +81,48 @@ export function fetchPostsForThreadSuccess(posts) {
 export function fetchPostsForThreadFailure(error) {
   return {
     type: FETCH_POSTS_FOR_THREAD_FAILURE,
+    error
+  };
+}
+
+export function likePost(id) {
+  return {
+    type: LIKE_POST_REQUEST,
+    id
+  };
+}
+
+export function likePostSuccess(post) {
+  return {
+    type: LIKE_POST_SUCCESS,
+    post
+  };
+}
+
+export function likePostFailure(error) {
+  return {
+    type: LIKE_POST_FAILURE,
+    error
+  };
+}
+
+export function dislikePost(id) {
+  return {
+    type: DISLIKE_POST_REQUEST,
+    id
+  };
+}
+
+export function dislikePostSuccess(post) {
+  return {
+    type: DISLIKE_POST_SUCCESS,
+    post
+  };
+}
+
+export function dislikePostFailure(error) {
+  return {
+    type: DISLIKE_POST_FAILURE,
     error
   };
 }

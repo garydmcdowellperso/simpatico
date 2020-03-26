@@ -3,7 +3,7 @@ import { Placeholder } from "semantic-ui-react";
 import { Box } from "grommet";
 
 const PlaceholderExamplePlaceholder = () => (
-  <Box direction="row">
+  <Box direction="row"  pad="medium" flex="grow">
     <Box width="xlarge">
       <Placeholder fluid>
         <Placeholder.Header image>
