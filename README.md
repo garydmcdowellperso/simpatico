@@ -47,13 +47,13 @@ simpatico
 |   +-- src  
 |   +-- test    
 +-- devops * everything to get a system up and running like nginx etc  
- |- load-test
- |- mongo
- |- nginx
- |- ngrok
-- interfaces # the different ways to access the system
- |- web
-   |- admin
+|   +-- load-test  
+|   +-- mongo  
+|   +-- nginx  
+|   +-- ngrok  
++-- interfaces * the different ways to access the system
+|   +-- web  
+|   |  +-- admin  
    |- connect
    |- home
    |- login
