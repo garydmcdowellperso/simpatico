@@ -5,7 +5,8 @@ Mono-repo, clean-architecture based (https://blog.cleancoder.com/uncle-bob/2012/
 - [Principal](#principal)
 - [Tech Stack](#techstack)
 - [Micro Services](#micro-services)
-- [Build / Test / Deploy](#build/test/deploy)
+- [Build / Test / Deploy](#build-test-deploy)
+- [Project Structure](#structure)
 
 
 ## principal
@@ -24,7 +25,7 @@ Javascript fullstack (although I love golan) you have ReactJS for the front (but
 
 well no, not really because until you have a use-case where you need to engineer them, you don't need to build it from day-1. However, using clean archtecture principales the 'api' can be effectively deconstructed into micro-services in probably 1-2 days. Clean API, injection of depedencies and separation of concerns.
 
-## build/test/deploy
+## build-test-deploy
 
 There is no hard and fast you must do x with simpatico. The idea is that your 'could' dockerize everything but you don't have to.
 
@@ -38,7 +39,7 @@ So, cheapest solution is currently this one in alpha which is noot dockerised, s
 
 However, the deployment roadmap is very much based around, images (containers), docker swarm and then kubernetes for the really funky, high scale SaaS setups
 
-# structure
+## structure
 ``
 |-- api
 
