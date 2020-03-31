@@ -44,14 +44,9 @@ However, the deployment roadmap is very much based around, images (containers), 
 simpatico  
 |  
 +-- api  
-|-- api
-|   |-- src
-- api # the apis
-
- |- src
-
- |- test
-- devops * everything to get a system up and running like nginx etc
+|   |-- src  
+|   |-- test  
++-- devops * everything to get a system up and running like nginx etc  
  |- load-test
  |- mongo
  |- nginx
