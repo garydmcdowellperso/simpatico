@@ -40,6 +40,10 @@ So, cheapest solution is currently this one in alpha which is noot dockerised, s
 However, the deployment roadmap is very much based around, images (containers), docker swarm and then kubernetes for the really funky, high scale SaaS setups
 
 ## structure
+
+simpatico
+|
++-- api
 |-- api
 |   |-- src
 - api # the apis
