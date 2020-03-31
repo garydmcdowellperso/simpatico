@@ -42,8 +42,8 @@ However, the deployment roadmap is very much based around, images (containers), 
 ## structure
 
 simpatico  
-|
-+-- api
+|  
++-- api  
 |-- api
 |   |-- src
 - api # the apis
