@@ -51,12 +51,12 @@ simpatico
 |   +-- mongo  
 |   +-- nginx  
 |   +-- ngrok  
-+-- interfaces * the different ways to access the system
++-- interfaces * the different ways to access the system  
 |   +-- web  
 |   |  +-- admin  
-   |- connect
-   |- home
-   |- login
-   |- profile
-   |- thread
+|   |  +-- connect  
+|   |  +-- home  
+|   |  +-- login  
+|   |  +-- profile  
+|   |  +-- thread  
 
