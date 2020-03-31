@@ -3,6 +3,8 @@ import CreatePost from "../use_cases/CreatePost";
 import ReplyPost from "../use_cases/ReplyPost";
 import LikePost from "../use_cases/LikePost";
 import DislikePost from "../use_cases/DislikePost";
+import UpdatePost from "../use_cases/UpdatePost";
+import DeletePost from "../use_cases/DeletePost";
 import FetchPostsForThread from "../use_cases/FetchPostsForThread";
 import PostRepository from "../repositories/PostRepository";
 
@@ -62,6 +64,32 @@ async function dislikePost(inputs) {
   return postSerializer.serialize(response);
 }
 
+async function updatePost(inputs) {
+  // Inputs
+  const { id, contents, uid } = inputs;
+
+  // Treatment
+  const response = await UpdatePost(id, contents, uid, {
+    postRepository
+  });
+
+  const postSerializer = new PostSerializer();
+  return postSerializer.serialize(response);
+}
+
+async function deletePost(inputs) {
+  // Inputs
+  const { id, uid } = inputs;
+
+  // Treatment
+  const response = await DeletePost(id, uid, {
+    postRepository
+  });
+
+  const postSerializer = new PostSerializer();
+  return postSerializer.serialize(response);
+}
+
 async function fetchPostsForThread(inputs) {
   // Inputs
   const { thread, page } = inputs;
@@ -80,5 +108,7 @@ module.exports = {
   replyPost,
   likePost,
   dislikePost,
-  fetchPostsForThread
+  fetchPostsForThread,
+  updatePost,
+  deletePost
 };

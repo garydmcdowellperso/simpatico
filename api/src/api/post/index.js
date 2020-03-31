@@ -89,7 +89,8 @@ const routes = async fastify => {
                             timestamp: { type: "string" },
                             thread: { type: "number" },
                             likes: { type: "number" },
-                            dislikes: { type: "number" }
+                            dislikes: { type: "number" },
+                            deleted: { type: "boolean" }
                         }
                     }
                 }
@@ -141,7 +142,8 @@ const routes = async fastify => {
                             timestamp: { type: "string" },
                             thread: { type: "number" },
                             likes: { type: "number" },
-                            dislikes: { type: "number" }
+                            dislikes: { type: "number" },
+                            deleted: { type: "boolean" }
                         }
                     }
                 }
@@ -159,7 +161,114 @@ const routes = async fastify => {
             // Replace user which is an ID with a name
             const userinputs = { uid: request.user.uid };
             const user = await UsersController.fetchUser(userinputs);
-            response.uid = request.user;
+            response.uid = request.user.uid;
+
+            response.user = user["first-name"];
+            
+            return response;
+        }
+    );
+
+    fastify.post(
+        '/updatePost',
+        {
+            config,
+            preValidation: [fastify.authenticate],
+            schema: {
+                description: 'updates a post',
+                tags: ['api'],
+                body: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'string' },
+                        contents: { type: 'string' }
+                    },
+                },
+                response: {
+                    200: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            title: { type: 'string' },
+                            contents: { type: 'string' },
+                            user: { type: 'string' },
+                            uid: { type: 'number' },
+                            timestamp: { type: "string" },
+                            thread: { type: "number" },
+                            likes: { type: "number" },
+                            dislikes: { type: "number" },
+                            deleted: { type: "boolean" }
+                        }
+                    }
+                }
+            },
+        },
+        async request => {
+            fastify.log.info(
+            { user: request.user, body: request.body },
+            "[src#api#updatePost] Entering"
+            );
+
+            const inputs = { ...request.body, uid: request.user.uid };
+            const response = await PostsController.updatePost(inputs);
+
+            // Replace user which is an ID with a name
+            const userinputs = { uid: request.user.uid };
+            const user = await UsersController.fetchUser(userinputs);
+            response.uid = request.user.uid;
+
+            response.user = user["first-name"];
+            
+            return response;
+        }
+    );
+
+    fastify.delete(
+        '/deletePost',
+        {
+            config,
+            preValidation: [fastify.authenticate],
+            schema: {
+                description: 'deletes a post',
+                tags: ['api'],
+                body: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'string' }
+                    },
+                },
+                response: {
+                    200: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            title: { type: 'string' },
+                            contents: { type: 'string' },
+                            user: { type: 'string' },
+                            uid: { type: 'number' },
+                            timestamp: { type: "string" },
+                            thread: { type: "number" },
+                            likes: { type: "number" },
+                            dislikes: { type: "number" },
+                            deleted: { type: "boolean" }
+                        }
+                    }
+                }
+            },
+        },
+        async request => {
+            fastify.log.info(
+            { user: request.user, body: request.body },
+            "[src#api#deletePost] Entering"
+            );
+
+            const inputs = { ...request.body, uid: request.user.uid };
+            const response = await PostsController.deletePost(inputs);
+
+            // Replace user which is an ID with a name
+            const userinputs = { uid: request.user.uid };
+            const user = await UsersController.fetchUser(userinputs);
+            response.uid = request.user.uid;
 
             response.user = user["first-name"];
             
@@ -191,6 +300,7 @@ const routes = async fastify => {
                 contents: { type: "string" },
                 user: { type: "string" },
                 timestamp: { type: "string" },
+                deleted: { type: "boolean" },
                 replies: {
                     type: "array",
                     items: {
@@ -268,6 +378,7 @@ const routes = async fastify => {
                 thread: { type: "number" },
                 likes: { type: "number" },
                 dislikes: { type: "number" },
+                deleted: { type: "boolean" },
                 replies: {
                   type: "array",
                   items: {

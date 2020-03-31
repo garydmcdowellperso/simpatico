@@ -24,7 +24,7 @@ async function CreatePost(
     throw new Error("No thread");
   }
 
-  const post = new Post(null, title, contents, user, timestamp, thread);
+  const post = new Post(null, title, contents, user, timestamp, thread, null, false);
 
   return postRepository.persist(post);
 }

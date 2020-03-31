@@ -6,15 +6,21 @@ import { connect } from "react-redux";
 import flowRight from 'lodash/flowRight';
 import PropTypes from "prop-types";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import styled from 'styled-components'
 
 import Placeholder from "./placeholder";
 import { replyPostRequest } from "../actions/post";
 import nextI18NextInstance from '../../i18n';
-import { dislikePost, fetchPostsForThread, likePost } from "../actions/post";
+import { deletePost, dislikePost, fetchPostsForThread, likePost, updatePost } from "../actions/post";
 
 const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || '';
+
+const Span = styled.span`
+  background: #fff;
+  padding: .67857143em 1em;
+`;
 
 const isMyPost = (post) => {
   if (!post) return false;
@@ -27,7 +33,7 @@ const isMyPost = (post) => {
   return false;
 }
 
-const renderComments = (posts, dispatch, handleOpen, handleClose, state, isValidToken, t) => {
+const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, RichTextEditor) => {
   let output;
 
   if (posts && posts.length > 0) {
@@ -55,8 +61,39 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, state, isValid
             <Box width="small" flex="grow">
               <Form reply>
                 {isValidToken && isMyPost(post) ?
-                (<Form.TextArea value={post.contents} />) :
-                (<Form.TextArea readOnly value={post.contents} />)
+                (<Box 
+                  onClick={() => {
+                    if (state.postEdit && state.postEditId !== post.id) {
+                      handlePostEditFinished();
+                      handlePostEdit(post.id);
+                      onChange(RichTextEditor.createValueFromString(post.contents, 'html'));  
+                    }
+
+                    // Change the component if not already in edit
+                    if (!state.postEdit) {
+                      handlePostEdit(post.id);
+                      onChange(RichTextEditor.createValueFromString(post.contents, 'html'));  
+                    }
+                  }}
+                  background="white" 
+                  height="small"
+                  border={{ color: 'black', size: 'small' }}>
+                  {state.postEdit && post.id == state.postEditId ?                  
+                  (<RichTextEditor
+                    value={state.value ? state.value : RichTextEditor.createEmptyValue()}
+                    name="contents"
+                    placeholder={t('contents')}
+                    onChange={onChange}
+                  />) :
+                  (<span dangerouslySetInnerHTML={{__html: post.contents}} />) 
+                  }
+                </Box>) :
+                (<Box
+                  background="white" 
+                  height="small"
+                  border={{ color: 'black', size: 'small' }}>
+                    <span dangerouslySetInnerHTML={{__html: post.contents}} />
+                </Box>)
                 }
               </Form>
             </Box>
@@ -95,7 +132,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, state, isValid
             </Box>
           </Box>
           <Comment.Actions>
-            {isValidToken && isMyPost(post) ?
+            {isValidToken && !isMyPost(post) ?
             (<Modal
               trigger={
                 <Icon size="large" name="share" onClick={handleOpen} />
@@ -168,9 +205,19 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, state, isValid
               trigger={<Icon size="large" name="trash alternate" />}
               size="mini"
               basic
+              onActionClick={(event) => {
+                handlePostEditFinished();
+
+                if (event.target.value === 'ok') {
+                  // Save this new value
+                  dispatch(
+                    deletePost(post.id)
+                  );
+                }
+              }}
               actions={[
-                t('cancel'),
-                { key: "done", content: t('ok'), positive: true }
+                { value: 'nok', key: 'cancel', content: t('cancel') },
+                { value: 'ok', key: "done", content: t('ok'), positive: true }
               ]}
             />) : null}
             {isValidToken && isMyPost(post) ?
@@ -179,16 +226,24 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, state, isValid
               trigger={<Icon size="large" name="save" />}
               size="mini"
               basic
+              onActionClick={(event) => {
+                handlePostEditFinished();
+
+                if (event.target.value === 'ok') {
+                  // Save this new value
+                  savePostEdit(post.id);
+                }
+              }}
               actions={[
-                t('cancel'),
-                { key: "done", content: t('ok'), positive: true }
+                { value: 'nok', key: 'cancel', content: t('cancel') },
+                { value: 'ok', key: "done", content: t('ok'), positive: true }
               ]}
             />) : null}
           </Comment.Actions>
         </Comment.Content>
         {post.replies && post.replies.length > 0 ? (
-          <Comment.Group  threaded style={{minWidth:'100%'}}>
-            {renderComments(post.replies, dispatch, handleOpen, handleClose, state, isValidToken, t)}
+          <Comment.Group  threaded style={{minWidth:'85%'}}>
+            {renderComments(post.replies, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, RichTextEditor)}
           </Comment.Group>
         ) : null}
       </Comment>
@@ -204,11 +259,48 @@ class ThreadScroll extends Component {
     return {};
   }
 
-  state = { modalOpen: false };
+  state = { 
+    modalOpen: false,
+    value: null,
+    postEdit: false,
+    postEditId: null
+  };
+
+  RichTextEditor = null;
 
   handleOpen = () => this.setState({ modalOpen: true });
 
   handleClose = () => this.setState({ modalOpen: false });
+
+  handlePostEdit = (id) => {
+    this.setState({ 
+      postEdit: true,
+      postEditId: id
+    });
+  }
+
+  handlePostEditFinished = () => {
+    this.setState({ 
+      postEdit: false,
+      postEditId: null
+    });
+  }
+
+  onChange = (value) => {
+    this.setState({value});
+  };
+
+  savePostEdit = (id) => {
+    const { value } = this.state;
+    const { dispatch } = this.props;   
+
+    const html = this.state.value.toString('html')
+    console.log('html', html)
+
+    dispatch(
+      updatePost(id, html)
+    );
+  };
 
   fetchData = () => {
     const { dispatch, post } = this.props;    
@@ -226,7 +318,11 @@ class ThreadScroll extends Component {
   render() {
     const { post, posts, isValidToken, t } = this.props;
 
-    console.log('t',t)
+    if (process.browser && !this.RichTextEditor) {
+      this.RichTextEditor = require('react-rte').default;
+      this.setState({ value: this.RichTextEditor.createEmptyValue()})
+    }
+    
     return (
       <Comment.Group threaded style={{minWidth:'100%'}}>
         <Header as="h3" dividing>
@@ -238,7 +334,7 @@ class ThreadScroll extends Component {
           hasMore={post.more}
           loader={<Placeholder />}
         >
-          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.state, isValidToken, t)}
+          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, this.RichTextEditor)}
         </InfiniteScroll>
       </Comment.Group>
     );

@@ -11,7 +11,8 @@ const _serializeSinglePost = post => {
     thread: post.thread,
     replies: post.replies && post.replies.map(_serializeSinglePost),
     likes: post.likes,
-    dislikes: post.dislikes
+    dislikes: post.dislikes,
+    deleted: post.deleted
   };
 };
 

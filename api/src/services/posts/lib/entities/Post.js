@@ -1,5 +1,5 @@
 class Post {
-  constructor(id = null, title, contents, user, timestamp, thread, replies) {
+  constructor(id = null, title, contents, user, timestamp, thread, replies, deleted) {
     this.id = id;
     this.title = title;
     this.contents = contents;
@@ -7,6 +7,7 @@ class Post {
     this.timestamp = timestamp;
     this.thread = thread;
     this.replies = replies;
+    this.deleted = deleted;
   }
 }
 

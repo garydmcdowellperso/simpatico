@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import faker from 'faker'
 import { Box, Grid, Grommet, Text } from "grommet";
 import PropTypes from "prop-types";
 import { Dropdown, Search } from "semantic-ui-react";
@@ -18,13 +17,6 @@ const { withTranslation } = nextI18NextInstance;
 const getCurrentLang = () => nextI18NextInstance.language || '';
 
 const initialState = { isLoading: false, results: [], value: '' }
-
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}))
 
 class Main extends Component {
   state = initialState

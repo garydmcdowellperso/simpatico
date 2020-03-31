@@ -15,7 +15,13 @@ import {
   LIKE_POST_FAILURE,
   DISLIKE_POST_REQUEST,
   DISLIKE_POST_SUCCESS,
-  DISLIKE_POST_FAILURE
+  DISLIKE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE
 } from "../actions/post";
 
 const initialState = { error: "", processing: false, posts: [], search: [], page: 0, more: true };
@@ -190,7 +196,58 @@ export default function post(state = initialState, action) {
         processing: false
       };
 
-      default:  
+    case UPDATE_POST_REQUEST:
+      return {
+        ...state,
+        processing: true
+      };
+    case UPDATE_POST_SUCCESS:
+      newPosts = cloneDeep(state.posts);
+
+      // Update our post in the array
+      const postsLength3 = newPosts.length;
+      for (let x = 0; x < postsLength3; x += 1) {
+        if (newPosts[x].id === action.post.id) {
+          newPosts[x] = action.post;
+        }
+      } 
+      return {
+        ...state,
+        processing: false,
+        posts: newPosts
+      };
+    case UPDATE_POST_FAILURE:
+      return {
+        ...state,
+        processing: false
+      };
+    case DELETE_POST_REQUEST:
+      return {
+        ...state,
+        processing: true
+      };
+    case DELETE_POST_SUCCESS:
+      newPosts = [];
+
+      // Update our post in the array
+      const postsLength4 = state.posts.length;
+      for (let x = 0; x < postsLength4; x += 1) {
+        if (state.posts[x].id !== action.post.id) {
+          newPosts.push(state.posts[x]);
+        }
+      } 
+      console.log('newPosts', newPosts)
+      return {
+        ...state,
+        processing: false,
+        posts: newPosts
+      };
+    case DELETE_POST_FAILURE:
+      return {
+        ...state,
+        processing: false
+      };
+    default:  
       return state;
   }
 }

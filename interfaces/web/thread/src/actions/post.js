@@ -18,6 +18,15 @@ export const DISLIKE_POST_REQUEST = "DISLIKE_POST_REQUEST";
 export const DISLIKE_POST_SUCCESS = "DISLIKE_POST_SUCCESS";
 export const DISLIKE_POST_FAILURE = "DISLIKE_POST_FAILURE";
 
+export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
+
+export const DELETE_POST_REQUEST = "DELETE_POST_REQUEST";
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_FAILURE = "DELETE_POST_FAILURE";
+
+
 export function createPostRequest({ title, contents, thread }) {
   return {
     type: CREATE_POST_REQUEST,
@@ -123,6 +132,49 @@ export function dislikePostSuccess(post) {
 export function dislikePostFailure(error) {
   return {
     type: DISLIKE_POST_FAILURE,
+    error
+  };
+}
+
+export function updatePost(id, contents) {
+  return {
+    type: UPDATE_POST_REQUEST,
+    id,
+    contents
+  };
+}
+
+export function updatePostSuccess(post) {
+  return {
+    type: UPDATE_POST_SUCCESS,
+    post
+  };
+}
+
+export function updatePostFailure(error) {
+  return {
+    type: UPDATE_POST_FAILURE,
+    error
+  };
+}
+
+export function deletePost(id) {
+  return {
+    type: DELETE_POST_REQUEST,
+    id
+  };
+}
+
+export function deletePostSuccess(post) {
+  return {
+    type: DELETE_POST_SUCCESS,
+    post
+  };
+}
+
+export function deletePostFailure(error) {
+  return {
+    type: DELETE_POST_FAILURE,
     error
   };
 }

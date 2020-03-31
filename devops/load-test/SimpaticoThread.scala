@@ -51,5 +51,5 @@ class Simpatico extends Simulation {
 			.headers(headers_6))
 			.check(status.is(404)))
 
-	setUp(scn.inject(atOnceUsers(50))).protocols(httpProtocol)
+	setUp(scn.inject(atOnceUsers(10))).protocols(httpProtocol)
 }

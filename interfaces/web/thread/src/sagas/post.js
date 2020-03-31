@@ -14,9 +14,15 @@ import {
   likePostFailure,
   DISLIKE_POST_REQUEST,
   dislikePostSuccess,
-  dislikePostFailure
+  dislikePostFailure,
+  UPDATE_POST_REQUEST,
+  updatePostSuccess,
+  updatePostFailure,
+  DELETE_POST_REQUEST,
+  deletePostSuccess,
+  deletePostFailure
 } from "../actions/post";
-import { get, post } from "../lib/api";
+import { remove, get, post } from "../lib/api";
 
 function* createPostRequest(action) {
   const r = yield post(
@@ -72,7 +78,33 @@ function* dislikePost(action) {
     })
   )
     .then(json => put(dislikePostSuccess(json)))
-    .catch(err => put(ldisikePostFailure(err)));
+    .catch(err => put(dislikePostFailure(err)));
+  yield r;
+}
+
+function* updatePost(action) {
+  const r = yield post(
+    "v1/updatePost",
+    JSON.stringify({
+      id: action.id,
+      contents: action.contents
+    })
+  )
+    .then(json => put(updatePostSuccess(json)))
+    .catch(err => put(updatePostFailure(err)));
+  yield r;
+}
+
+function* deletePost(action) {
+  console.log('HERE')
+  const r = yield remove(
+    "v1/deletePost",
+    JSON.stringify({
+      id: action.id
+    })
+  )
+    .then(json => put(deletePostSuccess(json)))
+    .catch(err => put(deletePostFailure(err)));
   yield r;
 }
 
@@ -82,4 +114,6 @@ export default function* postSaga() {
   yield takeLatest(FETCH_POSTS_FOR_THREAD_REQUEST, fetchPostsForThread);
   yield takeLatest(LIKE_POST_REQUEST, likePost);
   yield takeLatest(DISLIKE_POST_REQUEST, dislikePost);
+  yield takeLatest(UPDATE_POST_REQUEST, updatePost);
+  yield takeLatest(DELETE_POST_REQUEST, deletePost);
 }

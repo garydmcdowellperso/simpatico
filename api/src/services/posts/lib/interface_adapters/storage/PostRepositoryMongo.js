@@ -46,8 +46,8 @@ class PostRepositoryMongo {
     return this.collection.replaceOne({ id: post.id }, post);
   }
 
-  remove(postId) {
-    return this.collection.findOneAndDelete({ id: postId });
+  remove(post) {
+    return this.collection.replaceOne({ id: post.id }, post);
   }
 
   get(postId) {
@@ -55,7 +55,7 @@ class PostRepositoryMongo {
   }
 
   fetchPostsForThread(thread, page) {
-    return this.collection.find({ thread }).skip((page-1) * 5).limit(5).toArray();
+    return this.collection.find({ thread, deleted: false }).skip((page-1) * 5).limit(5).toArray();
   }
 
   find() {
