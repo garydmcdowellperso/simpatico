@@ -1,7 +1,11 @@
 # simpatico
 Mono-repo, clean-architecture based (https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), collective intelligence platform
 
-# principale
+## Table of contents
+- [Principal](#principale)
+
+
+## principale
 
 A modular approach to bulding a collective intelligence platform - but what does that mean ?
 
@@ -32,6 +36,9 @@ So, cheapest solution is currently this one in alpha which is noot dockerised, s
 However, the deployment roadmap is very much based around, images (containers), docker swarm and then kubernetes for the really funky, high scale SaaS setups
 
 # structure
+
+|-- api
+|   |-- src
 
 - api # the apis
 
