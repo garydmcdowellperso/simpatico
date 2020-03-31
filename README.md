@@ -2,10 +2,13 @@
 Mono-repo, clean-architecture based (https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), collective intelligence platform
 
 ## Table of contents
-- [Principal](#principale)
+- [Principal](#principal)
+- [Tech Stack](#techstack)
+- [Micro Services](#micro-services)
+- [Build / Test / Deploy](#build/test/deploy)
 
 
-## principale
+## principal
 
 A modular approach to bulding a collective intelligence platform - but what does that mean ?
 
@@ -13,15 +16,15 @@ It means the idea of micro-sites and micro-services.
 It means separation of concerns rather than monoliths (in terms of code not the repo)
 It means no affinity to a particular framework and so the possibility to add your 'own' component to replace an existing one if you don't like it - plug and play with some rules around authentication and what you can 'expect to find'
 
-# tech stack
+## techstack
 
 Javascript fullstack (although I love golan) you have ReactJS for the front (but again you can replace a micro-site with something else) and NodeJS for the back.
 
-# micro-services
+## micro-services
 
 well no, not really because until you have a use-case where you need to engineer them, you don't need to build it from day-1. However, using clean archtecture principales the 'api' can be effectively deconstructed into micro-services in probably 1-2 days. Clean API, injection of depedencies and separation of concerns.
 
-# build / test / deploy
+## build/test/deploy
 
 There is no hard and fast you must do x with simpatico. The idea is that your 'could' dockerize everything but you don't have to.
 
