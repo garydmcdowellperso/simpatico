@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import flowRight from 'lodash/flowRight';
 
 import Nav from "../components/nav";
-import Thread from "../components/thread";
 import ThreadScroll from "../components/threadscroll";
 import TopPost from "../components/toppost";
 import nextI18NextInstance from '../../i18n';

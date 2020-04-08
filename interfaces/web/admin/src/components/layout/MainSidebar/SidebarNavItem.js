@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const SidebarNavItem = ({ item }) => (
   <NavItem>
-    <Link href="/">
+    <Link href={item.to}>
       <a className="nav-link">
         <div
             className="d-inline-block item-icon-wrapper"

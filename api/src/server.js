@@ -17,6 +17,7 @@ import iam from "./api/iam";
 import ping from "./api/ping";
 import post from "./api/post";
 import thread from "./api/thread";
+import debate from "./api/debate";
 
 const singleton = fastify({
   logger: true
@@ -42,7 +43,7 @@ singleton.register(oauthPlugin, {
   // register a fastify url to start the redirect flow
   startRedirectPath: "/login/google",
   // facebook redirect here after the user login
-  callbackUri: "https://02779a1d.ngrok.io/api/v1/login/google/callback"
+  callbackUri: "https://8475c843.ngrok.io/api/v1/login/google/callback"
 });
 
 // Print routes
@@ -89,6 +90,7 @@ singleton.register(iam, { prefix: "/v1" });
 singleton.register(ping, { prefix: "/v1" });
 singleton.register(post, { prefix: "/v1" });
 singleton.register(thread, { prefix: "/v1" });
+singleton.register(debate, { prefix: "/v1" });
 
 // Hook it all together
 const start = async () => {
