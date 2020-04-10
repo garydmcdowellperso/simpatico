@@ -1,4 +1,13 @@
+const trueValue = "true";
+
 const config = {
+  simpatico: {
+    root: process.env.SIMPATICO_ROOT || "/root/simpatico",
+    sudo: process.env.SUDO || (trueValue === "true")
+  },
+  nginx: {
+    root: process.env.NGINX_ROOT || '/User/gary'
+  },
   server: {
     port: process.env.PORT || "5000",
     docPrefix: process.env.DOC_URL_PREFIX || "doc"

@@ -1,4 +1,4 @@
-# Nginx config for the simpatico application
+# Nginx config for the simpatico application (DEVELOPMENT)
 
 # description
 
@@ -7,6 +7,8 @@ Essentally the nginx uses locations to direct traffic to the front ends. This me
 thisdomainname.com/profile
 
 You need to simply adapt this file for the domain name you wish to use and either use ngrok to point to it or se a real domain name with an ssl cert etc
+
+IF YOU ARE LOOKING FOR A PRODUCTION CONFIGURATION PLEASE LOOK AT THE PRODUCTION DIRECTORY
 
 # dev
 

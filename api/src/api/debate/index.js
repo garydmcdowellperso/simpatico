@@ -1,3 +1,6 @@
+const fs = require('fs')
+const shell = require('shelljs');
+
 const config = require('../../config');
 
 import DebatesController from "../../services/debates/lib/controllers/DebatesController";
@@ -197,25 +200,60 @@ const routes = async fastify => {
                     200: {
                         type: "object",
                         properties: {
-                            status: { type: "string" }
+                            status: { type: "string" },
+                            reason: { type: "string" }
                         }
                     }
                 }
             }
         },
         async request => {
-            fastify.log.info("[src#api#createDebate] Entering");
+            fastify.log.info(request.body, "[src#api#createDebate] Entering");
 
             const inputs = { ...request.body };
             // Create the debate
             const response = await DebatesController.createDebate(inputs);
 
-            // Add the config to the LB
+            const sudo = config.default.simpatico.sudo === true ? 'sudo' : '';
+
+            // Add the config to the nginx. Take the vanilla config and update with parms
+            let configFile;
+            try {
+                configFile = fs.readFileSync(`${config.default.simpatico.root}/devops/production/simpatico.conf`, 'utf8');
+            } catch (error) {
+                fastify.log.error(error);
+                return {
+                    status: 'nok',
+                    reason: 'could not read config'
+                }
+            }
+            const result = configFile.replace(/SERVERNAME/g, request.body.name);
+
+            try {
+                fs.writeFileSync(`${config.default.nginx.root}/sites-enabled/${request.body.name}.conf`, result, 'utf8');
+            } catch (error) {
+                fastify.log.error(error);
+                return {
+                    status: 'nok',
+                    reason: 'could not create config'
+                }
+            }
 
             // Restart nginx
+            if (shell.exec(`${sudo} service nginx restart`).code !== 0) {
+                shell.exit(1);
+
+                fastify.log.error("[src#api#createDebate] nginx restart failed");
+
+                return {
+                    status: 'nok',
+                    reason: 'nginx restart failed'
+                }
+            }
 
             return {
-                status: 'ok'
+                status: 'ok',
+                reason: ''
             }
         }
     );

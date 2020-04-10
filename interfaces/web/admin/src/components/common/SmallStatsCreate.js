@@ -62,7 +62,7 @@ class SmallStatsCreate extends React.Component {
           <div className={innerWrapperClasses}>
             <div className={dataFieldClasses}>
               <span className={labelClasses}>New Debate</span>
-              <Link href={{ pathname: '/newdebate' }}>
+              <Link href={{ pathname: '/admin/newdebate' }}>
                 <h6 className={valueClasses}>+</h6>
               </Link>
             </div>

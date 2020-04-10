@@ -5,8 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "transpile": "babel src --out-dir dist",
-    "start:prod": "npm run transpile && node dist/server.js | ./node_modules/.bin/pino-elasticsearch --node http://kibana.bluenove.com:9200",
-    "start:prod:nologger": "npm run transpile && node dist/server.js",
+    "start:prod": "npm run transpile && node dist/server.js",
     "start:dev": "nodemon --exec babel-node src/server.js",
     "lint": "eslint .",
     "format": "eslint --fix . && prettier --write '**/*.js' '**/*.jsx' && echo 'format done.'",
@@ -46,7 +45,8 @@
     "moment-timezone": "0.5.26",
     "mongodb": "3.3.5",
     "pino-elasticsearch": "4.1.0",
-    "regenerator-runtime": "0.13.3"
+    "regenerator-runtime": "0.13.3",
+    "shelljs": "^0.8.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
