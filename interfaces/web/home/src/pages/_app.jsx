@@ -40,7 +40,6 @@ class Simpatico extends App {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    console.log('YO YO  YO', ctx.req.headers.host);
     const parts = ctx.req.headers.host.split('.');
     let name = '';
 
@@ -48,7 +47,7 @@ class Simpatico extends App {
       name = parts[0];
     }
     // Do a check if this debatee exists before trying to render (no saga here, server side)
-    const res = await fetch(`https://buchy.eu/api/v1/fetchDebate?${name}`)
+    const res = await fetch(`https://buchy.eu/api/v1/fetchDebate?name=${name}`)
     const json = await res.json()
     console.log('json', json);
     return { pageProps };
