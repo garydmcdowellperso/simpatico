@@ -12,6 +12,49 @@ import DebatesController from "../../services/debates/lib/controllers/DebatesCon
  */
 const routes = async fastify => {
     fastify.get(
+        "/fetchDebate",
+        {
+            config,
+            schema: {
+                description: "fetches a debate ",
+                tags: ["api"],
+                querystring: {
+                  debate: { type: "number" }
+                },
+                response: {
+                    200: {
+                       type: "object",
+                       properties: {
+                          id: { type: "number" },
+                          name: { type: 'string' },
+                          slug: { type: 'string' },
+                          debateType: { type: 'string' },
+                          languages: { 
+                            type: 'object',
+                            properties: {
+                                english: { type: 'boolean' },
+                                french: { type: 'boolean' },
+                                spanish: { type: 'boolean' }
+                            }            
+                          },
+                        }
+                    }
+                }
+            }
+        },
+        async request => {
+            fastify.log.info("[src#api#fetchDebate] Entering");
+
+            const inputs = {
+              debate: request.query.debate
+            };
+
+            const response = await DebatesController.fetchDebate(inputs);
+            return response;
+        }
+    );
+
+    fastify.get(
         "/fetchAllDebates",
         {
             config,
@@ -230,6 +273,7 @@ const routes = async fastify => {
             const result = configFile.replace(/SERVERNAME/g, request.body.name);
 
             try {
+		    console.log('HERE', config);
                 fs.writeFileSync(`${config.default.nginx.root}/sites-enabled/${request.body.name}.conf`, result, 'utf8');
             } catch (error) {
                 fastify.log.error(error);

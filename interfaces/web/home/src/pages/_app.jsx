@@ -4,6 +4,7 @@ import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import createSagaMiddleware from "redux-saga";
+import fetch from 'isomorphic-unfetch';
 
 import sagas from "../sagas";
 import allReducers from "../reducers";
@@ -34,11 +35,22 @@ const makeStore = initialState => {
 };
 
 class Simpatico extends App {
-  static async getInitialProps({ Component, ctx }) {
+  static async getInitialProps({ Component, ctx, req }) {
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
 
+    console.log('YO YO  YO', ctx.req.headers.host);
+    const parts = ctx.req.headers.host.split('.');
+    let name = '';
+
+    if (parts) {
+      name = parts[0];
+    }
+    // Do a check if this debatee exists before trying to render (no saga here, server side)
+    const res = await fetch(`https://buchy.eu/api/v1/fetchDebate?${name}`)
+    const json = await res.json()
+    console.log('json', json);
     return { pageProps };
   }
 
