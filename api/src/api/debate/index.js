@@ -19,7 +19,7 @@ const routes = async fastify => {
                 description: "fetches a debate ",
                 tags: ["api"],
                 querystring: {
-                  debate: { type: "number" }
+                    name: { type: "string" }
                 },
                 response: {
                     200: {
@@ -46,7 +46,7 @@ const routes = async fastify => {
             fastify.log.info("[src#api#fetchDebate] Entering");
 
             const inputs = {
-              debate: request.query.debate
+              name: request.query.name
             };
 
             const response = await DebatesController.fetchDebate(inputs);

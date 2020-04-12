@@ -3,7 +3,7 @@ const trueValue = "true";
 const config = {
   simpatico: {
     root: process.env.SIMPATICO_ROOT || "/root/simpatico",
-    sudo: process.env.SUDO || (trueValue === "true")
+    sudo: (trueValue === process.env.SUDO) || (trueValue === "false")
   },
   nginx: {
     root: process.env.NGINX_ROOT || '/User/gary'

@@ -54,6 +54,10 @@ class DebateRepositoryMongo {
     return this.collection.findOne({ id: debateId });
   }
 
+  getByName(name) {
+    return this.collection.findOne({ name });
+  }
+
   find() {
     return this.collection.find().toArray();
   }
