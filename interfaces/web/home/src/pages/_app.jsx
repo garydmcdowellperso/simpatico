@@ -9,6 +9,8 @@ import fetch from 'isomorphic-unfetch';
 import sagas from "../sagas";
 import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
+import '../styles.css'
+import Custom404 from './404';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -48,9 +50,9 @@ class Simpatico extends App {
     }
     // Do a check if this debatee exists before trying to render (no saga here, server side)
     const res = await fetch(`https://buchy.eu/api/v1/fetchDebate?name=${name}`)
-    const json = await res.json()
-    console.log('json', json);
-    return { pageProps };
+    const debate = await res.json()
+    console.log('debate', debate);
+    return { pageProps, debate };
   }
 
   componentDidMount() {
@@ -78,7 +80,9 @@ class Simpatico extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, debate } = this.props;
+
+    if (!debate.id) return <Custom404 />;
 
     return (
       <Provider store={store}>
