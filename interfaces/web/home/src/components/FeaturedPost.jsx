@@ -9,6 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 
+import nextI18NextInstance from '../../i18n';
+
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
+
 const useStyles = makeStyles({
   card: {
     display: 'flex',
@@ -23,22 +27,20 @@ const useStyles = makeStyles({
 
 export default function FeaturedPost(props) {
   const classes = useStyles();
-  const { post } = props;
+  const { module } = props;
 
+  console.log('module', module)
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea component="a" href="/thread/?thread=1">
+      <CardActionArea component="a" href={module.url}>
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {post.title}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {post.date}
+                {module.title[getCurrentLang()]}
               </Typography>
               <Typography variant="subtitle1" paragraph>
-                {post.description}
+                {module.description[getCurrentLang()]}
               </Typography>
               <Typography variant="subtitle1" color="primary">
                 Continue reading...
@@ -46,7 +48,7 @@ export default function FeaturedPost(props) {
             </CardContent>
           </div>
           <Hidden xsDown>
-            <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
+            <CardMedia className={classes.cardMedia} image={module.image} title={module.imageText[getCurrentLang()]} />
           </Hidden>
         </Card>
       </CardActionArea>

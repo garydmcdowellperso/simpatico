@@ -9,26 +9,27 @@ import PageTitle from "./common/PageTitle";
 import LandingPage from "./configure/debate/LandingPage";
 import Modules from "./configure/debate/Modules";
 import GeneralInfo from "./configure/debate/GeneralInfo";
+import Pages from "./configure/debate/Pages";
 
 import nextI18NextInstance from '../../i18n';
-//import { fetchDebatesRequest } from "../actions/debate";
+import { fetchDebateRequest } from "../actions/debate";
 
 const { withTranslation } = nextI18NextInstance;
 
 class Debate extends Component {
   componentDidMount() {
     const { dispatch } = this.props;    
-    const { router: { query: { id } } } = this.props;
+    const { router: { query: { name } } } = this.props;
 
-    console.log('id', id)
-    /*
+    console.log('name', name)
     dispatch(
-      fetchDebateRequest()
+      fetchDebateRequest(name)
     );
-    */
   }
 
   render() {
+    const { debate: { debate } } = this.props;
+
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -39,15 +40,20 @@ class Debate extends Component {
         {/* Small Stats Blocks */}
         <Row>
           <Col lg="12" md="12" sm="12" className="mb-4">
-            <GeneralInfo mode='update' />
+            <GeneralInfo mode='update' debate={debate} />
           </Col>
         </Row>
         <Row>
           <Col lg="6" md="6" sm="6" className="mb-4">
-            <LandingPage />
+            <Modules debate={debate} />
           </Col>
           <Col lg="6" md="6" sm="6" className="mb-4">
-            <Modules />
+              <Pages debate={debate} />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="10" md="10" sm="10" className="mb-4">
+            <LandingPage debate={debate} />
           </Col>
         </Row>
       </Container>

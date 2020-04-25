@@ -8,9 +8,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { useDispatch, useSelector } from 'react-redux'
+import nextI18NextInstance from '../../i18n';
 
 import UserMenu from "./UserMenu";
 import { fetchUserInfo } from "../actions/auth";
+
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -37,6 +40,7 @@ export default function Header(props) {
   const dispatch = useDispatch();
   let firstNameLocalStorage;
 
+  console.log('getCurrentLang', getCurrentLang())
   const { firstName, lastName, id, isValidToken, token } = useSelector(state => state.auth);
 
   if (typeof window !== 'undefined') {
@@ -111,16 +115,16 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map(section => (
+        {sections.map((section, idx) => (
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={idx}
             variant="body2"
             href={section.url}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {section.title[getCurrentLang()]}
           </Link>
         ))}
       </Toolbar>

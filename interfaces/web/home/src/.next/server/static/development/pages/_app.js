@@ -93,6 +93,32 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "../config.js":
+/*!********************!*\
+  !*** ../config.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  api: {
+    host: process.env.API_HOST || 'http://localhost:5000'
+  },
+  server: {
+    host: process.env.SERVER_HOST || 'http://localhost',
+    port: parseInt(process.env.PORT, 10) || 1000
+  },
+  i18n: {
+    languages: process.env.LANGUAGES || ['en', 'es', 'fr'],
+    defaultLanguage: process.env.DEFAULT_LANGUAGE || 'fr',
+  },
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js":
 /*!*******************************************************************************!*\
   !*** ../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js ***!
@@ -737,6 +763,80 @@ var Api = {
 
 /***/ }),
 
+/***/ "./pages/404.jsx":
+/*!***********************!*\
+  !*** ./pages/404.jsx ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Custom404; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Custom404() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
+    className: "bg-purple"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "stars"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "custom-navbar"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "brand-logo"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "http://salehriaz.com/404Page/img/logo.svg",
+    width: "80px"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "central-body"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "image-404",
+    src: "http://salehriaz.com/404Page/img/404.svg",
+    width: "300px"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "http://salehriaz.com/404Page/404.html",
+    className: "btn-go-home",
+    target: "_blank"
+  }, "GO BACK HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "objects"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "object_rocket",
+    src: "http://salehriaz.com/404Page/img/rocket.svg",
+    width: "40px"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "earth-moon"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "object_earth",
+    src: "http://salehriaz.com/404Page/img/earth.svg",
+    width: "100px"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "object_moon",
+    src: "http://salehriaz.com/404Page/img/moon.svg",
+    width: "80px"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "box_astronaut"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "object_astronaut",
+    src: "http://salehriaz.com/404Page/img/astronaut.svg",
+    width: "140px"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "glowing_stars"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "star"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "star"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "star"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "star"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "star"
+  }))));
+}
+
+/***/ }),
+
 /***/ "./pages/_app.jsx":
 /*!************************!*\
   !*** ./pages/_app.jsx ***!
@@ -768,9 +868,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! redux-saga */ "redux-saga");
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
-/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
-/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../styles.css */ "./styles.css");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _404__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./404 */ "./pages/404.jsx");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../config */ "../config.js");
+
+
+
+
 
 
 
@@ -796,8 +906,8 @@ var getUrlParameter = function getUrlParameter(name) {
 };
 
 var makeStore = function makeStore(initialState) {
-  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_12__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
-  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_11__["default"]);
+  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_13__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
+  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_12__["default"]);
   return store;
 };
 
@@ -818,7 +928,7 @@ function (_App) {
       // Check if token passed in - validate it and use the response to populate local storage
       if (window.location.search.includes("token")) {
         // Ask server to verify and set cookie
-        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
+        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
           token: getUrlParameter("token")
         }));
       }
@@ -827,7 +937,7 @@ function (_App) {
         // Not on the URL so check the localStorage
         if (localStorage.getItem("token")) {
           // Ask server to verify and set cookie
-          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
+          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
             token: localStorage.getItem("token")
           }));
         }
@@ -838,19 +948,26 @@ function (_App) {
     value: function render() {
       var _this$props = this.props,
           Component = _this$props.Component,
-          pageProps = _this$props.pageProps;
+          pageProps = _this$props.pageProps,
+          debate = _this$props.debate;
+      if (!debate.id) return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(_404__WEBPACK_IMPORTED_MODULE_16__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_8__["Provider"], {
         store: store
-      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Component, pageProps));
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Component, debate));
     }
   }], [{
     key: "getInitialProps",
     value: async function getInitialProps(_ref) {
       var Component = _ref.Component,
-          ctx = _ref.ctx;
-      var pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+          ctx = _ref.ctx,
+          req = _ref.req;
+      var pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {}; // Do a check if this debatee exists before trying to render (no saga here, server side)
+
+      var res = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11___default()("".concat(_config__WEBPACK_IMPORTED_MODULE_17__["default"].api.host, "/api/v1/fetchDebate?name=").concat(ctx.req.headers.host));
+      var debate = await res.json();
       return {
-        pageProps: pageProps
+        pageProps: pageProps,
+        debate: debate
       };
     }
   }]);
@@ -1041,6 +1158,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function* () {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"])]);
 });
+
+/***/ }),
+
+/***/ "./styles.css":
+/*!********************!*\
+  !*** ./styles.css ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 

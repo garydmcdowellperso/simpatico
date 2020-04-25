@@ -21,3 +21,7 @@ To configure your platform for the domain name you want, simply run this script 
 This will generate and copy as a symbolic link the simpatico.nginx file to the sites-enabled directory, restart nginx and then start the process of requesting an SSL with certbot.
 
 All of the updates, repos, installs of certbot will be handled by the script above.
+
+# certbot
+
+certbot certonly --manual -d *.DOMAINNAME -d DOMAINNAME --agree-tos --no-bootstrap --manual-public-ip-logging-ok --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory

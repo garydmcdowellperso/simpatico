@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
@@ -13,16 +13,20 @@ import {
     FormSelect,
     Row
 } from "shards-react";
-import { useEffect } from 'react';
 import RingLoader from "react-spinners/RingLoader";
 import LoadingOverlay from 'react-loading-overlay';
 
-import useForm from '../../../lib/useForm';
 import { createDebateRequest } from "../../../actions/debate"
 
 const englishChecked = false;
 
 function GeneralInfo(props) {
+    const { debate } = props;
+
+    console.log('debate', debate);
+    const [disable, setDisable] = useState(false)
+    const [name, setName] = useState("")
+    const [slug, setSlug] = useState("")
     const [englishChecked, setCheckEnglish] = useState(false)
     const [frenchChecked, setCheckFrench] = useState(false)
     const [spanishChecked, setCheckSpanish] = useState(false)
@@ -30,32 +34,10 @@ function GeneralInfo(props) {
 
     const dispatch = useDispatch();
 
-    const stateSchema = {
-        name: { value: '', error: '' },
-        slug: { value: '', error: '' }
-    };
-
-    const validationStateSchema = {
-        name: {
-          required: true,
-          validator: {
-            regEx: /^[a-zA-Z0-9\.]+$/,
-            error: 'Invalid name format.',
-          },
-        },
-        slug: {
-          required: true,
-          validator: {
-            regEx: /^[a-zA-Z]+$/,
-            error: 'Invalid slug format.',
-          },
-        }
-      };
-
-    function onSubmitForm(state) {
+    function handleOnSubmit() {
         dispatch(createDebateRequest(
-            state.name.value,
-            state.slug.value,
+            name,
+            slug,
             debateType,
             {
                 english: englishChecked ? true : false,
@@ -65,25 +47,30 @@ function GeneralInfo(props) {
         ))
     }
 
-    const { state, handleOnChange, handleOnSubmit, disable } = useForm(
-        stateSchema,
-        validationStateSchema,
-        onSubmitForm
-    );
-    const debate = useSelector(state => state.debate.debate);
+    // const debate = useSelector(state => state.debate.debate);
     const error = useSelector(state => state.debate.error);
     const processing = useSelector(state => state.debate.processing);
 
     useEffect(() => {
         // Debate exists, transition to edit
+        console.log('debate changed',debate)
+        if (debate) {
+            // Transfer values to state
+            setName(debate.name);
+            setSlug(debate.slug);
+            setDebateType(debate.debateType);
+            setCheckEnglish(debate.languages.english);
+            setCheckFrench(debate.languages.french);
+            setCheckSpanish(debate.languages.spanish);
+        }
     }, [debate]);
 
     useEffect(() => {
         // Error somewhere
     }, [error]);
 
-    const { mode } = props.mode;
-
+    const { mode } = props;
+    console.log('mode', props);
     return (
         <>
         <LoadingOverlay
@@ -107,10 +94,11 @@ function GeneralInfo(props) {
                                     id="name"
                                     name="name"
                                     placeholder="mydebate.simpatico.com"
-                                    value={state.name.value}
-                                    onChange={handleOnChange}
+                                    value={name}
+                                    onChange={(event) =>{
+                                        setName(event.target.value);
+                                    }}
                                 />
-                                {state.name.error && <p>{state.name.error}</p>}
                             </Col>
                         </Row>    
                     </FormGroup>
@@ -124,8 +112,10 @@ function GeneralInfo(props) {
                                     id="slug"
                                     name="slug"
                                     placeholder="mydebate.simpatico.com/slug"
-                                    value={state.slug.value}
-                                    onChange={handleOnChange}
+                                    value={slug}
+                                    onChange={(event) =>{
+                                        setSlug(event.target.value);
+                                    }}
                                 />
                             </Col>
                         </Row>    

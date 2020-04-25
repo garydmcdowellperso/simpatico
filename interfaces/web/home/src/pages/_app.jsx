@@ -11,6 +11,7 @@ import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
 import '../styles.css'
 import Custom404 from './404';
+import config from '../../config';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -42,16 +43,9 @@ class Simpatico extends App {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    const parts = ctx.req.headers.host.split('.');
-    let name = '';
-
-    if (parts) {
-      name = parts[0];
-    }
     // Do a check if this debatee exists before trying to render (no saga here, server side)
-    const res = await fetch(`https://buchy.eu/api/v1/fetchDebate?name=${name}`)
+    const res = await fetch(`${config.api.host}/api/v1/fetchDebate?name=${ctx.req.headers.host}`)
     const debate = await res.json()
-    console.log('debate', debate);
     return { pageProps, debate };
   }
 
@@ -86,7 +80,7 @@ class Simpatico extends App {
 
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <Component {...debate} />
       </Provider>
     );
   }

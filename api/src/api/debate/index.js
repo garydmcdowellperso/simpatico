@@ -37,6 +37,93 @@ const routes = async fastify => {
                                 spanish: { type: 'boolean' }
                             }            
                           },
+                          header: { 
+                            type: 'object',
+                            properties: {
+                                share: { type: 'boolean' },
+                                sections: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {    
+                                            page:   { type: "number" },
+                                            languages: {
+                                                type: 'object',
+                                                properties: {
+                                                    en: { type: 'string' },
+                                                    fr: { type: 'string' },
+                                                    es: { type: 'string' }            
+                                                },
+                                            },
+                                        },
+                                    }, 
+                                },
+                            },        
+                          },
+                          overview: { 
+                            type: 'object',
+                            properties: {
+                                url: { type: 'string' },
+                                title: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                description: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                linkText: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                }
+                            }            
+                          },
+                          modules: { 
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {     
+                                    title: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    description: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    imageText: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    image: { type: 'string' },
+                                    url: { type: 'string' }
+                                }
+                            }            
+                          },
                         }
                     }
                 }
@@ -67,44 +154,101 @@ const routes = async fastify => {
                         items: {
                             type: "object",
                             properties: {
-                                id: { type: "number" },
-                                label: { type: "string" },
-                                value: { type: "string" },
-                                percentage: { type: "string" },
-                                increase: { type: "boolean" },
-                                chartLabels: {
-                                    type: "array",
-                                    items: {
-                                        type: "string" 
-                                    }
-                                },
-                                attrs: { 
-                                    type: "object",
-                                    properties: {
-                                        md: { type: "string" },
-                                        sm: { type: "string" }
-                                    }        
-                                },
-                                datasets: { 
-                                    type: "array",
-                                    items: {
-                                        type: "object",
-                                        properties: {
-                                            label: { type: "string" },
-                                            fill: { type: "string" },
-                                            borderWidth: { type: "number" },
-                                            backgroundColor: { type: "string" },
-                                            data: { 
-                                                type: "array",
-                                                items: {
-                                                    type: "number" 
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                            }
-                        }
+                               id: { type: "number" },
+                               name: { type: 'string' },
+                               slug: { type: 'string' },
+                               debateType: { type: 'string' },
+                               languages: { 
+                                 type: 'object',
+                                 properties: {
+                                     english: { type: 'boolean' },
+                                     french: { type: 'boolean' },
+                                     spanish: { type: 'boolean' }
+                                 }            
+                               },
+                               sections: { 
+                                 type: 'array',
+                                 items: {
+                                     type: 'object',
+                                     properties: {     
+                                         title: { 
+                                             type: 'object',
+                                             properties: {
+                                                 en: { type: 'string' },
+                                                 fr: { type: 'string' },
+                                                 es: { type: 'string' }
+                                             }            
+                                         },            
+                                         url: { type: 'string' }
+                                     }
+                                 }            
+                               },
+                               overview: { 
+                                 type: 'object',
+                                 properties: {
+                                     url: { type: 'string' },
+                                     title: { 
+                                         type: 'object',
+                                         properties: {
+                                             en: { type: 'string' },
+                                             fr: { type: 'string' },
+                                             es: { type: 'string' }
+                                         }
+                                     },
+                                     description: { 
+                                         type: 'object',
+                                         properties: {
+                                             en: { type: 'string' },
+                                             fr: { type: 'string' },
+                                             es: { type: 'string' }
+                                         }
+                                     },
+                                     linkText: { 
+                                         type: 'object',
+                                         properties: {
+                                             en: { type: 'string' },
+                                             fr: { type: 'string' },
+                                             es: { type: 'string' }
+                                         }
+                                     }
+                                 }            
+                               },
+                               modules: { 
+                                 type: 'array',
+                                 items: {
+                                     type: 'object',
+                                     properties: {     
+                                         title: { 
+                                             type: 'object',
+                                             properties: {
+                                                 en: { type: 'string' },
+                                                 fr: { type: 'string' },
+                                                 es: { type: 'string' }
+                                             }            
+                                         },            
+                                         description: { 
+                                             type: 'object',
+                                             properties: {
+                                                 en: { type: 'string' },
+                                                 fr: { type: 'string' },
+                                                 es: { type: 'string' }
+                                             }            
+                                         },            
+                                         imageText: { 
+                                             type: 'object',
+                                             properties: {
+                                                 en: { type: 'string' },
+                                                 fr: { type: 'string' },
+                                                 es: { type: 'string' }
+                                             }            
+                                         },            
+                                         image: { type: 'string' },
+                                         url: { type: 'string' }
+                                     }
+                                 }            
+                               },
+                             }
+                         }
                     }
                 }
             }
@@ -112,26 +256,9 @@ const routes = async fastify => {
         async request => {
             fastify.log.info("[src#api#fetchAllDebates] Entering");
 
-            return [{
-                id: 1,
-                label: "Posts",
-                value: "2,390",
-                percentage: "4.7%",
-                increase: true,
-                chartLabels: [null, null, null, null, null, null, null],
-                attrs: { md: "6", sm: "6" },
-                datasets: [
-                  {
-                    label: "Today",
-                    fill: "start",
-                    borderWidth: 1.5,
-                    backgroundColor: "rgba(0, 184, 216, 0.1)",
-                    borderColor: "rgb(0, 184, 216)",
-                    data: [1, 2, 1, 3, 5, 4, 7]
-                  }
-                ]
-              }
-            ];
+            const response = await DebatesController.fetchAllDebates();
+
+            return response;
         }
     );
 
@@ -257,48 +384,327 @@ const routes = async fastify => {
             // Create the debate
             const response = await DebatesController.createDebate(inputs);
 
-            const sudo = config.default.simpatico.sudo === true ? 'sudo' : '';
-
-            // Add the config to the nginx. Take the vanilla config and update with parms
-            let configFile;
-            try {
-                configFile = fs.readFileSync(`${config.default.simpatico.root}/devops/production/simpatico.conf`, 'utf8');
-            } catch (error) {
-                fastify.log.error(error);
-                return {
-                    status: 'nok',
-                    reason: 'could not read config'
-                }
-            }
-            const result = configFile.replace(/SERVERNAME/g, request.body.name);
-
-            try {
-		    console.log('HERE', config);
-                fs.writeFileSync(`${config.default.nginx.root}/sites-enabled/${request.body.name}.conf`, result, 'utf8');
-            } catch (error) {
-                fastify.log.error(error);
-                return {
-                    status: 'nok',
-                    reason: 'could not create config'
-                }
-            }
-
-            // Restart nginx
-            if (shell.exec(`${sudo} service nginx restart`).code !== 0) {
-                shell.exit(1);
-
-                fastify.log.error("[src#api#createDebate] nginx restart failed");
-
-                return {
-                    status: 'nok',
-                    reason: 'nginx restart failed'
-                }
-            }
-
             return {
                 status: 'ok',
                 reason: ''
             }
+        }
+    );
+
+    fastify.put(
+        "/updateLandingPageHeader",
+        {
+            config,
+            schema: {
+                description: "updates the header for a debate landing page",
+                tags: ["api"],
+                body: {
+                    type: 'object',
+                    properties: {
+                        debateID: { type: 'number' },
+                        header: { 
+                            type: 'object',
+                            properties: {
+                                share: { type: 'boolean' },
+                                sections: { 
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {
+                                            page: { type: 'number' },
+                                            languages: {
+                                                type: 'object',
+                                                properties: {
+                                                    en: { type: 'string' },
+                                                    fr: { type: 'string' },
+                                                    es: { type: 'string' }            
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            }            
+                        },
+                    },
+                },    
+                response: {
+                    200: {
+                       type: "object",
+                       properties: {
+                          id: { type: "number" },
+                          name: { type: 'string' },
+                          slug: { type: 'string' },
+                          debateType: { type: 'string' },
+                          languages: { 
+                            type: 'object',
+                            properties: {
+                                english: { type: 'boolean' },
+                                french: { type: 'boolean' },
+                                spanish: { type: 'boolean' }
+                            }            
+                          },
+                          header: { 
+                            type: 'object',
+                            properties: {
+                                share: { type: 'boolean' },
+                                sections: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {    
+                                            page:   { type: "number" },
+                                            languages: {
+                                                type: 'object',
+                                                properties: {
+                                                    en: { type: 'string' },
+                                                    fr: { type: 'string' },
+                                                    es: { type: 'string' }            
+                                                },
+                                            },
+                                        },
+                                    }, 
+                                },
+                            },        
+                          },
+                          overview: { 
+                            type: 'object',
+                            properties: {
+                                url: { type: 'string' },
+                                title: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                description: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                linkText: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                }
+                            }            
+                          },
+                          modules: { 
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {     
+                                    title: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    description: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    imageText: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    image: { type: 'string' },
+                                    url: { type: 'string' }
+                                }
+                            }            
+                          },
+                        }
+                    }
+                }
+            }
+        },
+        async request => {
+            fastify.log.info(request.body, "[src#api#updateLandingPageHeader] Entering");
+
+            const inputs = { ...request.body };
+            // Update the debate landing page header
+            const response = await DebatesController.updateLandingPageHeader(inputs);
+
+            return response;
+        }
+    );
+
+    fastify.put(
+        "/updateLandingPageOverview",
+        {
+            config,
+            schema: {
+                description: "updates the overview for a debate landing page",
+                tags: ["api"],
+                body: {
+                    type: 'object',
+                    properties: {
+                        debateID: { type: 'number' },
+                        overview: { 
+                            type: 'object',
+                            properties: {
+                                url: { type: 'string' },
+                                title: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }            
+                                    },
+                                },
+                                description: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }            
+                                    },
+                                },
+                                linkText: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }            
+                                    },
+                                },
+                            }            
+                        },
+                    },
+                },    
+                response: {
+                    200: {
+                       type: "object",
+                       properties: {
+                          id: { type: "number" },
+                          name: { type: 'string' },
+                          slug: { type: 'string' },
+                          debateType: { type: 'string' },
+                          languages: { 
+                            type: 'object',
+                            properties: {
+                                english: { type: 'boolean' },
+                                french: { type: 'boolean' },
+                                spanish: { type: 'boolean' }
+                            }            
+                          },
+                          header: { 
+                            type: 'object',
+                            properties: {
+                                share: { type: 'boolean' },
+                                sections: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {    
+                                            page:   { type: "number" },
+                                            languages: {
+                                                type: 'object',
+                                                properties: {
+                                                    en: { type: 'string' },
+                                                    fr: { type: 'string' },
+                                                    es: { type: 'string' }            
+                                                },
+                                            },
+                                        },
+                                    }, 
+                                },
+                            },        
+                          },
+                          overview: { 
+                            type: 'object',
+                            properties: {
+                                url: { type: 'string' },
+                                title: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                description: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                },
+                                linkText: { 
+                                    type: 'object',
+                                    properties: {
+                                        en: { type: 'string' },
+                                        fr: { type: 'string' },
+                                        es: { type: 'string' }
+                                    }
+                                }
+                            }            
+                          },
+                          modules: { 
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {     
+                                    title: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    description: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    imageText: { 
+                                        type: 'object',
+                                        properties: {
+                                            en: { type: 'string' },
+                                            fr: { type: 'string' },
+                                            es: { type: 'string' }
+                                        }            
+                                    },            
+                                    image: { type: 'string' },
+                                    url: { type: 'string' }
+                                }
+                            }            
+                          },
+                        }
+                    }
+                }
+            }
+        },
+        async request => {
+            fastify.log.info(request.body, "[src#api#updateLandingPageOverview] Entering");
+
+            const inputs = { ...request.body };
+            // Update the debate landing page overview
+            const response = await DebatesController.updateLandingPageOverview(inputs);
+
+            return response;
         }
     );
 

@@ -19,7 +19,7 @@ class Modules extends React.Component {
               <thead className="bg-light">
                 <tr>
                   <th scope="col" className="border-0">
-                    #
+                    
                   </th>
                   <th scope="col" className="border-0">
                     Type
@@ -40,7 +40,7 @@ class Modules extends React.Component {
               </thead>
               <tbody>
                   <tr>
-                    <td>1</td>
+                    <td><i class="material-icons">build</i></td>
                     <td>Thread</td>
                     <td>Yes</td>
                     <td>12</td>

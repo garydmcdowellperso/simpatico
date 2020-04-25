@@ -5,7 +5,7 @@ import flowRight from 'lodash/flowRight';
 import { connect } from "react-redux";
 
 import PageTitle from "./common/PageTitle";
-import SmallStatsConfigure from "./common/SmallStatsConfigure";
+import DebateOverview from "./common/DebateOverview";
 import SmallStatsCreate from "./common/SmallStatsCreate";
 
 import nextI18NextInstance from '../../i18n';
@@ -43,18 +43,7 @@ class Configure extends Component {
             </Col>
           {debates.map((debate, idx) => (
             <Col className="col-lg mb-4" key={idx} {...debate.attrs}>
-              <SmallStatsConfigure
-                id={`small-stats-${idx}`}
-                variation="1"
-                chartData={debate.datasets}
-                chartLabels={debate.chartLabels}
-                label={debate.label}
-                value={debate.value}
-                debateID={debate.id}
-                percentage={debate.percentage}
-                increase={debate.increase}
-                decrease={debate.decrease}
-              />
+              <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} />
             </Col>
           ))}
         </Row>

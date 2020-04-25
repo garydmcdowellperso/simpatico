@@ -94,7 +94,7 @@ Discussions.propTypes = {
 };
 
 Discussions.defaultProps = {
-  title: "Discussions",
+  title: "Latest Contributions",
   discussions: [
     {
       id: 1,

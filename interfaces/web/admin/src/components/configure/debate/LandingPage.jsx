@@ -8,8 +8,10 @@ class LandingPage extends React.Component {
   }
 
   render() {
+    const { debate } = this.props;
+
     return (
-      <Link href="/">
+      <Link href={{ pathname: '/admin/landing', query: { slug: debate ? debate.slug : '', name: debate ? debate.name : '' } }}>
         <Card small className="h-100">
             <CardHeader className="border-bottom">
             <h6 className="m-0">Landing Page</h6>

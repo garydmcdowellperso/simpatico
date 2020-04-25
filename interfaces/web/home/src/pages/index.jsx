@@ -1,4 +1,5 @@
 import React from "react";
+import Head from 'next/head'
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -7,14 +8,15 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Header from "../components/Header";
-import MainFeaturedPost from "../components/MainFeaturedPost";
+import Overview from "../components/Overview";
 import FeaturedPost from "../components/FeaturedPost";
 import Main from "../components/Main";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import post1 from "../data/blog-post1.md";
-import post2 from "../data/blog-post2.md";
-import post3 from "../data/blog-post3.md";
+import nextI18NextInstance from '../../i18n';
+
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -22,58 +24,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const sections = [
-  { title: 'Resource Center', url: '#' },
-  { title: 'Analytics', url: '#' },
-];
-
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-  imgText: 'main image description',
-  linkText: 'Continue reading…',
-};
-
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-];
-
-const posts = [post1, post2, post3];
+const posts = [post1];
 
 const sidebar = {
   title: 'About',
   description:
-    'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
-  archives: [
-    { title: 'March 2020', url: '#' },
-    { title: 'February 2020', url: '#' },
-    { title: 'January 2020', url: '#' },
-    { title: 'November 1999', url: '#' },
-    { title: 'October 1999', url: '#' },
-    { title: 'September 1999', url: '#' },
-    { title: 'August 1999', url: '#' },
-    { title: 'July 1999', url: '#' },
-    { title: 'June 1999', url: '#' },
-    { title: 'May 1999', url: '#' },
-    { title: 'April 1999', url: '#' },
-  ],
+    'Get involved',
   social: [
     { name: 'GitHub', icon: GitHubIcon },
     { name: 'Twitter', icon: TwitterIcon },
@@ -81,33 +37,41 @@ const sidebar = {
   ],
 };
 
-export default function Home() {
+export default function Home(debate) {
   const classes = useStyles();
 
+  console.log('debate', debate)
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Header title="Simpatico" sections={sections} />
-        <main>
-          <MainFeaturedPost post={mainFeaturedPost} />
-          <Grid container spacing={4}>
-            {featuredPosts.map(post => (
-              <FeaturedPost key={post.title} post={post} />
-            ))}
-          </Grid>
-          <Grid container spacing={5} className={classes.mainGrid}>
-            <Main title="From the firehose" posts={posts} />
-            <Sidebar
-              title={sidebar.title}
-              description={sidebar.description}
-              archives={sidebar.archives}
-              social={sidebar.social}
-            />
-          </Grid>
-        </main>
-      </Container>
-      <Footer title="Footer" description="Something here to give the footer a purpose!" />
+    <Head>
+      <title>{debate.slug}</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
+    <body>
+      <>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <Header title={debate.slug} sections={debate.sections} />
+          <main>
+            <Overview data={debate.overview} />
+            <Grid container spacing={4}>
+              {debate.modules.map(module => (
+                <FeaturedPost key={module.title[getCurrentLang()]} module={module} />
+              ))}
+            </Grid>
+            <Grid container spacing={5} className={classes.mainGrid}>
+              <Main title="Latest contributon" posts={posts} />
+              <Sidebar
+                title={sidebar.title}
+                description={sidebar.description}
+                social={sidebar.social}
+              />
+            </Grid>
+          </main>
+        </Container>
+        <Footer title="Footer" description="Something here to give the footer a purpose!" />
+      </>
+    </body>
     </>
   );
 }

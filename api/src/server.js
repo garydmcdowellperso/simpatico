@@ -18,6 +18,8 @@ import ping from "./api/ping";
 import post from "./api/post";
 import thread from "./api/thread";
 import debate from "./api/debate";
+import page from "./api/page";
+import stats from "./api/stats";
 
 const singleton = fastify({
   logger: true
@@ -91,6 +93,8 @@ singleton.register(ping, { prefix: "/v1" });
 singleton.register(post, { prefix: "/v1" });
 singleton.register(thread, { prefix: "/v1" });
 singleton.register(debate, { prefix: "/v1" });
+singleton.register(page, { prefix: "/v1" });
+singleton.register(stats, { prefix: "/v1" });
 
 // Hook it all together
 const start = async () => {

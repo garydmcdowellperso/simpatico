@@ -732,7 +732,7 @@ function fetchUserInfoFailure(error) {
 /*!***************************!*\
   !*** ./actions/debate.js ***!
   \***************************/
-/*! exports provided: FETCH_ALLDEBATES_REQUEST, FETCH_ALLDEBATES_SUCCESS, FETCH_ALLDEBATES_FAILURE, CREATE_DEBATE_REQUEST, CREATE_DEBATE_SUCCESS, CREATE_DEBATE_FAILURE, fetchDebatesRequest, fetchDebatesSuccess, fetchDebatesFailure, createDebateRequest, createDebateSuccess, createDebateFailure */
+/*! exports provided: FETCH_ALLDEBATES_REQUEST, FETCH_ALLDEBATES_SUCCESS, FETCH_ALLDEBATES_FAILURE, FETCH_DEBATE_REQUEST, FETCH_DEBATE_SUCCESS, FETCH_DEBATE_FAILURE, CREATE_DEBATE_REQUEST, CREATE_DEBATE_SUCCESS, CREATE_DEBATE_FAILURE, UPDATE_LANDING_PAGE_HEADER_REQUEST, UPDATE_LANDING_PAGE_HEADER_SUCCESS, UPDATE_LANDING_PAGE_HEADER_FAILURE, UPDATE_LANDING_PAGE_OVERVIEW_REQUEST, UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS, UPDATE_LANDING_PAGE_OVERVIEW_FAILURE, UPDATE_LANDING_PAGE_MODULES_REQUEST, UPDATE_LANDING_PAGE_MODULES_SUCCESS, UPDATE_LANDING_PAGE_MODULES_FAILURE, fetchDebatesRequest, fetchDebatesSuccess, fetchDebatesFailure, fetchDebateRequest, fetchDebateSuccess, fetchDebateFailure, createDebateRequest, createDebateSuccess, createDebateFailure, updateLandingPageHeaderRequest, updateLandingPageHeaderSuccess, updateLandingPageHeaderFailure, updateLandingPageOverviewRequest, updateLandingPageOverviewSuccess, updateLandingPageOverviewFailure, updateLandingPageModulesRequest, updateLandingPageModulesSuccess, updateLandingPageModulesFailure */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -740,22 +740,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_REQUEST", function() { return FETCH_ALLDEBATES_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_SUCCESS", function() { return FETCH_ALLDEBATES_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_FAILURE", function() { return FETCH_ALLDEBATES_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_REQUEST", function() { return FETCH_DEBATE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_SUCCESS", function() { return FETCH_DEBATE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_FAILURE", function() { return FETCH_DEBATE_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_REQUEST", function() { return CREATE_DEBATE_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_SUCCESS", function() { return CREATE_DEBATE_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_FAILURE", function() { return CREATE_DEBATE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_REQUEST", function() { return UPDATE_LANDING_PAGE_HEADER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_SUCCESS", function() { return UPDATE_LANDING_PAGE_HEADER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_FAILURE", function() { return UPDATE_LANDING_PAGE_HEADER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_REQUEST", function() { return UPDATE_LANDING_PAGE_OVERVIEW_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS", function() { return UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_FAILURE", function() { return UPDATE_LANDING_PAGE_OVERVIEW_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_MODULES_REQUEST", function() { return UPDATE_LANDING_PAGE_MODULES_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_MODULES_SUCCESS", function() { return UPDATE_LANDING_PAGE_MODULES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_MODULES_FAILURE", function() { return UPDATE_LANDING_PAGE_MODULES_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesRequest", function() { return fetchDebatesRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesSuccess", function() { return fetchDebatesSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesFailure", function() { return fetchDebatesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateRequest", function() { return fetchDebateRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateSuccess", function() { return fetchDebateSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateFailure", function() { return fetchDebateFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateRequest", function() { return createDebateRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateSuccess", function() { return createDebateSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateFailure", function() { return createDebateFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderRequest", function() { return updateLandingPageHeaderRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderSuccess", function() { return updateLandingPageHeaderSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderFailure", function() { return updateLandingPageHeaderFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewRequest", function() { return updateLandingPageOverviewRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewSuccess", function() { return updateLandingPageOverviewSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewFailure", function() { return updateLandingPageOverviewFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageModulesRequest", function() { return updateLandingPageModulesRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageModulesSuccess", function() { return updateLandingPageModulesSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageModulesFailure", function() { return updateLandingPageModulesFailure; });
 var FETCH_ALLDEBATES_REQUEST = "FETCH_ALLDEBATES_REQUEST";
 var FETCH_ALLDEBATES_SUCCESS = "FETCH_ALLDEBATES_SUCCESS";
 var FETCH_ALLDEBATES_FAILURE = "FETCH_ALLDEBATES_FAILURE";
+var FETCH_DEBATE_REQUEST = "FETCH_DEBATE_REQUEST";
+var FETCH_DEBATE_SUCCESS = "FETCH_DEBATE_SUCCESS";
+var FETCH_DEBATE_FAILURE = "FETCH_DEBATE_FAILURE";
 var CREATE_DEBATE_REQUEST = "CREATE_DEBATE_REQUEST";
 var CREATE_DEBATE_SUCCESS = "CREATE_DEBATE_SUCCESS";
 var CREATE_DEBATE_FAILURE = "CREATE_DEBATE_FAILURE";
-function fetchDebatesRequest(thread) {
+var UPDATE_LANDING_PAGE_HEADER_REQUEST = "UPDATE_LANDING_PAGE_HEADER_REQUEST";
+var UPDATE_LANDING_PAGE_HEADER_SUCCESS = "UPDATE_LANDING_PAGE_HEADER_SUCCESS";
+var UPDATE_LANDING_PAGE_HEADER_FAILURE = "UPDATE_LANDING_PAGE_HEADER_FAILURE";
+var UPDATE_LANDING_PAGE_OVERVIEW_REQUEST = "UPDATE_LANDING_PAGE_OVERVIEW_REQUEST";
+var UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS = "UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS";
+var UPDATE_LANDING_PAGE_OVERVIEW_FAILURE = "UPDATE_LANDING_PAGE_OVERVIEW_FAILURE";
+var UPDATE_LANDING_PAGE_MODULES_REQUEST = "UPDATE_LANDING_PAGE_MODULES_REQUEST";
+var UPDATE_LANDING_PAGE_MODULES_SUCCESS = "UPDATE_LANDING_PAGE_MODULES_SUCCESS";
+var UPDATE_LANDING_PAGE_MODULES_FAILURE = "UPDATE_LANDING_PAGE_MODULES_FAILURE";
+function fetchDebatesRequest() {
   return {
     type: FETCH_ALLDEBATES_REQUEST
   };
@@ -769,6 +805,24 @@ function fetchDebatesSuccess(debates) {
 function fetchDebatesFailure(error) {
   return {
     type: FETCH_ALLDEBATES_FAILURE,
+    error: error
+  };
+}
+function fetchDebateRequest(name) {
+  return {
+    type: FETCH_DEBATE_REQUEST,
+    name: name
+  };
+}
+function fetchDebateSuccess(debate) {
+  return {
+    type: FETCH_DEBATE_SUCCESS,
+    debate: debate
+  };
+}
+function fetchDebateFailure(error) {
+  return {
+    type: FETCH_DEBATE_FALIURE,
     error: error
   };
 }
@@ -790,6 +844,229 @@ function createDebateSuccess(debate) {
 function createDebateFailure(error) {
   return {
     type: CREATE_DEBATE_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageHeaderRequest(debateID, header) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_REQUEST,
+    debateID: debateID,
+    header: header
+  };
+}
+function updateLandingPageHeaderSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageHeaderFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageOverviewRequest(debateID, overview) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_REQUEST,
+    debateID: debateID,
+    overview: overview
+  };
+}
+function updateLandingPageOverviewSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageOverviewFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageModulesRequest(debateID, modules) {
+  return {
+    type: UPDATE_LANDING_PAGE_MODULES_REQUEST,
+    debateID: debateID,
+    modules: modules
+  };
+}
+function updateLandingPageModulesSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_MODULES_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageModulesFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_MODULES_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
+/***/ "./actions/pages.js":
+/*!**************************!*\
+  !*** ./actions/pages.js ***!
+  \**************************/
+/*! exports provided: FETCH_ALLPAGES_REQUEST, FETCH_ALLPAGES_SUCCESS, FETCH_ALLPAGES_FAILURE, CREATE_PAGE_REQUEST, CREATE_PAGE_SUCCESS, CREATE_PAGE_FAILURE, FETCH_PAGE_REQUEST, FETCH_PAGE_SUCCESS, FETCH_PAGE_FAILURE, UPDATE_PAGE_REQUEST, UPDATE_PAGE_SUCCESS, UPDATE_PAGE_FAILURE, fetchAllPagesRequest, fetchAllPagesSuccess, fetchAllPagesFailure, createPageRequest, createPageSuccess, createPageFailure, fetchPageRequest, fetchPageSuccess, fetchPageFailure, updatePageRequest, updatePageSuccess, updatePageFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_REQUEST", function() { return FETCH_ALLPAGES_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_SUCCESS", function() { return FETCH_ALLPAGES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FAILURE", function() { return FETCH_ALLPAGES_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_REQUEST", function() { return CREATE_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_SUCCESS", function() { return CREATE_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_FAILURE", function() { return CREATE_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_REQUEST", function() { return FETCH_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_SUCCESS", function() { return FETCH_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_FAILURE", function() { return FETCH_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_REQUEST", function() { return UPDATE_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_SUCCESS", function() { return UPDATE_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_FAILURE", function() { return UPDATE_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesRequest", function() { return fetchAllPagesRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesSuccess", function() { return fetchAllPagesSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesFailure", function() { return fetchAllPagesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageRequest", function() { return createPageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageSuccess", function() { return createPageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageFailure", function() { return createPageFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageRequest", function() { return fetchPageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageSuccess", function() { return fetchPageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageFailure", function() { return fetchPageFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageRequest", function() { return updatePageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageSuccess", function() { return updatePageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageFailure", function() { return updatePageFailure; });
+var FETCH_ALLPAGES_REQUEST = "FETCH_ALLPAGES_REQUEST";
+var FETCH_ALLPAGES_SUCCESS = "FETCH_ALLPAGES_SUCCESS";
+var FETCH_ALLPAGES_FAILURE = "FETCH_ALLPAGES_FAILURE";
+var CREATE_PAGE_REQUEST = "CREATE_PAGE_REQUEST";
+var CREATE_PAGE_SUCCESS = "CREATE_PAGE_SUCCESS";
+var CREATE_PAGE_FAILURE = "CREATE_PAGE_FAILURE";
+var FETCH_PAGE_REQUEST = "FETCH_PAGE_REQUEST";
+var FETCH_PAGE_SUCCESS = "FETCH_PAGE_SUCCESS";
+var FETCH_PAGE_FAILURE = "FETCH_PAGE_FAILURE";
+var UPDATE_PAGE_REQUEST = "UPDATE_PAGE_REQUEST";
+var UPDATE_PAGE_SUCCESS = "UPDATE_PAGE_SUCCESS";
+var UPDATE_PAGE_FAILURE = "UPDATE_PAGE_FAILURE";
+function fetchAllPagesRequest(id) {
+  return {
+    type: FETCH_ALLPAGES_REQUEST,
+    id: id
+  };
+}
+function fetchAllPagesSuccess(pages) {
+  return {
+    type: FETCH_ALLPAGES_SUCCESS,
+    pages: pages
+  };
+}
+function fetchAllPagesFailure(error) {
+  return {
+    type: FETCH_ALLPAGES_FAILURE,
+    error: error
+  };
+}
+function createPageRequest(name, debateId, pageType, url, languages) {
+  return {
+    type: CREATE_PAGE_REQUEST,
+    name: name,
+    debateId: debateId,
+    pageType: pageType,
+    url: url,
+    languages: languages
+  };
+}
+function createPageSuccess(pages) {
+  return {
+    type: CREATE_PAGE_SUCCESS,
+    pages: pages
+  };
+}
+function createPageFailure(error) {
+  return {
+    type: CREATE_PAGE_FAILURE,
+    error: error
+  };
+}
+function fetchPageRequest(id) {
+  return {
+    type: FETCH_PAGE_REQUEST,
+    id: id
+  };
+}
+function fetchPageSuccess(page) {
+  return {
+    type: FETCH_PAGE_SUCCESS,
+    page: page
+  };
+}
+function fetchPageFailure(error) {
+  return {
+    type: FETCH_PAGE_FAILURE,
+    error: error
+  };
+}
+function updatePageRequest(name, id, pageType, url, languages) {
+  return {
+    type: UPDATE_PAGE_REQUEST,
+    name: name,
+    id: id,
+    pageType: pageType,
+    url: url,
+    languages: languages
+  };
+}
+function updatePageSuccess(page) {
+  return {
+    type: UPDATE_PAGE_SUCCESS,
+    page: page
+  };
+}
+function updatePageFailure(error) {
+  return {
+    type: UPDATE_PAGE_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
+/***/ "./actions/stats.js":
+/*!**************************!*\
+  !*** ./actions/stats.js ***!
+  \**************************/
+/*! exports provided: FETCH_STATS_REQUEST, FETCH_STATS_SUCCESS, FETCH_STATS_FAILURE, fetchStatsRequest, fetchStatsSuccess, fetchStatsFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_REQUEST", function() { return FETCH_STATS_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_SUCCESS", function() { return FETCH_STATS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_FAILURE", function() { return FETCH_STATS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsRequest", function() { return fetchStatsRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsSuccess", function() { return fetchStatsSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsFailure", function() { return fetchStatsFailure; });
+var FETCH_STATS_REQUEST = "FETCH_STATS_REQUEST";
+var FETCH_STATS_SUCCESS = "FETCH_STATS_SUCCESS";
+var FETCH_STATS_FAILURE = "FETCH_STATS_FAILURE";
+function fetchStatsRequest() {
+  return {
+    type: FETCH_STATS_REQUEST
+  };
+}
+function fetchStatsSuccess(stats) {
+  return {
+    type: FETCH_STATS_SUCCESS,
+    stats: stats
+  };
+}
+function fetchStatsFailure(error) {
+  return {
+    type: FETCH_STATS_FAILURE,
     error: error
   };
 }
@@ -1155,6 +1432,27 @@ function debate() {
         debates: []
       });
 
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
     case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_REQUEST"]:
       return _objectSpread({}, state, {
         processing: true,
@@ -1174,6 +1472,48 @@ function debate() {
         //processing: false,
         error: action.error,
         debate: []
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
       });
 
     default:
@@ -1196,14 +1536,201 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./reducers/auth.js");
 /* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./reducers/debate.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages */ "./reducers/pages.js");
+/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stats */ "./reducers/stats.js");
+
+
 
 
 
 var allReducers = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   auth: _auth__WEBPACK_IMPORTED_MODULE_1__["default"],
-  debate: _debate__WEBPACK_IMPORTED_MODULE_2__["default"]
+  debate: _debate__WEBPACK_IMPORTED_MODULE_2__["default"],
+  pages: _pages__WEBPACK_IMPORTED_MODULE_3__["default"],
+  stats: _stats__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (allReducers);
+
+/***/ }),
+
+/***/ "./reducers/pages.js":
+/*!***************************!*\
+  !*** ./reducers/pages.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pages; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_pages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/pages */ "./actions/pages.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  pages: [],
+  processing: false,
+  error: "",
+  page: null,
+  processing_update: false
+};
+function pages() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        pages: action.pages
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        pages: []
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        page: action.page
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        page: action.page
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing_update: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing_update: false,
+        error: "",
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing_update: false,
+        error: action.error,
+        page: null
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./reducers/stats.js":
+/*!***************************!*\
+  !*** ./reducers/stats.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return stats; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_stats__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/stats */ "./actions/stats.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  stats: [],
+  processing: false,
+  error: ""
+};
+function stats() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        stats: action.stats
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        stats: []
+      });
+
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
@@ -1279,6 +1806,15 @@ function* fetchAllDebates() {
   yield r;
 }
 
+function* fetchDebate(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchDebate?name=".concat(action.name)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebateSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebateFailure"])(err));
+  });
+  yield r;
+}
+
 function* createDebate(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createDebate", JSON.stringify({
     name: action.name,
@@ -1293,9 +1829,36 @@ function* createDebate(action) {
   yield r;
 }
 
+function* updateLandingPageHeader(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateLandingPageHeader", JSON.stringify({
+    debateID: action.debateID,
+    header: action.header
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageHeaderSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageHeaderFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateLandingPageOverview(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateLandingPageOverview", JSON.stringify({
+    debateID: action.debateID,
+    overview: action.overview
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageOverviewSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageOverviewFailure"])(err));
+  });
+  yield r;
+}
+
 function* authSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_REQUEST"], fetchDebate);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLDEBATES_REQUEST"], fetchAllDebates);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_REQUEST"], createDebate);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_REQUEST"], updateLandingPageHeader);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_REQUEST"], updateLandingPageOverview);
 }
 
 /***/ }),
@@ -1313,12 +1876,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./sagas/auth.js");
 /* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./sagas/debate.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages */ "./sagas/pages.js");
+/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stats */ "./sagas/stats.js");
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function* () {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_debate__WEBPACK_IMPORTED_MODULE_2__["default"])]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_debate__WEBPACK_IMPORTED_MODULE_2__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_pages__WEBPACK_IMPORTED_MODULE_3__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_stats__WEBPACK_IMPORTED_MODULE_4__["default"])]);
 });
+
+/***/ }),
+
+/***/ "./sagas/pages.js":
+/*!************************!*\
+  !*** ./sagas/pages.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pagesSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_pages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/pages */ "./actions/pages.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchAllPages(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllPages?debateId=".concat(action.id)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesFailure"])(err));
+  });
+  yield r;
+}
+
+function* createPage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createPage", JSON.stringify({
+    name: action.name,
+    type: action.pageType,
+    debateId: action.debateId,
+    url: action.url,
+    languages: action.languages
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["createPageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["createPageFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchPage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchPage?id=".concat(action.id)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchPageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchPageFailure"])(err));
+  });
+  yield r;
+}
+
+function* updatePage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updatePage", JSON.stringify({
+    name: action.name,
+    type: action.pageType,
+    id: action.id,
+    url: action.url,
+    languages: action.languages
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["updatePageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["updatePageFailure"])(err));
+  });
+  yield r;
+}
+
+function* pagesSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_REQUEST"], fetchAllPages);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_REQUEST"], createPage);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_REQUEST"], fetchPage);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_REQUEST"], updatePage);
+}
+
+/***/ }),
+
+/***/ "./sagas/stats.js":
+/*!************************!*\
+  !*** ./sagas/stats.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return statsSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_stats__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/stats */ "./actions/stats.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchStats() {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchStats").then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchStatsSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchStatsFailure"])(err));
+  });
+  yield r;
+}
+
+function* statsSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_REQUEST"], fetchStats);
+}
 
 /***/ }),
 

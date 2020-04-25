@@ -3,10 +3,13 @@ import moment from 'moment';
 const _serializeSingleDebate = debate => {
   return {
     id: debate.id,
-    name: debate.title,
+    name: debate.name,
     slug: debate.slug,
     debateType: debate.debateType,
     languages: debate.languages,
+    header: debate.header,
+    overview: debate.overview,
+    modules: debate.modules,
     deleted: debate.deleted
   };
 };
