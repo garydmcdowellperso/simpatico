@@ -26,6 +26,10 @@ class PageRepository {
   findByDebateId(debateId) {
     return this.repository.findByDebateId(debateId);
   }
+
+  find() {
+    return this.repository.find();
+  }
 }
 
 export default PageRepository;

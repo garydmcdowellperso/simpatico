@@ -16,7 +16,7 @@ import {
 import { get, post, putApi } from "../lib/api";
 
 function* fetchAllPages(action) {
-  const r = yield get(`v1/fetchAllPages?debateId=${action.id}`)
+  const r = yield get(`v1/fetchAllPages`)
     .then(json => put(fetchAllPagesSuccess(json)))
     .catch(err => put(fetchAllPagesFailure(err)));
   yield r;

@@ -7,7 +7,7 @@ import { withRouter } from "next/router";
 
 import PageTitle from "./common/PageTitle";
 import LandingPage from "./configure/debate/LandingPage";
-import Modules from "./configure/debate/Modules";
+import Themes from "./configure/debate/Themes";
 import GeneralInfo from "./configure/debate/GeneralInfo";
 import Pages from "./configure/debate/Pages";
 
@@ -45,7 +45,7 @@ class Debate extends Component {
         </Row>
         <Row>
           <Col lg="6" md="6" sm="6" className="mb-4">
-            <Modules debate={debate} />
+            <Themes debate={debate} />
           </Col>
           <Col lg="6" md="6" sm="6" className="mb-4">
               <Pages debate={debate} />

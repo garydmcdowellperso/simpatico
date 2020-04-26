@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Header from "./configure/landing/Header";
 import Overview from "./configure/landing/Overview";
-import Modules from "./configure/landing/Modules";
+import Themes from "./configure/landing/Themes";
 import Footer from "./configure/landing/Footer";
 
 import nextI18NextInstance from '../../i18n';
@@ -47,7 +47,7 @@ class Landing extends Component {
         <Row>
           <Col lg="12" md="12" sm="12" className="mb-3">
             {debate ?
-              (<Modules debate={debate} />) : null}
+              (<Themes debate={debate} />) : null}
           </Col>
         </Row>            
         <Row>

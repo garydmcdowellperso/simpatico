@@ -17,7 +17,7 @@ function Pages(props) {
 
   useEffect(() => { // Fire once, get pages for debate
     if (debate) {
-      dispatch(fetchAllPagesRequest(debate.id));
+      dispatch(fetchAllPagesRequest());
     }
   }, [debate]);
 

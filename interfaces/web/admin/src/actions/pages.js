@@ -14,10 +14,9 @@ export const UPDATE_PAGE_REQUEST = "UPDATE_PAGE_REQUEST";
 export const UPDATE_PAGE_SUCCESS = "UPDATE_PAGE_SUCCESS";
 export const UPDATE_PAGE_FAILURE = "UPDATE_PAGE_FAILURE";
 
-export function fetchAllPagesRequest(id) {
+export function fetchAllPagesRequest() {
   return {
-    type: FETCH_ALLPAGES_REQUEST,
-    id
+    type: FETCH_ALLPAGES_REQUEST
   };
 }
 

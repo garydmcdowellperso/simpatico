@@ -1,7 +1,7 @@
-async function FetchAllPages(debateId, 
+async function fetchAllPages( 
   { pageRepository }
 ) {
-  return pageRepository.findByDebateId(debateId);
+  return pageRepository.find();
 }
 
-export default FetchAllPages;
+export default fetchAllPages;

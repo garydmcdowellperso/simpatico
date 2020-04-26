@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "shards-react";
 import { Button, Icon } from 'semantic-ui-react'
 import Link from 'next/link'
 
-class Modules extends React.Component {
+class Themes extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -61,4 +61,4 @@ class Modules extends React.Component {
   }
 }
 
-export default Modules;
+export default Themes;

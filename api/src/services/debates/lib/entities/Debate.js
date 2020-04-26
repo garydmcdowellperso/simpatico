@@ -7,7 +7,7 @@ class Debate {
     this.languages = languages;
     this.header = header;
     this.overview = overview;
-    this.modules = modules;
+    this.themes = themes;
     this.deleted = deleted;
   }
 }

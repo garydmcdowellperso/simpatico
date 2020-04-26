@@ -20,6 +20,7 @@ import thread from "./api/thread";
 import debate from "./api/debate";
 import page from "./api/page";
 import stats from "./api/stats";
+import module from "./api/module";
 
 const singleton = fastify({
   logger: true
@@ -95,6 +96,7 @@ singleton.register(thread, { prefix: "/v1" });
 singleton.register(debate, { prefix: "/v1" });
 singleton.register(page, { prefix: "/v1" });
 singleton.register(stats, { prefix: "/v1" });
+singleton.register(module, { prefix: "/v1" });
 
 // Hook it all together
 const start = async () => {

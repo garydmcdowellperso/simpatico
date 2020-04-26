@@ -9,7 +9,7 @@ import PageController from "../../services/page/lib/controllers/PageController";
  */
 const routes = async fastify => {
     fastify.get(
-        "/fetchAllPages",
+        "/fetchAllPagesForDebate",
         {
             config,
             schema: {
@@ -21,13 +21,31 @@ const routes = async fastify => {
             }
         },
         async request => {
-            fastify.log.info("[src#api#fetchAllPages] Entering");
+            fastify.log.info("[src#api#fetchAllPagesForDebate] Entering");
 
             const inputs = {
                 debateId: request.query.debateId
             };
 
-            const response = await PageController.fetchAllPages(inputs);
+            const response = await PageController.fetchAllPagesForDebate(inputs);
+
+            return response;
+        }
+    );
+
+    fastify.get(
+        "/fetchAllPages",
+        {
+            config,
+            schema: {
+                description: "fetches all the pages",
+                tags: ["api"],
+            }
+        },
+        async request => {
+            fastify.log.info("[src#api#fetchAllPages] Entering");
+
+            const response = await PageController.fetchAllPages();
 
             return response;
         }

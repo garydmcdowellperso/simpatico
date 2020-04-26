@@ -61,6 +61,11 @@ class PageRepositoryMongo {
   findByDebateId(debateId) {
     return this.collection.find({ debateId }).toArray();
   }
+
+  find() {
+    return this.collection.find({}).toArray();
+  }
+
 }
 
 export default PageRepositoryMongo;

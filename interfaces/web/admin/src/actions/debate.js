@@ -18,9 +18,9 @@ export const UPDATE_LANDING_PAGE_OVERVIEW_REQUEST = "UPDATE_LANDING_PAGE_OVERVIE
 export const UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS = "UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS";
 export const UPDATE_LANDING_PAGE_OVERVIEW_FAILURE = "UPDATE_LANDING_PAGE_OVERVIEW_FAILURE";
 
-export const UPDATE_LANDING_PAGE_MODULES_REQUEST = "UPDATE_LANDING_PAGE_MODULES_REQUEST";
-export const UPDATE_LANDING_PAGE_MODULES_SUCCESS = "UPDATE_LANDING_PAGE_MODULES_SUCCESS";
-export const UPDATE_LANDING_PAGE_MODULES_FAILURE = "UPDATE_LANDING_PAGE_MODULES_FAILURE";
+export const UPDATE_LANDING_PAGE_THEMES_REQUEST = "UPDATE_LANDING_PAGE_THEMES_REQUEST";
+export const UPDATE_LANDING_PAGE_THEMES_SUCCESS = "UPDATE_LANDING_PAGE_THEMES_SUCCESS";
+export const UPDATE_LANDING_PAGE_THEMES_FAILURE = "UPDATE_LANDING_PAGE_THEMES_FAILURE";
 
 export function fetchDebatesRequest() {
   return {
@@ -131,24 +131,24 @@ export function updateLandingPageOverviewFailure(error) {
   };
 }
 
-export function updateLandingPageModulesRequest(debateID, modules) {
+export function updateLandingPageThemesRequest(debateID, themes) {
   return {
-    type: UPDATE_LANDING_PAGE_MODULES_REQUEST,
+    type: UPDATE_LANDING_PAGE_THEMES_REQUEST,
     debateID,
-    modules
+    themes
   };
 }
 
-export function updateLandingPageModulesSuccess(debate) {
+export function updateLandingPageThemesSuccess(debate) {
   return {
-    type: UPDATE_LANDING_PAGE_MODULES_SUCCESS,
+    type: UPDATE_LANDING_PAGE_THEMES_SUCCESS,
     debate
   };
 }
 
-export function updateLandingPageModulesFailure(error) {
+export function updateLandingPageThemesFailure(error) {
   return {
-    type: UPDATE_LANDING_PAGE_MODULES_FAILURE,
+    type: UPDATE_LANDING_PAGE_THEMES_FAILURE,
     error
   };
 }

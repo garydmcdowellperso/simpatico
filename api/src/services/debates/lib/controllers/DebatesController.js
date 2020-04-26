@@ -4,6 +4,7 @@ import FetchDebate from "../use_cases/FetchDebate";
 import FetchAllDebates from "../use_cases/FetchAllDebates";
 import UpdateLandingPageHeader from "../use_cases/UpdateLandingPageHeader";
 import UpdateLandingPageOverview from "../use_cases/UpdateLandingPageOverview";
+import UpdateLandingPageThemes from "../use_cases/UpdateLandingPageThemes";
 
 import DebateRepository from "../repositories/DebateRepository";
 
@@ -85,10 +86,28 @@ async function updateLandingPageOverview(inputs) {
   return debateSerializer.serialize(response);
 }
 
+async function updateLandingPageThemes(inputs) {
+  // Inputs
+  const { debateID, themes } = inputs;
+
+  // Treatment
+  const response = await UpdateLandingPageThemes(debateID, themes, {
+    debateRepository
+  });
+
+  if (!response) {
+    return {};
+  }
+
+  const debateSerializer = new DebateSerializer();
+  return debateSerializer.serialize(response);
+}
+
 module.exports = {
   createDebate,
   fetchDebate,
   fetchAllDebates,
   updateLandingPageHeader,
-  updateLandingPageOverview
+  updateLandingPageOverview,
+  updateLandingPageThemes
 };

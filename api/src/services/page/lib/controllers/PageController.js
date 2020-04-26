@@ -1,7 +1,8 @@
 import PageSerializer from "../serializers/PageSerializer";
-import FetchAllPages from "../use_cases/FetchAllPages";
 import CreatePage from "../use_cases/CreatePage";
 import FetchPage from "../use_cases/FetchPage";
+import FetchAllPages from "../use_cases/FetchAllPages";
+import FetchAllPagesForDebate from "../use_cases/FetchAllPagesForDebate";
 import UpdatePage from "../use_cases/UpdatePage";
 import PageRepository from "../repositories/PageRepository";
 
@@ -9,11 +10,9 @@ import PageRepositoryMongo from "../interface_adapters/storage/PageRepositoryMon
 
 const pageRepository = new PageRepository(new PageRepositoryMongo());
 
-async function fetchAllPages(inputs) {
-  const { debateId } = inputs
-
+async function fetchAllPages() {
   // Treatment
-  const response = await FetchAllPages(debateId, {
+  const response = await FetchAllPages({
     pageRepository
   });
 
@@ -21,7 +20,19 @@ async function fetchAllPages(inputs) {
   return pagesSerializer.serialize(response);
 }
 
-async function fetchPage(inputs) {
+async function fetchAllPagesForDebate(inputs) {
+  const { debateId } = inputs
+
+  // Treatment
+  const response = await FetchAllPagesForDebate(debateId, {
+    pageRepository
+  });
+
+  const pagesSerializer = new PageSerializer();
+  return pagesSerializer.serialize(response);
+}
+
+async function fetchPage(input) {
   const { id } = inputs
 
   // Treatment
@@ -61,6 +72,7 @@ async function updatePage(inputs) {
 
 module.exports = {
   fetchAllPages,
+  fetchAllPagesForDebate,
   createPage,
   fetchPage,
   updatePage

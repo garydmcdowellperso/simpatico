@@ -9,7 +9,7 @@ const _serializeSingleDebate = debate => {
     languages: debate.languages,
     header: debate.header,
     overview: debate.overview,
-    modules: debate.modules,
+    themes: debate.themes,
     deleted: debate.deleted
   };
 };

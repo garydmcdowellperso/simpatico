@@ -103,7 +103,7 @@ export default function Header(props) {
 
     useEffect(() => { // Fire once, get pages for debate
         if (debate) {
-            dispatch(fetchAllPagesRequest(debate.id));
+            dispatch(fetchAllPagesRequest());
 
             const newPlaceHolderPage = [];
             const newPlaceHolderNameEnglish = [];
@@ -130,7 +130,6 @@ export default function Header(props) {
         }
     }, [debate]);
     
-
     return (
     <>
       <Toolbar className={classes.toolbar}>
@@ -167,6 +166,7 @@ export default function Header(props) {
         {sections.map((section, idx) => (
             <>
             <Typography
+                key={idx}
                 component="h2"
                 variant="body2"
                 color="inherit"

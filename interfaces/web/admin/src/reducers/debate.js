@@ -14,6 +14,9 @@ import {
   UPDATE_LANDING_PAGE_OVERVIEW_REQUEST,
   UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS,
   UPDATE_LANDING_PAGE_OVERVIEW_FAILURE,
+  UPDATE_LANDING_PAGE_THEMES_REQUEST,
+  UPDATE_LANDING_PAGE_THEMES_SUCCESS,
+  UPDATE_LANDING_PAGE_THEMES_FAILURE,
 } from "../actions/debate";
 
 const initialState = {
@@ -124,6 +127,27 @@ export default function debate(state = initialState, action) {
         debate: action.debate
       };
     case UPDATE_LANDING_PAGE_OVERVIEW_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        debate: null
+      };
+    case UPDATE_LANDING_PAGE_THEMES_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case UPDATE_LANDING_PAGE_THEMES_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
+      };
+    case UPDATE_LANDING_PAGE_THEMES_FAILURE:
       return {
         ...state,
         processing: false,
