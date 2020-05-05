@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
+import Link from 'next/link'
 
 import nextI18NextInstance from '../../i18n';
 
@@ -59,7 +59,8 @@ export default function Overview(props) {
             <Typography variant="h5" color="inherit" paragraph>
               {overview.description[getCurrentLang()]}
             </Typography>
-            <Link variant="subtitle1" href="#">
+            <Link 
+              href={{ pathname: 'cmspage', query: { page: overview.page } }}>
               {overview.linkText[getCurrentLang()]}
             </Link>
           </div>

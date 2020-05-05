@@ -7,7 +7,7 @@ import { withRouter } from "next/router";
 
 import PageTitle from "./common/PageTitle";
 import LandingPage from "./configure/debate/LandingPage";
-import Themes from "./configure/debate/Themes";
+import Modules from "./configure/debate/Modules";
 import GeneralInfo from "./configure/debate/GeneralInfo";
 import Pages from "./configure/debate/Pages";
 
@@ -21,7 +21,6 @@ class Debate extends Component {
     const { dispatch } = this.props;    
     const { router: { query: { name } } } = this.props;
 
-    console.log('name', name)
     dispatch(
       fetchDebateRequest(name)
     );
@@ -45,10 +44,10 @@ class Debate extends Component {
         </Row>
         <Row>
           <Col lg="6" md="6" sm="6" className="mb-4">
-            <Themes debate={debate} />
+            <Modules debate={debate} />
           </Col>
           <Col lg="6" md="6" sm="6" className="mb-4">
-              <Pages debate={debate} />
+            <Pages debate={debate} />
           </Col>
         </Row>
         <Row>

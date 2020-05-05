@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import nextI18NextInstance from '../../i18n';
 
@@ -30,17 +30,39 @@ const useStyles = makeStyles(theme => ({
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0
+  },
+  linkSelected: {
+    textDecoration: 'none',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontWeight: 400,
+    lineHeight: '1.5',
+    letterSpacing: '0.00938em',
+    color: '#007bff'
+  },
+  link: {
+    textDecoration: 'none',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontWeight: 400,
+    lineHeight: '1.5',
+    letterSpacing: '0.00938em'
   }
 }));
 
 export default function Header(props) {
   const [firstNameDisplay, setFirstNameDisplay] = useState();
   const classes = useStyles();
-  const { sections, title } = props;
+
+  const { header, title, selected } = props;
+  
+  console.log('header', header.sections)
+  
   const dispatch = useDispatch();
   let firstNameLocalStorage;
 
-  console.log('getCurrentLang', getCurrentLang())
   const { firstName, lastName, id, isValidToken, token } = useSelector(state => state.auth);
 
   if (typeof window !== 'undefined') {
@@ -84,17 +106,19 @@ export default function Header(props) {
   return (
     <>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Share</Button>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
+        {header.share ? (
+          <>
+          <Button size="small">Share</Button>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            {title}
+          </Typography></> ) : null }
         <IconButton>
           <SearchIcon />
         </IconButton>
@@ -115,16 +139,17 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map((section, idx) => (
+        <Link
+          href="/"
+        >
+          <a className={selected === 'home' ? classes.linkSelected : classes.link}>Home</a>
+        </Link>
+        {header.sections.map((section, idx) => (
           <Link
-            color="inherit"
-            noWrap
             key={idx}
-            variant="body2"
-            href={section.url}
-            className={classes.toolbarLink}
+            href={{ pathname: 'cmspage', query: { page: section.page, title: section.languages[getCurrentLang()] } }}
           >
-            {section.title[getCurrentLang()]}
+            <a className={selected === section.languages[getCurrentLang()] ? classes.linkSelected : classes.link}>{section.languages[getCurrentLang()]}</a>
           </Link>
         ))}
       </Toolbar>

@@ -93,46 +93,14 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "../config.js":
-/*!********************!*\
-  !*** ../config.js ***!
-  \********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  api: {
-    host: process.env.API_HOST || 'http://localhost:5000'
-  },
-  server: {
-    host: process.env.SERVER_HOST || 'http://localhost',
-    port: parseInt(process.env.PORT, 10) || 1000
-  },
-  i18n: {
-    languages: process.env.LANGUAGES || ['en', 'es', 'fr'],
-    defaultLanguage: process.env.DEFAULT_LANGUAGE || 'fr',
-  },
-});
-
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js":
-/*!*******************************************************************************!*\
-  !*** ../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js ***!
-  \*******************************************************************************/
+/***/ "../next-server/lib/utils":
+/*!*****************************************************!*\
+  !*** external "next/dist/next-server/lib/utils.js" ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
+module.exports = require("next/dist/next-server/lib/utils.js");
 
 /***/ }),
 
@@ -353,141 +321,6 @@ module.exports = __webpack_require__(/*! ./dist/pages/_app */ "../node_modules/n
 
 /***/ }),
 
-/***/ "../node_modules/next/dist/next-server/lib/utils.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/next/dist/next-server/lib/utils.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-const url_1 = __webpack_require__(/*! url */ "url");
-/**
- * Utils
- */
-
-
-function execOnce(fn) {
-  let used = false;
-  let result = null;
-  return (...args) => {
-    if (!used) {
-      used = true;
-      result = fn.apply(this, args);
-    }
-
-    return result;
-  };
-}
-
-exports.execOnce = execOnce;
-
-function getLocationOrigin() {
-  const {
-    protocol,
-    hostname,
-    port
-  } = window.location;
-  return `${protocol}//${hostname}${port ? ':' + port : ''}`;
-}
-
-exports.getLocationOrigin = getLocationOrigin;
-
-function getURL() {
-  const {
-    href
-  } = window.location;
-  const origin = getLocationOrigin();
-  return href.substring(origin.length);
-}
-
-exports.getURL = getURL;
-
-function getDisplayName(Component) {
-  return typeof Component === 'string' ? Component : Component.displayName || Component.name || 'Unknown';
-}
-
-exports.getDisplayName = getDisplayName;
-
-function isResSent(res) {
-  return res.finished || res.headersSent;
-}
-
-exports.isResSent = isResSent;
-
-async function loadGetInitialProps(App, ctx) {
-  var _a;
-
-  if (true) {
-    if ((_a = App.prototype) === null || _a === void 0 ? void 0 : _a.getInitialProps) {
-      const message = `"${getDisplayName(App)}.getInitialProps()" is defined as an instance method - visit https://err.sh/zeit/next.js/get-initial-props-as-an-instance-method for more information.`;
-      throw new Error(message);
-    }
-  } // when called from _app `ctx` is nested in `ctx`
-
-
-  const res = ctx.res || ctx.ctx && ctx.ctx.res;
-
-  if (!App.getInitialProps) {
-    if (ctx.ctx && ctx.Component) {
-      // @ts-ignore pageProps default
-      return {
-        pageProps: await loadGetInitialProps(ctx.Component, ctx.ctx)
-      };
-    }
-
-    return {};
-  }
-
-  const props = await App.getInitialProps(ctx);
-
-  if (res && isResSent(res)) {
-    return props;
-  }
-
-  if (!props) {
-    const message = `"${getDisplayName(App)}.getInitialProps()" should resolve to an object. But found "${props}" instead.`;
-    throw new Error(message);
-  }
-
-  if (true) {
-    if (Object.keys(props).length === 0 && !ctx.ctx) {
-      console.warn(`${getDisplayName(App)} returned an empty object from \`getInitialProps\`. This de-optimizes and prevents automatic static optimization. https://err.sh/zeit/next.js/empty-object-getInitialProps`);
-    }
-  }
-
-  return props;
-}
-
-exports.loadGetInitialProps = loadGetInitialProps;
-exports.urlObjectKeys = ['auth', 'hash', 'host', 'hostname', 'href', 'path', 'pathname', 'port', 'protocol', 'query', 'search', 'slashes'];
-
-function formatWithValidation(url, options) {
-  if (true) {
-    if (url !== null && typeof url === 'object') {
-      Object.keys(url).forEach(key => {
-        if (exports.urlObjectKeys.indexOf(key) === -1) {
-          console.warn(`Unknown key passed via urlObject into url.format: ${key}`);
-        }
-      });
-    }
-  }
-
-  return url_1.format(url, options);
-}
-
-exports.formatWithValidation = formatWithValidation;
-exports.SP = typeof performance !== 'undefined';
-exports.ST = exports.SP && typeof performance.mark === 'function' && typeof performance.measure === 'function';
-
-/***/ }),
-
 /***/ "../node_modules/next/dist/pages/_app.js":
 /*!***********************************************!*\
   !*** ../node_modules/next/dist/pages/_app.js ***!
@@ -498,7 +331,7 @@ exports.ST = exports.SP && typeof performance.mark === 'function' && typeof perf
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/next/node_modules/@babel/runtime/helpers/interopRequireDefault.js");
 
 exports.__esModule = true;
 exports.Container = Container;
@@ -507,7 +340,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
 
-var _utils = __webpack_require__(/*! ../next-server/lib/utils */ "../node_modules/next/dist/next-server/lib/utils.js");
+var _utils = __webpack_require__(/*! ../next-server/lib/utils */ "../next-server/lib/utils");
 
 exports.AppInitialProps = _utils.AppInitialProps;
 /**
@@ -538,12 +371,15 @@ class App extends _react.default.Component {
     var {
       router,
       Component,
-      pageProps
+      pageProps,
+      __N_SSG,
+      __N_SSP
     } = this.props;
-    var url = createUrl(router);
-    return _react.default.createElement(Component, Object.assign({}, pageProps, {
-      url: url
-    }));
+    return _react.default.createElement(Component, Object.assign({}, pageProps, // we don't add the legacy URL prop if it's using non-legacy
+    // methods like getStaticProps and getServerSideProps
+    !(__N_SSG || __N_SSP) ? {
+      url: createUrl(router)
+    } : {}));
   }
 
 }
@@ -621,6 +457,23 @@ function createUrl(router) {
 
 /***/ }),
 
+/***/ "../node_modules/next/node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!*****************************************************************************************!*\
+  !*** ../node_modules/next/node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
 /***/ "./actions/auth.js":
 /*!*************************!*\
   !*** ./actions/auth.js ***!
@@ -681,6 +534,351 @@ function fetchUserInfoSuccess(json) {
 function fetchUserInfoFailure(error) {
   return {
     type: FETCH_USER_INFO_REQUEST_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
+/***/ "./actions/debate.js":
+/*!***************************!*\
+  !*** ./actions/debate.js ***!
+  \***************************/
+/*! exports provided: FETCH_ALLDEBATES_REQUEST, FETCH_ALLDEBATES_SUCCESS, FETCH_ALLDEBATES_FAILURE, FETCH_DEBATE_REQUEST, FETCH_DEBATE_SUCCESS, FETCH_DEBATE_FAILURE, CREATE_DEBATE_REQUEST, CREATE_DEBATE_SUCCESS, CREATE_DEBATE_FAILURE, UPDATE_LANDING_PAGE_HEADER_REQUEST, UPDATE_LANDING_PAGE_HEADER_SUCCESS, UPDATE_LANDING_PAGE_HEADER_FAILURE, UPDATE_LANDING_PAGE_OVERVIEW_REQUEST, UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS, UPDATE_LANDING_PAGE_OVERVIEW_FAILURE, UPDATE_LANDING_PAGE_THEMES_REQUEST, UPDATE_LANDING_PAGE_THEMES_SUCCESS, UPDATE_LANDING_PAGE_THEMES_FAILURE, fetchDebatesRequest, fetchDebatesSuccess, fetchDebatesFailure, fetchDebateRequest, fetchDebateSuccess, fetchDebateFailure, createDebateRequest, createDebateSuccess, createDebateFailure, updateLandingPageHeaderRequest, updateLandingPageHeaderSuccess, updateLandingPageHeaderFailure, updateLandingPageOverviewRequest, updateLandingPageOverviewSuccess, updateLandingPageOverviewFailure, updateLandingPageThemesRequest, updateLandingPageThemesSuccess, updateLandingPageThemesFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_REQUEST", function() { return FETCH_ALLDEBATES_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_SUCCESS", function() { return FETCH_ALLDEBATES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLDEBATES_FAILURE", function() { return FETCH_ALLDEBATES_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_REQUEST", function() { return FETCH_DEBATE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_SUCCESS", function() { return FETCH_DEBATE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_DEBATE_FAILURE", function() { return FETCH_DEBATE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_REQUEST", function() { return CREATE_DEBATE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_SUCCESS", function() { return CREATE_DEBATE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_DEBATE_FAILURE", function() { return CREATE_DEBATE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_REQUEST", function() { return UPDATE_LANDING_PAGE_HEADER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_SUCCESS", function() { return UPDATE_LANDING_PAGE_HEADER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_HEADER_FAILURE", function() { return UPDATE_LANDING_PAGE_HEADER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_REQUEST", function() { return UPDATE_LANDING_PAGE_OVERVIEW_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS", function() { return UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_OVERVIEW_FAILURE", function() { return UPDATE_LANDING_PAGE_OVERVIEW_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_THEMES_REQUEST", function() { return UPDATE_LANDING_PAGE_THEMES_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_THEMES_SUCCESS", function() { return UPDATE_LANDING_PAGE_THEMES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LANDING_PAGE_THEMES_FAILURE", function() { return UPDATE_LANDING_PAGE_THEMES_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesRequest", function() { return fetchDebatesRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesSuccess", function() { return fetchDebatesSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebatesFailure", function() { return fetchDebatesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateRequest", function() { return fetchDebateRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateSuccess", function() { return fetchDebateSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchDebateFailure", function() { return fetchDebateFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateRequest", function() { return createDebateRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateSuccess", function() { return createDebateSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDebateFailure", function() { return createDebateFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderRequest", function() { return updateLandingPageHeaderRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderSuccess", function() { return updateLandingPageHeaderSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageHeaderFailure", function() { return updateLandingPageHeaderFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewRequest", function() { return updateLandingPageOverviewRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewSuccess", function() { return updateLandingPageOverviewSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageOverviewFailure", function() { return updateLandingPageOverviewFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageThemesRequest", function() { return updateLandingPageThemesRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageThemesSuccess", function() { return updateLandingPageThemesSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLandingPageThemesFailure", function() { return updateLandingPageThemesFailure; });
+var FETCH_ALLDEBATES_REQUEST = "FETCH_ALLDEBATES_REQUEST";
+var FETCH_ALLDEBATES_SUCCESS = "FETCH_ALLDEBATES_SUCCESS";
+var FETCH_ALLDEBATES_FAILURE = "FETCH_ALLDEBATES_FAILURE";
+var FETCH_DEBATE_REQUEST = "FETCH_DEBATE_REQUEST";
+var FETCH_DEBATE_SUCCESS = "FETCH_DEBATE_SUCCESS";
+var FETCH_DEBATE_FAILURE = "FETCH_DEBATE_FAILURE";
+var CREATE_DEBATE_REQUEST = "CREATE_DEBATE_REQUEST";
+var CREATE_DEBATE_SUCCESS = "CREATE_DEBATE_SUCCESS";
+var CREATE_DEBATE_FAILURE = "CREATE_DEBATE_FAILURE";
+var UPDATE_LANDING_PAGE_HEADER_REQUEST = "UPDATE_LANDING_PAGE_HEADER_REQUEST";
+var UPDATE_LANDING_PAGE_HEADER_SUCCESS = "UPDATE_LANDING_PAGE_HEADER_SUCCESS";
+var UPDATE_LANDING_PAGE_HEADER_FAILURE = "UPDATE_LANDING_PAGE_HEADER_FAILURE";
+var UPDATE_LANDING_PAGE_OVERVIEW_REQUEST = "UPDATE_LANDING_PAGE_OVERVIEW_REQUEST";
+var UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS = "UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS";
+var UPDATE_LANDING_PAGE_OVERVIEW_FAILURE = "UPDATE_LANDING_PAGE_OVERVIEW_FAILURE";
+var UPDATE_LANDING_PAGE_THEMES_REQUEST = "UPDATE_LANDING_PAGE_THEMES_REQUEST";
+var UPDATE_LANDING_PAGE_THEMES_SUCCESS = "UPDATE_LANDING_PAGE_THEMES_SUCCESS";
+var UPDATE_LANDING_PAGE_THEMES_FAILURE = "UPDATE_LANDING_PAGE_THEMES_FAILURE";
+function fetchDebatesRequest() {
+  return {
+    type: FETCH_ALLDEBATES_REQUEST
+  };
+}
+function fetchDebatesSuccess(debates) {
+  return {
+    type: FETCH_ALLDEBATES_SUCCESS,
+    debates: debates
+  };
+}
+function fetchDebatesFailure(error) {
+  return {
+    type: FETCH_ALLDEBATES_FAILURE,
+    error: error
+  };
+}
+function fetchDebateRequest(name) {
+  return {
+    type: FETCH_DEBATE_REQUEST,
+    name: name
+  };
+}
+function fetchDebateSuccess(debate) {
+  return {
+    type: FETCH_DEBATE_SUCCESS,
+    debate: debate
+  };
+}
+function fetchDebateFailure(error) {
+  return {
+    type: FETCH_DEBATE_FALIURE,
+    error: error
+  };
+}
+function createDebateRequest(name, slug, debateType, languages) {
+  return {
+    type: CREATE_DEBATE_REQUEST,
+    name: name,
+    slug: slug,
+    debateType: debateType,
+    languages: languages
+  };
+}
+function createDebateSuccess(debate) {
+  return {
+    type: CREATE_DEBATE_SUCCESS,
+    debate: debate
+  };
+}
+function createDebateFailure(error) {
+  return {
+    type: CREATE_DEBATE_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageHeaderRequest(debateID, header) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_REQUEST,
+    debateID: debateID,
+    header: header
+  };
+}
+function updateLandingPageHeaderSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageHeaderFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_HEADER_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageOverviewRequest(debateID, overview) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_REQUEST,
+    debateID: debateID,
+    overview: overview
+  };
+}
+function updateLandingPageOverviewSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageOverviewFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_OVERVIEW_FAILURE,
+    error: error
+  };
+}
+function updateLandingPageThemesRequest(debateID, themes) {
+  return {
+    type: UPDATE_LANDING_PAGE_THEMES_REQUEST,
+    debateID: debateID,
+    themes: themes
+  };
+}
+function updateLandingPageThemesSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_THEMES_SUCCESS,
+    debate: debate
+  };
+}
+function updateLandingPageThemesFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_THEMES_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
+/***/ "./actions/modules.js":
+/*!****************************!*\
+  !*** ./actions/modules.js ***!
+  \****************************/
+/*! exports provided: FETCH_MODULE_REQUEST, FETCH_MODULE_SUCCESS, FETCH_MODULE_FAILURE, fetchModuleRequest, fetchModuleSuccess, fetchModuleFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_MODULE_REQUEST", function() { return FETCH_MODULE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_MODULE_SUCCESS", function() { return FETCH_MODULE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_MODULE_FAILURE", function() { return FETCH_MODULE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleRequest", function() { return fetchModuleRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleSuccess", function() { return fetchModuleSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleFailure", function() { return fetchModuleFailure; });
+var FETCH_MODULE_REQUEST = "FETCH_MODULE_REQUEST";
+var FETCH_MODULE_SUCCESS = "FETCH_MODULE_SUCCESS";
+var FETCH_MODULE_FAILURE = "FETCH_MODULE_FAILURE";
+function fetchModuleRequest(id) {
+  return {
+    type: FETCH_MODULE_REQUEST,
+    id: id
+  };
+}
+function fetchModuleSuccess(module) {
+  return {
+    type: FETCH_MODULE_SUCCESS,
+    module: module
+  };
+}
+function fetchModuleFailure(error) {
+  return {
+    type: FETCH_MODULE_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
+/***/ "./actions/pages.js":
+/*!**************************!*\
+  !*** ./actions/pages.js ***!
+  \**************************/
+/*! exports provided: FETCH_ALLPAGES_REQUEST, FETCH_ALLPAGES_SUCCESS, FETCH_ALLPAGES_FAILURE, CREATE_PAGE_REQUEST, CREATE_PAGE_SUCCESS, CREATE_PAGE_FAILURE, FETCH_PAGE_REQUEST, FETCH_PAGE_SUCCESS, FETCH_PAGE_FAILURE, UPDATE_PAGE_REQUEST, UPDATE_PAGE_SUCCESS, UPDATE_PAGE_FAILURE, fetchAllPagesRequest, fetchAllPagesSuccess, fetchAllPagesFailure, createPageRequest, createPageSuccess, createPageFailure, fetchPageRequest, fetchPageSuccess, fetchPageFailure, updatePageRequest, updatePageSuccess, updatePageFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_REQUEST", function() { return FETCH_ALLPAGES_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_SUCCESS", function() { return FETCH_ALLPAGES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FAILURE", function() { return FETCH_ALLPAGES_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_REQUEST", function() { return CREATE_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_SUCCESS", function() { return CREATE_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PAGE_FAILURE", function() { return CREATE_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_REQUEST", function() { return FETCH_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_SUCCESS", function() { return FETCH_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PAGE_FAILURE", function() { return FETCH_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_REQUEST", function() { return UPDATE_PAGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_SUCCESS", function() { return UPDATE_PAGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PAGE_FAILURE", function() { return UPDATE_PAGE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesRequest", function() { return fetchAllPagesRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesSuccess", function() { return fetchAllPagesSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesFailure", function() { return fetchAllPagesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageRequest", function() { return createPageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageSuccess", function() { return createPageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageFailure", function() { return createPageFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageRequest", function() { return fetchPageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageSuccess", function() { return fetchPageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPageFailure", function() { return fetchPageFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageRequest", function() { return updatePageRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageSuccess", function() { return updatePageSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageFailure", function() { return updatePageFailure; });
+var FETCH_ALLPAGES_REQUEST = "FETCH_ALLPAGES_REQUEST";
+var FETCH_ALLPAGES_SUCCESS = "FETCH_ALLPAGES_SUCCESS";
+var FETCH_ALLPAGES_FAILURE = "FETCH_ALLPAGES_FAILURE";
+var CREATE_PAGE_REQUEST = "CREATE_PAGE_REQUEST";
+var CREATE_PAGE_SUCCESS = "CREATE_PAGE_SUCCESS";
+var CREATE_PAGE_FAILURE = "CREATE_PAGE_FAILURE";
+var FETCH_PAGE_REQUEST = "FETCH_PAGE_REQUEST";
+var FETCH_PAGE_SUCCESS = "FETCH_PAGE_SUCCESS";
+var FETCH_PAGE_FAILURE = "FETCH_PAGE_FAILURE";
+var UPDATE_PAGE_REQUEST = "UPDATE_PAGE_REQUEST";
+var UPDATE_PAGE_SUCCESS = "UPDATE_PAGE_SUCCESS";
+var UPDATE_PAGE_FAILURE = "UPDATE_PAGE_FAILURE";
+function fetchAllPagesRequest() {
+  return {
+    type: FETCH_ALLPAGES_REQUEST
+  };
+}
+function fetchAllPagesSuccess(pages) {
+  return {
+    type: FETCH_ALLPAGES_SUCCESS,
+    pages: pages
+  };
+}
+function fetchAllPagesFailure(error) {
+  return {
+    type: FETCH_ALLPAGES_FAILURE,
+    error: error
+  };
+}
+function createPageRequest(name, debateId, pageType, url, languages) {
+  return {
+    type: CREATE_PAGE_REQUEST,
+    name: name,
+    debateId: debateId,
+    pageType: pageType,
+    url: url,
+    languages: languages
+  };
+}
+function createPageSuccess(pages) {
+  return {
+    type: CREATE_PAGE_SUCCESS,
+    pages: pages
+  };
+}
+function createPageFailure(error) {
+  return {
+    type: CREATE_PAGE_FAILURE,
+    error: error
+  };
+}
+function fetchPageRequest(id) {
+  return {
+    type: FETCH_PAGE_REQUEST,
+    id: id
+  };
+}
+function fetchPageSuccess(page) {
+  return {
+    type: FETCH_PAGE_SUCCESS,
+    page: page
+  };
+}
+function fetchPageFailure(error) {
+  return {
+    type: FETCH_PAGE_FAILURE,
+    error: error
+  };
+}
+function updatePageRequest(name, id, pageType, url, languages) {
+  return {
+    type: UPDATE_PAGE_REQUEST,
+    name: name,
+    id: id,
+    pageType: pageType,
+    url: url,
+    languages: languages
+  };
+}
+function updatePageSuccess(page) {
+  return {
+    type: UPDATE_PAGE_SUCCESS,
+    page: page
+  };
+}
+function updatePageFailure(error) {
+  return {
+    type: UPDATE_PAGE_FAILURE,
     error: error
   };
 }
@@ -763,80 +961,6 @@ var Api = {
 
 /***/ }),
 
-/***/ "./pages/404.jsx":
-/*!***********************!*\
-  !*** ./pages/404.jsx ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Custom404; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function Custom404() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
-    className: "bg-purple"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "stars"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "custom-navbar"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "brand-logo"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "http://salehriaz.com/404Page/img/logo.svg",
-    width: "80px"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "central-body"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "image-404",
-    src: "http://salehriaz.com/404Page/img/404.svg",
-    width: "300px"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "http://salehriaz.com/404Page/404.html",
-    className: "btn-go-home",
-    target: "_blank"
-  }, "GO BACK HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "objects"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "object_rocket",
-    src: "http://salehriaz.com/404Page/img/rocket.svg",
-    width: "40px"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "earth-moon"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "object_earth",
-    src: "http://salehriaz.com/404Page/img/earth.svg",
-    width: "100px"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "object_moon",
-    src: "http://salehriaz.com/404Page/img/moon.svg",
-    width: "80px"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "box_astronaut"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "object_astronaut",
-    src: "http://salehriaz.com/404Page/img/astronaut.svg",
-    width: "140px"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "glowing_stars"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "star"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "star"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "star"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "star"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "star"
-  }))));
-}
-
-/***/ }),
-
 /***/ "./pages/_app.jsx":
 /*!************************!*\
   !*** ./pages/_app.jsx ***!
@@ -868,18 +992,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! redux-saga */ "redux-saga");
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
-/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
-/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../styles.css */ "./styles.css");
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _404__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./404 */ "./pages/404.jsx");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../config */ "../config.js");
-
-
-
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../styles.css */ "./styles.css");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_14__);
 
 
 
@@ -906,8 +1023,8 @@ var getUrlParameter = function getUrlParameter(name) {
 };
 
 var makeStore = function makeStore(initialState) {
-  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_13__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
-  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_12__["default"]);
+  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_12__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
+  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_11__["default"]);
   return store;
 };
 
@@ -928,7 +1045,7 @@ function (_App) {
       // Check if token passed in - validate it and use the response to populate local storage
       if (window.location.search.includes("token")) {
         // Ask server to verify and set cookie
-        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
+        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
           token: getUrlParameter("token")
         }));
       }
@@ -937,7 +1054,7 @@ function (_App) {
         // Not on the URL so check the localStorage
         if (localStorage.getItem("token")) {
           // Ask server to verify and set cookie
-          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
+          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
             token: localStorage.getItem("token")
           }));
         }
@@ -950,10 +1067,9 @@ function (_App) {
           Component = _this$props.Component,
           pageProps = _this$props.pageProps,
           debate = _this$props.debate;
-      if (!debate.id) return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(_404__WEBPACK_IMPORTED_MODULE_16__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_8__["Provider"], {
         store: store
-      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Component, debate));
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Component, pageProps));
     }
   }], [{
     key: "getInitialProps",
@@ -961,13 +1077,9 @@ function (_App) {
       var Component = _ref.Component,
           ctx = _ref.ctx,
           req = _ref.req;
-      var pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {}; // Do a check if this debatee exists before trying to render (no saga here, server side)
-
-      var res = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_11___default()("".concat(_config__WEBPACK_IMPORTED_MODULE_17__["default"].api.host, "/api/v1/fetchDebate?name=").concat(ctx.req.headers.host));
-      var debate = await res.json();
+      var pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
       return {
-        pageProps: pageProps,
-        debate: debate
+        pageProps: pageProps
       };
     }
   }]);
@@ -1075,6 +1187,170 @@ function auth() {
 
 /***/ }),
 
+/***/ "./reducers/debate.js":
+/*!****************************!*\
+  !*** ./reducers/debate.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return debate; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_debate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/debate */ "./actions/debate.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  debates: [],
+  processing: false,
+  error: "",
+  debate: null
+};
+function debate() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLDEBATES_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLDEBATES_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debates: action.debates
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLDEBATES_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debates: []
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_FAILURE"]:
+      return _objectSpread({}, state, {
+        //processing: false,
+        error: action.error,
+        debate: []
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_THEMES_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_THEMES_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_THEMES_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -1087,12 +1363,202 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./reducers/auth.js");
+/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./reducers/debate.js");
+/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules */ "./reducers/modules.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages */ "./reducers/pages.js");
+
+
+
 
 
 var allReducers = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  auth: _auth__WEBPACK_IMPORTED_MODULE_1__["default"]
+  auth: _auth__WEBPACK_IMPORTED_MODULE_1__["default"],
+  debate: _debate__WEBPACK_IMPORTED_MODULE_2__["default"],
+  modules: _modules__WEBPACK_IMPORTED_MODULE_3__["default"],
+  pages: _pages__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (allReducers);
+
+/***/ }),
+
+/***/ "./reducers/modules.js":
+/*!*****************************!*\
+  !*** ./reducers/modules.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return modules; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/modules */ "./actions/modules.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  processing: false,
+  error: "",
+  module: null
+};
+function modules() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_MODULE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_MODULE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        module: action.module
+      });
+
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_MODULE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        module: null
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./reducers/pages.js":
+/*!***************************!*\
+  !*** ./reducers/pages.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pages; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_pages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/pages */ "./actions/pages.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  pages: [],
+  processing: false,
+  error: "",
+  page: null,
+  processing_update: false
+};
+function pages() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        pages: action.pages
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        pages: []
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        page: action.page
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        page: action.page
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing_update: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing_update: false,
+        error: "",
+        page: null
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing_update: false,
+        error: action.error,
+        page: null
+      });
+
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
@@ -1141,6 +1607,103 @@ function* authSaga() {
 
 /***/ }),
 
+/***/ "./sagas/debate.js":
+/*!*************************!*\
+  !*** ./sagas/debate.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return authSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_debate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/debate */ "./actions/debate.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchAllDebates() {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllDebates").then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebatesSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebatesFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchDebate(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchDebate?name=".concat(action.name)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebateSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebateFailure"])(err));
+  });
+  yield r;
+}
+
+function* createDebate(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createDebate", JSON.stringify({
+    name: action.name,
+    slug: action.slug,
+    debateType: action.debateType,
+    languages: action.languages
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["createDebateSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["createDebateFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateLandingPageHeader(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateLandingPageHeader", JSON.stringify({
+    debateID: action.debateID,
+    header: action.header
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageHeaderSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageHeaderFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateLandingPageOverview(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateLandingPageOverview", JSON.stringify({
+    debateID: action.debateID,
+    overview: action.overview
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageOverviewSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageOverviewFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateLandingPageThemes(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateLandingPageThemes", JSON.stringify({
+    debateID: action.debateID,
+    themes: action.themes
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageThemesSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["updateLandingPageThemesFailure"])(err));
+  });
+  yield r;
+}
+
+function* authSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_DEBATE_REQUEST"], fetchDebate);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLDEBATES_REQUEST"], fetchAllDebates);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["CREATE_DEBATE_REQUEST"], createDebate);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_HEADER_REQUEST"], updateLandingPageHeader);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_OVERVIEW_REQUEST"], updateLandingPageOverview);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LANDING_PAGE_THEMES_REQUEST"], updateLandingPageThemes);
+}
+
+/***/ }),
+
 /***/ "./sagas/index.js":
 /*!************************!*\
   !*** ./sagas/index.js ***!
@@ -1153,11 +1716,125 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./sagas/auth.js");
+/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./sagas/debate.js");
+/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules */ "./sagas/modules.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages */ "./sagas/pages.js");
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function* () {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"])]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_debate__WEBPACK_IMPORTED_MODULE_2__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_modules__WEBPACK_IMPORTED_MODULE_3__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_pages__WEBPACK_IMPORTED_MODULE_4__["default"])]);
 });
+
+/***/ }),
+
+/***/ "./sagas/modules.js":
+/*!**************************!*\
+  !*** ./sagas/modules.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return modulesSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/modules */ "./actions/modules.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchModule(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchModule?id=".concat(action.id)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["fetchModuleSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["fetchModuleFailure"])(err));
+  });
+  yield r;
+}
+
+function* modulesSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_MODULE_REQUEST"], fetchModule);
+}
+
+/***/ }),
+
+/***/ "./sagas/pages.js":
+/*!************************!*\
+  !*** ./sagas/pages.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pagesSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_pages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/pages */ "./actions/pages.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchAllPages(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllPages").then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesFailure"])(err));
+  });
+  yield r;
+}
+
+function* createPage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createPage", JSON.stringify({
+    name: action.name,
+    type: action.pageType,
+    debateId: action.debateId,
+    url: action.url,
+    languages: action.languages
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["createPageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["createPageFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchPage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchPage?id=".concat(action.id)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchPageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchPageFailure"])(err));
+  });
+  yield r;
+}
+
+function* updatePage(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updatePage", JSON.stringify({
+    name: action.name,
+    type: action.pageType,
+    id: action.id,
+    url: action.url,
+    languages: action.languages
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["updatePageSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["updatePageFailure"])(err));
+  });
+  yield r;
+}
+
+function* pagesSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_REQUEST"], fetchAllPages);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_REQUEST"], createPage);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_REQUEST"], fetchPage);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["UPDATE_PAGE_REQUEST"], updatePage);
+}
 
 /***/ }),
 
@@ -1258,17 +1935,6 @@ module.exports = require("redux-saga");
 /***/ (function(module, exports) {
 
 module.exports = require("redux-saga/effects");
-
-/***/ }),
-
-/***/ "url":
-/*!**********************!*\
-  !*** external "url" ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("url");
 
 /***/ })
 

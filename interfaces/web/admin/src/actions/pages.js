@@ -1,3 +1,7 @@
+export const FETCH_ALLPAGES_FOR_DEBATE_REQUEST = "FETCH_ALLPAGES_FOR_DEBATE_REQUEST";
+export const FETCH_ALLPAGES_FOR_DEBATE_SUCCESS = "FETCH_ALLPAGES_FOR_DEBATE_SUCCESS";
+export const FETCH_ALLPAGES_FOR_DEBATE_FAILURE = "FETCH_ALLPAGES_FOR_DEBATE_FAILURE";
+
 export const FETCH_ALLPAGES_REQUEST = "FETCH_ALLPAGES_REQUEST";
 export const FETCH_ALLPAGES_SUCCESS = "FETCH_ALLPAGES_SUCCESS";
 export const FETCH_ALLPAGES_FAILURE = "FETCH_ALLPAGES_FAILURE";
@@ -30,6 +34,27 @@ export function fetchAllPagesSuccess(pages) {
 export function fetchAllPagesFailure(error) {
   return {
     type: FETCH_ALLPAGES_FAILURE,
+    error
+  };
+}
+
+export function fetchAllPagesForDebateRequest(debateId) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_REQUEST,
+    debateId
+  };
+}
+
+export function fetchAllPagesForDebateSuccess(pages) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_SUCCESS,
+    pages
+  };
+}
+
+export function fetchAllPagesForDebateFailure(error) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_FAILURE,
     error
   };
 }

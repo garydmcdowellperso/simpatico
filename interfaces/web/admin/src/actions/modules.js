@@ -1,3 +1,7 @@
+export const FETCH_ALLMODULES_FOR_DEBATE_REQUEST = "FETCH_ALLMODULES_FOR_DEBATE_REQUEST";
+export const FETCH_ALLMODULES_FOR_DEBATE_SUCCESS = "FETCH_ALLMODULES_FOR_DEBATE_SUCCESS";
+export const FETCH_ALLMODULES_FOR_DEBATE_FAILURE = "FETCH_ALLMODULES_FOR_DEBATE_FAILURE";
+
 export const FETCH_ALLMODULES_REQUEST = "FETCH_ALLMODULES_REQUEST";
 export const FETCH_ALLMODULES_SUCCESS = "FETCH_ALLMODULES_SUCCESS";
 export const FETCH_ALLMODULES_FAILURE = "FETCH_ALLMODULES_FAILURE";
@@ -14,10 +18,9 @@ export const UPDATE_MODULE_REQUEST = "UPDATE_MODULE_REQUEST";
 export const UPDATE_MODULE_SUCCESS = "UPDATE_MODULE_SUCCESS";
 export const UPDATE_MODULE_FAILURE = "UPDATE_MODULE_FAILURE";
 
-export function fetchAllModulesRequest(id) {
+export function fetchAllModulesRequest() {
   return {
-    type: FETCH_ALLMODULES_REQUEST,
-    id
+    type: FETCH_ALLMODULES_REQUEST
   };
 }
 
@@ -35,21 +38,42 @@ export function fetchAllModulesFailure(error) {
   };
 }
 
-export function createModuleRequest(name, debateId, MODULEType, url, languages) {
+export function fetchAllModulesForDebateRequest(debateId) {
   return {
-    type: CREATE_MODULE_REQUEST,
-    name,
-    debateId,
-    MODULEType,
-    url,
-    languages
+    type: FETCH_ALLMODULES_FOR_DEBATE_REQUEST,
+    debateId
   };
 }
 
-export function createModuleSuccess(MODULEs) {
+export function fetchAllModulesForDebateSuccess(modules) {
+  return {
+    type: FETCH_ALLMODULES_FOR_DEBATE_SUCCESS,
+    modules
+  };
+}
+
+export function fetchAllModulesForDebateFailure(error) {
+  return {
+    type: FETCH_ALLMODULES_FOR_DEBATE_FAILURE,
+    error
+  };
+}
+
+export function createModuleRequest(title, debateId, moduleType, help, name) {
+  return {
+    type: CREATE_MODULE_REQUEST,
+    title,
+    debateId,
+    moduleType,
+    help,
+    name
+  };
+}
+
+export function createModuleSuccess(module) {
   return {
     type: CREATE_MODULE_SUCCESS,
-    MODULEs
+    module
   };
 }
 
@@ -67,10 +91,10 @@ export function fetchModuleRequest(id) {
   };
 }
 
-export function fetchModuleSuccess(MODULE) {
+export function fetchModuleSuccess(module) {
   return {
     type: FETCH_MODULE_SUCCESS,
-    MODULE
+    module
   };
 }
 
@@ -81,21 +105,21 @@ export function fetchModuleFailure(error) {
   };
 }
 
-export function updateModuleERequest(name, id, moduleType, url, languages) {
+export function updateModuleRequest(title, id, moduleType, help, name) {
   return {
     type: UPDATE_MODULE_REQUEST,
-    name,
+    title,
     id,
-    MODULEType,
-    url,
-    languages
+    moduleType,
+    help,
+    name
   };
 }
 
-export function updateModuleSuccess(MODULE) {
+export function updateModuleSuccess(module) {
   return {
     type: UPDATE_MODULE_SUCCESS,
-    MODULE
+    module
   };
 }
 

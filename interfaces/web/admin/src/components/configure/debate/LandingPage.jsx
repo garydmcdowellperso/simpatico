@@ -14,7 +14,8 @@ class LandingPage extends React.Component {
       <Link href={{ pathname: '/admin/landing', query: { slug: debate ? debate.slug : '', name: debate ? debate.name : '' } }}>
         <Card small className="h-100">
             <CardHeader className="border-bottom">
-            <h6 className="m-0">Landing Page</h6>
+            <h6 className="m-0">Landing Page <i class="material-icons">build</i></h6>
+            
             </CardHeader>
             <CardImg top src={require('../../../images/lp.png')} />
         </Card>

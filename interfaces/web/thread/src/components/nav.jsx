@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import flowRight from 'lodash/flowRight';
 import { Box, Heading, Select } from "grommet";
@@ -9,37 +9,19 @@ import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
 
-const getCurrentLang = () => nextI18NextInstance.i18n.language || '';
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
 function Nav(props) {
-  let translation = {};
-  const { thread } = useSelector(state => state.thread);
+  const { module } = useSelector(state => state.module);
 
-  const { onClick, t } = props;
+  const { onClick } = props;
 
-  // Find translations
-  if (thread) {
-    const langLength = thread.languages.length;
-    for (let x = 0; x < langLength; x += 1) {
-      if (thread.languages[x].code === getCurrentLang()) {
-        translation = thread.languages[x];
-      }
-    }
-  }
+  console.log('module nav', getCurrentLang())
 
   return (
     <Box direction="row" justify='between'>
       <Box direction="row" justify="start">
-        <Heading margin="none">{translation.title}</Heading>
-      </Box>
-      <Box direction="row">
-        <Select
-          options={['en', 'fr', 'es']}
-          value={getCurrentLang()}
-          onChange={( { option } ) => {
-            nextI18NextInstance.i18n.changeLanguage(option);
-          }}
-        />
+        <Heading margin="none">{module.title[getCurrentLang()]}</Heading>
       </Box>
       <Box direction="row" justify="end">
         <Menu color="plain" onClick={onClick} />
@@ -49,8 +31,7 @@ function Nav(props) {
 }
 
 Nav.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 export default flowRight(

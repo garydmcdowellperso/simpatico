@@ -4,7 +4,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "shards-react";
 import { Button, Icon } from 'semantic-ui-react'
 import Link from 'next/link'
 
-import { fetchAllPagesRequest } from "../../../actions/pages"
+import { fetchAllPagesForDebateRequest } from "../../../actions/pages"
 
 function Pages(props) {
   const { debate } = props;
@@ -17,7 +17,7 @@ function Pages(props) {
 
   useEffect(() => { // Fire once, get pages for debate
     if (debate) {
-      dispatch(fetchAllPagesRequest());
+      dispatch(fetchAllPagesForDebateRequest(debate.id));
     }
   }, [debate]);
 
@@ -46,10 +46,16 @@ function Pages(props) {
             </thead>
             <tbody>
               {pages.map((page, idx) => {
-                console.log('page', page)
                 return (
                   <tr key={idx}>
-                      <Link href={{ pathname: '/admin/newpage', query: { debateName: debate ? debate.name : '', id: page ? page.id : '', mode: 'update' } }}><td><i class="material-icons">build</i></td></Link>
+                      <td>
+                        <Link href={{ pathname: '/admin/newpage', query: { debateName: debate ? debate.name : '', id: page ? page.id : '', mode: 'update' } }}><a><i class="material-icons">build</i></a></Link>
+                        <a onClick={(idx) => {
+                          console.log('delete')
+                        }}>
+                          <i class="material-icons" style={{color:'red'}}>delete</i>
+                        </a>
+                      </td>
                       <td>{page.name}</td>
                       <td>{page.type}</td>
                       <td>{page.inuse ? "Yes" : "No"}</td>
@@ -60,10 +66,10 @@ function Pages(props) {
         </CardBody>
         <CardFooter>
             <Button icon labelPosition='left'>
-              <Icon name='pause' />
-                <Link href={{ pathname: '/admin/newpage', query: { debateName: debate ? debate.name : '', id: debate ? debate.id : '', mode: 'new' } }}>
-                  Add
-                </Link>
+              <i class="material-icons">add</i>
+              <Link href={{ pathname: '/admin/newpage', query: { debateName: debate ? debate.name : '', id: debate ? debate.id : '', mode: 'new' } }}>
+                Add
+              </Link>
             </Button>
           </CardFooter>
       </Card>

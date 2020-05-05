@@ -13,7 +13,7 @@ function* loginRequest(action) {
   const r = yield post(
     "v1/loginRequest",
     JSON.stringify({
-      username: action.username,
+      email: action.email,
       password: action.password
     })
   )

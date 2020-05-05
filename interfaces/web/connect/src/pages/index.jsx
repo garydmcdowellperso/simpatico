@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Head from "next/head";
 import { Grommet, ResponsiveContext } from "grommet";
 
-import Main from "../components/main";
+import Login from "../components/login";
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
         />
       </Head>
       <Grommet>
-        <Main />
+        <Login />
       </Grommet>
     </div>
   );

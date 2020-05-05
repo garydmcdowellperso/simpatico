@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import SlideOutSidebar from "../components/slideoutsidebar";
 import { fetchPostsForThread } from "../actions/post";
-import { fetchThreadRequest } from "../actions/thread";
+import { fetchModuleRequest } from "../actions/module";
 
 import 'react-flags-select/css/react-flags-select.css';
 
@@ -32,7 +32,7 @@ class Home extends Component {
     );
 
     dispatch(
-      fetchThreadRequest(thread)
+      fetchModuleRequest(thread)
     );
   }
 

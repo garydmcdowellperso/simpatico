@@ -1,6 +1,7 @@
 import UserSerializer from "../serializers/UserSerializer";
 import TokenSerializer from "../serializers/TokenSerializer";
 import CreateOrLogin from "../use_cases/CreateOrLogin";
+import Login from "../use_cases/Login";
 import VerifyToken from "../use_cases/VerifyToken";
 import FetchUserByUID from "../use_cases/FetchUserByID";
 import UserRepository from "../repositories/UserRepository";
@@ -29,6 +30,23 @@ async function createOrLogin(inputs) {
   });
 
   console.log('token', token)
+  // Output
+  const tokenSerializer = new TokenSerializer();
+  return tokenSerializer.serialize(token);
+}
+
+async function login(inputs) {
+  // Input
+  const { email, password } = inputs;
+
+  // Treatment
+  const token = await Login(email, password, {
+    userRepository,
+    accessTokenManager
+  });
+
+  console.log('token', token)
+
   // Output
   const tokenSerializer = new TokenSerializer();
   return tokenSerializer.serialize(token);
@@ -63,5 +81,6 @@ async function fetchUser(inputs) {
 module.exports = {
   createOrLogin,
   verifyToken,
-  fetchUser
+  fetchUser,
+  login
 };

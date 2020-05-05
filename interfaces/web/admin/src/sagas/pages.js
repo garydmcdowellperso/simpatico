@@ -3,6 +3,9 @@ import {
   FETCH_ALLPAGES_REQUEST,
   fetchAllPagesSuccess,
   fetchAllPagesFailure,
+  FETCH_ALLPAGES_FOR_DEBATE_REQUEST,
+  fetchAllPagesForDebateSuccess,
+  fetchAllPagesForDebateFailure,
   CREATE_PAGE_REQUEST,
   createPageSuccess,
   createPageFailure,
@@ -19,6 +22,13 @@ function* fetchAllPages(action) {
   const r = yield get(`v1/fetchAllPages`)
     .then(json => put(fetchAllPagesSuccess(json)))
     .catch(err => put(fetchAllPagesFailure(err)));
+  yield r;
+}
+
+function* fetchAllPagesForDebate(action) {
+  const r = yield get(`v1/fetchAllPagesForDebate?debateId=${action.debateId}`)
+    .then(json => put(fetchAllPagesForDebateSuccess(json)))
+    .catch(err => put(fetchAllPagesForDebateFailure(err)));
   yield r;
 }
 
@@ -58,6 +68,7 @@ function* updatePage(action) {
 }
 
 export default function* pagesSaga() {
+  yield takeLatest(FETCH_ALLPAGES_FOR_DEBATE_REQUEST, fetchAllPagesForDebate);
   yield takeLatest(FETCH_ALLPAGES_REQUEST, fetchAllPages);
   yield takeLatest(CREATE_PAGE_REQUEST, createPage);
   yield takeLatest(FETCH_PAGE_REQUEST, fetchPage);

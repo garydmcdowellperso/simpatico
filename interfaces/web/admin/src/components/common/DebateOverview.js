@@ -40,7 +40,7 @@ const DebateOverview = (props) => {
 
   const innerDataFieldClasses = classNames(
     "stats-small__data",
-    variation !== "1" && "text-right align-items-center"
+    "align-items-center"
   );
 
   return (
@@ -53,7 +53,16 @@ const DebateOverview = (props) => {
           </div>
           <div className={innerDataFieldClasses}>
             <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <span>Configure</span>
+              <i class="material-icons">build</i>
+            </Link>
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <i class="material-icons">play_arrow</i>
+            </Link>
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <i class="material-icons">delete</i>
+            </Link>
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <i class="material-icons">pause</i>
             </Link>
           </div>
         </div>

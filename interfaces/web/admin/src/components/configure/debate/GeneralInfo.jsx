@@ -59,9 +59,6 @@ function GeneralInfo(props) {
             setName(debate.name);
             setSlug(debate.slug);
             setDebateType(debate.debateType);
-            setCheckEnglish(debate.languages.english);
-            setCheckFrench(debate.languages.french);
-            setCheckSpanish(debate.languages.spanish);
         }
     }, [debate]);
 
@@ -135,50 +132,6 @@ function GeneralInfo(props) {
                                     {debateType === 'public' ? <option id="public" name="public" value="public" selected>Public</option> : <option id="public" name="public" value="public">Public</option> }
                                     {debateType === 'private' ? <option id="private" name="private" value="private" selected>Private</option> : <option id="private" name="private" value="private">Private</option> }
                                 </FormSelect>
-                            </Col>
-                        </Row>    
-                    </FormGroup>
-                    <FormGroup>
-                        <Row form>
-                            <Col lg="3" md="3" sm="3" className="mb-3">
-                                <label htmlFor="languages">Lanuages</label>
-                            </Col>
-                            <Col lg="9" md="9" sm="9" className="mb-9">
-                                <Row form>
-                                    <Col lg="2" md="2" sm="2" className="mb-2">
-                                        <FormCheckbox 
-                                            id="english"
-                                            name="english"
-                                            checked={englishChecked}
-                                            onChange={() =>{
-                                                setCheckEnglish(!englishChecked)
-                                            }}>
-                                            English
-                                        </FormCheckbox>
-                                    </Col>
-                                    <Col lg="2" md="2" sm="2" className="mb-2">
-                                        <FormCheckbox 
-                                            id="french"
-                                            name="french"
-                                            checked={frenchChecked}
-                                            onChange={() =>{
-                                                setCheckFrench(!frenchChecked)
-                                            }}>
-                                            French
-                                        </FormCheckbox>
-                                    </Col>
-                                    <Col lg="2" md="2" sm="2" className="mb-2">
-                                        <FormCheckbox 
-                                            id="spanish"
-                                            name="spanish"
-                                            checked={spanishChecked}
-                                            onChange={() =>{
-                                                setCheckSpanish(!spanishChecked)
-                                            }}>
-                                            French
-                                        </FormCheckbox>
-                                    </Col>
-                                </Row>
                             </Col>
                         </Row>    
                     </FormGroup>

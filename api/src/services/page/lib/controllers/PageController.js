@@ -32,7 +32,7 @@ async function fetchAllPagesForDebate(inputs) {
   return pagesSerializer.serialize(response);
 }
 
-async function fetchPage(input) {
+async function fetchPage(inputs) {
   const { id } = inputs
 
   // Treatment

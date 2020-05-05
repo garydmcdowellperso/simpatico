@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,15 +14,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BuildIcon from '@material-ui/icons/Build';
 import ReactCountryFlag from "react-country-flag"
-import classNames from "classnames";
 
-import { fetchAllModulesRequest } from "../../../actions/modules"
+import { fetchAllModulesForDebateRequest } from "../../../actions/modules"
 import { updateLandingPageThemesRequest } from "../../../actions/debate";
 
 import { 
   Button as ShardButton,
   Col, 
-  FormGroup, 
   FormInput, 
   FormTextarea,
   FormSelect,
@@ -49,11 +47,7 @@ const useStyles = makeStyles({
 });
 
 function Theme(props) {
-  const [titleOpen, setTitleOpen] = useState(false)
-  const [descriptionOpen, setDescriptionOpen] = useState(false)
-  const [linkTextOpen, setLinkTextOpen] = useState(false)
-  const [imageOpen, setImageOpen] = useState(false)
-  const [moduleOpen, setModuleOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const [version, setVersion] = useState("english")
   const [titleEnglish, setTitleEnglish] = useState("");
@@ -71,7 +65,7 @@ function Theme(props) {
 
   const classes = useStyles();
 
-  const { theme, modules, themes, idx, handleUpdate } = props;
+  const { theme, modules, themes, idx, handleUpdate, updateChanges } = props;
 
   useEffect(() => { // Fire once, get pages for debate
     if (theme) {
@@ -90,37 +84,11 @@ function Theme(props) {
 
       modules.map((mod, idx) => {
         if (mod.id === theme.module) {
-          setModuleTitle(mod.title)
+          setModuleTitle(mod.title.en)
         }
       })
     }
   }, [theme]);
-
-  function updateTheme() {
-    // Update this theme
-    const newThemes = [...themes];
-
-    newThemes[idx] = {
-      "title" : {
-        "en" : titleEnglish,
-        "fr" : titleFrench,
-        "es" : titleSpanish
-      },
-      "description" : {
-          "en" : descriptionEnglish,
-          "fr" : descriptionFrench,
-          "es" : descriptionSpanish
-      },
-      "imageText" : {
-          "en" : linkTextEnglish,
-          "fr" : linkTextFrench,
-          "es" : linkTextSpanish
-      },
-      "image" : image,
-      "module" : module
-    };
-    handleUpdate(newThemes)
-  }
 
   function deleteTheme() {
     // Update this theme
@@ -131,6 +99,7 @@ function Theme(props) {
     handleUpdate(newThemes)
   }
 
+  console.log('theme', theme)
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a">
@@ -139,16 +108,13 @@ function Theme(props) {
             <CardContent>
               <Typography component="h2" variant="h5">
                 {theme.title[getCurrentLang()]}
-                <i class="material-icons" onClick={() => {
-                  setTitleOpen(true)
-                }}>build</i>
               </Typography>
-              <Modal open={titleOpen} toggle={() => {
-                setTitleOpen(false)
+              <Modal open={modalOpen} toggle={() => {
+                setModalOpen(false)
               }} >
-                <ModalHeader>{titleEnglish}</ModalHeader>
+                <ModalHeader>theme.title[getCurrentLang()]</ModalHeader>
                 <ModalBody>
-                    <Row form>
+                  <Row form>
                         <Col lg="3" md="3" sm="3" className="mb-3">
                             <label htmlFor="title">Title</label>
                         </Col>
@@ -187,11 +153,170 @@ function Theme(props) {
                             />
                           ) : null}
                         </Col>
+                    </Row>                      
+                    <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="description">Description</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                          {version === 'english' ? (
+                            <FormTextarea
+                                id="descripton"
+                                name="descripton"
+                                placeholder={descriptionEnglish}
+                                value={descriptionEnglish}
+                                onChange={(event) => {
+                                  setDescriptionEnglish(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                          {version === 'french' ? (
+                            <FormTextarea
+                                id="descripton"
+                                name="descripton"
+                                placeholder={descriptionFrench}
+                                value={descriptionFrench}
+                                onChange={(event) => {
+                                  setDescriptionFrench(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                          {version === 'spanish' ? (
+                            <FormTextarea
+                                id="descripton"
+                                name="descripton"
+                                placeholder={descriptionSpanish}
+                                value={descriptionSpanish}
+                                onChange={(event) => {
+                                  setDescriptionSpanish(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                        </Col>
                     </Row>    
                     <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="linktext">Link Text</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                          {version === 'english' ? (
+                            <FormInput
+                                id="linktext"
+                                name="linktext"
+                                placeholder={linkTextEnglish}
+                                value={linkTextEnglish}
+                                onChange={(event) => {
+                                  setLinkTextEnglish(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                          {version === 'french' ? (
+                            <FormInput
+                                id="linktext"
+                                name="linktext"
+                                placeholder={linkTextFrench}
+                                value={linkTextFrench}
+                                onChange={(event) => {
+                                  setLinkTextFrench(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                          {version === 'spanish' ? (
+                            <FormInput
+                                id="linktext"
+                                name="linktext"
+                                placeholder={linkTextSpanish}
+                                value={linkTextSpanish}
+                                onChange={(event) => {
+                                  setLinkTextSpanish(event.target.value);
+                                }}
+                            />
+                          ) : null}
+                        </Col>
+                    </Row>    
+                    <Row form>
+                      <Col lg="3" md="3" sm="3" className="mb-3">
+                          <label htmlFor="image">Image</label>
+                      </Col>
+                      <Col lg="6" md="6" sm="6" className="mb-6">
+                          <FormInput
+                              id="image"
+                              name="image"
+                              placeholder={image}
+                              value={image}
+                              onChange={(event) => {
+                                setImage(event.target.value);
+                              }}
+                          />
+                      </Col>
+                    </Row>  
+                    {modules ? (   
+                    <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="module">Module</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                            <FormSelect 
+                                id="module"
+                                name="module"
+                                onChange={(event) =>{
+                                  console.log('here', event.target.value)
+                                  setModule(parseInt(event.target.value, 10));
+
+                                  if (event.target.value !== "-1") {
+                                    modules.map((mdl, idx) => {
+                                      if (mdl.id === parseInt(event.target.value, 10)) {
+                                        setModuleTitle(mdl.title)
+                                      }
+                                    })
+                                  }
+                                  if (event.target.value === "-1") {
+                                    setModuleTitle("Module")
+                                  }
+                                }}>
+                            >
+                            <option key="-1" id="empty" name="empty" value="-1"> </option> 
+
+                            {modules.map((mdl, idx2) => {
+                                if (mdl.id === module) {
+                                    return (<option selected key={idx2} id={mdl.name} name={mdl.name} value={mdl.id}>{mdl.name}</option>)
+                                }
+                                return (<option key={idx2} id={mdl.namee} name={mdl.name} value={mdl.id}>{mdl.name}</option>)
+                            })}
+                            </FormSelect>
+                        </Col>
+                    </Row>) :null }                                        
+                    <Row form>
                         <ShardButton type="button" onClick={() => {
-                            setTitleOpen(false)
-                            updateTheme()
+                            setModalOpen(false)
+                            // Push to the top
+                            const newThemes = [...themes];
+
+                            // Update this index
+                            newThemes[idx] = {
+                                "title" : {
+                                    "en" : titleEnglish,
+                                    "fr" : titleFrench,
+                                    "es" : titleSpanish
+                                },
+                                "description" : {
+                                    "en" : descriptionEnglish,
+                                    "fr" : descriptionFrench,
+                                    "es" : descriptionSpanish
+                                },
+                                "imageText" : {
+                                    "en" : linkTextEnglish,
+                                    "fr" : linkTextFrench,
+                                    "es" : linkTextSpanish
+                                },
+                                image,
+                                module
+                            };
+
+                            console.log('newThemes', newThemes)
+                            handleUpdate(newThemes)
+
+                            updateChanges()
                         }}>Done</ShardButton>
                     </Row>
                 </ModalBody>
@@ -263,359 +388,32 @@ function Theme(props) {
               </Modal>
               <Typography variant="subtitle1" paragraph>
                 {theme.description[getCurrentLang()]}
-                <i class="material-icons" onClick={() => {
-                  setDescriptionOpen(true)
-                }}>build</i>
               </Typography>
-              <Modal open={descriptionOpen} toggle={() => {
-                setDescriptionOpen(false)
-              }} >
-                <ModalHeader>{descriptionEnglish}</ModalHeader>
-                <ModalBody>
-                    <Row form>
-                        <Col lg="3" md="3" sm="3" className="mb-3">
-                            <label htmlFor="description">Description</label>
-                        </Col>
-                        <Col lg="6" md="6" sm="6" className="mb-6">
-                          {version === 'english' ? (
-                            <FormTextarea
-                                id="descripton"
-                                name="descripton"
-                                placeholder={descriptionEnglish}
-                                value={descriptionEnglish}
-                                onChange={(event) => {
-                                  setDescriptionEnglish(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                          {version === 'french' ? (
-                            <FormTextarea
-                                id="descripton"
-                                name="descripton"
-                                placeholder={descriptionFrench}
-                                value={descriptionFrench}
-                                onChange={(event) => {
-                                  setDescriptionFrench(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                          {version === 'spanish' ? (
-                            <FormTextarea
-                                id="descripton"
-                                name="descripton"
-                                placeholder={descriptionSpanish}
-                                value={descriptionSpanish}
-                                onChange={(event) => {
-                                  setDescriptionSpanish(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                        </Col>
-                    </Row>    
-                    <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            setDescriptionOpen(false)
-
-                            updateTheme()
-                        }}>Done</ShardButton>
-                    </Row>
-                </ModalBody>
-                <ModalFooter>
-                  <Row>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'english' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                        />
-                      )
-                    }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'french' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />)
-                      }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'spanish' ? 
-                        (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                        />) :                     
-                      (<ReactCountryFlag 
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                      />)
-                      }
-                    </Col>
-                  </Row>
-                </ModalFooter>
-              </Modal>
               <Typography variant="subtitle1" color="primary">
                 {linkTextEnglish}
-                <i class="material-icons" onClick={() => {
-                  setLinkTextOpen(true)
-                }}>build</i>
               </Typography>
-              <Modal open={linkTextOpen} toggle={() => {
-                setLinkTextOpen(false)
-              }} >
-              <ModalHeader>{linkTextEnglish}</ModalHeader>
-                <ModalBody>
-                    <Row form>
-                        <Col lg="3" md="3" sm="3" className="mb-3">
-                            <label htmlFor="linktext">Link Text</label>
-                        </Col>
-                        <Col lg="6" md="6" sm="6" className="mb-6">
-                          {version === 'english' ? (
-                            <FormInput
-                                id="linktext"
-                                name="linktext"
-                                placeholder={linkTextEnglish}
-                                value={linkTextEnglish}
-                                onChange={(event) => {
-                                  setLinkTextEnglish(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                          {version === 'french' ? (
-                            <FormInput
-                                id="linktext"
-                                name="linktext"
-                                placeholder={linkTextFrench}
-                                value={linkTextFrench}
-                                onChange={(event) => {
-                                  setLinkTextFrench(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                          {version === 'spanish' ? (
-                            <FormInput
-                                id="linktext"
-                                name="linktext"
-                                placeholder={linkTextSpanish}
-                                value={linkTextSpanish}
-                                onChange={(event) => {
-                                  setLinkTextSpanish(event.target.value);
-                                }}
-                            />
-                          ) : null}
-                        </Col>
-                    </Row>    
-                    <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            setLinkTextOpen(false)
-
-                            updateTheme()
-                        }}>Done</ShardButton>
-                    </Row>
-                </ModalBody>
-                <ModalFooter>
-                  <Row>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'english' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                        />
-                      )
-                    }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'french' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />)
-                      }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'spanish' ? 
-                        (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                        />) :                     
-                      (<ReactCountryFlag 
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                      />)
-                      }
-                    </Col>
-                  </Row>
-                </ModalFooter>
-            </Modal>
-            {module ? (
-            <Typography variant="subtitle1" color="primary">
-                {moduleTitle ? moduleTitle : ""}
-                <i class="material-icons" onClick={() => {
-                  setModuleOpen(true)
-                }}>build</i>
-            </Typography> ) : null}
-            <Modal open={moduleOpen} toggle={() => {
-                setModuleOpen(false)
-              }} >
-                <ModalHeader>Module</ModalHeader>
-                <ModalBody>
-                    <Row form>
-                        <Col lg="3" md="3" sm="3" className="mb-3">
-                            <label htmlFor="module">Module</label>
-                        </Col>
-                        <Col lg="6" md="6" sm="6" className="mb-6">
-                            <FormSelect 
-                                id="module"
-                                name="module"
-                                onChange={(event) =>{
-                                    console.log('here', event.target.value)
-                                    setModule(parseInt(event.target.value, 10));
-
-                                    if (event.target.value !== "-1") {
-                                      console.log('here1', event.target.value)
-                                      modules.map((mod, idx) => {
-                                        if (mod.id === parseInt(event.target.value, 10)) {
-                                          setModuleTitle(mod.title)
-                                        }
-                                      })
-                                    }
-                                    if (event.target.value === "-1") {
-                                      setModuleTitle("Module")
-                                    }
-                                }}>
-                            >
-                            <option key="-1" id="empty" name="empty" value="-1"> </option> 
-
-                            {modules.map((mod, idx2) => {
-                                if (mod.id === module) {
-                                    return (<option selected key={idx2} id={mod.title} name={mod.title} value={mod.id}>{mod.title}</option>)
-                                }
-                                return (<option key={idx2} id={mod.title} name={mod.title} value={mod.id}>{mod.title}</option>)
-                            })}
-                            </FormSelect>
-                        </Col>
-                    </Row>                                       
-                    <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            setModuleOpen(false)
-
-                            updateTheme()
-                        }}>Done</ShardButton>
-                    </Row>
-                </ModalBody>
-              </Modal>
+              <Typography variant="subtitle1" color="primary">
+                  {moduleTitle ? moduleTitle : ""}
+              </Typography>
             </CardContent>
             <CardActions>
               <IconButton aria-label="configure">
-                <BuildIcon />
+                <BuildIcon onClick={() => {
+                    setModalOpen(true)
+                  }} />
               </IconButton>
               <IconButton aria-label="delete">
                 <DeleteIcon onClick={() => {
                   deleteTheme()
+
+                  updateChanges()
                 }} />
               </IconButton>
             </CardActions>
           </div>
           <Hidden xsDown>
             <CardMedia className={classes.cardMedia} image={image} title={linkTextEnglish} />
-              <i class="material-icons" onClick={() => {
-                    setImageOpen(true)
-              }}>build</i>
           </Hidden>
-          <Modal open={imageOpen} toggle={() => {
-            setImageOpen(false)
-          }} >
-            <ModalHeader>{image}</ModalHeader>
-            <ModalBody>
-                <Row form>
-                    <Col lg="3" md="3" sm="3" className="mb-3">
-                        <label htmlFor="image">Image</label>
-                    </Col>
-                    <Col lg="8" md="8" sm="8" className="mb-8">
-                        <FormInput
-                            id="image"
-                            name="image"
-                            placeholder={image}
-                            value={image}
-                            onChange={(event) => {
-                              setImage(event.target.value);
-                            }}
-                        />
-                    </Col>
-                </Row>    
-                <Row form>
-                    <ShardButton type="button" primary onClick={() => {
-                        setImageOpen(false)
-                        
-                        updateTheme()
-                    }}>Done</ShardButton>
-                </Row>
-            </ModalBody>
-          </Modal>
         </Card>
       </CardActionArea>
     </Grid>
@@ -642,16 +440,7 @@ function NewTheme(props) {
 
   const { modules, themes, handleUpdate, updateChanges } = props;
 
-  const valueClasses = classNames(
-    "stats-small__value",
-    "count",
-    "my-3"
-  );
-    
-  const dataFieldClasses = classNames(
-    "stats-small__data",
-    "text-center"
-  );
+  console.log('modules', modules)
 
   return (
     <Grid item xs={12} md={6}>
@@ -820,15 +609,15 @@ function NewTheme(props) {
 
                             {modules.map((module, idx2) => {
                                 if (module.id === module) {
-                                    return (<option selected key={idx2} id={module.title} name={module.title} value={module.id}>{module.title}</option>)
+                                    return (<option selected key={idx2} id={module.name} name={module.name} value={module.id}>{module.name}</option>)
                                 }
-                                return (<option key={idx2} id={module.title} name={module.title} value={module.id}>{module.title}</option>)
+                                return (<option key={idx2} id={module.name} name={module.name} value={module.id}>{module.name}</option>)
                             })}
                             </FormSelect>
                         </Col>
                     </Row>) :null }                                        
                     <Row form>
-                        <ShardButton type="button" primary onClick={() => {
+                        <ShardButton type="button" onClick={() => {
                             setModalOpen(false)
                             // Push to the top
                             const newThemes = [...themes];
@@ -952,7 +741,7 @@ export default function Themes(props) {
   const dispatch = useDispatch();
 
   useEffect(() => { // Fire once, get pages for debate
-    dispatch(fetchAllModulesRequest(debate.id)); //Don't need ID
+    dispatch(fetchAllModulesForDebateRequest(debate.id)); //Don't need ID
   }, []);
 
 
@@ -981,7 +770,7 @@ export default function Themes(props) {
         <Grid container spacing={4}>
             <NewTheme themes={themes} handleUpdate={handleUpdate} modules={modules} updateChanges={updateChanges} />
             {themes.map((theme, idx) => (
-              <Theme key={idx} themes={themes} idx={idx} theme={theme} modules={modules} handleUpdate={handleUpdate} />
+              <Theme key={idx} themes={themes} idx={idx} theme={theme} modules={modules} handleUpdate={handleUpdate} updateChanges={updateChanges} />
             ))}
         </Grid>
       </Col>
@@ -997,15 +786,6 @@ export default function Themes(props) {
                 dispatch(updateLandingPageThemesRequest(debate.id, themes));
               }}
               >Update Modules ({changes})</ShardButton>) : null }
-        </Col>
-        <Col lg="3" md="3" sm="3" className="mb-3">
-          {  changes > 0 ? (
-            <ShardButton 
-              theme="danger"
-              onClick={() => {
-                setChanges(0)
-              }}
-              >Undo updates</ShardButton>) : null }
         </Col>
     </Row>
     </>

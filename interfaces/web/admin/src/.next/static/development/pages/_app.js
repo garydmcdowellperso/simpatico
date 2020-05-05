@@ -29772,11 +29772,14 @@ function updateLandingPageThemesFailure(error) {
 /*!****************************!*\
   !*** ./actions/modules.js ***!
   \****************************/
-/*! exports provided: FETCH_ALLMODULES_REQUEST, FETCH_ALLMODULES_SUCCESS, FETCH_ALLMODULES_FAILURE, CREATE_MODULE_REQUEST, CREATE_MODULE_SUCCESS, CREATE_MODULE_FAILURE, FETCH_MODULE_REQUEST, FETCH_MODULE_SUCCESS, FETCH_MODULE_FAILURE, UPDATE_MODULE_REQUEST, UPDATE_MODULE_SUCCESS, UPDATE_MODULE_FAILURE, fetchAllModulesRequest, fetchAllModulesSuccess, fetchAllModulesFailure, createModuleRequest, createModuleSuccess, createModuleFailure, fetchModuleRequest, fetchModuleSuccess, fetchModuleFailure, updateModuleERequest, updateModuleSuccess, updateModuleFailure */
+/*! exports provided: FETCH_ALLMODULES_FOR_DEBATE_REQUEST, FETCH_ALLMODULES_FOR_DEBATE_SUCCESS, FETCH_ALLMODULES_FOR_DEBATE_FAILURE, FETCH_ALLMODULES_REQUEST, FETCH_ALLMODULES_SUCCESS, FETCH_ALLMODULES_FAILURE, CREATE_MODULE_REQUEST, CREATE_MODULE_SUCCESS, CREATE_MODULE_FAILURE, FETCH_MODULE_REQUEST, FETCH_MODULE_SUCCESS, FETCH_MODULE_FAILURE, UPDATE_MODULE_REQUEST, UPDATE_MODULE_SUCCESS, UPDATE_MODULE_FAILURE, fetchAllModulesRequest, fetchAllModulesSuccess, fetchAllModulesFailure, fetchAllModulesForDebateRequest, fetchAllModulesForDebateSuccess, fetchAllModulesForDebateFailure, createModuleRequest, createModuleSuccess, createModuleFailure, fetchModuleRequest, fetchModuleSuccess, fetchModuleFailure, updateModuleRequest, updateModuleSuccess, updateModuleFailure */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_FOR_DEBATE_REQUEST", function() { return FETCH_ALLMODULES_FOR_DEBATE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_FOR_DEBATE_SUCCESS", function() { return FETCH_ALLMODULES_FOR_DEBATE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_FOR_DEBATE_FAILURE", function() { return FETCH_ALLMODULES_FOR_DEBATE_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_REQUEST", function() { return FETCH_ALLMODULES_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_SUCCESS", function() { return FETCH_ALLMODULES_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLMODULES_FAILURE", function() { return FETCH_ALLMODULES_FAILURE; });
@@ -29792,15 +29795,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesRequest", function() { return fetchAllModulesRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesSuccess", function() { return fetchAllModulesSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesFailure", function() { return fetchAllModulesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesForDebateRequest", function() { return fetchAllModulesForDebateRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesForDebateSuccess", function() { return fetchAllModulesForDebateSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllModulesForDebateFailure", function() { return fetchAllModulesForDebateFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createModuleRequest", function() { return createModuleRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createModuleSuccess", function() { return createModuleSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createModuleFailure", function() { return createModuleFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleRequest", function() { return fetchModuleRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleSuccess", function() { return fetchModuleSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchModuleFailure", function() { return fetchModuleFailure; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateModuleERequest", function() { return updateModuleERequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateModuleRequest", function() { return updateModuleRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateModuleSuccess", function() { return updateModuleSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateModuleFailure", function() { return updateModuleFailure; });
+var FETCH_ALLMODULES_FOR_DEBATE_REQUEST = "FETCH_ALLMODULES_FOR_DEBATE_REQUEST";
+var FETCH_ALLMODULES_FOR_DEBATE_SUCCESS = "FETCH_ALLMODULES_FOR_DEBATE_SUCCESS";
+var FETCH_ALLMODULES_FOR_DEBATE_FAILURE = "FETCH_ALLMODULES_FOR_DEBATE_FAILURE";
 var FETCH_ALLMODULES_REQUEST = "FETCH_ALLMODULES_REQUEST";
 var FETCH_ALLMODULES_SUCCESS = "FETCH_ALLMODULES_SUCCESS";
 var FETCH_ALLMODULES_FAILURE = "FETCH_ALLMODULES_FAILURE";
@@ -29813,10 +29822,9 @@ var FETCH_MODULE_FAILURE = "FETCH_MODULE_FAILURE";
 var UPDATE_MODULE_REQUEST = "UPDATE_MODULE_REQUEST";
 var UPDATE_MODULE_SUCCESS = "UPDATE_MODULE_SUCCESS";
 var UPDATE_MODULE_FAILURE = "UPDATE_MODULE_FAILURE";
-function fetchAllModulesRequest(id) {
+function fetchAllModulesRequest() {
   return {
-    type: FETCH_ALLMODULES_REQUEST,
-    id: id
+    type: FETCH_ALLMODULES_REQUEST
   };
 }
 function fetchAllModulesSuccess(modules) {
@@ -29831,20 +29839,38 @@ function fetchAllModulesFailure(error) {
     error: error
   };
 }
-function createModuleRequest(name, debateId, MODULEType, url, languages) {
+function fetchAllModulesForDebateRequest(debateId) {
   return {
-    type: CREATE_MODULE_REQUEST,
-    name: name,
-    debateId: debateId,
-    MODULEType: MODULEType,
-    url: url,
-    languages: languages
+    type: FETCH_ALLMODULES_FOR_DEBATE_REQUEST,
+    debateId: debateId
   };
 }
-function createModuleSuccess(MODULEs) {
+function fetchAllModulesForDebateSuccess(modules) {
+  return {
+    type: FETCH_ALLMODULES_FOR_DEBATE_SUCCESS,
+    modules: modules
+  };
+}
+function fetchAllModulesForDebateFailure(error) {
+  return {
+    type: FETCH_ALLMODULES_FOR_DEBATE_FAILURE,
+    error: error
+  };
+}
+function createModuleRequest(title, debateId, moduleType, help, name) {
+  return {
+    type: CREATE_MODULE_REQUEST,
+    title: title,
+    debateId: debateId,
+    moduleType: moduleType,
+    help: help,
+    name: name
+  };
+}
+function createModuleSuccess(module) {
   return {
     type: CREATE_MODULE_SUCCESS,
-    MODULEs: MODULEs
+    module: module
   };
 }
 function createModuleFailure(error) {
@@ -29859,10 +29885,10 @@ function fetchModuleRequest(id) {
     id: id
   };
 }
-function fetchModuleSuccess(MODULE) {
+function fetchModuleSuccess(module) {
   return {
     type: FETCH_MODULE_SUCCESS,
-    MODULE: MODULE
+    module: module
   };
 }
 function fetchModuleFailure(error) {
@@ -29871,20 +29897,20 @@ function fetchModuleFailure(error) {
     error: error
   };
 }
-function updateModuleERequest(name, id, moduleType, url, languages) {
+function updateModuleRequest(title, id, moduleType, help, name) {
   return {
     type: UPDATE_MODULE_REQUEST,
-    name: name,
+    title: title,
     id: id,
-    MODULEType: MODULEType,
-    url: url,
-    languages: languages
+    moduleType: moduleType,
+    help: help,
+    name: name
   };
 }
-function updateModuleSuccess(MODULE) {
+function updateModuleSuccess(module) {
   return {
     type: UPDATE_MODULE_SUCCESS,
-    MODULE: MODULE
+    module: module
   };
 }
 function updateModuleFailure(error) {
@@ -29900,11 +29926,14 @@ function updateModuleFailure(error) {
 /*!**************************!*\
   !*** ./actions/pages.js ***!
   \**************************/
-/*! exports provided: FETCH_ALLPAGES_REQUEST, FETCH_ALLPAGES_SUCCESS, FETCH_ALLPAGES_FAILURE, CREATE_PAGE_REQUEST, CREATE_PAGE_SUCCESS, CREATE_PAGE_FAILURE, FETCH_PAGE_REQUEST, FETCH_PAGE_SUCCESS, FETCH_PAGE_FAILURE, UPDATE_PAGE_REQUEST, UPDATE_PAGE_SUCCESS, UPDATE_PAGE_FAILURE, fetchAllPagesRequest, fetchAllPagesSuccess, fetchAllPagesFailure, createPageRequest, createPageSuccess, createPageFailure, fetchPageRequest, fetchPageSuccess, fetchPageFailure, updatePageRequest, updatePageSuccess, updatePageFailure */
+/*! exports provided: FETCH_ALLPAGES_FOR_DEBATE_REQUEST, FETCH_ALLPAGES_FOR_DEBATE_SUCCESS, FETCH_ALLPAGES_FOR_DEBATE_FAILURE, FETCH_ALLPAGES_REQUEST, FETCH_ALLPAGES_SUCCESS, FETCH_ALLPAGES_FAILURE, CREATE_PAGE_REQUEST, CREATE_PAGE_SUCCESS, CREATE_PAGE_FAILURE, FETCH_PAGE_REQUEST, FETCH_PAGE_SUCCESS, FETCH_PAGE_FAILURE, UPDATE_PAGE_REQUEST, UPDATE_PAGE_SUCCESS, UPDATE_PAGE_FAILURE, fetchAllPagesRequest, fetchAllPagesSuccess, fetchAllPagesFailure, fetchAllPagesForDebateRequest, fetchAllPagesForDebateSuccess, fetchAllPagesForDebateFailure, createPageRequest, createPageSuccess, createPageFailure, fetchPageRequest, fetchPageSuccess, fetchPageFailure, updatePageRequest, updatePageSuccess, updatePageFailure */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FOR_DEBATE_REQUEST", function() { return FETCH_ALLPAGES_FOR_DEBATE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FOR_DEBATE_SUCCESS", function() { return FETCH_ALLPAGES_FOR_DEBATE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FOR_DEBATE_FAILURE", function() { return FETCH_ALLPAGES_FOR_DEBATE_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_REQUEST", function() { return FETCH_ALLPAGES_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_SUCCESS", function() { return FETCH_ALLPAGES_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALLPAGES_FAILURE", function() { return FETCH_ALLPAGES_FAILURE; });
@@ -29920,6 +29949,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesRequest", function() { return fetchAllPagesRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesSuccess", function() { return fetchAllPagesSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesFailure", function() { return fetchAllPagesFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesForDebateRequest", function() { return fetchAllPagesForDebateRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesForDebateSuccess", function() { return fetchAllPagesForDebateSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllPagesForDebateFailure", function() { return fetchAllPagesForDebateFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageRequest", function() { return createPageRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageSuccess", function() { return createPageSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPageFailure", function() { return createPageFailure; });
@@ -29929,6 +29961,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageRequest", function() { return updatePageRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageSuccess", function() { return updatePageSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageFailure", function() { return updatePageFailure; });
+var FETCH_ALLPAGES_FOR_DEBATE_REQUEST = "FETCH_ALLPAGES_FOR_DEBATE_REQUEST";
+var FETCH_ALLPAGES_FOR_DEBATE_SUCCESS = "FETCH_ALLPAGES_FOR_DEBATE_SUCCESS";
+var FETCH_ALLPAGES_FOR_DEBATE_FAILURE = "FETCH_ALLPAGES_FOR_DEBATE_FAILURE";
 var FETCH_ALLPAGES_REQUEST = "FETCH_ALLPAGES_REQUEST";
 var FETCH_ALLPAGES_SUCCESS = "FETCH_ALLPAGES_SUCCESS";
 var FETCH_ALLPAGES_FAILURE = "FETCH_ALLPAGES_FAILURE";
@@ -29955,6 +29990,24 @@ function fetchAllPagesSuccess(pages) {
 function fetchAllPagesFailure(error) {
   return {
     type: FETCH_ALLPAGES_FAILURE,
+    error: error
+  };
+}
+function fetchAllPagesForDebateRequest(debateId) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_REQUEST,
+    debateId: debateId
+  };
+}
+function fetchAllPagesForDebateSuccess(pages) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_SUCCESS,
+    pages: pages
+  };
+}
+function fetchAllPagesForDebateFailure(error) {
+  return {
+    type: FETCH_ALLPAGES_FOR_DEBATE_FAILURE,
     error: error
   };
 }
@@ -30613,6 +30666,27 @@ function modules() {
         modules: []
       });
 
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLMODULES_FOR_DEBATE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLMODULES_FOR_DEBATE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        modules: action.modules
+      });
+
+    case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLMODULES_FOR_DEBATE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        modules: []
+      });
+
     case _actions_modules__WEBPACK_IMPORTED_MODULE_1__["CREATE_MODULE_REQUEST"]:
       return _objectSpread({}, state, {
         processing: true,
@@ -30730,6 +30804,27 @@ function pages() {
       });
 
     case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        pages: []
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FOR_DEBATE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FOR_DEBATE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        pages: action.pages
+      });
+
+    case _actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FOR_DEBATE_FAILURE"]:
       return _objectSpread({}, state, {
         processing: false,
         error: action.error,
@@ -31048,6 +31143,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function* fetchAllModulesForDebate(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllModulesForDebate?debateId=".concat(action.debateId)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["fetchAllModulesForDebateSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["fetchAllModulesForDebateFailure"])(err));
+  });
+  yield r;
+}
+
 function* fetchAllModules(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllModules").then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["fetchAllModulesSuccess"])(json));
@@ -31059,11 +31163,11 @@ function* fetchAllModules(action) {
 
 function* createModule(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createModule", JSON.stringify({
-    name: action.name,
-    type: action.moduleType,
+    title: action.title,
+    moduleType: action.moduleType,
     debateId: action.debateId,
-    url: action.url,
-    languages: action.languages
+    help: action.help,
+    name: action.name
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["createModuleSuccess"])(json));
   })["catch"](function (err) {
@@ -31083,11 +31187,11 @@ function* fetchModule(action) {
 
 function* updateModule(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateModule", JSON.stringify({
-    name: action.name,
-    type: action.MODULEType,
+    title: action.title,
+    moduleType: action.moduleType,
     id: action.id,
-    url: action.url,
-    languages: action.languages
+    help: action.help,
+    name: action.name
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["updateModuleSuccess"])(json));
   })["catch"](function (err) {
@@ -31097,6 +31201,7 @@ function* updateModule(action) {
 }
 
 function* ModulesSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLMODULES_FOR_DEBATE_REQUEST"], fetchAllModulesForDebate);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLMODULES_REQUEST"], fetchAllModules);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["CREATE_MODULE_REQUEST"], createModule);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_modules__WEBPACK_IMPORTED_MODULE_1__["FETCH_MODULE_REQUEST"], fetchModule);
@@ -31127,6 +31232,15 @@ function* fetchAllPages(action) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesSuccess"])(json));
   })["catch"](function (err) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchAllPagesForDebate(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllPagesForDebate?debateId=".concat(action.debateId)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesForDebateSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["fetchAllPagesForDebateFailure"])(err));
   });
   yield r;
 }
@@ -31171,6 +31285,7 @@ function* updatePage(action) {
 }
 
 function* pagesSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_FOR_DEBATE_REQUEST"], fetchAllPagesForDebate);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_ALLPAGES_REQUEST"], fetchAllPages);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["CREATE_PAGE_REQUEST"], createPage);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_pages__WEBPACK_IMPORTED_MODULE_1__["FETCH_PAGE_REQUEST"], fetchPage);

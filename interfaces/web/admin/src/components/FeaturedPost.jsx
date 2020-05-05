@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 export default function FeaturedPost(props) {
   const classes = useStyles();
-  const { post } = props;
+  const { theme } = props;
 
   return (
     <Grid item xs={12} md={6}>
@@ -32,13 +32,13 @@ export default function FeaturedPost(props) {
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {post.title}
+                {theme.title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {post.date}
+                Date
               </Typography>
               <Typography variant="subtitle1" paragraph>
-                {post.description}
+                {theme.description}
               </Typography>
               <Typography variant="subtitle1" color="primary">
                 Continue reading...

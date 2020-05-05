@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import ReactCountryFlag from "react-country-flag"
 
+import { fetchAllPagesRequest } from "../../../actions/pages"
 import { updateLandingPageOverviewRequest } from "../../../actions/debate";
 
 import { 
@@ -15,6 +16,7 @@ import {
   Col, 
   FormInput, 
   FormGroup,
+  FormSelect,
   Modal, 
   ModalBody, 
   ModalHeader, 
@@ -54,10 +56,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Overview(props) {
-  const [titleOpen, setTitleOpen] = useState(false)
-  const [descriptionOpen, setDescriptionOpen] = useState(false)
-  const [linkTextOpen, setLinkTextOpen] = useState(false)
-  const [imageOpen, setImageOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const [version, setVersion] = useState("english")
   const [titleEnglish, setTitleEnglish] = useState("");
@@ -70,6 +69,8 @@ export default function Overview(props) {
   const [linkTextFrench, setLinkTextFrench] = useState("");
   const [linkTextSpanish, setLinkTextSpanish] = useState("");
   const [image, setImage] = useState("");
+  const [page, setPage] = useState(null);
+  const [pageName, setPageName] = useState("");
 
   const classes = useStyles();
 
@@ -80,37 +81,9 @@ export default function Overview(props) {
 
   console.log('debate', debate)
 
-  function handleOpenTitle () {
-    setTitleOpen(true)
-  }
-
-  function handleCloseTitle () {
-    setTitleOpen(false)
-  }
-
-  function handleOpenDescription () {
-    setDescriptionOpen(true)
-  }
-
-  function handleCloseDescription () {
-    setDescriptionOpen(false)
-  }
-
-  function handleOpenLinkText () {
-    setLinkTextOpen(true)
-  }
-
-  function handleCloseLinkText () {
-    setLinkTextOpen(false)
-  }
-
-  function handleOpenImage () {
-    setImageOpen(true)
-  }
-
-  function handleCloseImage () {
-    setImageOpen(false)
-  }
+  useEffect(() => { // Fire once, get pages for debate
+    dispatch(fetchAllPagesRequest()); //Don't need ID
+  }, []);
 
   useEffect(() => { // Fire once, get pages for debate
     if (debate && debate.overview) {
@@ -125,8 +98,21 @@ export default function Overview(props) {
       setLinkTextFrench(debate.overview.linkText.fr)
       setLinkTextSpanish(debate.overview.linkText.es)
       setImage(debate.overview.url)
+
+      setPage(debate.overview.page)
+
+      pages.map((pge, idx) => {
+        if (pge.id === debate.overview.page) {
+          setPageName(pge.name)
+        }
+      })
+
     }
   }, [debate]);
+
+  const error = useSelector(state => state.pages.error);
+  const processing = useSelector(state => state.pages.processing);
+  const pages = useSelector(state => state.pages.pages);
 
 
   return (
@@ -141,51 +127,29 @@ export default function Overview(props) {
         src={image} 
         alt={debate.overview.title[getCurrentLang()]} 
       />}
-      <Modal open={imageOpen} toggle={() => {
-        handleCloseImage()
-       }} >
-        <ModalHeader>{image}</ModalHeader>
-        <ModalBody>
-            <Row form>
-                <Col lg="3" md="3" sm="3" className="mb-3">
-                    <label htmlFor="image">Image</label>
-                </Col>
-                <Col lg="6" md="6" sm="6" className="mb-6">
-                    <FormInput
-                        id="image"
-                        name="image"
-                        placeholder={image}
-                        value={image}
-                        onChange={(event) => {
-                          setImage(event.target.value);
-                        }}
-                    />
-                </Col>
-            </Row>    
-            <Row form>
-                <ShardButton type="button" primary onClick={() => {
-                    handleCloseImage()
-                }}>Done</ShardButton>
-            </Row>
-        </ModalBody>
-    </Modal>
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>
-          <i class="material-icons" onClick={() => {
-            handleOpenImage()
-          }}>build</i>
           <div className={classes.mainFeaturedPostContent}>
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
               {titleEnglish}
-              <i class="material-icons" onClick={() => {
-               handleOpenTitle()
-              }}>build</i>
             </Typography>
-            <Modal open={titleOpen} toggle={() => {
-                handleCloseTitle()
+            <Typography variant="h5" color="inherit" paragraph>
+              {debate.overview.description[getCurrentLang()]}
+            </Typography>
+            <Link variant="subtitle1">
+              {debate.overview.linkText[getCurrentLang()]}
+            </Link>
+            <Typography variant="h5" color="inherit" paragraph>
+              <i className="material-icons" onClick={() => {
+                setModalOpen(true)
+                }}>build</i>
+            </Typography>
+
+            <Modal open={modalOpen} toggle={() => {
+                setModalOpen(false)
             }} >
-                <ModalHeader>{titleEnglish}</ModalHeader>
+              <ModalHeader>Overview</ModalHeader>
                 <ModalBody>
                     <Row form>
                         <Col lg="3" md="3" sm="3" className="mb-3">
@@ -228,97 +192,14 @@ export default function Overview(props) {
                         </Col>
                     </Row>    
                     <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            handleCloseTitle()
-                        }}>Done</ShardButton>
-                    </Row>
-                </ModalBody>
-                <ModalFooter>
-                  <Row>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'english' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                        />
-                      )
-                    }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'french' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />)
-                      }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'spanish' ? 
-                        (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                        />) :                     
-                      (<ReactCountryFlag 
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                      />)
-                      }
-                    </Col>
-                  </Row>
-                </ModalFooter>
-            </Modal>
-            <Typography variant="h5" color="inherit" paragraph>
-              {debate.overview.description[getCurrentLang()]}
-              <i class="material-icons" onClick={() => {
-               handleOpenDescription()
-              }}>build</i>
-            </Typography>
-            <Modal open={descriptionOpen} toggle={() => {
-                handleCloseDescription()
-            }} >
-                <ModalHeader>{descriptionEnglish}</ModalHeader>
-                <ModalBody>
-                    <Row form>
                         <Col lg="3" md="3" sm="3" className="mb-3">
                             <label htmlFor="description">Description</label>
                         </Col>
                         <Col lg="6" md="6" sm="6" className="mb-6">
                           {version === 'english' ? (
                             <FormInput
-                                id="descripton"
-                                name="descripton"
+                                id="description"
+                                name="description"
                                 placeholder={descriptionEnglish}
                                 value={descriptionEnglish}
                                 onChange={(event) => {
@@ -328,8 +209,8 @@ export default function Overview(props) {
                           ) : null}
                           {version === 'french' ? (
                             <FormInput
-                                id="descripton"
-                                name="descripton"
+                                id="description"
+                                name="description"
                                 placeholder={descriptionFrench}
                                 value={descriptionFrench}
                                 onChange={(event) => {
@@ -339,8 +220,8 @@ export default function Overview(props) {
                           ) : null}
                           {version === 'spanish' ? (
                             <FormInput
-                                id="descripton"
-                                name="descripton"
+                                id="description"
+                                name="description"
                                 placeholder={descriptionSpanish}
                                 value={descriptionSpanish}
                                 onChange={(event) => {
@@ -351,91 +232,8 @@ export default function Overview(props) {
                         </Col>
                     </Row>    
                     <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            handleCloseDescription()
-                        }}>Done</ShardButton>
-                    </Row>
-                </ModalBody>
-                <ModalFooter>
-                  <Row>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'english' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="GB" svg 
-                        onClick={()=> {
-                            setVersion('english')
-                        }}
-                        />
-                      )
-                    }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'french' ? 
-                      (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />) : 
-                      (<ReactCountryFlag 
-                        countryCode="FR" svg 
-                        onClick={()=> {
-                            setVersion('french')
-                        }}
-                      />)
-                      }
-                    </Col>
-                    <Col lg="1" md="1" sm="1" className="mb-1">
-                    {version === 'spanish' ? 
-                        (<ReactCountryFlag 
-                        style={{
-                            fontSize: '2em',
-                            lineHeight: '2em',
-                        }}
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                        />) :                     
-                      (<ReactCountryFlag 
-                        countryCode="ES" svg 
-                        onClick={()=> {
-                            setVersion('spanish')
-                        }}
-                      />)
-                      }
-                    </Col>
-                  </Row>
-                </ModalFooter>
-            </Modal>
-            <Link variant="subtitle1">
-              {debate.overview.linkText[getCurrentLang()]}
-              <i class="material-icons" onClick={() => {
-               handleOpenLinkText()
-              }}>build</i>
-            </Link>
-            <Modal open={linkTextOpen} toggle={() => {
-                handleCloseLinkText()
-            }} >
-                <ModalHeader>{linkTextEnglish}</ModalHeader>
-                <ModalBody>
-                    <Row form>
                         <Col lg="3" md="3" sm="3" className="mb-3">
-                            <label htmlFor="title">Link Text</label>
+                            <label htmlFor="linktext">Link Text</label>
                         </Col>
                         <Col lg="6" md="6" sm="6" className="mb-6">
                           {version === 'english' ? (
@@ -472,12 +270,59 @@ export default function Overview(props) {
                             />
                           ) : null}
                         </Col>
-                    </Row>    
+                    </Row>                        
                     <Row form>
-                        <ShardButton type="button" primary onClick={() => {
-                            handleCloseLinkText()
-                        }}>Done</ShardButton>
-                    </Row>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="image">Image</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                          <FormInput
+                              id="image"
+                              name="image"
+                              placeholder={image}
+                              value={image}
+                              onChange={(event) => {
+                                setImage(event.target.value);
+                              }}
+                          />
+                        </Col>
+                    </Row>        
+                    <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="page">Page</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                            <FormSelect 
+                                id="page"
+                                name="page"
+                                onChange={(event) =>{
+                                    console.log('here', event.target.value)
+                                    setPage(parseInt(event.target.value, 10));
+
+                                    if (event.target.value !== "-1") {
+                                      console.log('here1', event.target.value)
+                                      pages.map((pge, idx) => {
+                                        if (pge.id === parseInt(event.target.value, 10)) {
+                                          setPageName(pge.name)
+                                        }
+                                      })
+                                    }
+                                    if (event.target.value === "-1") {
+                                      setPageName("Page")
+                                    }
+                                }}>
+                            >
+                            <option key="-1" id="empty" name="empty" value="-1"> </option> 
+
+                            {pages.map((pge, idx2) => {
+                                if (pge.id === page) {
+                                    return (<option selected key={idx2} id={pge.name} name={pge.name} value={pge.id}>{pge.name}</option>)
+                                }
+                                return (<option key={idx2} id={pge.name} name={pge.name} value={pge.id}>{pge.name}</option>)
+                            })}
+                            </FormSelect>
+                        </Col>
+                    </Row>      
                 </ModalBody>
                 <ModalFooter>
                   <Row>
@@ -574,7 +419,8 @@ export default function Overview(props) {
                         fr: linkTextFrench,
                         es: linkTextSpanish
                       },
-                      url: image
+                      url: image,
+                      page
                     };
                   dispatch(updateLandingPageOverviewRequest(debate.id, overview));
                 }}

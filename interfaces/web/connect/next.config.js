@@ -1,8 +1,9 @@
 const withCSS = require('@zeit/next-css');
 const withTM = require('next-transpile-modules');
+const withImages = require('next-images')
 
 module.exports = withTM(
-  withCSS({
+  withImages(withCSS({
     assetPrefix: "/connect",
     publicRuntimeConfig: {
       localeSubpaths:
@@ -10,5 +11,5 @@ module.exports = withTM(
           ? process.env.LOCALE_SUBPATHS
           : 'none',
     },
-  }),
+  })),
 );

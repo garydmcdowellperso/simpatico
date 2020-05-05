@@ -2,6 +2,9 @@ import {
   FETCH_ALLMODULES_REQUEST,
   FETCH_ALLMODULES_SUCCESS,
   FETCH_ALLMODULES_FAILURE,
+  FETCH_ALLMODULES_FOR_DEBATE_REQUEST,
+  FETCH_ALLMODULES_FOR_DEBATE_SUCCESS,
+  FETCH_ALLMODULES_FOR_DEBATE_FAILURE,
   CREATE_MODULE_REQUEST,
   CREATE_MODULE_SUCCESS,
   CREATE_MODULE_FAILURE,
@@ -38,6 +41,27 @@ export default function modules(state = initialState, action) {
         modules: action.modules
       };
     case FETCH_ALLMODULES_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        modules: []
+      };
+    case FETCH_ALLMODULES_FOR_DEBATE_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case FETCH_ALLMODULES_FOR_DEBATE_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        modules: action.modules
+      };
+    case FETCH_ALLMODULES_FOR_DEBATE_FAILURE:
       return {
         ...state,
         processing: false,

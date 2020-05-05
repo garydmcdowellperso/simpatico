@@ -96,9 +96,9 @@ const GeneralInfoPage = (props) => {
         setName(page.name);
         setType(page.type);
         setUrl(page.url);
-        setEditorValueEnglish(page.languages.english);
-        setEditorValueFrench(page.languages.french);
-        setEditorValueSpanish(page.languages.spanish);
+        setEditorValueEnglish(page.languages.en);
+        setEditorValueFrench(page.languages.fr);
+        setEditorValueSpanish(page.languages.es);
         setVersion('english')
     }
   }, [page]);
@@ -138,9 +138,9 @@ const GeneralInfoPage = (props) => {
                 e. preventDefault();
 
                 const languages = {
-                    english: editorValueEnglish,
-                    french: editorValueFrench,
-                    spanish: editorValueSpanish
+                    en: editorValueEnglish,
+                    fr: editorValueFrench,
+                    es: editorValueSpanish
                 };
 
                 if (mode === 'new') {

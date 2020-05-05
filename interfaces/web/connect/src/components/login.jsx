@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import Link from 'next/link'
 
 import { loginRequest } from "../actions/auth";
 
@@ -25,7 +26,7 @@ class Login extends PureComponent {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src="/logo.png" /> Log-in to your account
+            <Image src={require("../images/intelligence-collective1.png")} /> Log-in to your account
           </Header>
           <Button
             color="google plus"
@@ -38,11 +39,11 @@ class Login extends PureComponent {
             <Icon name="google plus" /> Google Plus
           </Button>
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={{ email: "", password: "" }}
             validate={values => {
               const errors = {};
-              if (!values.username) {
-                errors.username = "Required";
+              if (!values.email) {
+                errors.email = "Required";
               }
               if (!values.password) {
                 errors.password = "Required";
@@ -54,7 +55,7 @@ class Login extends PureComponent {
 
               dispatch(
                 loginRequest({
-                  username: values.username,
+                  email: values.email,
                   password: values.password
                 })
               );
@@ -79,15 +80,15 @@ class Login extends PureComponent {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      type="username"
-                      name="username"
-                      placeholder="username"
+                      type="email"
+                      name="email"
+                      placeholder="email"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.username}
+                      value={values.email}
                       icon="user"
                     />
-                    {errors.username && touched.username && errors.username}
+                    {errors.email && touched.email && errors.email}
                   </Form.Field>
                   <Form.Field>
                     <Form.Input
@@ -116,7 +117,7 @@ class Login extends PureComponent {
             )}
           </Formik>
           <Message>
-            New to us? <a href="#">Sign Up</a>
+            New to us? <Link href="/connect/signup"><a>Sign Up</a></Link>
           </Message>
         </Grid.Column>
       </Grid>

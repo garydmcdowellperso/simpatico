@@ -8,21 +8,66 @@ import UsersController from "../../services/iam/lib/controllers/UsersController"
  * @returns {Object} Different per route
  */
 const routes = async fastify => {
+    fastify.post(
+        "/loginRequest",
+        {
+            config,
+            schema: {
+                description: "google social media callback url",
+                tags: ["api"],
+                summary: "google oauth callback url",
+                body: {
+                    type: 'object',
+                    properties: {
+                        username: { type: 'string' },
+                        password: { type: 'string' },
+                    },
+                },    
+                response: {
+                    200: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string" },
+                            reason: { type: "string" }
+                        },
+                    },
+                },
+            },
+        },
+        async (request, reply) => {
+            fastify.log.info(
+                { body: request.body }, "[src#api#iam#loginRequest] Entering");
+    
+            const inputs = {...request.body};
+
+            const response = await UsersController.login(inputs);
+
+            reply.setCookie("simpatico", response.token, {
+                httpOnly: true,
+                secure: true,
+                path: "/",
+                domain: "8475c843.ngrok.io"
+            });
+
+            reply.redirect(`/?token=${response.token}`);
+        }
+    );
+
     fastify.get(
         "/login/google/callback",
         {
             config,
             schema: {
-            description: "google social media callback url",
-            tags: ["api"],
-            summary: "google oauth callback url",
-            querystring: {
-                state: { type: "string" },
-                scope: { type: "string" },
-                prompt: { type: "string" },
-                authuser: { type: "string" },
-                session_state: { type: "string" }
-            }
+                description: "google social media callback url",
+                tags: ["api"],
+                summary: "google oauth callback url",
+                querystring: {
+                    state: { type: "string" },
+                    scope: { type: "string" },
+                    prompt: { type: "string" },
+                    authuser: { type: "string" },
+                    session_state: { type: "string" }
+                }
             }
         },
         async (request, reply) => {
@@ -48,19 +93,19 @@ const routes = async fastify => {
             console.log("responseUserInfo", JSON.parse(responseUserInfo.data));
 
             const inputs = {
-            firstName: responseUserInfoJSON.given_name,
-            lastName: responseUserInfoJSON.family_name,
-            email: responseUserInfoJSON.email
+                firstName: responseUserInfoJSON.given_name,
+                lastName: responseUserInfoJSON.family_name,
+                email: responseUserInfoJSON.email
             };
 
             const responseCreate = await UsersController.createOrLogin(inputs);
             console.log("responseCreate", responseCreate);
 
             reply.setCookie("simpatico", responseCreate.token, {
-            httpOnly: true,
-            secure: true,
-            path: "/",
-            domain: "f84bf21a.ngrok.io"
+                httpOnly: true,
+                secure: true,
+                path: "/",
+                domain: "f84bf21a.ngrok.io"
             });
 
             reply.redirect(`/?token=${responseCreate.token}`);

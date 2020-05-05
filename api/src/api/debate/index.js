@@ -64,6 +64,7 @@ const routes = async fastify => {
                             type: 'object',
                             properties: {
                                 url: { type: 'string' },
+                                page: { type: 'number' },
                                 title: { 
                                     type: 'object',
                                     properties: {

@@ -2,6 +2,9 @@ import {
   FETCH_ALLPAGES_REQUEST,
   FETCH_ALLPAGES_SUCCESS,
   FETCH_ALLPAGES_FAILURE,
+  FETCH_ALLPAGES_FOR_DEBATE_REQUEST,
+  FETCH_ALLPAGES_FOR_DEBATE_SUCCESS,
+  FETCH_ALLPAGES_FOR_DEBATE_FAILURE,
   CREATE_PAGE_REQUEST,
   CREATE_PAGE_SUCCESS,
   CREATE_PAGE_FAILURE,
@@ -38,6 +41,27 @@ export default function pages(state = initialState, action) {
         pages: action.pages
       };
     case FETCH_ALLPAGES_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        pages: []
+      };
+    case FETCH_ALLPAGES_FOR_DEBATE_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case FETCH_ALLPAGES_FOR_DEBATE_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        pages: action.pages
+      };
+    case FETCH_ALLPAGES_FOR_DEBATE_FAILURE:
       return {
         ...state,
         processing: false,
