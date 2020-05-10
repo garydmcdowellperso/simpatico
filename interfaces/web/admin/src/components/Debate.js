@@ -10,6 +10,7 @@ import LandingPage from "./configure/debate/LandingPage";
 import Modules from "./configure/debate/Modules";
 import GeneralInfo from "./configure/debate/GeneralInfo";
 import Pages from "./configure/debate/Pages";
+import Connection from "./configure/debate/Connection";
 
 import nextI18NextInstance from '../../i18n';
 import { fetchDebateRequest } from "../actions/debate";
@@ -40,6 +41,11 @@ class Debate extends Component {
         <Row>
           <Col lg="12" md="12" sm="12" className="mb-4">
             <GeneralInfo mode='update' debate={debate} />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" md="12" sm="12" className="mb-4">
+            <Connection debate={debate} />
           </Col>
         </Row>
         <Row>

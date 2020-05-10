@@ -1,9 +1,7 @@
-import bcrypt from 'bcrypt';
-
 async function Login(
   email,
   password,
-  { userRepository, accessTokenManager }
+  { userRepository, encryptionManager, accessTokenManager }
 ) {
   if (!email) {
     throw new Error("No email");
@@ -18,12 +16,20 @@ async function Login(
   if (!existingUser) {
     throw new Error("User does not exist");
   }
-  console.log('existingUser', existingUser)
+
+  // Check active
+  if (!existingUser.activated) {
+    throw new Error("User not activated");
+  }
 
   // Check password
-  const response = await bcrypt.compare(password, existingUser.password);
+  const response = await encryptionManager.compare(password, existingUser.password);
 
-  console.log('response', response)
+  console.log('HERE', password, existingUser.password, response)
+
+  if (!response) {
+    throw new Error("Wrong password");
+  }
 
   return accessTokenManager.generate({ uid: existingUser.id });
 }

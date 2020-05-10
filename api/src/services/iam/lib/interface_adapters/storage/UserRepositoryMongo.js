@@ -42,8 +42,8 @@ class UserRepositoryInMemory {
     return augmentedEntity;
   }
 
-  merge() {
-    throw new Error("User not found");
+  merge(user) {
+    return this.collection.replaceOne({ id: user.id }, user);
   }
 
   remove(userId) {
@@ -56,6 +56,10 @@ class UserRepositoryInMemory {
 
   getByEmail(userEmail) {
     return this.collection.findOne({ email: userEmail });
+  }
+
+  getByToken(token) {
+    return this.collection.findOne({ token });
   }
 
   find() {

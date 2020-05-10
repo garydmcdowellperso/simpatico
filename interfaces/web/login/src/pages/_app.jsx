@@ -28,14 +28,19 @@ class Simpatico extends App {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    return { pageProps };
+    if (ctx.req) {
+      const host = ctx.req.get('host');
+      const res = await fetch(`https://21f49666.ngrok.io/api/v1/fetchDebate?name=${host}`)
+      const debate = await res.json()
+      return { pageProps, debate };
+    }
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, debate, pageProps, store } = this.props;
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <Component {...pageProps} {...debate} />
       </Provider>
     );
   }

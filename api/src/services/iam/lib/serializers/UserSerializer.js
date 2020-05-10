@@ -4,6 +4,9 @@ const _serializeSingleUser = user => {
     'first-name': user.firstName,
     'last-name': user.lastName,
     email: user.email,
+    password: user.password,
+    activated: user.activated,
+    token: user.token
   };
 };
 

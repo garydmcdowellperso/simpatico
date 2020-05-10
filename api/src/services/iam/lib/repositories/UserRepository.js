@@ -23,6 +23,10 @@ class UserRepository {
     return this.repository.getByEmail(email);
   }
 
+  getByToken(token) {
+    return this.repository.getByToken(token);
+  }
+
   find() {
     return this.repository.find();
   }

@@ -16,35 +16,40 @@ import {
 import RingLoader from "react-spinners/RingLoader";
 import LoadingOverlay from 'react-loading-overlay';
 
-import { createDebateRequest } from "../../../actions/debate"
+import { createDebateRequest, updateGeneralInfoRequest } from "../../../actions/debate"
 
 const englishChecked = false;
 
 function GeneralInfo(props) {
     const { debate } = props;
 
-    console.log('debate', debate);
     const [disable, setDisable] = useState(false)
     const [name, setName] = useState("")
     const [slug, setSlug] = useState("")
-    const [englishChecked, setCheckEnglish] = useState(false)
-    const [frenchChecked, setCheckFrench] = useState(false)
-    const [spanishChecked, setCheckSpanish] = useState(false)
     const [debateType, setDebateType] = useState('public')
 
     const dispatch = useDispatch();
 
     function handleOnSubmit() {
-        dispatch(createDebateRequest(
-            name,
-            slug,
-            debateType,
-            {
-                english: englishChecked ? true : false,
-                french: frenchChecked ? true :  false,
-                spanish: spanishChecked ? true : false
-            }
-        ))
+        if (mode === 'create') {
+            dispatch(createDebateRequest(
+                name,
+                slug,
+                debateType
+            ))
+        }
+        if (mode === 'update') {
+            const info = {
+                name,
+                slug,
+                debateType
+            };
+
+            dispatch(updateGeneralInfoRequest(
+                debate.id,
+                info
+            ))
+        }
     }
 
     // const debate = useSelector(state => state.debate.debate);
@@ -53,7 +58,6 @@ function GeneralInfo(props) {
 
     useEffect(() => {
         // Debate exists, transition to edit
-        console.log('debate changed',debate)
         if (debate) {
             // Transfer values to state
             setName(debate.name);
@@ -67,7 +71,6 @@ function GeneralInfo(props) {
     }, [error]);
 
     const { mode } = props;
-    console.log('mode', props);
     return (
         <>
         <LoadingOverlay
@@ -80,7 +83,7 @@ function GeneralInfo(props) {
                 <h6 className="m-0">General Info</h6>
             </CardHeader>
             <CardBody className="pt-0">
-                <Form onSubmit={handleOnSubmit}>
+                <Form>
                     <FormGroup>
                         <Row form>
                             <Col lg="3" md="3" sm="3" className="mb-3">
@@ -136,8 +139,8 @@ function GeneralInfo(props) {
                         </Row>    
                     </FormGroup>
                     {mode === 'update' ?
-                    <Button type="submit" disabled={disable}>Update General Settings</Button>
-                    : <Button type="submit" disabled={disable}>Create Debate</Button>}
+                    <Button type="button" onClick={() => {  handleOnSubmit() }} disabled={disable}>Update General Settings</Button>
+                    : <Button type="button" onClick={() => {  handleOnSubmit() }} disabled={disable}>Create Debate</Button>}
                 </Form>
             </CardBody>
         </Card>

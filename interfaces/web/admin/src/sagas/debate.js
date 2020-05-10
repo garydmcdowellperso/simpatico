@@ -17,7 +17,13 @@ import {
   updateLandingPageOverviewFailure,
   UPDATE_LANDING_PAGE_THEMES_REQUEST,
   updateLandingPageThemesSuccess,
-  updateLandingPageThemesFailure
+  updateLandingPageThemesFailure,
+  UPDATE_CONNECTION_REQUEST,
+  updateConnectionSuccess,
+  updateConnectionFailure,
+  UPDATE_GENERAL_INFO_REQUEST,
+  updateGeneralInfoSuccess,
+  updateGeneralInfoFailure
 } from "../actions/debate";
 import { get, post, putApi } from "../lib/api";
 
@@ -81,6 +87,28 @@ function* updateLandingPageThemes(action) {
   yield r;
 }
 
+function* updateConnection(action) {
+  const r = yield putApi("v1/updateConnection",
+    JSON.stringify({
+      debateID: action.debateID,
+      connection: action.connection
+    }))
+    .then(json => put(updateConnectionSuccess(json)))
+    .catch(err => put(updateConnectionFailure(err)));
+  yield r;
+}
+
+function* updateGeneralInfo(action) {
+  const r = yield putApi("v1/updateGeneralInfo",
+    JSON.stringify({
+      debateID: action.debateID,
+      info: action.info
+    }))
+    .then(json => put(updateGeneralInfoSuccess(json)))
+    .catch(err => put(updateGeneralInfoFailure(err)));
+  yield r;
+}
+
 export default function* authSaga() {
   yield takeLatest(FETCH_DEBATE_REQUEST, fetchDebate);
   yield takeLatest(FETCH_ALLDEBATES_REQUEST, fetchAllDebates);
@@ -88,4 +116,6 @@ export default function* authSaga() {
   yield takeLatest(UPDATE_LANDING_PAGE_HEADER_REQUEST, updateLandingPageHeader);
   yield takeLatest(UPDATE_LANDING_PAGE_OVERVIEW_REQUEST, updateLandingPageOverview);
   yield takeLatest(UPDATE_LANDING_PAGE_THEMES_REQUEST, updateLandingPageThemes);
+  yield takeLatest(UPDATE_CONNECTION_REQUEST, updateConnection);
+  yield takeLatest(UPDATE_GENERAL_INFO_REQUEST, updateGeneralInfo);
 }

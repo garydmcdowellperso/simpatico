@@ -82,7 +82,6 @@ export default function Header(props) {
     const dispatch = useDispatch();
 
     function handleOpen (idx) {
-        console.log('idx', idx)
         const placeHolderOpenNew =[...placeHolderOpen];
         placeHolderOpenNew[idx] = true;
 
@@ -90,7 +89,6 @@ export default function Header(props) {
     }
 
     function handleClose (idx) {
-        console.log('idx', idx)
         const placeHolderOpenNew =[...placeHolderOpen];
         placeHolderOpenNew[idx] = false;
 
@@ -257,7 +255,7 @@ export default function Header(props) {
                         </Col>
                     </Row>    
                     <Row form>
-                        <ShardButton type="button" primary onClick={() => {
+                        <ShardButton type="button" onClick={() => {
                             handleClose(idx)
                         }}>Done</ShardButton>
                     </Row>

@@ -21,6 +21,7 @@ import debate from "./api/debate";
 import page from "./api/page";
 import stats from "./api/stats";
 import module from "./api/module";
+import email from "./api/email";
 
 const singleton = fastify({
   logger: true
@@ -46,7 +47,7 @@ singleton.register(oauthPlugin, {
   // register a fastify url to start the redirect flow
   startRedirectPath: "/login/google",
   // facebook redirect here after the user login
-  callbackUri: "https://8475c843.ngrok.io/api/v1/login/google/callback"
+  callbackUri: "https://21f49666.ngrok.io/api/v1/login/google/callback"
 });
 
 // Print routes
@@ -97,6 +98,7 @@ singleton.register(debate, { prefix: "/v1" });
 singleton.register(page, { prefix: "/v1" });
 singleton.register(stats, { prefix: "/v1" });
 singleton.register(module, { prefix: "/v1" });
+singleton.register(email, { prefix: "/v1" });
 
 // Hook it all together
 const start = async () => {

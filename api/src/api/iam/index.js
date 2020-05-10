@@ -1,6 +1,7 @@
 const config = require('../../config');
 
 import UsersController from "../../services/iam/lib/controllers/UsersController";
+import EmailController from "../../services/email/lib/controllers/EmailController";
 
 /**
  * Defines all the routes
@@ -13,13 +14,67 @@ const routes = async fastify => {
         {
             config,
             schema: {
-                description: "google social media callback url",
+                description: "login to a debate",
                 tags: ["api"],
-                summary: "google oauth callback url",
+                summary: "login to a debate",
                 body: {
                     type: 'object',
                     properties: {
-                        username: { type: 'string' },
+                        email: { type: 'string' },
+                        password: { type: 'string' },
+                    },
+                },    
+                response: {
+                    200: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string" },
+                            token: { type: "string" }
+                        },
+                    },
+                },
+            },
+        },
+        async (request, reply) => {
+            fastify.log.info(
+                { body: request.body }, "[src#api#iam#loginRequest] Entering");
+    
+            const inputs = {...request.body};
+
+            try {
+                const response = await UsersController.login(inputs);
+
+                reply.setCookie("simpatico", response.token, {
+                    httpOnly: true,
+                    secure: true,
+                    path: "/",
+                    domain: "21f49666.ngrok.io"
+                });
+
+                reply.send({
+                    status: 'ok',
+                    token: response.token
+                });
+            } catch (error) {
+                throw error;
+            }
+        }
+    );
+
+    fastify.post(
+        "/createAccount",
+        {
+            config,
+            schema: {
+                description: "creates an account for a debate",
+                tags: ["api"],
+                summary: "creates an account for a debate",
+                body: {
+                    type: 'object',
+                    properties: {
+                        firstname: { type: 'string' },
+                        lastname: { type: 'string' },
+                        email: { type: 'string' },
                         password: { type: 'string' },
                     },
                 },    
@@ -36,20 +91,39 @@ const routes = async fastify => {
         },
         async (request, reply) => {
             fastify.log.info(
-                { body: request.body }, "[src#api#iam#loginRequest] Entering");
+                { body: request.body }, "[src#api#iam#createAccount] Entering");
     
             const inputs = {...request.body};
 
-            const response = await UsersController.login(inputs);
+            const response = await UsersController.createAccount(inputs);
 
-            reply.setCookie("simpatico", response.token, {
-                httpOnly: true,
-                secure: true,
-                path: "/",
-                domain: "8475c843.ngrok.io"
-            });
+            console.log('response', response)
 
-            reply.redirect(`/?token=${response.token}`);
+            // Send activattion email
+            const inputsEmali = {
+                template: {
+                    type: "test",
+                    language: "en-US",
+                    name: "creation"
+                },
+                email: {
+                    to: request.body.email,
+                    from: "noreply@simpatico.cloud",
+                    subject: "Activate your account"
+                },
+                substitutions: {
+                    firstname: request.body.firstname,
+                    lastname: request.body.lastname,
+                    url: `https://21f49666.ngrok.io/api/v1/activate?token=${response.token}`
+                }
+            };
+
+            await EmailController.sendEmail(inputsEmali);
+
+            return  {
+                status: 'ok',
+                reason: ""
+            }
         }
     );
 
@@ -99,7 +173,6 @@ const routes = async fastify => {
             };
 
             const responseCreate = await UsersController.createOrLogin(inputs);
-            console.log("responseCreate", responseCreate);
 
             reply.setCookie("simpatico", responseCreate.token, {
                 httpOnly: true,
@@ -111,7 +184,41 @@ const routes = async fastify => {
             reply.redirect(`/?token=${responseCreate.token}`);
         }
     );
-    
+
+    fastify.get(
+        "/activate",
+        {
+            config,
+            schema: {
+                description: "activates an account",
+                tags: ["api"],
+                summary: "activates an account",
+                querystring: {
+                    token: { type: "string" },
+                }
+            }
+        },
+        async (request, reply) => {
+            fastify.log.info(
+            { query: request.query },
+            "[src#api#activate] Entering"
+            );
+
+            const inputs = {...request.query};
+
+            const responseActivate = await UsersController.activate(inputs);
+
+            reply.setCookie("simpatico", responseActivate.token, {
+                httpOnly: true,
+                secure: true,
+                path: "/",
+                domain: "21f49666.ngrok.io"
+            });
+
+            reply.redirect(`/?token=${responseActivate.token}`);
+        }
+    );
+
     fastify.post(
         "/verifyToken",
         {

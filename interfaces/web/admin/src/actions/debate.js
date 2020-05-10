@@ -22,6 +22,14 @@ export const UPDATE_LANDING_PAGE_THEMES_REQUEST = "UPDATE_LANDING_PAGE_THEMES_RE
 export const UPDATE_LANDING_PAGE_THEMES_SUCCESS = "UPDATE_LANDING_PAGE_THEMES_SUCCESS";
 export const UPDATE_LANDING_PAGE_THEMES_FAILURE = "UPDATE_LANDING_PAGE_THEMES_FAILURE";
 
+export const UPDATE_CONNECTION_REQUEST = "UPDATE_CONNECTION_REQUEST";
+export const UPDATE_CONNECTION_SUCCESS = "UPDATE_CONNECTION_SUCCESS";
+export const UPDATE_CONNECTION_FAILURE = "UPDATE_CONNECTION_FAILURE";
+
+export const UPDATE_GENERAL_INFO_REQUEST = "UPDATE_GENERAL_INFO_REQUEST";
+export const UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
+export const UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
+
 export function fetchDebatesRequest() {
   return {
     type: FETCH_ALLDEBATES_REQUEST
@@ -149,6 +157,50 @@ export function updateLandingPageThemesSuccess(debate) {
 export function updateLandingPageThemesFailure(error) {
   return {
     type: UPDATE_LANDING_PAGE_THEMES_FAILURE,
+    error
+  };
+}
+
+export function updateConnectionRequest(debateID, connection) {
+  return {
+    type: UPDATE_CONNECTION_REQUEST,
+    debateID,
+    connection
+  };
+}
+
+export function updateConnectionSuccess(debate) {
+  return {
+    type: UPDATE_CONNECTION_SUCCESS,
+    debate
+  };
+}
+
+export function updateConnectionFailure(error) {
+  return {
+    type: UPDATE_CONNECTION_FAILURE,
+    error
+  };
+}
+
+export function updateGeneralInfoRequest(debateID, info) {
+  return {
+    type: UPDATE_GENERAL_INFO_REQUEST,
+    debateID,
+    info
+  };
+}
+
+export function updateGeneralInfoSuccess(debate) {
+  return {
+    type: UPDATE_GENERAL_INFO_SUCCESS,
+    debate
+  };
+}
+
+export function updateGeneralInfoFailure(error) {
+  return {
+    type: UPDATE_GENERAL_INFO_FAILURE,
     error
   };
 }

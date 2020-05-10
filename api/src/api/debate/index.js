@@ -126,8 +126,30 @@ const routes = async fastify => {
                                 }
                             }            
                           },
-                        }
-                    }
+                          connection: { 
+                            type: "object",
+                            properties: {
+                                firstname: { type: "boolean" },
+                                lastname: { type: "boolean" },
+                                username: { type: "boolean" },
+                                email: { type: "boolean" },
+                                password: { type: "boolean" },
+                                google: { type: "boolean" },
+                                linkedin: { type: "boolean" },
+                                additional_fields: {
+                                    type: "array",
+                                        items: {                                    type: "object",
+                                        properties: {
+                                            type: { type: "string" },
+                                            name: { type: "string" },
+                                            active: { type: "boolean" },
+                                        }
+                                    }
+                                }
+                            }
+                         }
+                      }
+                   }
                 }
             }
         },
@@ -249,6 +271,28 @@ const routes = async fastify => {
                                      }
                                  }            
                                },
+                               connection: { 
+                                type: "object",
+                                properties: {
+                                    firstname: { type: "boolean" },
+                                    lastname: { type: "boolean" },
+                                    username: { type: "boolean" },
+                                    email: { type: "boolean" },
+                                    password: { type: "boolean" },
+                                    google: { type: "boolean" },
+                                    linkedin: { type: "boolean" },
+                                    additional_fields: {
+                                        type: "array",
+                                            items: {                                    type: "object",
+                                            properties: {
+                                                type: { type: "string" },
+                                                name: { type: "string" },
+                                                active: { type: "boolean" },
+                                            }
+                                        }
+                                    }
+                                }
+                             }    
                              }
                          }
                     }
@@ -265,12 +309,20 @@ const routes = async fastify => {
     );
 
     fastify.put(
-        "/updateDebateGeneralInfo",
+        "/updateGeneralInfo",
         {
             config,
             schema: {
                 description: "updates the general information for a debate",
                 tags: ["api"],
+                body: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        slug: { type: 'string' },
+                        debateType: { type: 'string' }
+                    },
+                },    
                 response: {
                     200: {
                         type: "array",
@@ -320,28 +372,61 @@ const routes = async fastify => {
             }
         },
         async request => {
-            fastify.log.info("[src#api#updateDebateGeneralInfo] Entering");
+            fastify.log.info(request.body, "[src#api#updateGeneralInfo] Entering");
 
-            return [{
-                id: 1,
-                label: "Posts",
-                value: "2,390",
-                percentage: "4.7%",
-                increase: true,
-                chartLabels: [null, null, null, null, null, null, null],
-                attrs: { md: "6", sm: "6" },
-                datasets: [
-                  {
-                    label: "Today",
-                    fill: "start",
-                    borderWidth: 1.5,
-                    backgroundColor: "rgba(0, 184, 216, 0.1)",
-                    borderColor: "rgb(0, 184, 216)",
-                    data: [1, 2, 1, 3, 5, 4, 7]
-                  }
-                ]
-              }
-            ];
+            const inputs = { ...request.body };
+            // Update the debate general info
+            const response = await DebatesController.updateGeneralInfo(inputs);
+            
+            return response;
+        }
+    );
+
+    fastify.put(
+        "/updateConnection",
+        {
+            config,
+            schema: {
+                description: "updates the connectioin information for a debate",
+                tags: ["api"],
+                body: {
+                    type: "object",
+                    properties: {
+                        debateID: { type: "number" },
+                        connection: { 
+                            type: "object",
+                            properties: {
+                                firstname: { type: "boolean" },
+                                lastname: { type: "boolean" },
+                                username: { type: "boolean" },
+                                email: { type: "boolean" },
+                                password: { type: "boolean" },
+                                google: { type: "boolean" },
+                                linkedin: { type: "boolean" },
+                                additional_fields: {
+                                    type: "array",
+                                        items: {                                    type: "object",
+                                        properties: {
+                                            type: { type: "string" },
+                                            name: { type: "string" },
+                                            active: { type: "boolean" },
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        async request => {
+            fastify.log.info(request.body, "[src#api#updateConnection] Entering");
+
+            const inputs = { ...request.body };
+            // Update the debate connection
+            const response = await DebatesController.updateConnection(inputs);
+
+            return response;
         }
     );
 
@@ -532,6 +617,28 @@ const routes = async fastify => {
                                 }
                             }            
                           },
+                          connection: { 
+                            type: "object",
+                            properties: {
+                                firstname: { type: "boolean" },
+                                lastname: { type: "boolean" },
+                                username: { type: "boolean" },
+                                email: { type: "boolean" },
+                                password: { type: "boolean" },
+                                google: { type: "boolean" },
+                                linkedin: { type: "boolean" },
+                                additional_fields: {
+                                    type: "array",
+                                        items: {                                    type: "object",
+                                        properties: {
+                                            type: { type: "string" },
+                                            name: { type: "string" },
+                                            active: { type: "boolean" },
+                                        }
+                                    }
+                                }
+                            }
+                         }
                         }
                     }
                 }
@@ -694,6 +801,28 @@ const routes = async fastify => {
                                 }
                             }            
                           },
+                          connection: { 
+                            type: "object",
+                            properties: {
+                                firstname: { type: "boolean" },
+                                lastname: { type: "boolean" },
+                                username: { type: "boolean" },
+                                email: { type: "boolean" },
+                                password: { type: "boolean" },
+                                google: { type: "boolean" },
+                                linkedin: { type: "boolean" },
+                                additional_fields: {
+                                    type: "array",
+                                        items: {                                    type: "object",
+                                        properties: {
+                                            type: { type: "string" },
+                                            name: { type: "string" },
+                                            active: { type: "boolean" },
+                                        }
+                                    }
+                                }
+                            }
+                         }
                         }
                     }
                 }
@@ -861,6 +990,28 @@ const routes = async fastify => {
                                 }
                             }            
                           },
+                          connection: { 
+                            type: "object",
+                            properties: {
+                                firstname: { type: "boolean" },
+                                lastname: { type: "boolean" },
+                                username: { type: "boolean" },
+                                email: { type: "boolean" },
+                                password: { type: "boolean" },
+                                google: { type: "boolean" },
+                                linkedin: { type: "boolean" },
+                                additional_fields: {
+                                    type: "array",
+                                        items: {                                    type: "object",
+                                        properties: {
+                                            type: { type: "string" },
+                                            name: { type: "string" },
+                                            active: { type: "boolean" },
+                                        }
+                                    }
+                                }
+                            }
+                         }
                         }
                     }
                 }
