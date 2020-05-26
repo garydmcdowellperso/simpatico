@@ -56,7 +56,6 @@ class GeneralInfo extends Component {
         if (type === 'internal') {
             content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         }
-        console.log('content', content)
         dispatch(createPageRequest(
             name,
             type,

@@ -18,10 +18,12 @@ export function loginRequest({ email, password }) {
   };
 }
 
-export function loginRequestSuccess(token) {
+export function loginRequestSuccess(response) {
+  console.log('response', response)
   return {
     type: LOGIN_REQUEST_SUCCESS,
-    token
+    token: response.token,
+    accountId: response.accountId
   };
 }
 
@@ -32,9 +34,10 @@ export function loginRequestFailure(error) {
   };
 }
 
-export function createAccountRequest(firstname, lastname, email, password) {
+export function createAccountRequest(account, firstname, lastname, email, password) {
   return {
     type: CREATE_ACCOUNT_REQUEST,
+    account,
     firstname,
     lastname,
     email,

@@ -17,8 +17,14 @@ export default function Logn({ debate }) {
   useEffect(() => {
     if (token) {
       console.log('token', token);
-      // Redirect to login
-      window.location.href = `/?token=${token}`;
+
+      // Put this into localStorage for the other apps
+      localStorage.setItem("token", token);
+
+      // Cookie automatically set by server
+
+      // Redirect to home
+      window.location.href = '/';
     }
   }, [token]);
 

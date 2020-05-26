@@ -48,6 +48,7 @@ export default function Home(props) {
   const dispatch = useDispatch();
 
   const debate = useSelector(state => state.debate.debate);
+  const isValidToken = useSelector(state => state.auth.isValidToken);
 
   useEffect(() => { // Fire once, get page and debate
     if (!debate) {
@@ -55,13 +56,20 @@ export default function Home(props) {
     }
   }, []);
 
+  useEffect(() => { // Fire once, get page and debate
+    if (debate && debate.debateType === 'private') {
+      console.log('HERE')
+      if (!isValidToken) {
+        window.location.href = '/login/';
+      }
+    }
+  }, [isValidToken]);
 
   const classes = useStyles();
 
   if (!debate) {
     return (<div/>)
   }
-  console.log('debate', debate.header)
 
   return (
     <div>

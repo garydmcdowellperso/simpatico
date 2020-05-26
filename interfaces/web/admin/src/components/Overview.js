@@ -17,13 +17,23 @@ import { fetchStatsRequest } from "../actions/stats";
 export default function Overview(props) {
   const dispatch = useDispatch();
 
+  const smallStats = useSelector(state => state.stats.stats)
+  const isValidToken = useSelector(state => state.auth.isValidToken)
+
   // First time effect
   useEffect(() => {
     // Go and get some data
     dispatch(fetchStatsRequest());
   }, []);
 
-  const smallStats = useSelector(state => state.stats.stats)
+  useEffect(() => {
+    console.log('isValidToken', isValidToken)
+    if (isValidToken === false) {
+      window.location.href = '/connect/';
+    }
+  }, [isValidToken]);
+  
+
   //const smallStats = [];
   const placeholder = [1, 2, 3, 4, 5];
 

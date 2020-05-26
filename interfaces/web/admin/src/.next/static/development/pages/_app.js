@@ -29523,6 +29523,73 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./actions/account.js":
+/*!****************************!*\
+  !*** ./actions/account.js ***!
+  \****************************/
+/*! exports provided: FETCH_ACCOUNT_REQUEST, FETCH_ACCOUNT_SUCCESS, FETCH_ACCOUNT_FAILURE, UPDATE_ACCOUNT_INFO_REQUEST, UPDATE_ACCOUNT_INFO_SUCCESS, UPDATE_ACCOUNT_INFO_FAILURE, fetchAccountRequest, fetchAccountSuccess, fetchAccountFailure, updateAccountInfoRequest, updateAccountInfoSuccess, updateAccountInfoFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ACCOUNT_REQUEST", function() { return FETCH_ACCOUNT_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ACCOUNT_SUCCESS", function() { return FETCH_ACCOUNT_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ACCOUNT_FAILURE", function() { return FETCH_ACCOUNT_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ACCOUNT_INFO_REQUEST", function() { return UPDATE_ACCOUNT_INFO_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ACCOUNT_INFO_SUCCESS", function() { return UPDATE_ACCOUNT_INFO_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ACCOUNT_INFO_FAILURE", function() { return UPDATE_ACCOUNT_INFO_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAccountRequest", function() { return fetchAccountRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAccountSuccess", function() { return fetchAccountSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAccountFailure", function() { return fetchAccountFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccountInfoRequest", function() { return updateAccountInfoRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccountInfoSuccess", function() { return updateAccountInfoSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccountInfoFailure", function() { return updateAccountInfoFailure; });
+var FETCH_ACCOUNT_REQUEST = "FETCH_ACCOUNT_REQUEST";
+var FETCH_ACCOUNT_SUCCESS = "FETCH_ACCOUNT_SUCCESS";
+var FETCH_ACCOUNT_FAILURE = "FETCH_ACCOUNT_FAILURE";
+var UPDATE_ACCOUNT_INFO_REQUEST = "UPDATE_ACCOUNT_INFO_REQUEST";
+var UPDATE_ACCOUNT_INFO_SUCCESS = "UPDATE_ACCOUNT_INFO_SUCCESS";
+var UPDATE_ACCOUNT_INFO_FAILURE = "UPDATE_ACCOUNT_INFO_FAILURE";
+function fetchAccountRequest(id) {
+  return {
+    type: FETCH_ACCOUNT_REQUEST,
+    id: id
+  };
+}
+function fetchAccountSuccess(account) {
+  return {
+    type: FETCH_ACCOUNT_SUCCESS,
+    account: account
+  };
+}
+function fetchAccountFailure(error) {
+  return {
+    type: FETCH_ACCOUNT_FAILURE,
+    error: error
+  };
+}
+function updateAccountInfoRequest(accountId, name) {
+  return {
+    type: UPDATE_ACCOUNT_INFO_REQUEST,
+    accountId: accountId,
+    name: name
+  };
+}
+function updateAccountInfoSuccess(account) {
+  return {
+    type: UPDATE_ACCOUNT_INFO_SUCCESS,
+    account: account
+  };
+}
+function updateAccountInfoFailure(error) {
+  return {
+    type: UPDATE_ACCOUNT_INFO_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
 /***/ "./actions/auth.js":
 /*!*************************!*\
   !*** ./actions/auth.js ***!
@@ -29551,10 +29618,12 @@ var FETCH_USER_INFO_REQUEST = "FETCH_USER_INFO_REQUEST";
 var FETCH_USER_INFO_REQUEST_SUCCESS = "FETCH_USER_INFO_REQUEST_SUCCESS";
 var FETCH_USER_INFO_REQUEST_FAILURE = "FETCH_USER_INFO_REQUEST_FAILURE";
 function verifyTokenRequest(_ref) {
-  var token = _ref.token;
+  var token = _ref.token,
+      role = _ref.role;
   return {
     type: VERIFY_TOKEN_REQUEST,
-    token: token
+    token: token,
+    role: role
   };
 }
 function verifyTokenRequestSuccess(json) {
@@ -29670,9 +29739,10 @@ var UPDATE_CONNECTION_FAILURE = "UPDATE_CONNECTION_FAILURE";
 var UPDATE_GENERAL_INFO_REQUEST = "UPDATE_GENERAL_INFO_REQUEST";
 var UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
 var UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
-function fetchDebatesRequest() {
+function fetchDebatesRequest(accountId) {
   return {
-    type: FETCH_ALLDEBATES_REQUEST
+    type: FETCH_ALLDEBATES_REQUEST,
+    accountId: accountId
   };
 }
 function fetchDebatesSuccess(debates) {
@@ -30170,6 +30240,100 @@ function fetchStatsFailure(error) {
 
 /***/ }),
 
+/***/ "./actions/users.js":
+/*!**************************!*\
+  !*** ./actions/users.js ***!
+  \**************************/
+/*! exports provided: FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, FETCH_USER_INFO_ADMIN_REQUEST, FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS, FETCH_USER_INFO_ADMIN_REQUEST_FAILURE, UPDATE_USER_INFO_REQUEST, UPDATE_USER_INFO_SUCCESS, UPDATE_USER_INFO_FAILURE, fetchUsersRequest, fetchUsersSuccess, fetchUsersFailure, fetchUserInfoAdmin, fetchUserInfoAdminSuccess, fetchUserInfoAdminFailure, updateUserInfo, updateUserInfoSuccess, updateUserInfoFailure */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERS_REQUEST", function() { return FETCH_USERS_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERS_SUCCESS", function() { return FETCH_USERS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERS_FAILURE", function() { return FETCH_USERS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER_INFO_ADMIN_REQUEST", function() { return FETCH_USER_INFO_ADMIN_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS", function() { return FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER_INFO_ADMIN_REQUEST_FAILURE", function() { return FETCH_USER_INFO_ADMIN_REQUEST_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_USER_INFO_REQUEST", function() { return UPDATE_USER_INFO_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_USER_INFO_SUCCESS", function() { return UPDATE_USER_INFO_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_USER_INFO_FAILURE", function() { return UPDATE_USER_INFO_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersRequest", function() { return fetchUsersRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersSuccess", function() { return fetchUsersSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersFailure", function() { return fetchUsersFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfoAdmin", function() { return fetchUserInfoAdmin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfoAdminSuccess", function() { return fetchUserInfoAdminSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfoAdminFailure", function() { return fetchUserInfoAdminFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUserInfo", function() { return updateUserInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUserInfoSuccess", function() { return updateUserInfoSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUserInfoFailure", function() { return updateUserInfoFailure; });
+var FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
+var FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+var FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
+var FETCH_USER_INFO_ADMIN_REQUEST = "FETCH_USER_INFO_ADMIN_REQUEST";
+var FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS = "FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS";
+var FETCH_USER_INFO_ADMIN_REQUEST_FAILURE = "FETCH_USER_INFO_ADMIN_REQUEST_FAILURE";
+var UPDATE_USER_INFO_REQUEST = "UPDATE_USER_INFO_REQUEST";
+var UPDATE_USER_INFO_SUCCESS = "UPDATE_USER_INFO_SUCCESS";
+var UPDATE_USER_INFO_FAILURE = "UPDATE_USER_INFO_FAILURE";
+function fetchUsersRequest(accountId) {
+  return {
+    type: FETCH_USERS_REQUEST,
+    accountId: accountId
+  };
+}
+function fetchUsersSuccess(users) {
+  return {
+    type: FETCH_USERS_SUCCESS,
+    users: users
+  };
+}
+function fetchUsersFailure(error) {
+  return {
+    type: FETCH_USERS_FAILURE,
+    error: error
+  };
+}
+function fetchUserInfoAdmin(userId, accountId) {
+  return {
+    type: FETCH_USER_INFO_ADMIN_REQUEST,
+    userId: userId,
+    accountId: accountId
+  };
+}
+function fetchUserInfoAdminSuccess(json) {
+  return {
+    type: FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS,
+    json: json
+  };
+}
+function fetchUserInfoAdminFailure(error) {
+  return {
+    type: FETCH_USER_INFO_ADMIN_REQUEST_FAILURE,
+    error: error
+  };
+}
+function updateUserInfo(user) {
+  return {
+    type: UPDATE_USER_INFO_REQUEST,
+    user: user
+  };
+}
+function updateUserInfoSuccess(json) {
+  return {
+    type: UPDATE_USER_INFO_SUCCESS,
+    json: json
+  };
+}
+function updateUserInfoFailure(error) {
+  return {
+    type: UPDATE_USER_INFO_FAILURE,
+    error: error
+  };
+}
+
+/***/ }),
+
 /***/ "./lib/api.js":
 /*!********************!*\
   !*** ./lib/api.js ***!
@@ -30326,24 +30490,18 @@ function (_App) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Simpatico, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // Check if token passed in - validate it and use the response to populate local storage
-      if (window.location.search.includes("token")) {
+      // Not on the URL so check the localStorage
+      if (localStorage.getItem("token")) {
         // Ask server to verify and set cookie
-        console.log('window token', getUrlParameter("token"));
         store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
-          token: getUrlParameter("token")
+          token: localStorage.getItem("token"),
+          role: "administrator"
         }));
       }
 
-      if (!window.location.search.includes("token")) {
-        // Not on the URL so check the localStorage
-        if (localStorage.getItem("token")) {
-          // Ask server to verify and set cookie
-          console.log('localStorage token', localStorage.getItem("token"));
-          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
-            token: localStorage.getItem("token")
-          }));
-        }
+      if (!localStorage.getItem("token")) {
+        // Send them back to login
+        window.location.href = '/connect/';
       }
     }
   }, {
@@ -30376,6 +30534,85 @@ var appWithTranslation = _i18n__WEBPACK_IMPORTED_MODULE_15__["default"].appWithT
 
 /***/ }),
 
+/***/ "./reducers/account.js":
+/*!*****************************!*\
+  !*** ./reducers/account.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return account; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_account__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/account */ "./actions/account.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = {
+  processing: false,
+  error: "",
+  account: null
+};
+function account() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["FETCH_ACCOUNT_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["FETCH_ACCOUNT_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        account: action.account
+      });
+
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["FETCH_ACCOUNT_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        account: null
+      });
+
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["UPDATE_ACCOUNT_INFO_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["UPDATE_ACCOUNT_INFO_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        account: action.account
+      });
+
+    case _actions_account__WEBPACK_IMPORTED_MODULE_1__["UPDATE_ACCOUNT_INFO_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        account: null
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./reducers/auth.js":
 /*!**************************!*\
   !*** ./reducers/auth.js ***!
@@ -30400,8 +30637,9 @@ var initialState = {
   firstName: "",
   lastName: "",
   email: "",
+  avatar: "",
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
   error: ""
@@ -30415,12 +30653,20 @@ function auth() {
       return _objectSpread({}, state, {
         processing: true,
         error: "",
-        isValidToken: false,
         token: action.token
       });
 
     case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_REQUEST_SUCCESS"]:
       // Parse out json and update the store
+      if (action && action.json && action.json.statusCode === 500) {
+        return _objectSpread({}, state, {
+          processing: false,
+          error: "",
+          isValidToken: false
+        });
+      } // Parse out json and update the store
+
+
       return _objectSpread({}, state, {
         processing: false,
         error: "",
@@ -30442,6 +30688,7 @@ function auth() {
         firstName: "",
         lastName: "",
         email: "",
+        avatar: "",
         id: null
       });
 
@@ -30453,6 +30700,7 @@ function auth() {
         firstName: action.json["first-name"],
         lastName: action.json["last-name"],
         email: action.json.email,
+        avatar: action.json.avatar,
         id: action.json.id
       });
 
@@ -30651,6 +30899,27 @@ function debate() {
         debate: null
       });
 
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_GENERAL_INFO_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_GENERAL_INFO_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        debate: action.debate
+      });
+
+    case _actions_debate__WEBPACK_IMPORTED_MODULE_1__["UPDATE_GENERAL_INFO_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        debate: null
+      });
+
     default:
       return state;
   }
@@ -30668,11 +30937,15 @@ function debate() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "../node_modules/redux/es/redux.js");
-/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./reducers/auth.js");
-/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./reducers/debate.js");
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules */ "./reducers/modules.js");
-/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages */ "./reducers/pages.js");
-/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stats */ "./reducers/stats.js");
+/* harmony import */ var _account__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./account */ "./reducers/account.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./reducers/auth.js");
+/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./debate */ "./reducers/debate.js");
+/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules */ "./reducers/modules.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages */ "./reducers/pages.js");
+/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stats */ "./reducers/stats.js");
+/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./users */ "./reducers/users.js");
+
+
 
 
 
@@ -30680,11 +30953,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var allReducers = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  auth: _auth__WEBPACK_IMPORTED_MODULE_1__["default"],
-  debate: _debate__WEBPACK_IMPORTED_MODULE_2__["default"],
-  modules: _modules__WEBPACK_IMPORTED_MODULE_3__["default"],
-  pages: _pages__WEBPACK_IMPORTED_MODULE_4__["default"],
-  stats: _stats__WEBPACK_IMPORTED_MODULE_5__["default"]
+  account: _account__WEBPACK_IMPORTED_MODULE_1__["default"],
+  auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
+  debate: _debate__WEBPACK_IMPORTED_MODULE_3__["default"],
+  modules: _modules__WEBPACK_IMPORTED_MODULE_4__["default"],
+  pages: _pages__WEBPACK_IMPORTED_MODULE_5__["default"],
+  stats: _stats__WEBPACK_IMPORTED_MODULE_6__["default"],
+  users: _users__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (allReducers);
 
@@ -31036,6 +31311,228 @@ function stats() {
 
 /***/ }),
 
+/***/ "./reducers/users.js":
+/*!***************************!*\
+  !*** ./reducers/users.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return users; });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_users__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/users */ "./actions/users.js");
+
+
+var _initialState;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var initialState = (_initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  avatar: "",
+  id: null
+}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "avatar", ""), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "bio", ""), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "badge", 0), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "score", 0), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "likes", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "dislikes", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "contributions", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "debates", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "role", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "users", []), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "processing", false), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_initialState, "error", ""), _initialState);
+function users() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERS_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERS_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        users: action.users
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERS_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        users: []
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USER_INFO_ADMIN_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        avatar: "",
+        id: null,
+        bio: null,
+        badge: 0,
+        score: 0,
+        likes: [],
+        dislikes: [],
+        contributions: [],
+        debates: [],
+        role: []
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USER_INFO_ADMIN_REQUEST_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        firstName: action.json["first-name"],
+        lastName: action.json["last-name"],
+        email: action.json.email,
+        avatar: action.json.avatar,
+        id: action.json.id,
+        bio: action.json.bio,
+        badge: action.json.badge,
+        score: action.json.score,
+        likes: action.json.likes,
+        dislikes: action.json.dislikes,
+        contributions: action.json.contributions,
+        debates: action.json.debates,
+        role: action.json.role
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USER_INFO_ADMIN_REQUEST_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        firstName: "",
+        lastName: "",
+        email: "",
+        avatar: "",
+        id: null,
+        bio: null,
+        badge: 0,
+        score: 0,
+        likes: [],
+        dislikes: [],
+        contributions: [],
+        debates: [],
+        role: []
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["UPDATE_USER_INFO_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        id: null,
+        bio: null,
+        badge: 0,
+        score: 0,
+        likes: [],
+        dislikes: [],
+        contributions: [],
+        debates: [],
+        role: []
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["UPDATE_USER_INFO_SUCCESS"]:
+      // Parse out json and update the store
+      console.log('action', action.json);
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        firstName: action.json["first-name"],
+        lastName: action.json["last-name"],
+        email: action.json.email,
+        bio: action.json.bio,
+        avatar: action.json.avatar,
+        score: action.json.score,
+        badge: action.json.badge,
+        id: action.json.id,
+        likes: action.json.likes,
+        dislikes: action.json.dislikes,
+        contributions: action.json.contributions,
+        debates: action.json.debates,
+        role: action.json.role
+      });
+
+    case _actions_users__WEBPACK_IMPORTED_MODULE_1__["UPDATE_USER_INFO_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        firstName: "",
+        lastName: "",
+        email: "",
+        id: null,
+        bio: null,
+        badge: 0,
+        score: 0,
+        likes: [],
+        dislikes: [],
+        contributions: [],
+        debates: [],
+        role: []
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./sagas/account.js":
+/*!**************************!*\
+  !*** ./sagas/account.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return accountSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "../node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
+/* harmony import */ var _actions_account__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/account */ "./actions/account.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchAccount(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAccount?id=".concat(action.id)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_account__WEBPACK_IMPORTED_MODULE_1__["fetchAccountSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_account__WEBPACK_IMPORTED_MODULE_1__["fetchAccountFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateAccountInfo(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateAccountInfo", JSON.stringify({
+    id: action.accountId,
+    name: action.name
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_account__WEBPACK_IMPORTED_MODULE_1__["updateAccountInfoSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_account__WEBPACK_IMPORTED_MODULE_1__["updateAccountInfoFailure"])(err));
+  });
+  yield r;
+}
+
+function* accountSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_account__WEBPACK_IMPORTED_MODULE_1__["FETCH_ACCOUNT_REQUEST"], fetchAccount);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_account__WEBPACK_IMPORTED_MODULE_1__["UPDATE_ACCOUNT_INFO_REQUEST"], updateAccountInfo);
+}
+
+/***/ }),
+
 /***/ "./sagas/auth.js":
 /*!***********************!*\
   !*** ./sagas/auth.js ***!
@@ -31055,7 +31552,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function* verifyTokenRequest(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/verifyToken", JSON.stringify({
-    token: action.token
+    token: action.token,
+    role: action.role
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["verifyTokenRequestSuccess"])(json));
   })["catch"](function (err) {
@@ -31097,8 +31595,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function* fetchAllDebates() {
-  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllDebates").then(function (json) {
+function* fetchAllDebates(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchAllDebates?id=".concat(action.accountId)).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebatesSuccess"])(json));
   })["catch"](function (err) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_debate__WEBPACK_IMPORTED_MODULE_1__["fetchDebatesFailure"])(err));
@@ -31212,11 +31710,15 @@ function* authSaga() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "../node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
-/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./sagas/auth.js");
-/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debate */ "./sagas/debate.js");
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules */ "./sagas/modules.js");
-/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages */ "./sagas/pages.js");
-/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stats */ "./sagas/stats.js");
+/* harmony import */ var _account__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./account */ "./sagas/account.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./sagas/auth.js");
+/* harmony import */ var _debate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./debate */ "./sagas/debate.js");
+/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules */ "./sagas/modules.js");
+/* harmony import */ var _pages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages */ "./sagas/pages.js");
+/* harmony import */ var _stats__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stats */ "./sagas/stats.js");
+/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./users */ "./sagas/users.js");
+
+
 
 
 
@@ -31224,7 +31726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function* () {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_debate__WEBPACK_IMPORTED_MODULE_2__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_modules__WEBPACK_IMPORTED_MODULE_3__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_pages__WEBPACK_IMPORTED_MODULE_4__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_stats__WEBPACK_IMPORTED_MODULE_5__["default"])]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_account__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_auth__WEBPACK_IMPORTED_MODULE_2__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_debate__WEBPACK_IMPORTED_MODULE_3__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_modules__WEBPACK_IMPORTED_MODULE_4__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_pages__WEBPACK_IMPORTED_MODULE_5__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_stats__WEBPACK_IMPORTED_MODULE_6__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_users__WEBPACK_IMPORTED_MODULE_7__["default"])]);
 });
 
 /***/ }),
@@ -31425,6 +31927,69 @@ function* fetchStats() {
 
 function* statsSaga() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_REQUEST"], fetchStats);
+}
+
+/***/ }),
+
+/***/ "./sagas/users.js":
+/*!************************!*\
+  !*** ./sagas/users.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return usersSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "../node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
+/* harmony import */ var _actions_users__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/users */ "./actions/users.js");
+/* harmony import */ var _lib_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/api */ "./lib/api.js");
+
+
+
+
+function* fetchUsers(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchUsers?id=".concat(action.accountId)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["fetchUsersSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["fetchUsersFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchUserInfoAdmin(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchUserInfoAdmin?userId=".concat(action.userId, "&accountId=").concat(action.accountId)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["fetchUserInfoAdminSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["fetchUserInfoAdminFailure"])(err));
+  });
+  yield r;
+}
+
+function* updateUserInfo(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["putApi"])("v1/updateUserInfo", JSON.stringify({
+    id: action.user.id,
+    email: action.user.email,
+    firstName: action.user.firstName,
+    lastName: action.user.lastName,
+    bio: action.user.bio,
+    avatar: action.user.avatar,
+    password: action.user.password,
+    confirmPassword: action.user.confirmPassword,
+    debates: action.user.debates,
+    role: action.user.role
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["updateUserInfoSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_users__WEBPACK_IMPORTED_MODULE_1__["updateUserInfoFailure"])(err));
+  });
+  yield r;
+}
+
+function* usersSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERS_REQUEST"], fetchUsers);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_users__WEBPACK_IMPORTED_MODULE_1__["FETCH_USER_INFO_ADMIN_REQUEST"], fetchUserInfoAdmin);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_users__WEBPACK_IMPORTED_MODULE_1__["UPDATE_USER_INFO_REQUEST"], updateUserInfo);
 }
 
 /***/ }),

@@ -54,6 +54,14 @@ class UserRepositoryInMemory {
     return this.collection.findOne({ id: userId });
   }
 
+  getByAccountId(id) {
+    return this.collection.find({ accountId: id }).toArray();
+  }
+
+  getByUserIdAccountId(userId, accountId) {
+    return this.collection.findOne({ accountId, id: userId });
+  }
+
   getByEmail(userEmail) {
     return this.collection.findOne({ email: userEmail });
   }

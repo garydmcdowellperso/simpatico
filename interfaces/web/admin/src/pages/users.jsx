@@ -5,6 +5,7 @@ import { Container, Row, Col } from "shards-react";
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
 import MainFooter from "../components/layout/MainFooter";
+import Users from '../components/Users';
 
 
 import "../assets/shards-dashboards.1.1.0.min.css";
@@ -28,6 +29,7 @@ export default ({ noNavbar, noFooter }) => (
           tag="main"
         >
           {!noNavbar && <MainNavbar />}
+          <Users />
           {!noFooter && <MainFooter />}
         </Col>
       </Row>

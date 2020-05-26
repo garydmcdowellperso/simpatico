@@ -25,8 +25,6 @@ async function Login(
   // Check password
   const response = await encryptionManager.compare(password, existingUser.password);
 
-  console.log('HERE', password, existingUser.password, response)
-
   if (!response) {
     throw new Error("Wrong password");
   }

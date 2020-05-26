@@ -181,6 +181,27 @@ export default function debate(state = initialState, action) {
         error: action.error,
         debate: null
       };
+    case UPDATE_GENERAL_INFO_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case UPDATE_GENERAL_INFO_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
+      };
+    case UPDATE_GENERAL_INFO_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        debate: null
+      };
     default:
       return state;
   }

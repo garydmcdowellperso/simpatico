@@ -58,7 +58,7 @@ export function fetchDebateSuccess(debate) {
 
 export function fetchDebateFailure(error) {
   return {
-    type: FETCH_DEBATE_FALIURE,
+    type: FETCH_DEBATE_FAILURE,
     error
   };
 }

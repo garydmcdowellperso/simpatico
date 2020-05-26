@@ -12,7 +12,7 @@ const initialState = {
   lastName: "",
   email: "",
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
   error: ""
@@ -30,6 +30,15 @@ export default function auth(state = initialState, action) {
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:
       // Parse out json and update the store
+      if (action && action.json && action.json.statusCode === 500) {
+        return {
+          ...state,
+          processing: false,
+          error: "",
+          isValidToken: false
+        };
+      }
+
       return {
         ...state,
         processing: false,

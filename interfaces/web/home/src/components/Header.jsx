@@ -5,11 +5,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import Typography from "@material-ui/core/Typography";
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import nextI18NextInstance from '../../i18n';
 
+import nextI18NextInstance from '../../i18n';
 import UserMenu from "./UserMenu";
 import { fetchUserInfo } from "../actions/auth";
 
@@ -58,8 +59,6 @@ export default function Header(props) {
 
   const { header, title, selected } = props;
   
-  console.log('header', header.sections)
-  
   const dispatch = useDispatch();
   let firstNameLocalStorage;
 
@@ -86,13 +85,17 @@ export default function Header(props) {
        dispatch(fetchUserInfo());
      }
    }
+
    // Sorry token no longer valid, get rid of display name for login
    if (isValidToken) {
      if (firstNameLocalStorage) {
       setFirstNameDisplay();
      }
    }
-   localStorage.setItem("token", token);
+
+   if (isValidToken) {
+      localStorage.setItem("token", token);
+   }
   }, [isValidToken]);
 
   useEffect(() => {
@@ -122,12 +125,15 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
+        <IconButton>
+          <NotificationsIcon />
+        </IconButton>
         {!firstNameDisplay ?
           <Button
             variant="outlined"
             size="small"
             onClick={() => {
-              window.location = "/connect/";
+              window.location = "/login/";
             }}
           >
             {`Sign up / Sign in`}

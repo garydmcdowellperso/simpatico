@@ -48,7 +48,7 @@ func main() {
 
 		// Route the request to it's destination and process the response
 		respProxy, _ := http.Get("https://21f49666.ngrok.io/api/v1/fetchDebate?name=8475c843.ngrok.io")
-		js := json.Unmarshal(respProxy.Body)
+		js := json.Unmarshal(respProxy.Body, &js)
 
 		log.Printf("js:%s", js)
 		ctx.JSON(iris.StatusOK, js)

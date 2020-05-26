@@ -6,9 +6,9 @@ import {
   REPLY_POST_REQUEST,
   replyPostSuccess,
   replyPostFailure,
-  FETCH_POSTS_FOR_THREAD_REQUEST,
-  fetchPostsForThreadSuccess,
-  fetchPostsForThreadFailure,
+  FETCH_POSTS_FOR_MODULE_REQUEST,
+  fetchPostsForModuleSuccess,
+  fetchPostsForModuleFailure,
   LIKE_POST_REQUEST,
   likePostSuccess,
   likePostFailure,
@@ -30,7 +30,7 @@ function* createPostRequest(action) {
     JSON.stringify({
       title: action.title,
       contents: action.contents,
-      thread: action.thread
+      module: action.module
     })
   )
     .then(json => put(createPostSuccess(json)))
@@ -51,10 +51,10 @@ function* replyPostRequest(action) {
   yield r;
 }
 
-function* fetchPostsForThread(action) {
-  const r = yield get(`v1/fetchPostsForThread?thread=${action.thread}&page=${action.page}`)
-    .then(json => put(fetchPostsForThreadSuccess(json)))
-    .catch(err => put(fetchPostsForThreadFailure(err)));
+function* fetchPostsForModule(action) {
+  const r = yield get(`v1/fetchPostsForModule?module=${action.module}&page=${action.page}`)
+    .then(json => put(fetchPostsForModuleSuccess(json)))
+    .catch(err => put(fetchPostsForModuleFailure(err)));
   yield r;
 }
 
@@ -111,7 +111,7 @@ function* deletePost(action) {
 export default function* postSaga() {
   yield takeLatest(CREATE_POST_REQUEST, createPostRequest);
   yield takeLatest(REPLY_POST_REQUEST, replyPostRequest);
-  yield takeLatest(FETCH_POSTS_FOR_THREAD_REQUEST, fetchPostsForThread);
+  yield takeLatest(FETCH_POSTS_FOR_MODULE_REQUEST, fetchPostsForModule);
   yield takeLatest(LIKE_POST_REQUEST, likePost);
   yield takeLatest(DISLIKE_POST_REQUEST, dislikePost);
   yield takeLatest(UPDATE_POST_REQUEST, updatePost);

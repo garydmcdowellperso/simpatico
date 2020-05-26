@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dropdown,
   DropdownToggle,
@@ -8,54 +8,75 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+import { useDispatch, useSelector } from 'react-redux'
+import Link from 'next/link'
 
-export default class UserActions extends React.Component {
-  constructor(props) {
-    super(props);
+import { fetchUserInfo } from "../../../../actions/auth";
 
-    this.state = {
-      visible: false
-    };
+function UserActions(props) {
+  const [isVisible, setIsVisible] = useState();
+  const [firstNameDisplay, setFirstNameDisplay] = useState("");
+  let firstNameLocalStorage;
 
-    this.toggleUserActions = this.toggleUserActions.bind(this);
+  const dispatch = useDispatch();
+  if (typeof window !== 'undefined') {
+    // Server side rendering protection
+    firstNameLocalStorage = localStorage.getItem("firstName");
   }
 
-  toggleUserActions() {
-    this.setState({
-      visible: !this.state.visible
-    });
-  }
+  const { isValidToken, firstName, lastName, avatar } = useSelector(state => state.auth);
 
-  render() {
-    return (
-      <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
-        <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
-          <img
-            className="user-avatar rounded-circle mr-2"
-            src={require("./../../../../images/avatars/0.jpg")}
-            alt="User Avatar"
-          />{" "}
-          <span className="d-none d-md-inline-block">Sierra Brooks</span>
-        </DropdownToggle>
-        <Collapse tag={DropdownMenu} right small open={this.state.visible}>
-          <DropdownItem to="user-profile">
-            <i className="material-icons">&#xE7FD;</i> Profile
-          </DropdownItem>
-          <DropdownItem to="edit-user-profile">
-            <i className="material-icons">&#xE8B8;</i> Edit Profile
-          </DropdownItem>
-          <DropdownItem to="file-manager-list">
-            <i className="material-icons">&#xE2C7;</i> Files
-          </DropdownItem>
-          <DropdownItem to="transaction-history">
-            <i className="material-icons">&#xE896;</i> Transactions
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem to="/" className="text-danger">
-            <i className="material-icons text-danger">&#xE879;</i> Logout
-          </DropdownItem>
-        </Collapse>
-      </NavItem>
-    );
+  function toggleUserActions() {
+    setIsVisible(!isVisible)
   }
+  
+  // When isValidToken changes
+  useEffect(() => {
+    if (isValidToken) {
+      // So the token is present and valid, do I have the user details?
+      dispatch(fetchUserInfo());
+
+      if (firstNameLocalStorage) {
+        setFirstNameDisplay(firstNameLocalStorage)
+      }
+    }
+  }, [isValidToken]);
+
+
+  useEffect(() => {
+    if (firstName !== "") {
+      localStorage.setItem("firstName", firstName);
+      localStorage.setItem("lastName", lastName);
+      setFirstNameDisplay(firstName);
+    }
+  }, [firstName]);
+
+  return (
+    <NavItem tag={Dropdown} caret toggle={() => {
+      toggleUserActions()
+    }}>
+      <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
+        {avatar ?
+        (<img
+          className="user-avatar rounded-circle mr-2"
+          src={avatar}
+          alt="User Avatar"
+        />) : null }
+        <span className="d-none d-md-inline-block">{firstNameDisplay}</span>
+      </DropdownToggle>
+      <Collapse tag={DropdownMenu} right small open={isVisible}>
+        <DropdownItem to="user-profile" onClick={() => {
+          window.location.href='/profile/';
+        }}>
+          <i className="material-icons">&#xE7FD;</i> Profile
+        </DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem className="text-danger">
+          <i className="material-icons text-danger">&#xE879;</i> <Link href="/connect/"><a>Logout</a></Link>
+        </DropdownItem>
+      </Collapse>
+    </NavItem>
+  );
 }
+
+export default UserActions;

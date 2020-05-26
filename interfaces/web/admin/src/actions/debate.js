@@ -30,9 +30,10 @@ export const UPDATE_GENERAL_INFO_REQUEST = "UPDATE_GENERAL_INFO_REQUEST";
 export const UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
 export const UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
 
-export function fetchDebatesRequest() {
+export function fetchDebatesRequest(accountId) {
   return {
-    type: FETCH_ALLDEBATES_REQUEST
+    type: FETCH_ALLDEBATES_REQUEST,
+    accountId
   };
 }
 

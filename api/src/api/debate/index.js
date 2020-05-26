@@ -29,6 +29,7 @@ const routes = async fastify => {
                           name: { type: 'string' },
                           slug: { type: 'string' },
                           debateType: { type: 'string' },
+                          accountId: { type: 'number' },
                           languages: { 
                             type: 'object',
                             properties: {
@@ -170,8 +171,11 @@ const routes = async fastify => {
         {
             config,
             schema: {
-                description: "fetches all the debates associated to a user",
+                description: "fetches all the debates associated to an account",
                 tags: ["api"],
+                querystring: {
+                    id: { type: "number" },
+                },
                 response: {
                     200: {
                         type: "array",
@@ -182,6 +186,7 @@ const routes = async fastify => {
                                name: { type: 'string' },
                                slug: { type: 'string' },
                                debateType: { type: 'string' },
+                               accountId: { type: 'number' },
                                languages: { 
                                  type: 'object',
                                  properties: {
@@ -300,9 +305,11 @@ const routes = async fastify => {
             }
         },
         async request => {
-            fastify.log.info("[src#api#fetchAllDebates] Entering");
+            fastify.log.info({ query: request.query }, "[src#api#fetchAllDebates] Entering");
 
-            const response = await DebatesController.fetchAllDebates();
+            const inputs = { ...request.query };
+
+            const response = await DebatesController.fetchAllDebates(inputs);
 
             return response;
         }

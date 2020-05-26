@@ -23,6 +23,10 @@ class DebateRepository {
     return this.repository.getByName(name);
   }
 
+  getByAccountId(id) {
+    return this.repository.getByAccountId(id);
+  }
+
   find() {
     return this.repository.find();
   }

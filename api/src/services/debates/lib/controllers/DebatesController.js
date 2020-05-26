@@ -44,9 +44,12 @@ async function fetchDebate(inputs) {
   return debateSerializer.serialize(response);
 }
 
-async function fetchAllDebates() {
+async function fetchAllDebates(inputs) {
+  // Inputs
+  const { id } = inputs;
+
   // Treatment
-  const response = await FetchAllDebates({
+  const response = await FetchAllDebates(id, {
     debateRepository
   });
 

@@ -55,8 +55,6 @@ function Main(props) {
   const { module } = useSelector(state => state.module)
   const { post } = useSelector(state => state)
 
-  console.log('module', getCurrentLang())
-
   if (!module) {
     return (<p>Loading</p>)
   }

@@ -19,6 +19,14 @@ class UserRepository {
     return this.repository.get(userId);
   }
 
+  getByAccountId(id) {
+    return this.repository.getByAccountId(id);
+  }
+
+  getByUserIdAccountId(userId, accountId) {
+    return this.repository.getByUserIdAccountId(userId, accountId);
+  }
+
   getByEmail(email) {
     return this.repository.getByEmail(email);
   }

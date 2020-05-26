@@ -7,9 +7,9 @@ import {
   REPLY_POST_REQUEST,
   REPLY_POST_SUCCESS,
   REPLY_POST_FAILURE,
-  FETCH_POSTS_FOR_THREAD_REQUEST,
-  FETCH_POSTS_FOR_THREAD_SUCCESS,
-  FETCH_POSTS_FOR_THREAD_FAILURE,
+  FETCH_POSTS_FOR_MODULE_REQUEST,
+  FETCH_POSTS_FOR_MODULE_SUCCESS,
+  FETCH_POSTS_FOR_MODULE_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE,
@@ -71,13 +71,13 @@ export default function post(state = initialState, action) {
         ...state,
         posts: newPosts
       };
-    case FETCH_POSTS_FOR_THREAD_REQUEST:
+    case FETCH_POSTS_FOR_MODULE_REQUEST:
       return {
         ...state,
         processing: true,
         page: action.page
       };
-    case FETCH_POSTS_FOR_THREAD_SUCCESS:
+    case FETCH_POSTS_FOR_MODULE_SUCCESS:
       /**
       // Change order according to filter
       newPosts = cloneDeep(action.posts);
@@ -102,44 +102,7 @@ export default function post(state = initialState, action) {
         search: searchPosts,
         more: action.posts.length > 0 ? true : false
       };
-    case FETCH_POSTS_FOR_THREAD_FAILURE:
-      return {
-        ...state,
-        processing: false,
-        error: action.error
-      };
-    case FETCH_POSTS_FOR_THREAD_REQUEST:
-      return {
-        ...state,
-        processing: true,
-        page: action.page
-      };
-    case FETCH_POSTS_FOR_THREAD_SUCCESS:
-      /**
-      // Change order according to filter
-      newPosts = cloneDeep(action.posts);
-      newPosts.sort((a, b) => {
-        return b.timestamp_unix - a.timestamp_unix;
-      });
-
-      // Change order according to filter
-      searchPosts = cloneDeep(action.posts);
-      const postsLength = searchPosts.length;
-      for (let x = 0; x < postsLength; x += 1) {
-        searchPosts[x].description = searchPosts[x].contents;    
-      } 
-
-      console.log('searchPosts', searchPosts)
-      **/
-
-      return {
-        ...state,
-        processing: false,
-        posts: action.posts.length > 0 ? state.posts.concat(action.posts) : state.posts,
-        search: searchPosts,
-        more: action.posts.length > 0 ? true : false
-      };
-    case FETCH_POSTS_FOR_THREAD_FAILURE:
+    case FETCH_POSTS_FOR_MODULE_FAILURE:
       return {
         ...state,
         processing: false,

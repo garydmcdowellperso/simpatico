@@ -8,10 +8,11 @@ export const FETCH_USER_INFO_REQUEST_SUCCESS =
 export const FETCH_USER_INFO_REQUEST_FAILURE =
   "FETCH_USER_INFO_REQUEST_FAILURE";
 
-export function verifyTokenRequest({ token }) {
+export function verifyTokenRequest({ token, role }) {
   return {
     type: VERIFY_TOKEN_REQUEST,
-    token
+    token,
+    role
   };
 }
 

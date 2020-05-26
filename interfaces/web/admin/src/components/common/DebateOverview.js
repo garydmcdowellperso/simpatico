@@ -1,12 +1,11 @@
 import React from "react";
-import { Card, CardBody } from "shards-react";
+import { Card, CardBody, CardFooter, Row, Col, Tooltip } from "shards-react";
 import Link from 'next/link'
 import classNames from "classnames";
 
 const DebateOverview = (props) => {
   const { variation, debate } = props;
 
-  console.log('props', props)
   const cardClasses = classNames(
     "stats-small",
     variation && `stats-small--${variation}`
@@ -39,8 +38,12 @@ const DebateOverview = (props) => {
   );
 
   const innerDataFieldClasses = classNames(
-    "stats-small__data",
     "align-items-center"
+  );
+
+  const materialBig = classNames(
+    "material-icons",
+    "md-48"
   );
 
   return (
@@ -51,22 +54,47 @@ const DebateOverview = (props) => {
             <span className={labelClasses}>{debate.name}</span>
             <h6 className={valueClasses}>{debate.slug}</h6>
           </div>
-          <div className={innerDataFieldClasses}>
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <i class="material-icons">build</i>
-            </Link>
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <i class="material-icons">play_arrow</i>
-            </Link>
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <i class="material-icons">delete</i>
-            </Link>
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <i class="material-icons">pause</i>
-            </Link>
-          </div>
         </div>
       </CardBody>
+      <CardFooter>
+        <Row>
+          <Col className="col-lg mb-3">
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <a>
+                <i className={materialBig}>build</i> Configure
+              </a>
+            </Link>
+          </Col>
+          <Col className="col-lg mb-3">
+            <Link href={{ pathname: '/' }}>
+              <a>
+                <i className="material-icons">play_arrow</i> Goto
+              </a>
+            </Link>
+          </Col>
+          <Col className="col-lg mb-3">
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <a>
+                <i className="material-icons">pause</i> Pause
+              </a>
+            </Link>
+          </Col>
+          <Col className="col-lg mb-3">
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <a>
+                <i className="material-icons">double_arrow</i> Clone
+              </a>
+            </Link>
+          </Col>
+          <Col className="col-lg mb-3">
+            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+              <a>
+                <i className="material-icons" style={{color:'red'}}>delete</i> Delete
+              </a>
+            </Link>
+          </Col>
+        </Row>
+      </CardFooter>
     </Card>
   );
 }

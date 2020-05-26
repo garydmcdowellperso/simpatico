@@ -1,6 +1,7 @@
 {
-  "account": "My account",
-  "login": "Login",
+  "follow": "Follow",
+  "home": "Home",
   "logout": "Logout",
-  "langSelectLabel": "Language"
+  "overview": "Overview",
+  "profile": "Profile"
 }

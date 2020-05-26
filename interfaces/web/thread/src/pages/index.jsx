@@ -5,11 +5,10 @@ import { Grommet } from "grommet";
 import PropTypes from "prop-types";
 
 import SlideOutSidebar from "../components/slideoutsidebar";
-import { fetchPostsForThread } from "../actions/post";
+import { fetchPostsForModule } from "../actions/post";
 import { fetchModuleRequest } from "../actions/module";
 
 import 'react-flags-select/css/react-flags-select.css';
-
 
 class Home extends Component {
   static async getInitialProps({ ctx }) {
@@ -22,17 +21,18 @@ class Home extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;    
-    const thread = localStorage.getItem("thread");
-    if (!thread) {
+    const module = localStorage.getItem("module");
+
+    if (!module) {
       return
     }
     
     dispatch(
-      fetchPostsForThread(thread, 1)
+      fetchPostsForModule(module, 1)
     );
 
     dispatch(
-      fetchModuleRequest(thread)
+      fetchModuleRequest(module)
     );
   }
 

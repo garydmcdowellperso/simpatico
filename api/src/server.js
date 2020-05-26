@@ -22,6 +22,7 @@ import page from "./api/page";
 import stats from "./api/stats";
 import module from "./api/module";
 import email from "./api/email";
+import account from "./api/account";
 
 const singleton = fastify({
   logger: true
@@ -99,6 +100,7 @@ singleton.register(page, { prefix: "/v1" });
 singleton.register(stats, { prefix: "/v1" });
 singleton.register(module, { prefix: "/v1" });
 singleton.register(email, { prefix: "/v1" });
+singleton.register(account, { prefix: "/v1" });
 
 // Hook it all together
 const start = async () => {

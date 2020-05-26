@@ -1,7 +1,12 @@
 async function FetchAllDebates(
+  id,
   { debateRepository }
 ) {
-  return debateRepository.find();
+  if (!id) {
+    throw new Error("No id");
+  }
+
+  return debateRepository.getByAccountId(id);
 }
 
 export default FetchAllDebates;

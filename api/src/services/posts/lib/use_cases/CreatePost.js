@@ -5,7 +5,7 @@ async function CreatePost(
   contents,
   user,
   timestamp,
-  thread,
+  module,
   { postRepository }
 ) {
   if (!title) {
@@ -20,11 +20,11 @@ async function CreatePost(
   if (!timestamp) {
     throw new Error("No timestamp");
   }
-  if (!thread) {
-    throw new Error("No thread");
+  if (!module) {
+    throw new Error("No module");
   }
 
-  const post = new Post(null, title, contents, user, timestamp, thread, null, false);
+  const post = new Post(null, title, contents, user, timestamp, module, null, false);
 
   return postRepository.persist(post);
 }

@@ -6,9 +6,9 @@ export const REPLY_POST_REQUEST = "REPLY_POST_REQUEST";
 export const REPLY_POST_SUCCESS = "REPLY_POST_SUCCESS";
 export const REPLY_POST_FAILURE = "REPLY_POST_FAILURE";
 
-export const FETCH_POSTS_FOR_THREAD_REQUEST = "FETCH_POSTS_FOR_THREAD_REQUEST";
-export const FETCH_POSTS_FOR_THREAD_SUCCESS = "FETCH_POSTS_FOR_THREAD_SUCCESS";
-export const FETCH_POSTS_FOR_THREAD_FAILURE = "FETCH_POSTS_FOR_THREAD_FAILURE";
+export const FETCH_POSTS_FOR_MODULE_REQUEST = "FETCH_POSTS_FOR_MODULE_REQUEST";
+export const FETCH_POSTS_FOR_MODULE_SUCCESS = "FETCH_POSTS_FOR_MODULE_SUCCESS";
+export const FETCH_POSTS_FOR_MODULE_FAILURE = "FETCH_POSTS_FOR_MODULE_FAILURE";
 
 export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
 export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
@@ -27,12 +27,12 @@ export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const DELETE_POST_FAILURE = "DELETE_POST_FAILURE";
 
 
-export function createPostRequest({ title, contents, thread }) {
+export function createPostRequest({ title, contents, module }) {
   return {
     type: CREATE_POST_REQUEST,
     title,
     contents,
-    thread
+    module
   };
 }
 
@@ -72,24 +72,24 @@ export function replyPostFailure(error) {
   };
 }
 
-export function fetchPostsForThread(thread, page) {
+export function fetchPostsForModule(module, page) {
   return {
-    type: FETCH_POSTS_FOR_THREAD_REQUEST,
-    thread,
+    type: FETCH_POSTS_FOR_MODULE_REQUEST,
+    module,
     page
   };
 }
 
-export function fetchPostsForThreadSuccess(posts) {
+export function fetchPostsForModuleSuccess(posts) {
   return {
-    type: FETCH_POSTS_FOR_THREAD_SUCCESS,
+    type: FETCH_POSTS_FOR_MODULE_SUCCESS,
     posts
   };
 }
 
-export function fetchPostsForThreadFailure(error) {
+export function fetchPostsForModuleFailure(error) {
   return {
-    type: FETCH_POSTS_FOR_THREAD_FAILURE,
+    type: FETCH_POSTS_FOR_MODULE_FAILURE,
     error
   };
 }

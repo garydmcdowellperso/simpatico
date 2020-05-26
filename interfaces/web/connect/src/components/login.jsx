@@ -18,6 +18,14 @@ import { loginRequest } from "../actions/auth";
 
 class Login extends PureComponent {
   render() {
+    const { auth: { accountId, token } } = this.props;
+    
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("accountId", accountId);
+      window.location.href = '/admin/';
+    }
+
     return (
       <Grid
         textAlign="center"

@@ -5,7 +5,7 @@ import {
   verifyTokenRequestFailure,
   FETCH_USER_INFO_REQUEST,
   fetchUserInfoSuccess,
-  fetchUserInfoFailure
+  fetchUserInfoFailure,
 } from "../actions/auth";
 import { get, post } from "../lib/api";
 
@@ -13,7 +13,8 @@ function* verifyTokenRequest(action) {
   const r = yield post(
     "v1/verifyToken",
     JSON.stringify({
-      token: action.token
+      token: action.token,
+      role: action.role
     })
   )
     .then(json => put(verifyTokenRequestSuccess(json)))

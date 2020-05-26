@@ -44,26 +44,15 @@ class Simpatico extends App {
   }
 
   componentDidMount() {
-    // Check if token passed in - validate it and use the response to populate local storage
-    if (window.location.search.includes("token")) {
+    // Not on the URL so check the localStorage
+    if (localStorage.getItem("token")) {
       // Ask server to verify and set cookie
       store.dispatch(
         verifyTokenRequest({
-          token: getUrlParameter("token")
+          token: localStorage.getItem("token"),
+          role: "participant"
         })
       );
-    }
-
-    if (!window.location.search.includes("token")) {
-      // Not on the URL so check the localStorage
-      if (localStorage.getItem("token")) {
-        // Ask server to verify and set cookie
-        store.dispatch(
-          verifyTokenRequest({
-            token: localStorage.getItem("token")
-          })
-        );
-      }
     }
   }
 

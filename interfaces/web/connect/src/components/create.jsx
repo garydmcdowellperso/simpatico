@@ -29,9 +29,12 @@ function Create(props) {
           <Image src={require("../images/intelligence-collective1.png")} /> Create an account
         </Header>
         <Formik
-          initialValues={{ firstname: "", lastname: "", email: "", password: "" }}
+          initialValues={{ account: "", firstname: "", lastname: "", email: "", password: "" }}
           validate={values => {
             const errors = {};
+            if (!values.account) {
+              errors.account = "Required";
+            }
             if (!values.firstname) {
               errors.firstname = "Required";
             }
@@ -49,6 +52,7 @@ function Create(props) {
           onSubmit={(values, { setSubmitting }) => {
             dispatch(
               createAccountRequest(
+                values.account,
                 values.firstname,
                 values.lastname,
                 values.email,
@@ -76,7 +80,18 @@ function Create(props) {
                 <Form.Field>
                   <Form.Input
                     fluid
-                    type="firstname"
+                    name="account"
+                    placeholder="accpunt"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.account}
+                    icon="user"
+                  />
+                  {errors.account && touched.account && errors.account}
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
                     name="firstname"
                     placeholder="firstname"
                     onChange={handleChange}
@@ -89,7 +104,6 @@ function Create(props) {
                 <Form.Field>
                   <Form.Input
                     fluid
-                    type="lastname"
                     name="lastname"
                     placeholder="lastname"
                     onChange={handleChange}

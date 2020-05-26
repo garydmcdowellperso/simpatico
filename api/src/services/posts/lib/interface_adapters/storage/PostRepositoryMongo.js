@@ -54,8 +54,8 @@ class PostRepositoryMongo {
     return this.collection.findOne({ id: postId });
   }
 
-  fetchPostsForThread(thread, page) {
-    return this.collection.find({ thread, deleted: false }).skip((page-1) * 5).limit(5).toArray();
+  fetchPostsForModule(module, page) {
+    return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).toArray();
   }
 
   find() {

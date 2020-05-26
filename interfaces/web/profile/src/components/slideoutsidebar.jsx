@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import flowRight from 'lodash/flowRight';
 
 import Main from "./main";
+import nextI18NextInstance from '../../i18n';
+import { getCurrentLang } from '../lib/utils';
 
-const SlideOutSidebar = () => {
+const { withTranslation } = nextI18NextInstance;
+
+const SlideOutSidebar = (props) => {
+  const { debate, t } = props;
+
   const [visible, setVisible] = useState(false);
 
   const onClick = () => {
@@ -32,11 +39,19 @@ const SlideOutSidebar = () => {
               window.location = "/";
             }}
           />
-          <a href="/">Home</a>
+          <a href="/">{t('home')}</a>
         </Menu.Item>
+        {debate.themes ? debate.themes.map((theme,idx) => {
+          return (
+            <Menu.Item key={idx}>
+              <Icon link name="talk" />
+              <Link href={theme.module ? `/thread/?module=${theme.module}` : null}><a>{theme.title[getCurrentLang()]} </a></Link>
+            </Menu.Item>
+          )
+        }) : null}
         <Menu.Item>
-          <Icon link name="user" />
-          {(typeof window !== 'undefined') ? localStorage.getItem("firstName") : ''}
+          <Icon link name="power off" />
+          {(typeof window !== 'undefined') && localStorage.getItem("firstName") ? t('logout') : ''}
         </Menu.Item>
       </Sidebar>
 
@@ -49,4 +64,6 @@ const SlideOutSidebar = () => {
   );
 }
 
-export default SlideOutSidebar
+export default flowRight(
+  withTranslation(['common'])
+)(SlideOutSidebar);

@@ -59,6 +59,7 @@ class ModuleRepositoryMongo {
   }
 
   findByDebateId(debateId) {
+    console.log('debateId', )
     return this.collection.find({ debateId }).toArray();
   }
 

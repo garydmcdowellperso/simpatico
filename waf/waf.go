@@ -5,5 +5,5 @@ type waf interface {
 	authentication() error
 	authorisation() error
 	sanitisation() (string, error)
-	routing() float64
+	routing() (response, error)
 }

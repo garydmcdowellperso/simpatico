@@ -1,5 +1,5 @@
 class Debate {
-  constructor(id = null, name, slug, debateType, languages, header, overview, themes, connection, deleted) {
+  constructor(id = null, name, slug, debateType, languages, header, overview, themes, connection, deleted, accountId) {
     this.id = id;
     this.name = name;
     this.slug = slug;
@@ -10,6 +10,7 @@ class Debate {
     this.themes = themes;
     this.connection = connection;
     this.deleted = deleted;
+    this.accountId = accountId;
   }
 }
 

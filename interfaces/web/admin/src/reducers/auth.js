@@ -11,8 +11,9 @@ const initialState = {
   firstName: "",
   lastName: "",
   email: "",
+  avatar: "",
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
   error: ""
@@ -25,10 +26,19 @@ export default function auth(state = initialState, action) {
         ...state,
         processing: true,
         error: "",
-        isValidToken: false,
         token: action.token
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:
+      // Parse out json and update the store
+      if (action && action.json && action.json.statusCode === 500) {
+        return {
+          ...state,
+          processing: false,
+          error: "",
+          isValidToken: false
+        };
+      }
+      
       // Parse out json and update the store
       return {
         ...state,
@@ -52,6 +62,7 @@ export default function auth(state = initialState, action) {
         firstName: "",
         lastName: "",
         email: "",
+        avatar: "",
         id: null
       };
     case FETCH_USER_INFO_REQUEST_SUCCESS:
@@ -63,6 +74,7 @@ export default function auth(state = initialState, action) {
         firstName: action.json["first-name"],
         lastName: action.json["last-name"],
         email: action.json.email,
+        avatar: action.json.avatar,
         id: action.json.id
       };
     case FETCH_USER_INFO_REQUEST_FAILURE:

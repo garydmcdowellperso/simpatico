@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { createAccountRequest } from "../actions/auth";
 
 function Create({ debate }) {
-  console.log('debate', debate)
   const dispatch = useDispatch();
 
   return (
@@ -79,7 +78,9 @@ function Create({ debate }) {
                 values.firstname,
                 values.lastname,
                 values.email,
-                values.password
+                values.password,
+                debate.id,
+                debate.accountId
               )
             );
 

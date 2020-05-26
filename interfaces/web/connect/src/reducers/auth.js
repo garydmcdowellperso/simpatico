@@ -7,7 +7,7 @@ import {
   CALLBACK_REQUEST_FAILURE
 } from "../actions/auth";
 
-const initialState = { token: "", processing: false, error: "" };
+const initialState = { accountId: null, token: "", processing: false, error: "" };
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
@@ -15,18 +15,24 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         processing: true,
+        token: "",
+        account: null,
         error: ""
       };
     case LOGIN_REQUEST_SUCCESS:
       return {
         ...state,
         processing: false,
+        token: action.token,
+        accountId: action.accountId,
         error: ""
       };
     case LOGIN_REQUEST_FAILURE:
       return {
         ...state,
         processing: false,
+        token: "",
+        account: null,
         error: action.error
       };
     case CALLBACK_REQUEST:

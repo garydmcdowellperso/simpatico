@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { Box } from "grommet";
 import { Formik } from "formik";
@@ -5,30 +6,37 @@ import { connect } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import flowRight from 'lodash/flowRight';
+import { EditorState, convertToRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import dynamic from 'next/dynamic'
 
 import { createPostRequest } from "../actions/post";
 import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
 
+const Editor = dynamic(
+  () => {
+    return import('react-draft-wysiwyg').then((mod) => mod.Editor);
+  },
+  { loading: () => null, ssr: false },
+);
+
 class TopPost extends Component {
   state = {
-    value: null
+    editorState: null
   }
 
-  onChange = (value) => {
-    this.setState({value});
+  onEditorStateChange = (editorState) => {
+    this.setState({
+        editorState,
+    });
   };
-
-  RichTextEditor = null;
 
   render() {
     const { t } = this.props;
-
-    if (process.browser && !this.RichTextEditor) {
-      this.RichTextEditor = require('react-rte').default;
-      this.setState({ value: this.RichTextEditor.createEmptyValue()})
-    }
+    const { editorState } = this.state;
 
     return (
       <Box direction="row">
@@ -37,21 +45,34 @@ class TopPost extends Component {
             initialValues={{ title: "" }}
             validate={values => {
               const errors = {};
+              const { editorState } = this.state;      
+
+              if (editorState) {
+                const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+                if (content === '<p></p>') {
+                  errors.contents = t('required');
+                }
+              }
+
               if (!values.title) {
                 errors.title = t('required');
-              }
-              if (!this.state.value.toString('html')) {
-                errors.contents = t('required');
               }
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
               const { dispatch } = this.props;
+              const { editorState } = this.state;      
+
+              if (!editorState) {
+                return;
+              }
+              const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+
               dispatch(
                 createPostRequest({
                   title: values.title,
-                  contents: this.state.value.toString('html'),
-                  thread: localStorage.getItem("thread")
+                  contents: content,
+                  module: localStorage.getItem("module")
                 })
               );
 
@@ -83,14 +104,34 @@ class TopPost extends Component {
                   {errors.title && touched.title && errors.title}
                 </Form.Field>
                 <Form.Field>
-                  {process.browser ? 
-                  (<this.RichTextEditor
-                    value={this.state.value ? this.state.value : this.RichTextEditor.createEmptyValue()}
-                    name="contents"
-                    placeholder={t('contents')}
-                    onChange={this.onChange}
-                    onBlur={handleBlur}
-                  />) : null}
+                  <Editor
+                      editorState={editorState ? editorState : EditorState.createEmpty()}
+                      toolbarClassName="toolbarClassName"
+                      wrapperClassName="wrapperClassName"
+                      editorClassName="editorClassName"
+                      localization={{
+                          locale: 'fr',
+                      }}
+                      mention={{
+                          separator: ' ',
+                          trigger: '@',
+                          suggestions: [
+                            { text: 'APPLE', value: 'apple', url: 'apple' },
+                            { text: 'BANANA', value: 'banana', url: 'banana' },
+                            { text: 'CHERRY', value: 'cherry', url: 'cherry' },
+                            { text: 'DURIAN', value: 'durian', url: 'durian' },
+                            { text: 'EGGFRUIT', value: 'eggfruit', url: 'eggfruit' },
+                            { text: 'FIG', value: 'fig', url: 'fig' },
+                            { text: 'GRAPEFRUIT', value: 'grapefruit', url: 'grapefruit' },
+                            { text: 'HONEYDEW', value: 'honeydew', url: 'honeydew' },
+                          ],
+                        }}
+                      hashtag={{
+                          separator: ' ',
+                          trigger: '#',
+                        }}  
+                      onEditorStateChange={this.onEditorStateChange}
+                  />                  
                   {errors.contents && touched.contents && errors.contents}
                 </Form.Field>
                 <Button type="submit" disabled={isSubmitting}>

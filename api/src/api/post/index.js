@@ -17,30 +17,30 @@ const routes = async fastify => {
             config,
             preValidation: [fastify.authenticate],
             schema: {
-            description: 'creates a post',
-            tags: ['api'],
-            body: {
-                type: 'object',
-                properties: {
-                title: { type: 'string' },
-                contents: { type: 'string' },
-                thread: { type: 'number' }
+                description: 'creates a post',
+                tags: ['api'],
+                body: {
+                    type: 'object',
+                    properties: {
+                        title: { type: 'string' },
+                        contents: { type: 'string' },
+                        module: { type: 'number' }
+                    },
                 },
-            },
-            response: {
-                200: {
-                type: 'object',
-                properties: {
-                    id: { type: 'number' },
-                    title: { type: 'string' },
-                    contents: { type: 'string' },
-                    user: { type: 'string' },
-                    uid: { type: 'number' },
-                    timestamp: { type: "string" },
-                    thread: { type: "number" }
+                response: {
+                    200: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            title: { type: 'string' },
+                            contents: { type: 'string' },
+                            user: { type: 'string' },
+                            uid: { type: 'number' },
+                            timestamp: { type: "string" },
+                            module: { type: "number" }
+                        }
+                    }
                 }
-                }
-            }
             }
         },
         async request => {
@@ -87,7 +87,7 @@ const routes = async fastify => {
                             user: { type: 'string' },
                             uid: { type: 'number' },
                             timestamp: { type: "string" },
-                            thread: { type: "number" },
+                            module: { type: "number" },
                             likes: { type: "number" },
                             dislikes: { type: "number" },
                             deleted: { type: "boolean" }
@@ -140,7 +140,7 @@ const routes = async fastify => {
                             user: { type: 'string' },
                             uid: { type: 'number' },
                             timestamp: { type: "string" },
-                            thread: { type: "number" },
+                            module: { type: "number" },
                             likes: { type: "number" },
                             dislikes: { type: "number" },
                             deleted: { type: "boolean" }
@@ -194,7 +194,7 @@ const routes = async fastify => {
                             user: { type: 'string' },
                             uid: { type: 'number' },
                             timestamp: { type: "string" },
-                            thread: { type: "number" },
+                            module: { type: "number" },
                             likes: { type: "number" },
                             dislikes: { type: "number" },
                             deleted: { type: "boolean" }
@@ -247,7 +247,7 @@ const routes = async fastify => {
                             user: { type: 'string' },
                             uid: { type: 'number' },
                             timestamp: { type: "string" },
-                            thread: { type: "number" },
+                            module: { type: "number" },
                             likes: { type: "number" },
                             dislikes: { type: "number" },
                             deleted: { type: "boolean" }
@@ -292,30 +292,30 @@ const routes = async fastify => {
             }
             },
             response: {
-            200: {
-                type: "object",
-                properties: {
-                id: { type: "number" },
-                title: { type: "string" },
-                contents: { type: "string" },
-                user: { type: "string" },
-                timestamp: { type: "string" },
-                deleted: { type: "boolean" },
-                replies: {
-                    type: "array",
-                    items: {
+                200: {
                     type: "object",
                     properties: {
-                        id: { type: "number" },
-                        title: { type: "string" },
-                        contents: { type: "string" },
-                        user: { type: "string" },
-                        timestamp: { type: "string" }
+                    id: { type: "number" },
+                    title: { type: "string" },
+                    contents: { type: "string" },
+                    user: { type: "string" },
+                    timestamp: { type: "string" },
+                    deleted: { type: "boolean" },
+                    replies: {
+                        type: "array",
+                        items: {
+                        type: "object",
+                        properties: {
+                            id: { type: "number" },
+                            title: { type: "string" },
+                            contents: { type: "string" },
+                            user: { type: "string" },
+                            timestamp: { type: "string" }
+                        }
+                        }
                     }
                     }
                 }
-                }
-            }
             }
         }
         },
@@ -352,14 +352,14 @@ const routes = async fastify => {
     );
 
   fastify.get(
-    "/fetchPostsForThread",
+    "/fetchPostsForModule",
     {
       config,
       schema: {
         description: "fetches the posts for a given thread",
         tags: ["api"],
         querystring: {
-          thread: { type: "number" },
+          module: { type: "number" },
           page: { type: "number" }
         },
         response: {
@@ -375,7 +375,7 @@ const routes = async fastify => {
                 uid: { type: "number" },
                 timestamp: { type: "string" },
                 timestamp_unix: { type: "string" },
-                thread: { type: "number" },
+                module: { type: "number" },
                 likes: { type: "number" },
                 dislikes: { type: "number" },
                 deleted: { type: "boolean" },
@@ -403,14 +403,14 @@ const routes = async fastify => {
       }
     },
     async request => {
-      fastify.log.info("[src#api#fetchPostsForThread] Entering");
+      fastify.log.info("[src#api#fetchPostsForModule] Entering");
 
       const inputs = {
-        thread: request.query.thread,
+        module: request.query.module,
         page: request.query.page
       };
 
-      const response = await PostsController.fetchPostsForThread(inputs);
+      const response = await PostsController.fetchPostsForModule(inputs);
 
       if (response.length > 0) {
         const resps = await response.map(async resp => {

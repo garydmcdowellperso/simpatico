@@ -6,7 +6,17 @@ const _serializeSingleUser = user => {
     email: user.email,
     password: user.password,
     activated: user.activated,
-    token: user.token
+    token: user.token,
+    role: user.role,
+    bio: user.bio,
+    avatar: user.avatar,
+    score: user.score,
+    badge: user.badge,
+    likes: user.likes,
+    dislikes: user.dislikes,
+    contributions: user.contributions,
+    accountId: user.accountId,
+    debates: user.debates
   };
 };
 

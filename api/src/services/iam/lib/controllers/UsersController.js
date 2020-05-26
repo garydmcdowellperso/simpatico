@@ -1,11 +1,15 @@
 import UserSerializer from "../serializers/UserSerializer";
 import TokenSerializer from "../serializers/TokenSerializer";
 import CreateOrLogin from "../use_cases/CreateOrLogin";
-import CreateAccount from "../use_cases/CreateAccount";
+import CreateUser from "../use_cases/CreateUser";
 import Login from "../use_cases/Login";
 import Activate from "../use_cases/Activate";
 import VerifyToken from "../use_cases/VerifyToken";
 import FetchUserByUID from "../use_cases/FetchUserByID";
+import FetchUserByEmail from "../use_cases/FetchUserByEmail";
+import FetchUserByUserIdAccountId from "../use_cases/FetchUserByUserIdAccountId";
+import UpdateUserInfo from "../use_cases/UpdateUserInfo";
+import FetchUsersByAccountId from "../use_cases/FetchUsersByAccountId";
 import UserRepository from "../repositories/UserRepository";
 import AccessTokenManager from "../security/AccessTokenManager";
 import EncryptionManager from "../security/EncryptionManager";
@@ -64,12 +68,12 @@ async function activate(inputs) {
   return tokenSerializer.serialize(tokenUser);
 }
 
-async function createAccount(inputs) {
+async function createUser(inputs) {
   // Input
-  const { firstname, lastname, email, password } = inputs;
+  const { debateId, accountId, firstname, lastname, email, password, role } = inputs;
 
   // Treatment
-  const user = await CreateAccount(firstname, lastname, email, password, {
+  const user = await CreateUser(debateId, accountId, firstname, lastname, email, password, role, {
     userRepository,
     encryptionManager,
     accessTokenManager
@@ -82,10 +86,10 @@ async function createAccount(inputs) {
 
 async function verifyToken(inputs) {
   // Input
-  const { token } = inputs;
+  const { token, role } = inputs;
 
   // Treatment
-  return VerifyToken(token, {
+  return VerifyToken(token, role, {
     userRepository,
     accessTokenManager
   });
@@ -105,12 +109,71 @@ async function fetchUser(inputs) {
   return userSerializer.serialize(user);
 }
 
+async function fetchUserAdmin(inputs) {
+  // Input
+  const { accountId, userId } = inputs;
+
+  // Treatment
+  const user = await FetchUserByUserIdAccountId(userId, accountId, {
+    userRepository
+  });
+
+  // Output
+  const userSerializer = new UserSerializer();
+  return userSerializer.serialize(user);
+}
+
+async function fetchUsers(inputs) {
+  // Input
+  const { id } = inputs;
+
+  // Treatment
+  const users = await FetchUsersByAccountId(id, {
+    userRepository
+  });
+
+  // Output
+  const userSerializer = new UserSerializer();
+  return userSerializer.serialize(users);
+}
+
+async function fetchUserByEmail(inputs) {
+  // Input
+  const { email } = inputs;
+
+  // Treatment
+  const user = await FetchUserByEmail(email, {
+    userRepository
+  });
+
+  // Output
+  const userSerializer = new UserSerializer();
+  return userSerializer.serialize(user);
+}
+
+async function updateUserInfo(inputs) {
+  // Input
+  const { id, firstName, lastName, email, bio, avatar } = inputs;
+
+  // Treatment
+  const user = await UpdateUserInfo(id, firstName, lastName, email, bio, avatar, {
+    userRepository
+  });
+
+  // Output
+  const userSerializer = new UserSerializer();
+  return userSerializer.serialize(user);
+}
 
 module.exports = {
   createOrLogin,
   verifyToken,
   fetchUser,
+  fetchUsers,
   login,
-  createAccount,
-  activate
+  createUser,
+  activate,
+  fetchUserByEmail,
+  updateUserInfo,
+  fetchUserAdmin
 };

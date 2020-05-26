@@ -502,10 +502,12 @@ var FETCH_USER_INFO_REQUEST = "FETCH_USER_INFO_REQUEST";
 var FETCH_USER_INFO_REQUEST_SUCCESS = "FETCH_USER_INFO_REQUEST_SUCCESS";
 var FETCH_USER_INFO_REQUEST_FAILURE = "FETCH_USER_INFO_REQUEST_FAILURE";
 function verifyTokenRequest(_ref) {
-  var token = _ref.token;
+  var token = _ref.token,
+      role = _ref.role;
   return {
     type: VERIFY_TOKEN_REQUEST,
-    token: token
+    token: token,
+    role: role
   };
 }
 function verifyTokenRequestSuccess(json) {
@@ -634,7 +636,7 @@ function fetchDebateSuccess(debate) {
 }
 function fetchDebateFailure(error) {
   return {
-    type: FETCH_DEBATE_FALIURE,
+    type: FETCH_DEBATE_FAILURE,
     error: error
   };
 }
@@ -1042,22 +1044,13 @@ function (_App) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Simpatico, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // Check if token passed in - validate it and use the response to populate local storage
-      if (window.location.search.includes("token")) {
+      // Not on the URL so check the localStorage
+      if (localStorage.getItem("token")) {
         // Ask server to verify and set cookie
         store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
-          token: getUrlParameter("token")
+          token: localStorage.getItem("token"),
+          role: "participant"
         }));
-      }
-
-      if (!window.location.search.includes("token")) {
-        // Not on the URL so check the localStorage
-        if (localStorage.getItem("token")) {
-          // Ask server to verify and set cookie
-          store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_13__["verifyTokenRequest"])({
-            token: localStorage.getItem("token")
-          }));
-        }
       }
     }
   }, {
@@ -1116,7 +1109,7 @@ var initialState = {
   lastName: "",
   email: "",
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
   error: ""
@@ -1136,6 +1129,14 @@ function auth() {
 
     case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_REQUEST_SUCCESS"]:
       // Parse out json and update the store
+      if (action && action.json && action.json.statusCode === 500) {
+        return _objectSpread({}, state, {
+          processing: false,
+          error: "",
+          isValidToken: false
+        });
+      }
+
       return _objectSpread({}, state, {
         processing: false,
         error: "",
@@ -1582,7 +1583,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function* verifyTokenRequest(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/verifyToken", JSON.stringify({
-    token: action.token
+    token: action.token,
+    role: action.role
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["verifyTokenRequestSuccess"])(json));
   })["catch"](function (err) {

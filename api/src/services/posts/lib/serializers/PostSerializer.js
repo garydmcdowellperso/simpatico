@@ -8,7 +8,7 @@ const _serializeSinglePost = post => {
     user: post.user,
     timestamp: moment.unix(post.timestamp).format("DD/MM/YYYY hh-mm-ss"),
     timestamp_unix: post.timestamp,
-    thread: post.thread,
+    module: post.module,
     replies: post.replies && post.replies.map(_serializeSinglePost),
     likes: post.likes,
     dislikes: post.dislikes,

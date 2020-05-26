@@ -5,13 +5,16 @@ import {
   loginRequestFailure,
   CALLBACK_REQUEST,
   callBackRequestSuccess,
-  callBackRequestFailure
+  callBackRequestFailure,
+  CREATE_ACCOUNT_REQUEST,
+  createAccountSuccess,
+  createAccountFailure
 } from "../actions/auth";
 import { get, post } from "../lib/api";
 
 function* loginRequest(action) {
   const r = yield post(
-    "v1/loginRequest",
+    "v1/loginRequestAdmin",
     JSON.stringify({
       email: action.email,
       password: action.password
@@ -19,6 +22,23 @@ function* loginRequest(action) {
   )
     .then(json => put(loginRequestSuccess(json)))
     .catch(err => put(loginRequestFailure(err)));
+  yield r;
+}
+
+function* createAccount(action) {
+  const r = yield post(
+    "v1/createAccount",
+    JSON.stringify({
+      account: action.account,
+      firstname: action.firstname,
+      lastname: action.lastname,
+      email: action.email,
+      password: action.password,
+      role: 'administrator'
+    })
+  )
+    .then(json => put(createAccountSuccess(json)))
+    .catch(err => put(createAccountFailure(err)));
   yield r;
 }
 
@@ -32,4 +52,5 @@ function* callBackRequest(action) {
 export default function* authSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(CALLBACK_REQUEST, callBackRequest);
+  yield takeLatest(CREATE_ACCOUNT_REQUEST, createAccount);
 }

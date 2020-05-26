@@ -32,13 +32,15 @@ export function loginRequestFailure(error) {
   };
 }
 
-export function createAccountRequest(firstname, lastname, email, password) {
+export function createAccountRequest(firstname, lastname, email, password, debateId, accountId) {
   return {
     type: CREATE_ACCOUNT_REQUEST,
     firstname,
     lastname,
     email,
-    password
+    password,
+    debateId,
+    accountId
   };
 }
 

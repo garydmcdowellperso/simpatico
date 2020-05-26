@@ -75,8 +75,12 @@ export default function UserMenu({firstNameDisplay}) {
                     <MenuItem onClick={() => {
                       window.location.href = "/profile/";
                     }}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={() =>  {
+                      // Remove tokens
+                      localStorage.clear()
+
+                      window.location.href = '/login/';
+                    }} >Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

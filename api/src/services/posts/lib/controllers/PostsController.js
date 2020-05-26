@@ -5,7 +5,7 @@ import LikePost from "../use_cases/LikePost";
 import DislikePost from "../use_cases/DislikePost";
 import UpdatePost from "../use_cases/UpdatePost";
 import DeletePost from "../use_cases/DeletePost";
-import FetchPostsForThread from "../use_cases/FetchPostsForThread";
+import FetchPostsForModule from "../use_cases/FetchPostsForModule";
 import PostRepository from "../repositories/PostRepository";
 
 import PostRepositoryMongo from "../interface_adapters/storage/PostRepositoryMongo";
@@ -14,10 +14,10 @@ const postRepository = new PostRepository(new PostRepositoryMongo());
 
 async function createPost(inputs) {
   // Inputs
-  const { title, contents, user, timestamp, thread } = inputs;
+  const { title, contents, user, timestamp, module } = inputs;
 
   // Treatment
-  const response = await CreatePost(title, contents, user, timestamp, thread, {
+  const response = await CreatePost(title, contents, user, timestamp, module, {
     postRepository
   });
 
@@ -90,12 +90,12 @@ async function deletePost(inputs) {
   return postSerializer.serialize(response);
 }
 
-async function fetchPostsForThread(inputs) {
+async function fetchPostsForModule(inputs) {
   // Inputs
-  const { thread, page } = inputs;
+  const { module, page } = inputs;
 
   // Treatment
-  const response = await FetchPostsForThread(thread, page, {
+  const response = await FetchPostsForModule(module, page, {
     postRepository
   });
 
@@ -108,7 +108,7 @@ module.exports = {
   replyPost,
   likePost,
   dislikePost,
-  fetchPostsForThread,
+  fetchPostsForModule,
   updatePost,
   deletePost
 };

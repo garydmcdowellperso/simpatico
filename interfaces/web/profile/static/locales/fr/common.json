@@ -1,6 +1,7 @@
 {
-  "account": "Mon compte",
-  "login": "Se connecter",
-  "logout": "Se déconnecter",
-  "langSelectLabel": "Langue"
+  "follow": "Suivre",
+  "home": "Acceuil",
+  "profile": "Profil",
+  "overview": "Aperçu",
+  "logout": "Se déconnecter"
 }

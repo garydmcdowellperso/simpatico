@@ -11,7 +11,8 @@ const _serializeSingleDebate = debate => {
     overview: debate.overview,
     themes: debate.themes,
     connection: debate.connection,
-    deleted: debate.deleted
+    deleted: debate.deleted,
+    accountId: debate.accountId
   };
 };
 

@@ -47,8 +47,8 @@ class Simpatico extends App {
 
   componentDidMount() {
     // Check if thread passed in and put in local storage
-    if (window.location.search.includes("thread")) {
-      localStorage.setItem("thread", getUrlParameter("thread"));
+    if (window.location.search.includes("module")) {
+      localStorage.setItem("module", getUrlParameter("module"));
     }
 
     if (!window.location.search.includes("token")) {
@@ -57,7 +57,8 @@ class Simpatico extends App {
         // Ask server to verify and set cookie
         store.dispatch(
           verifyTokenRequest({
-            token: localStorage.getItem("token")
+            token: localStorage.getItem("token"),
+            role: 'participant'
           })
         );
       }

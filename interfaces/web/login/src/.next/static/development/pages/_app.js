@@ -10409,13 +10409,15 @@ function loginRequestFailure(error) {
     error: error
   };
 }
-function createAccountRequest(firstname, lastname, email, password) {
+function createAccountRequest(firstname, lastname, email, password, debateId, accountId) {
   return {
     type: CREATE_ACCOUNT_REQUEST,
     firstname: firstname,
     lastname: lastname,
     email: email,
-    password: password
+    password: password,
+    debateId: debateId,
+    accountId: accountId
   };
 }
 function createAccountSuccess() {
@@ -10621,6 +10623,7 @@ var Simpatico = /*#__PURE__*/function (_App) {
         var host = ctx.req.get('host');
         var res = await fetch("https://21f49666.ngrok.io/api/v1/fetchDebate?name=".concat(host));
         var debate = await res.json();
+        console.log('debate', debate);
         return {
           pageProps: pageProps,
           debate: debate
@@ -10766,11 +10769,14 @@ function* loginRequest(action) {
 }
 
 function* createAccount(action) {
-  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createAccount", JSON.stringify({
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/createUser", JSON.stringify({
     firstname: action.firstname,
     lastname: action.lastname,
     email: action.email,
-    password: action.password
+    password: action.password,
+    debateId: action.debateId,
+    accountId: action.accountId,
+    role: 'participant'
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["createAccountSuccess"])(json));
   })["catch"](function (err) {

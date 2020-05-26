@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import Placeholder from "./placeholder";
 import { replyPostRequest } from "../actions/post";
 import nextI18NextInstance from '../../i18n';
-import { deletePost, dislikePost, fetchPostsForThread, likePost, updatePost } from "../actions/post";
+import { deletePost, dislikePost, fetchPostsForModule, likePost, updatePost } from "../actions/post";
 
 const { withTranslation } = nextI18NextInstance;
 
@@ -310,7 +310,7 @@ class ThreadScroll extends Component {
     }
     setTimeout(() => {
       dispatch(
-        fetchPostsForThread(thread, post.page + 1)
+        fetchPostsForModule(thread, post.page + 1)
       );
     }, 1500);
   }
