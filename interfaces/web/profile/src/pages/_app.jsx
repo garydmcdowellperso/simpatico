@@ -44,7 +44,7 @@ class Simpatico extends App {
 
     if (ctx.req) {
       const host = ctx.req.get('host');
-      const res = await fetch(`https://21f49666.ngrok.io/api/v1/fetchDebate?name=${host}`)
+      const res = await fetch(`https://0040d099ab7e.ngrok.io/api/v1/fetchDebate?name=${host}`)
       const debate = await res.json()
       return { pageProps, debate };
     }

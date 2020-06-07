@@ -447,6 +447,158 @@ const routes = async fastify => {
       return [];
     }
   );
+
+  fastify.get(
+    "/fetchPosts",
+    {
+      config,
+      schema: {
+        description: "fetches the posts for an account (across all debates)",
+        tags: ["api"],
+        querystring: {
+          id: { type: "number" }
+        },
+        response: {
+          200: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                id: { type: "number" },
+                title: { type: "string" },
+                contents: { type: "string" },
+                user: { type: "string" },
+                avatar: { type: "string" },
+                uid: { type: "number" },
+                timestamp: { type: "string" },
+                timestamp_unix: { type: "string" },
+                module: { type: "number" },
+                likes: { type: "number" },
+                dislikes: { type: "number" },
+                deleted: { type: "boolean" },
+                replies: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "number" },
+                      title: { type: "string" },
+                      contents: { type: "string" },
+                      user: { type: "string" },
+                      avatar: { type: "string" },
+                      uid: { type: "number" },
+                      timestamp: { type: "string" },
+                      timestamp_unix: { type: "string" },
+                      likes: { type: "number" },
+                      dislikes: { type: "number" }      
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    async request => {
+      fastify.log.info("[src#api#fetchPosts] Entering");
+
+      const inputs = {...request.query};
+
+      const response = await PostsController.fetchPosts(inputs);
+
+      if (response.length > 0) {
+        const resps = await response.map(async resp => {
+          if (resp.replies == null) {
+            delete resp.replies;
+          }
+          // Add name of user 
+          const userinputs = { uid: resp.user };
+          const user = await UsersController.fetchUser(userinputs);
+
+          resp.uid = resp.user;
+          resp.user = user["first-name"];
+          resp.avatar = user.avatar;
+
+          if (resp.replies) {
+            const replies = await resp.replies.map(async reply => {
+              const userInputs = { uid: reply.user };
+              const replyUser = await UsersController.fetchUser(userInputs);
+
+              resp.uid = resp.user;
+              reply.user = replyUser["first-name"];
+              resp.avatar = user.avatar;
+
+              return reply;
+            });
+            await Promise.all(replies);
+          }
+
+          return resp;
+        });
+        const final = await Promise.all(resps);
+        return final;
+      }
+
+      return [];
+    }
+  );
+
+  fastify.get(
+    "/fetchTopContributors",
+    {
+      config,
+      schema: {
+        description: "fetches the users who have made the most posts for an account",
+        tags: ["api"],
+        querystring: {
+          id: { type: "number" }
+        },
+        response: {
+          200: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                id: { type: "number" },
+                user: { type: "string" },
+                avatar: { type: "string" },
+                contributions: { type: "number" },
+              }
+            }
+          }
+        }
+      }
+    },
+    async request => {
+      fastify.log.info("[src#api#fetchTopContributors] Entering");
+
+      const inputs = {...request.query};
+
+      const response = await PostsController.fetchTopContributors(inputs);
+
+      if (response.length > 0) {
+        const resps = await response.map(async resp => {
+          if (resp.replies == null) {
+            delete resp.replies;
+          }
+          // Add name of user 
+          const userinputs = { uid: resp.id };
+          const user = await UsersController.fetchUser(userinputs);
+
+          resp.user = user["first-name"];
+          resp.avatar = user.avatar;
+
+          return resp;
+        });
+        const final = await Promise.all(resps);
+        return final;
+      }
+
+      return [];
+    }
+  );
+
 }
 
 module.exports = routes;

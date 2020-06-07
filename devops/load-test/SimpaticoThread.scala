@@ -8,7 +8,7 @@ import io.gatling.jdbc.Predef._
 class Simpatico extends Simulation {
 
 	val httpProtocol = http
-		.baseUrl("https://21f49666.ngrok.io")
+		.baseUrl("https://0040d099ab7e.ngrok.io")
 		.inferHtmlResources()
 		.acceptHeader("*/*")
 		.acceptEncodingHeader("gzip, deflate")

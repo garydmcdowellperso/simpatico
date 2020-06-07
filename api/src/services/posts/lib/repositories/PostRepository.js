@@ -23,6 +23,14 @@ class PostRepository {
     return this.repository.fetchPostsForModule(module, page);
   }
 
+  fetchPosts(id) {
+    return this.repository.fetchPosts(id);
+  }
+
+  fetchFetchTopContributors(id) {
+    return this.repository.fetchFetchTopContributors(id);
+  }
+
   find() {
     return this.repository.find();
   }

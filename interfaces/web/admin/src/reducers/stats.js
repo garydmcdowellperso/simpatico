@@ -5,7 +5,8 @@ import {
 } from "../actions/stats";
 
 const initialState = {
-  stats: [],
+  posts: null,
+  pageviews: null,
   processing: false,
   error: ""
 };
@@ -24,7 +25,8 @@ export default function stats(state = initialState, action) {
         ...state,
         processing: false,
         error: "",
-        stats: action.stats
+        posts: action.stats.posts,
+        pageviews: action.stats.pageviews
       };
     case FETCH_STATS_FAILURE:
       return {

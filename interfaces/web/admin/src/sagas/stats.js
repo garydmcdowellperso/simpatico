@@ -6,8 +6,8 @@ import {
 } from "../actions/stats";
 import { get } from "../lib/api";
 
-function* fetchStats() {
-  const r = yield get("v1/fetchStats")
+function* fetchStats(action) {
+  const r = yield get(`v1/fetchStats?id=${action.accountId}`)
     .then(json => put(fetchStatsSuccess(json)))
     .catch(err => put(fetchStatsFailure(err)));
   yield r;

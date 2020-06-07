@@ -7,35 +7,43 @@ import PageTitle from "./common/PageTitle";
 import SmallStats from "./common/SmallStats";
 import UsersOverview from "./blog/UsersOverview";
 import UsersByDevice from "./blog/UsersByDevice";
-import Discussions from "./blog/Discussions";
-import TopReferrals from "./common/TopReferrals";
+import Contributions from "./Contributions";
+import TopContributors from "./TopContributors";
 import ActionableItems from "./blog/ActionableItems";
 import Placeholder from "./common/Placeholder";
 
 import { fetchStatsRequest } from "../actions/stats";
+import { fetchPostsRequest, fetchTopContributorsRequest } from "../actions/posts";
 
 export default function Overview(props) {
   const dispatch = useDispatch();
 
-  const smallStats = useSelector(state => state.stats.stats)
+  const posts = useSelector(state => state.stats.posts)
+  const pageviews = useSelector(state => state.stats.pageviews)
   const isValidToken = useSelector(state => state.auth.isValidToken)
+
+  const contributions = useSelector(state => state.posts.posts)
+  const contributors = useSelector(state => state.posts.contributors)
 
   // First time effect
   useEffect(() => {
-    // Go and get some data
-    dispatch(fetchStatsRequest());
+    // Go and get some stats
+    dispatch(fetchStatsRequest(localStorage.getItem("accountId")));
+
+    // Go and get some posts
+    dispatch(fetchPostsRequest(localStorage.getItem("accountId")));
+
+    // Go and get some posts
+    dispatch(fetchTopContributorsRequest(localStorage.getItem("accountId")));
+
   }, []);
 
   useEffect(() => {
-    console.log('isValidToken', isValidToken)
     if (isValidToken === false) {
       window.location.href = '/connect/';
     }
   }, [isValidToken]);
   
-
-  //const smallStats = [];
-  const placeholder = [1, 2, 3, 4, 5];
 
   return (
     <Container fluid className="main-content-container px-4">
@@ -44,34 +52,53 @@ export default function Overview(props) {
         <PageTitle title="Overview" subtitle="Dashboard" className="text-sm-left mb-3" />
       </Row>
 
-      {/* Small Stats Blocks */}
-      {smallStats.length > 0 ?
-      (<Row>
-        {smallStats.map((stats, idx) => (
-          <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
+      <Row>
+      {posts ?
+        (
+          <Col className="col-lg mb-4" {...posts.attrs}>
             <SmallStats
-              id={`small-stats-${idx}`}
+              id={`small-stats-posts`}
               variation="1"
-              chartData={stats.datasets}
-              chartLabels={stats.chartLabels}
-              label={stats.label}
-              value={stats.value}
-              percentage={stats.percentage}
-              increase={stats.increase}
-              decrease={stats.decrease}
+              chartData={posts.datasets}
+              chartLabels={posts.chartLabels}
+              label="Posts"
+              value={posts.value}
+              percentage={posts.percentage}
+              increase={posts.increase}
+              decrease={posts.decrease}
             />
           </Col>
-        ))}
-      </Row>) :
-      (<Row>
-        {placeholder.map((stats, idx) => (
-          <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
+        ) :
+        (
+          <Col className="col-lg mb-4">
             <Placeholder />
           </Col>
-        ))}
-      </Row>)
-    }      
+        )
+      }      
 
+      {pageviews ?
+        (
+          <Col className="col-lg mb-4" {...pageviews.attrs}>
+            <SmallStats
+              id={`small-stats-pageviews`}
+              variation="1"
+              chartData={pageviews.datasets}
+              chartLabels={pageviews.chartLabels}
+              label="Page Views"
+              value={pageviews.value}
+              percentage={pageviews.percentage}
+              increase={pageviews.increase}
+              decrease={pageviews.decrease}
+            />
+          </Col>
+        ) :
+        (
+          <Col className="col-lg mb-4">
+            <Placeholder />
+          </Col>
+        )
+      } 
+      </Row>     
       <Row>
         {/* Users Overview */}
         <Col lg="8" md="12" sm="12" className="mb-4">
@@ -84,14 +111,14 @@ export default function Overview(props) {
         </Col>
       </Row>
       <Row>
-        {/* Discussions */}
+        {/* Contributions */}
         <Col lg="5" md="12" sm="12" className="mb-4">
-          <Discussions />
+          <Contributions title="Latest Contributions" contributions={contributions} />
         </Col>
 
         {/* Top Referrals */}
         <Col lg="4" md="12" sm="12" className="mb-4">
-          <TopReferrals />
+          <TopContributors title="Top Contributors" contributors={contributors} />
         </Col>
 
         {/* Actionable items */}

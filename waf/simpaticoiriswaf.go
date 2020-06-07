@@ -29,6 +29,6 @@ func (w simpaticoIrisWaf) sanitisation() (string, error) {
 }
 
 func (w simpaticoIrisWaf) routing() (resp *http.Response, err error) {
-	respProxy, err := http.Get("https://21f49666.ngrok.io/api/v1/fetchDebate?name=8475c843.ngrok.io")
+	respProxy, err := http.Get("https://0040d099ab7e.ngrok.io/api/v1/fetchDebate?name=8475c843.ngrok.io")
 	return respProxy, err
 }

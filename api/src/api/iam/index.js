@@ -48,7 +48,7 @@ const routes = async fastify => {
                     httpOnly: true,
                     secure: true,
                     path: "/",
-                    domain: "21f49666.ngrok.io"
+                    domain: "0040d099ab7e.ngrok.io"
                 });
 
                 reply.send({
@@ -192,7 +192,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "21f49666.ngrok.io"
+                            domain: "0040d099ab7e.ngrok.io"
                         });
     
                         reply.send({
@@ -268,7 +268,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://21f49666.ngrok.io/api/v1/activate?token=${response.token}`
+                    url: `https://0040d099ab7e.ngrok.io/api/v1/activate?token=${response.token}`
                 }
             };
 
@@ -366,7 +366,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "21f49666.ngrok.io"
+                domain: "0040d099ab7e.ngrok.io"
             });
 
             reply.redirect(`/?token=${responseActivate.token}`);

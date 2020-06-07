@@ -1,4 +1,6 @@
 import PostSerializer from "../serializers/PostSerializer";
+import TopContributorsSerializer from "../serializers/TopContributorsSerializer";
+
 import CreatePost from "../use_cases/CreatePost";
 import ReplyPost from "../use_cases/ReplyPost";
 import LikePost from "../use_cases/LikePost";
@@ -6,6 +8,8 @@ import DislikePost from "../use_cases/DislikePost";
 import UpdatePost from "../use_cases/UpdatePost";
 import DeletePost from "../use_cases/DeletePost";
 import FetchPostsForModule from "../use_cases/FetchPostsForModule";
+import FetchPosts from "../use_cases/FetchPosts";
+import FetchTopContributors from "../use_cases/FetchTopContributors";
 import PostRepository from "../repositories/PostRepository";
 
 import PostRepositoryMongo from "../interface_adapters/storage/PostRepositoryMongo";
@@ -103,12 +107,40 @@ async function fetchPostsForModule(inputs) {
   return postSerializer.serialize(response);
 }
 
+async function fetchPosts(inputs) {
+  // Inputs
+  const { id } = inputs;
+
+  // Treatment
+  const response = await FetchPosts(id, {
+    postRepository
+  });
+
+  const postSerializer = new PostSerializer();
+  return postSerializer.serialize(response);
+}
+
+async function fetchTopContributors(inputs) {
+  // Inputs
+  const { id } = inputs;
+
+  // Treatment
+  const response = await FetchTopContributors(id, {
+    postRepository
+  });
+
+  const topContributorsSerializer = new TopContributorsSerializer();
+  return topContributorsSerializer.serialize(response);
+}
+
 module.exports = {
   createPost,
   replyPost,
   likePost,
   dislikePost,
   fetchPostsForModule,
+  fetchPosts,
   updatePost,
-  deletePost
+  deletePost,
+  fetchTopContributors
 };

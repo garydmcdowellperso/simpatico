@@ -5,6 +5,7 @@ import auth from "./auth";
 import debate from "./debate";
 import modules from "./modules";
 import pages from "./pages";
+import posts from "./posts";
 import stats from "./stats";
 import users from "./users";
 
@@ -14,6 +15,7 @@ const allReducers = combineReducers({
   debate,
   modules,
   pages,
+  posts,
   stats,
   users
 });

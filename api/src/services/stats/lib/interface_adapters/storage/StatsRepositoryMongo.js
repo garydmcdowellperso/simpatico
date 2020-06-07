@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 
-import Post from "../../entities/Post";
+import Stats from "../../entities/Stats";
 import config from "../../../../../config";
 
-class PostRepositoryMongo {
+class StatsRepositoryMongo {
   constructor() {
     const { url } = config.db;
 
@@ -15,14 +15,14 @@ class PostRepositoryMongo {
         throw new Error("Error connecting to Mongo");
       }
       this.db = client.db(config.db.dbname);
-      this.collection = this.db.collection("posts");
+      this.collection = this.db.collection("stats");
       this.sequences = this.db.collection("sequences");
     });
   }
 
   async _getValueForNextSequence() {
     const sequenceDoc = await this.sequences.findOneAndUpdate(
-      { _id: "posts" },
+      { _id: "stats" },
       { $inc: { sequence_value: 1 } },
       { returnOriginal: false }
     );
@@ -31,9 +31,9 @@ class PostRepositoryMongo {
     return sequenceDoc.value.sequence_value;
   }
 
-  async persist(postEntity) {
+  async persist(statsEntity) {
     const augmentedEntity = {
-      ...postEntity,
+      ...pstatsEntity,
       id: await this._getValueForNextSequence()
     };
 
@@ -42,31 +42,16 @@ class PostRepositoryMongo {
     return augmentedEntity;
   }
 
-  merge(post) {
-    return this.collection.replaceOne({ id: post.id }, post);
+  merge(stats) {
+    return this.collection.replaceOne({ id: stats.id }, stats);
   }
 
-  remove(post) {
-    return this.collection.replaceOne({ id: post.id }, post);
+  remove(stats) {
+    return this.collection.replaceOne({ id: stats.id }, stats);
   }
 
-  get(postId) {
-    return this.collection.findOne({ id: postId });
-  }
-
-  fetchPostsForModule(module, page) {
-    return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).toArray();
-  }
-
-  fetchPosts(id) {
-    return this.collection.find({ accountId: id, deleted: false }).toArray();
-  }
-
-  fetchFetchTopContributors(id) {
-    return this.collection.aggregate([
-      {"$group" : {_id:"$user", count:{$sum:1}}},
-      {$sort:{"count":-1}}
-    ]).toArray();
+  getByAccountId(accountId) {
+    return this.collection.findOne({ accountId });
   }
 
   find() {
@@ -74,4 +59,4 @@ class PostRepositoryMongo {
   }
 }
 
-export default PostRepositoryMongo;
+export default StatsRepositoryMongo;
