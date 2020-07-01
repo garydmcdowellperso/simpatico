@@ -9,10 +9,14 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Typography from "@material-ui/core/Typography";
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
+import flowRight from 'lodash/flowRight';
 
 import nextI18NextInstance from '../../i18n';
 import UserMenu from "./UserMenu";
+import Share from "./Share";
 import { fetchUserInfo } from "../actions/auth";
+
+const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
@@ -53,16 +57,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Header(props) {
+function Header(props) {
+  const [shareOpen, setShareOpen] = useState(false);
   const [firstNameDisplay, setFirstNameDisplay] = useState();
   const classes = useStyles();
 
-  const { header, title, selected } = props;
-  
+  const { header, title, selected, t } = props;
+
+  function handleShareClose() {
+    setShareOpen(false);
+  }
+
+
   const dispatch = useDispatch();
   let firstNameLocalStorage;
 
-  const { firstName, lastName, id, isValidToken, token } = useSelector(state => state.auth);
+  const { firstName, lastName, id, isValidToken, token, accountId } = useSelector(state => state.auth);
 
   if (typeof window !== 'undefined') {
     // Server side rendering protection
@@ -103,6 +113,7 @@ export default function Header(props) {
     localStorage.setItem("firstName", firstName);
     localStorage.setItem("lastName", lastName);
     localStorage.setItem("uid", id);
+    localStorage.setItem("accountId", accountId);
     setFirstNameDisplay(firstName);
   }, [firstName]);
 
@@ -111,7 +122,12 @@ export default function Header(props) {
       <Toolbar className={classes.toolbar}>
         {header.share ? (
           <>
-          <Button size="small">Share</Button>
+          <Button onClick={()=> {
+            setShareOpen(true);
+                      }}
+            size="small"
+            >{t('share')}</Button>
+          <Share open={shareOpen} handleClose={handleShareClose} />
           <Typography
             component="h2"
             variant="h5"
@@ -136,7 +152,7 @@ export default function Header(props) {
               window.location = "/login/";
             }}
           >
-            {`Sign up / Sign in`}
+            {t('signin')}
           </Button>
         : <UserMenu firstNameDisplay={firstNameDisplay}/>}
       </Toolbar>
@@ -148,7 +164,7 @@ export default function Header(props) {
         <Link
           href="/"
         >
-          <a className={selected === 'home' ? classes.linkSelected : classes.link}>Home</a>
+          <a className={selected === 'home' ? classes.linkSelected : classes.link}>{t('home')}</a>
         </Link>
         {header.sections.map((section, idx) => (
           <Link
@@ -167,3 +183,7 @@ Header.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string
 };
+
+export default flowRight(
+  withTranslation(['common'])
+)(Header);

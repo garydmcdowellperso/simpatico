@@ -10,6 +10,9 @@ import {
   FETCH_POSTS_FOR_MODULE_REQUEST,
   FETCH_POSTS_FOR_MODULE_SUCCESS,
   FETCH_POSTS_FOR_MODULE_FAILURE,
+  FETCH_ALL_POSTS_FOR_MODULE_REQUEST,
+  FETCH_ALL_POSTS_FOR_MODULE_SUCCESS,
+  FETCH_ALL_POSTS_FOR_MODULE_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE,
@@ -21,10 +24,19 @@ import {
   UPDATE_POST_FAILURE,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
-  DELETE_POST_FAILURE
+  DELETE_POST_FAILURE,
+  CHANGE_SORT_ORDER
 } from "../actions/post";
 
-const initialState = { error: "", processing: false, posts: [], search: [], page: 0, more: true };
+const initialState = { 
+  error: "", 
+  processingPosts: false, 
+  posts: [], 
+  search: [], 
+  page: 0, 
+  more: false,
+  sort: 'Sort Descending'
+};
 
 function findInReplies(replies, actionPost) {
   replies.map(y => {
@@ -39,21 +51,28 @@ function findInReplies(replies, actionPost) {
 
 export default function post(state = initialState, action) {
   let newPosts;
-  let searchPosts;
   switch (action.type) {
+    case CHANGE_SORT_ORDER:
+      return {
+        ...state,
+        sort: action.order
+      };
     case CREATE_POST_REQUEST:
       return {
         ...state,
-        processing: true
+        processingPosts: true
       };
     case CREATE_POST_SUCCESS:
       newPosts = cloneDeep(state.posts);
-      newPosts.push(action.post);
-
+      if (state.sort === 'Sort Descending') {
+        newPosts.unshift(action.post);
+      } else {
+        newPosts.push(action.post);
+      }
       return {
         ...state,
         posts: newPosts,
-        processing: false
+        processingPosts: false
       };
     case REPLY_POST_SUCCESS:
       // Replace existing post with returned one
@@ -74,44 +93,48 @@ export default function post(state = initialState, action) {
     case FETCH_POSTS_FOR_MODULE_REQUEST:
       return {
         ...state,
-        processing: true,
         page: action.page
       };
     case FETCH_POSTS_FOR_MODULE_SUCCESS:
-      /**
-      // Change order according to filter
-      newPosts = cloneDeep(action.posts);
-      newPosts.sort((a, b) => {
-        return b.timestamp_unix - a.timestamp_unix;
-      });
-
-      // Change order according to filter
-      searchPosts = cloneDeep(action.posts);
-      const postsLength = searchPosts.length;
-      for (let x = 0; x < postsLength; x += 1) {
-        searchPosts[x].description = searchPosts[x].contents;    
-      } 
-
-      console.log('searchPosts', searchPosts)
-      **/
+      if (action.json.page === 1) {
+        return {
+          ...state,
+          posts: action.json.posts,
+          more: action.json.more,
+          page: action.json.page
+        };  
+      }
 
       return {
         ...state,
-        processing: false,
-        posts: action.posts.length > 0 ? state.posts.concat(action.posts) : state.posts,
-        search: searchPosts,
-        more: action.posts.length > 0 ? true : false
+        posts: action.json.posts.length > 0 ? state.posts.concat(action.json.posts) : state.posts,
+        more: action.json.more,
+        page: action.json.page
       };
     case FETCH_POSTS_FOR_MODULE_FAILURE:
       return {
         ...state,
-        processing: false,
+        error: action.error
+      };
+    case FETCH_ALL_POSTS_FOR_MODULE_REQUEST:
+      return {
+        ...state,
+      };
+    case FETCH_ALL_POSTS_FOR_MODULE_SUCCESS:
+      return {
+        ...state,
+        posts: action.json.posts,
+        more: false,
+      };
+    case FETCH_ALL_POSTS_FOR_MODULE_FAILURE:
+      return {
+        ...state,
         error: action.error
       };
     case LIKE_POST_REQUEST:
       return {
         ...state,
-        processing: true
+        processingPosts: true
       };
     case LIKE_POST_SUCCESS:
       newPosts = cloneDeep(state.posts);
@@ -125,18 +148,18 @@ export default function post(state = initialState, action) {
       } 
       return {
         ...state,
-        processing: false,
+        processingPosts: false,
         posts: newPosts
       };
     case LIKE_POST_FAILURE:
       return {
         ...state,
-        processing: false
+        processingPosts: false
       };
     case DISLIKE_POST_REQUEST:
       return {
         ...state,
-        processing: true
+        processingPosts: true
       };
     case DISLIKE_POST_SUCCESS:
       newPosts = cloneDeep(state.posts);
@@ -150,19 +173,19 @@ export default function post(state = initialState, action) {
       } 
       return {
         ...state,
-        processing: false,
+        processingPosts: false,
         posts: newPosts
       };
     case DISLIKE_POST_FAILURE:
       return {
         ...state,
-        processing: false
+        processingPosts: false
       };
 
-    case UPDATE_POST_REQUEST:
+    case UPDATE_POST_REQUEST:      
       return {
         ...state,
-        processing: true
+        processingPosts: true
       };
     case UPDATE_POST_SUCCESS:
       newPosts = cloneDeep(state.posts);
@@ -176,18 +199,18 @@ export default function post(state = initialState, action) {
       } 
       return {
         ...state,
-        processing: false,
+        processingPosts: false,
         posts: newPosts
       };
     case UPDATE_POST_FAILURE:
       return {
         ...state,
-        processing: false
+        processingPosts: false
       };
     case DELETE_POST_REQUEST:
       return {
         ...state,
-        processing: true
+        processingPosts: true
       };
     case DELETE_POST_SUCCESS:
       newPosts = [];
@@ -202,13 +225,13 @@ export default function post(state = initialState, action) {
       console.log('newPosts', newPosts)
       return {
         ...state,
-        processing: false,
+        processingPosts: false,
         posts: newPosts
       };
     case DELETE_POST_FAILURE:
       return {
         ...state,
-        processing: false
+        processingPosts: false
       };
     default:  
       return state;

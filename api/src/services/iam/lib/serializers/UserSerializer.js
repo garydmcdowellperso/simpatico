@@ -16,7 +16,8 @@ const _serializeSingleUser = user => {
     dislikes: user.dislikes,
     contributions: user.contributions,
     accountId: user.accountId,
-    debates: user.debates
+    debates: user.debates,
+    accountId: user.accountId
   };
 };
 

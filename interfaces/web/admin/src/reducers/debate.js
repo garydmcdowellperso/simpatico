@@ -17,6 +17,15 @@ import {
   UPDATE_LANDING_PAGE_THEMES_REQUEST,
   UPDATE_LANDING_PAGE_THEMES_SUCCESS,
   UPDATE_LANDING_PAGE_THEMES_FAILURE,
+  UPDATE_LANDING_PAGE_SIDEBAR_REQUEST,
+  UPDATE_LANDING_PAGE_SIDEBAR_SUCCESS,
+  UPDATE_LANDING_PAGE_SIDEBAR_FAILURE,
+  UPDATE_LANDING_PAGE_FOOTER_REQUEST,
+  UPDATE_LANDING_PAGE_FOOTER_SUCCESS,
+  UPDATE_LANDING_PAGE_FOOTER_FAILURE,
+  UPDATE_LANDING_PAGE_METATAGS_REQUEST,
+  UPDATE_LANDING_PAGE_METATAGS_SUCCESS,
+  UPDATE_LANDING_PAGE_METATAGS_FAILURE,
   UPDATE_CONNECTION_REQUEST,
   UPDATE_CONNECTION_SUCCESS,
   UPDATE_CONNECTION_FAILURE,
@@ -154,6 +163,69 @@ export default function debate(state = initialState, action) {
         debate: action.debate
       };
     case UPDATE_LANDING_PAGE_THEMES_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        debate: null
+      };
+    case UPDATE_LANDING_PAGE_SIDEBAR_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case UPDATE_LANDING_PAGE_SIDEBAR_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
+      };
+    case UPDATE_LANDING_PAGE_SIDEBAR_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        debate: null
+      };
+    case UPDATE_LANDING_PAGE_FOOTER_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case UPDATE_LANDING_PAGE_FOOTER_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
+      };
+    case UPDATE_LANDING_PAGE_FOOTER_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+        debate: null
+      };
+    case UPDATE_LANDING_PAGE_METATAGS_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case UPDATE_LANDING_PAGE_METATAGS_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
+      };
+    case UPDATE_LANDING_PAGE_METATAGS_FAILURE:
       return {
         ...state,
         processing: false,

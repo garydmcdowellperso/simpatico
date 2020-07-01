@@ -4,9 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -16,11 +13,11 @@ import Theme from "../components/Theme";
 import Main from "../components/Main";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import post1 from "../data/blog-post1.md";
 import nextI18NextInstance from '../../i18n';
 import config from '../../config';
 
-import { fetchDebateRequest } from '../actions/debate';
+import { setDebateRequest } from '../actions/debate';
+import { fetchPostsRequest } from '../actions/posts';
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
@@ -30,40 +27,38 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const posts = [post1];
-
-const sidebar = {
-  title: 'About',
-  description:
-    'Get involved',
-  social: [
-    { name: 'GitHub', icon: GitHubIcon },
-    { name: 'Twitter', icon: TwitterIcon },
-    { name: 'Facebook', icon: FacebookIcon },
-  ],
-};
-
-export default function Home(props) {
-
+function Home({ debateServer }) {
   const dispatch = useDispatch();
 
+  if (debateServer) {
+    // Put the server side fetch into client side store
+    dispatch(setDebateRequest(debateServer))
+  }
+
   const debate = useSelector(state => state.debate.debate);
-  const isValidToken = useSelector(state => state.auth.isValidToken);
+  const { posts } = useSelector(state => state.posts);
+  const { isValidToken, accountId } = useSelector(state => state.auth);
 
-  useEffect(() => { // Fire once, get page and debate
-    if (!debate) {
-      dispatch(fetchDebateRequest(window.location.hostname));
-    }
-  }, []);
-
-  useEffect(() => { // Fire once, get page and debate
+  useEffect(() => {
     if (debate && debate.debateType === 'private') {
-      console.log('HERE')
-      if (!isValidToken) {
+      if (isValidToken === false) {
         window.location.href = '/login/';
       }
     }
-  }, [isValidToken]);
+  }, [isValidToken, debate]);
+
+  useEffect(() => {
+    if (debate && debate.debateType === 'private') {
+      if (isValidToken === true) {
+        if (posts.length === 0) {
+          if (!!accountId) {
+            dispatch(fetchPostsRequest(accountId));
+          }
+        }
+      }
+    }
+  }, [accountId]);
+
 
   const classes = useStyles();
 
@@ -76,6 +71,14 @@ export default function Home(props) {
       <Head>
         <title>{debate.slug}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        {debate.metaTags.map((tag, idx) => {
+
+            if (tag.type === 'property') {
+              return (<meta property={tag.typevalue} content={tag.content} key={idx} />)
+            } else  {
+              return (<meta name={tag.typevalue} content={tag.content} key={idx} />)
+            }
+        })}
       </Head>
       {debate ? (
       <>
@@ -92,14 +95,13 @@ export default function Home(props) {
             <Grid container spacing={5} className={classes.mainGrid}>
               <Main title="Latest contributon" posts={posts} />
               <Sidebar
-                title={sidebar.title}
-                description={sidebar.description}
-                social={sidebar.social}
+                description={debate.sidebar.about[getCurrentLang()]}
+                social={debate.sidebar.social}
               />
             </Grid>
           </main>
         </Container>
-        <Footer title="Footer" description="Something here to give the footer a purpose!" />
+        <Footer footer={debate.footer} />
       </>) : null }
      </div>
   );
@@ -107,12 +109,18 @@ export default function Home(props) {
 
 Home.getInitialProps = async ctx => {
   if (ctx.req) {
-    // Do a check if this debatee exists before trying to render (no saga here, server side)
+    // Do a check if this debate exists before trying to render (no saga here, server side)
     const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
-    const debate = await res.json()
+    const debateServer = await res.json()
 
-    return debate
+    return {
+      debateServer
+    };
   }
 
-  return  null
+  return {
+    debateServer: null
+  }
 }
+
+export default Home;

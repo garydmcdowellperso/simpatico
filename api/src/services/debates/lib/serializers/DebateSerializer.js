@@ -10,6 +10,9 @@ const _serializeSingleDebate = debate => {
     header: debate.header,
     overview: debate.overview,
     themes: debate.themes,
+    sidebar: debate.sidebar,
+    footer: debate.footer,
+    metaTags: debate.metaTags,
     connection: debate.connection,
     deleted: debate.deleted,
     accountId: debate.accountId

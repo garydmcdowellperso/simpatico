@@ -15,7 +15,8 @@ const initialState = {
   isValidToken: null,
   token: "",
   processing: false,
-  error: ""
+  error: "",
+  accountId: null
 };
 
 export default function auth(state = initialState, action) {
@@ -25,7 +26,6 @@ export default function auth(state = initialState, action) {
         ...state,
         processing: true,
         error: "",
-        isValidToken: false,
         token: action.token
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:
@@ -71,7 +71,8 @@ export default function auth(state = initialState, action) {
         firstName: action.json["first-name"],
         lastName: action.json["last-name"],
         email: action.json.email,
-        id: action.json.id
+        id: action.json.id,
+        accountId: action.json.accountId
       };
     case FETCH_USER_INFO_REQUEST_FAILURE:
       return {

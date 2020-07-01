@@ -7,6 +7,13 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import flowRight from 'lodash/flowRight';
+
+import nextI18NextInstance from '../../i18n';
+const { withTranslation } = nextI18NextInstance;
+
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserMenu({firstNameDisplay}) {
+function UserMenu({t, firstNameDisplay}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -74,13 +81,13 @@ export default function UserMenu({firstNameDisplay}) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={() => {
                       window.location.href = "/profile/";
-                    }}>Profile</MenuItem>
+                    }}>{t('profile')}</MenuItem>
                     <MenuItem onClick={() =>  {
                       // Remove tokens
                       localStorage.clear()
 
                       window.location.href = '/login/';
-                    }} >Logout</MenuItem>
+                    }} >{t('logout')}</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -91,3 +98,7 @@ export default function UserMenu({firstNameDisplay}) {
     </div>
   );
 }
+
+export default flowRight(
+  withTranslation(['common'])
+)(UserMenu);

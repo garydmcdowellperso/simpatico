@@ -1,6 +1,12 @@
 {
+  "about": "A propos",
   "account": "Mon compte",
+  "home": "Acceuil",
   "login": "Se connecter",
   "logout": "Se déconnecter",
-  "langSelectLabel": "Langue"
+  "langSelectLabel": "Langue",
+  "profile": "Profil",
+  "social": "Social",
+  "share": "Partager",
+  "signin": "S'inscrire / Se Connecter"
 }

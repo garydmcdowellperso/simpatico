@@ -18,6 +18,15 @@ import {
   UPDATE_LANDING_PAGE_THEMES_REQUEST,
   updateLandingPageThemesSuccess,
   updateLandingPageThemesFailure,
+  UPDATE_LANDING_PAGE_SIDEBAR_REQUEST,
+  updateLandingPageSidebarSuccess,
+  updateLandingPageSidebarFailure,
+  UPDATE_LANDING_PAGE_FOOTER_REQUEST,
+  updateLandingPageFooterSuccess,
+  updateLandingPageFooterFailure,
+  UPDATE_LANDING_PAGE_METATAGS_REQUEST,
+  updateLandingPageMetaTagsSuccess,
+  updateLandingPageMetaTagsFailure,
   UPDATE_CONNECTION_REQUEST,
   updateConnectionSuccess,
   updateConnectionFailure,
@@ -87,6 +96,39 @@ function* updateLandingPageThemes(action) {
   yield r;
 }
 
+function* updateLandingPageSidebar(action) {
+  const r = yield putApi("v1/updateLandingPageSidebar",
+    JSON.stringify({
+      debateID: action.debateID,
+      sidebar: action.sidebar
+    }))
+    .then(json => put(updateLandingPageSidebarSuccess(json)))
+    .catch(err => put(updateLandingPageSidebarFailure(err)));
+  yield r;
+}
+
+function* updateLandingPageFooter(action) {
+  const r = yield putApi("v1/updateLandingPageFooter",
+    JSON.stringify({
+      debateID: action.debateID,
+      footer: action.footer
+    }))
+    .then(json => put(updateLandingPageFooterSuccess(json)))
+    .catch(err => put(updateLandingPageFooterFailure(err)));
+  yield r;
+}
+
+function* updateLandingPageMetaTags(action) {
+  const r = yield putApi("v1/updateLandingPageMetaTags",
+    JSON.stringify({
+      debateID: action.debateID,
+      metaTags: action.metaTags
+    }))
+    .then(json => put(updateLandingPageMetaTagsSuccess(json)))
+    .catch(err => put(updateLandingPageMetaTagsFailure(err)));
+  yield r;
+}
+
 function* updateConnection(action) {
   const r = yield putApi("v1/updateConnection",
     JSON.stringify({
@@ -116,6 +158,9 @@ export default function* authSaga() {
   yield takeLatest(UPDATE_LANDING_PAGE_HEADER_REQUEST, updateLandingPageHeader);
   yield takeLatest(UPDATE_LANDING_PAGE_OVERVIEW_REQUEST, updateLandingPageOverview);
   yield takeLatest(UPDATE_LANDING_PAGE_THEMES_REQUEST, updateLandingPageThemes);
+  yield takeLatest(UPDATE_LANDING_PAGE_SIDEBAR_REQUEST, updateLandingPageSidebar);
+  yield takeLatest(UPDATE_LANDING_PAGE_FOOTER_REQUEST, updateLandingPageFooter);
+  yield takeLatest(UPDATE_LANDING_PAGE_METATAGS_REQUEST, updateLandingPageMetaTags);
   yield takeLatest(UPDATE_CONNECTION_REQUEST, updateConnection);
   yield takeLatest(UPDATE_GENERAL_INFO_REQUEST, updateGeneralInfo);
 }

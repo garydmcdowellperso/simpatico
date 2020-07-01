@@ -54,8 +54,44 @@ class PostRepositoryMongo {
     return this.collection.findOne({ id: postId });
   }
 
-  fetchPostsForModule(module, page) {
-    return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).toArray();
+  fetchPostsForModule(module, page, sort) {
+    if (sort == 'Sort Ascending') {
+      return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).sort({timestamp:1}).toArray();
+    }
+    if (sort == 'Sort Descending') {
+      return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).sort({timestamp:-1}).toArray();
+    }
+    if (sort == 'Likes') {
+      return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).sort({likes:-1}).toArray();
+    }
+    if (sort == 'Dislikes') {
+      return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).sort({dislikes:-1}).toArray();
+    }
+    if (sort == 'Shares') {
+      return this.collection.find({ module, deleted: false }).skip((page-1) * 5).limit(5).sort({shares:-1}).toArray();
+    }
+  }
+
+  fetchAllPostsForModule(module, sort) {
+    if (sort == 'Sort Ascending') {
+      return this.collection.find({ module, deleted: false }).sort({timestamp:1}).toArray();
+    }
+    if (sort == 'Sort Descending') {
+      return this.collection.find({ module, deleted: false }).sort({timestamp:-1}).toArray();
+    }
+    if (sort == 'Likes') {
+      return this.collection.find({ module, deleted: false }).sort({likes:-1}).toArray();
+    }
+    if (sort == 'Dislikes') {
+      return this.collection.find({ module, deleted: false }).sort({dislikes:-1}).toArray();
+    }
+    if (sort == 'Shares') {
+      return this.collection.find({ module, deleted: false }).sort({shares:-1}).toArray();
+    }
+  }
+
+  countPostsForModule(module) {
+    return this.collection.countDocuments({ module, deleted: false });
   }
 
   fetchPosts(id) {

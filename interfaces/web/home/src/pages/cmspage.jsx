@@ -66,8 +66,6 @@ function CMSPage(props) {
     dispatch(fetchDebateRequest(window.location.hostname));
   }, []);
 
-
-  console.log('title', title)
   const classes = useStyles();
 
   if (!page || !debate) {
@@ -91,7 +89,7 @@ function CMSPage(props) {
             />
           </main>
         </Container>
-        <Footer title="Footer" description="Something here to give the footer a purpose!" />
+        <Footer selected={title} footer={debate.footer} />
       </>
     </div>
   );

@@ -44,7 +44,6 @@ export default function Overview(props) {
 
   const overview = props.data;
 
-  console.log('overview', overview)
   return (
     <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${overview.url})` }}>
       {/* Increase the priority of the hero background image */}
@@ -61,7 +60,7 @@ export default function Overview(props) {
             </Typography>
             <Link 
               href={{ pathname: 'cmspage', query: { page: overview.page } }}>
-              {overview.linkText[getCurrentLang()]}
+              <a>{overview.linkText[getCurrentLang()]}</a>
             </Link>
           </div>
         </Grid>

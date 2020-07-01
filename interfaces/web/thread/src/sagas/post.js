@@ -9,6 +9,9 @@ import {
   FETCH_POSTS_FOR_MODULE_REQUEST,
   fetchPostsForModuleSuccess,
   fetchPostsForModuleFailure,
+  FETCH_ALL_POSTS_FOR_MODULE_REQUEST,
+  fetchAllPostsForModuleSuccess,
+  fetchAllPostsForModuleFailure,
   LIKE_POST_REQUEST,
   likePostSuccess,
   likePostFailure,
@@ -52,11 +55,19 @@ function* replyPostRequest(action) {
 }
 
 function* fetchPostsForModule(action) {
-  const r = yield get(`v1/fetchPostsForModule?module=${action.module}&page=${action.page}`)
+  const r = yield get(`v1/fetchPostsForModule?module=${action.module}&page=${action.page}&sort=${action.sort}`)
     .then(json => put(fetchPostsForModuleSuccess(json)))
     .catch(err => put(fetchPostsForModuleFailure(err)));
   yield r;
 }
+
+function* fetchAllPostsForModule(action) {
+  const r = yield get(`v1/fetchAllPostsForModule?module=${action.module}&sort=${action.sort}`)
+    .then(json => put(fetchAllPostsForModuleSuccess(json)))
+    .catch(err => put(fetchAllPostsForModuleFailure(err)));
+  yield r;
+}
+
 
 function* likePost(action) {
   const r = yield post(
@@ -112,6 +123,7 @@ export default function* postSaga() {
   yield takeLatest(CREATE_POST_REQUEST, createPostRequest);
   yield takeLatest(REPLY_POST_REQUEST, replyPostRequest);
   yield takeLatest(FETCH_POSTS_FOR_MODULE_REQUEST, fetchPostsForModule);
+  yield takeLatest(FETCH_ALL_POSTS_FOR_MODULE_REQUEST, fetchAllPostsForModule);
   yield takeLatest(LIKE_POST_REQUEST, likePost);
   yield takeLatest(DISLIKE_POST_REQUEST, dislikePost);
   yield takeLatest(UPDATE_POST_REQUEST, updatePost);

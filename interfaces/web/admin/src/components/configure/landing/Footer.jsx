@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Typography from '@material-ui/core/Typography';
-import Link from "@material-ui/core/Link";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import ReactCountryFlag from "react-country-flag"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      Copyright ©
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { fetchAllPagesRequest } from "../../../actions/pages"
+import { updateLandingPageFooterRequest } from "../../../actions/debate";
+
+import { 
+    Button as ShardButton,
+    Col, 
+    FormGroup,
+    FormInput, 
+    FormSelect, 
+    Modal, 
+    ModalBody, 
+    ModalFooter, 
+    ModalHeader, 
+    Row 
+} from "shards-react";
 
 const useStyles = makeStyles(theme => ({
+  toolbar: {
+    borderBottom: `1px solid ${theme.palette.divider}`
+  },
+  toolbarTitle: {
+    flex: 1
+  },
+  toolbarSecondary: {
+    justifyContent: "space-around",
+    width: "80%",
+    overflowX: "auto"
+  },
+  toolbarLink: {
+    padding: theme.spacing(1),
+    flexShrink: 0
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     // marginTop: theme.spacing(8),
@@ -27,30 +46,328 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Footer(props) {
-  const classes = useStyles();
-  const { description, title } = props;
+    const [version, setVersion] = useState("english")
+    const [placeHolderOpen, setPlaceHolderOpen] = useState([
+        false, false, false, false
+    ])
+    const [placeHolderNameEnglish, setPlaceHolderNameEnglish] = useState([
+        "", "", "", ""
+    ])
+    const [placeHolderNameFrench, setPlaceHolderNameFrench] = useState([
+        "", "", "", ""
+    ])
+    const [placeHolderNameSpanish, setPlaceHolderNameSpanish] = useState([
+        "", "", "", ""
+    ])
+    const [placeHolderPage, setPlaceHolderPage] = useState([
+        null, null, null, null
+    ])
+    const [sections, setSections] = useState([
+        {
+            title: 'placeholder1'
+        },
+        {
+            title: 'placeholder2'
+        },
+        {
+            title: 'placeholder3'
+        },
+        {
+            title: 'placeholder4'
+        }    
+    ])
 
-  return (
+    const classes = useStyles();
+    const { debate } = props;
+
+    const dispatch = useDispatch();
+
+    function handleOpen (idx) {
+        const placeHolderOpenNew =[...placeHolderOpen];
+        placeHolderOpenNew[idx] = true;
+
+        setPlaceHolderOpen(placeHolderOpenNew)
+    }
+
+    function handleClose (idx) {
+        const placeHolderOpenNew =[...placeHolderOpen];
+        placeHolderOpenNew[idx] = false;
+
+        setPlaceHolderOpen(placeHolderOpenNew)
+    }
+    
+    const error = useSelector(state => state.pages.error);
+    const processing = useSelector(state => state.pages.processing);
+    const pages = useSelector(state => state.pages.pages);
+
+    useEffect(() => { // Fire once, get pages for debate
+        if (debate) {
+            dispatch(fetchAllPagesRequest());
+
+            const newPlaceHolderPage = [];
+            const newPlaceHolderNameEnglish = [];
+            const newPlaceHolderNameFrench = [];
+            const newPlaceHolderNameSpanish = [];
+
+            console.log('HERE')
+            if (debate.footer.sections) {
+                debate.footer.sections.map((section, idx) => {
+                    if (section.page && section.page !== 0) {
+                        newPlaceHolderPage[idx] = section.page;
+                    }
+                    if (section.languages) {
+                        newPlaceHolderNameEnglish[idx] = section.languages['en'];
+                        newPlaceHolderNameFrench[idx] = section.languages['fr'];
+                        newPlaceHolderNameSpanish[idx] = section.languages['es'];
+                    }
+                })
+                setPlaceHolderPage(newPlaceHolderPage);
+                setPlaceHolderNameEnglish(newPlaceHolderNameEnglish);
+                setPlaceHolderNameFrench(newPlaceHolderNameFrench);
+                setPlaceHolderNameSpanish(newPlaceHolderNameSpanish);
+            }
+        }
+    }, [debate]);
+    
+    return (
     <footer className={classes.footer}>
-      <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          {title}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          {description}
-        </Typography>
-        <Copyright />
-      </Container>
+      <Toolbar
+        component="nav"
+        variant="dense"
+        className={classes.toolbarSecondary}
+      >
+        {sections.map((section, idx) => (
+          <>
+            <Typography
+                key={idx}
+                component="h2"
+                variant="body2"
+                color="inherit"
+                align="center"
+                noWrap
+                className={classes.toolbarLink}
+            >
+              <i className="material-icons" onClick={() => {
+                handleOpen(idx)
+                }}>build</i> &nbsp;
+              {placeHolderNameEnglish[idx] !== "" ? placeHolderNameEnglish[idx] : sections[idx].title }
+            </Typography>
+            <Modal open={placeHolderOpen[idx]} toggle={() => {
+                handleClose(idx)
+            }} >
+                <ModalHeader>{section.title}</ModalHeader>
+                <ModalBody>
+                    <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="name">Name</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                        {version === 'english' ?
+                            (<FormInput
+                                id="name"
+                                name="name"
+                                placeholder={section.title}
+                                value={placeHolderNameEnglish[idx] || section.title}
+                                onChange={(event) =>{
+                                    const placeHolderNameNew =[...placeHolderNameEnglish];
+
+                                    placeHolderNameNew[idx] = event.target.value;
+                                    setPlaceHolderNameEnglish(placeHolderNameNew);
+                                }}
+                            />) : null}
+                        {version === 'french' ?
+                            (<FormInput
+                                id="name"
+                                name="name"
+                                placeholder={section.title}
+                                value={placeHolderNameFrench[idx] || section.title}
+                                onChange={(event) =>{
+                                    const placeHolderNameNew =[...placeHolderNameFrench];
+
+                                    placeHolderNameNew[idx] = event.target.value;
+                                    setPlaceHolderNameFrench(placeHolderNameNew);
+                                }}
+                            />) : null}
+                        {version === 'spanish' ?
+                            (<FormInput
+                                id="name"
+                                name="name"
+                                placeholder={section.title}
+                                value={placeHolderNameSpanish[idx] || section.title}
+                                onChange={(event) =>{
+                                    const placeHolderNameNew =[...placeHolderNameSpanish];
+
+                                    placeHolderNameNew[idx] = event.target.value;
+                                    setPlaceHolderNameSpanish(placeHolderNameNew);
+                                }}
+                            />) : null}
+                        </Col>
+                    </Row>    
+                    <Row form>
+                        <Col lg="3" md="3" sm="3" className="mb-3">
+                            <label htmlFor="page">Page</label>
+                        </Col>
+                        <Col lg="6" md="6" sm="6" className="mb-6">
+                            <FormSelect 
+                                id="page"
+                                name="page"
+                                onChange={(event) =>{
+                                    const placeHolderPageNew =[...placeHolderPage];
+
+                                    placeHolderPageNew[idx] = event.target.value;
+                                    setPlaceHolderPage(placeHolderPageNew);
+                                }}>
+                            >
+                            <option key="-1" id="empty" name="empty" value="" />
+
+                            {pages.map((page, idx2) => {
+                                if (page.id === placeHolderPage[idx]) {
+                                    return (<option selected key={idx2} id={page.name} name={page.name} value={page.id}>{page.name}</option>)
+                                }
+                                return (<option key={idx2} id={page.name} name={page.name} value={page.id}>{page.name}</option>)
+                            })}
+                            </FormSelect>
+                        </Col>
+                    </Row>    
+                    <Row form>
+                        <ShardButton type="button" onClick={() => {
+                            handleClose(idx)
+                        }}>Done</ShardButton>
+                    </Row>
+                </ModalBody>
+                <ModalFooter>
+                  <Row>
+                    <Col lg="1" md="1" sm="1" className="mb-1">
+                    {version === 'english' ? 
+                      (<ReactCountryFlag 
+                        style={{
+                            fontSize: '2em',
+                            lineHeight: '2em',
+                        }}
+                        countryCode="GB" svg 
+                        onClick={()=> {
+                            setVersion('english')
+                        }}
+                      />) : 
+                      (<ReactCountryFlag 
+                        countryCode="GB" svg 
+                        onClick={()=> {
+                            setVersion('english')
+                        }}
+                        />
+                      )
+                    }
+                    </Col>
+                    <Col lg="1" md="1" sm="1" className="mb-1">
+                    {version === 'french' ? 
+                      (<ReactCountryFlag 
+                        style={{
+                            fontSize: '2em',
+                            lineHeight: '2em',
+                        }}
+                        countryCode="FR" svg 
+                        onClick={()=> {
+                            setVersion('french')
+                        }}
+                      />) : 
+                      (<ReactCountryFlag 
+                        countryCode="FR" svg 
+                        onClick={()=> {
+                            setVersion('french')
+                        }}
+                      />)
+                      }
+                    </Col>
+                    <Col lg="1" md="1" sm="1" className="mb-1">
+                    {version === 'spanish' ? 
+                        (<ReactCountryFlag 
+                        style={{
+                            fontSize: '2em',
+                            lineHeight: '2em',
+                        }}
+                        countryCode="ES" svg 
+                        onClick={()=> {
+                            setVersion('spanish')
+                        }}
+                        />) :                     
+                      (<ReactCountryFlag 
+                        countryCode="ES" svg 
+                        onClick={()=> {
+                            setVersion('spanish')
+                        }}
+                      />)
+                      }
+                    </Col>
+                  </Row>
+                </ModalFooter>
+            </Modal>
+            </>
+        ))}
+      </Toolbar>
+      <Row>
+        <Col lg="2" md="2" sm="2" className="mb-2">
+          <i className="material-icons" onClick={() => {
+                  handleOpen(idx)
+          }}>copyright</i> Simpatico 2020
+        </Col>
+      </Row>
+      <Row>
+          <FormGroup>
+            <Row form>
+              <Col lg="2" md="2" sm="2" className="mb-2" />
+              <Col lg="3" md="3" sm="3" className="mb-3">
+                  <ShardButton 
+                    type="button"
+                    onClick={() => {
+                        // Create the header object
+                        const footer = {
+                            sections: [
+                                {
+                                    page: placeHolderPage[0],
+                                    languages: {
+                                        'en': placeHolderNameEnglish[0],
+                                        'fr': placeHolderNameFrench[0],
+                                        'es': placeHolderNameSpanish[0]
+                                    }        
+                                },
+                                {
+                                    page: placeHolderPage[1],
+                                    languages: {
+                                        'en': placeHolderNameEnglish[1],
+                                        'fr': placeHolderNameFrench[1],
+                                        'es': placeHolderNameSpanish[1]
+                                    }        
+                                },
+                                {
+                                    page: placeHolderPage[2],
+                                    languages: {
+                                        'en': placeHolderNameEnglish[2],
+                                        'fr': placeHolderNameFrench[2],
+                                        'es': placeHolderNameSpanish[2]
+                                    }        
+                                },
+                                {
+                                    page: placeHolderPage[3],
+                                    languages: {
+                                        'en': placeHolderNameEnglish[3],
+                                        'fr': placeHolderNameFrench[3],
+                                        'es': placeHolderNameSpanish[3]
+                                    }        
+                                }
+                            ]
+                        };
+                      dispatch(updateLandingPageFooterRequest(debate.id, footer));
+                    }}
+                    >Update Footer</ShardButton>
+              </Col>
+            </Row>
+          </FormGroup>
+        </Row>
     </footer>
   );
 }
 
 Footer.propTypes = {
-  description: PropTypes.string,
+  sections: PropTypes.array,
   title: PropTypes.string
 };

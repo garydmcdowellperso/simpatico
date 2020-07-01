@@ -10621,7 +10621,7 @@ var Simpatico = /*#__PURE__*/function (_App) {
 
       if (ctx.req) {
         var host = ctx.req.get('host');
-        var res = await fetch("https://21f49666.ngrok.io/api/v1/fetchDebate?name=".concat(host));
+        var res = await fetch("https://0040d099ab7e.ngrok.io/api/v1/fetchDebate?name=".concat(host));
         var debate = await res.json();
         console.log('debate', debate);
         return {

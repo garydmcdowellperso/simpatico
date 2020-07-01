@@ -170,11 +170,11 @@ export default function Header(props) {
                 color="inherit"
                 align="center"
                 noWrap
-                onClick={() => {
-                    handleOpen(idx)
-                }}
                 className={classes.toolbarLink}
             >
+            <i className="material-icons" onClick={() => {
+                handleOpen(idx)
+            }}>build</i> &nbsp;
                 {placeHolderNameEnglish[idx] !== "" ? placeHolderNameEnglish[idx] : sections[idx].title }
             </Typography>
             <Modal open={placeHolderOpen[idx]} toggle={() => {

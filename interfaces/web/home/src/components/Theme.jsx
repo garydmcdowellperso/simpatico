@@ -46,8 +46,6 @@ export default function Theme(props) {
 
   const { module } = useSelector(state => state.modules);
 
-  console.log('module', module)
-
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a" href={theme.url}>
@@ -62,14 +60,16 @@ export default function Theme(props) {
               </Typography>
               <Typography variant="subtitle1" color="primary">
                 {module && module.moduleType === 'thread' ?
-                  (<Link href={'/thread/?thread=' + module.id}>
-                    {theme.imageText[getCurrentLang()]}
+                  (<Link href={'/thread/?module=' + module.id}>
+                    <a>{theme.imageText[getCurrentLang()]}</a>
                   </Link>) : null}
               </Typography>
             </CardContent>
           </div>
           <Hidden xsDown>
+            {theme.image ? (
             <CardMedia className={classes.cardMedia} image={theme.image} title={theme.imageText[getCurrentLang()]} />
+            ) : null }
           </Hidden>
         </Card>
       </CardActionArea>

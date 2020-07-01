@@ -66,32 +66,30 @@ const DebateOverview = (props) => {
             </Link>
           </Col>
           <Col className="col-lg mb-3">
-            <Link href={{ pathname: '/' }}>
-              <a>
+              <a href="/">
                 <i className="material-icons">play_arrow</i> Goto
               </a>
-            </Link>
           </Col>
           <Col className="col-lg mb-3">
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <a>
+              <a onClick={() => {
+                console.log('pause')
+              }}>
                 <i className="material-icons">pause</i> Pause
               </a>
-            </Link>
           </Col>
           <Col className="col-lg mb-3">
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
+            <Link href={{ pathname: '/admin/clonedebate', query: { name: debate.name } }}>
               <a>
                 <i className="material-icons">double_arrow</i> Clone
-              </a>
+              </a>  
             </Link>
           </Col>
           <Col className="col-lg mb-3">
-            <Link href={{ pathname: '/admin/debate', query: { name: debate.name } }}>
-              <a>
+              <a onClick={() => {
+                    console.log('delete')
+                }}>
                 <i className="material-icons" style={{color:'red'}}>delete</i> Delete
               </a>
-            </Link>
           </Col>
         </Row>
       </CardFooter>

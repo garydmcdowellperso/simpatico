@@ -38,6 +38,13 @@ function GeneralInfo(props) {
                 debateType
             ))
         }
+        if (mode === 'clone') {
+            dispatch(createDebateRequest(
+                name,
+                slug,
+                debateType
+            ))
+        }
         if (mode === 'update') {
             const info = {
                 name,
@@ -71,12 +78,20 @@ function GeneralInfo(props) {
     }, [error]);
 
     const { mode } = props;
+    let text = 'Creating your debate...';
+
+    if (mode === 'update') {
+        text = 'Updating your debate..';
+    }
+    if (mode === 'clone') {
+        text = 'Cloning your debate...';
+    }
     return (
         <>
         <LoadingOverlay
             active={processing}
             spinner={<RingLoader size={150} color={"#123abc"} />}
-            text='Creating your new debate...'
+            text={text}
         >
         <Card small className="h-100">
             <CardHeader className="border-bottom">

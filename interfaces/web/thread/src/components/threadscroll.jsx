@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Comment, Form, Header, Icon, Modal } from "semantic-ui-react";
+import dynamic from 'next/dynamic'
 import { Formik } from "formik";
 import { Box } from "grommet";
 import { connect } from "react-redux";
@@ -7,6 +8,8 @@ import flowRight from 'lodash/flowRight';
 import PropTypes from "prop-types";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styled from 'styled-components'
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Placeholder from "./placeholder";
 import { replyPostRequest } from "../actions/post";
@@ -33,15 +36,31 @@ const isMyPost = (post) => {
   return false;
 }
 
-const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, RichTextEditor) => {
+function SaveOption(props) {
+  const { editorState, post, savePostEdit, handleToggleInProgress } = props;
+
+  function savePost() {
+    const draftToHtml = require('draftjs-to-html');
+    post.contents = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+
+    savePostEdit(post.id, post.contents);
+  };
+
+  return (
+    <div onClick={savePost}><Icon size="large" name="save" /></div>
+  );
+}
+
+const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions) => {
   let output;
 
   if (posts && posts.length > 0) {
-    output = posts.map(post => (
-      <Comment key={post.id}>
+    output = posts.map(post => {
+
+      return (<Comment key={post.id} id={post.id}>
         <Comment.Avatar
           as="a"
-          src="https://react.semantic-ui.com//images/avatar/small/matt.jpg"
+          src={post.avatar}
         />
         <Comment.Content>
           <Comment.Author as="a">{post.user}</Comment.Author>
@@ -63,28 +82,57 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
                 {isValidToken && isMyPost(post) ?
                 (<Box 
                   onClick={() => {
-                    if (state.postEdit && state.postEditId !== post.id) {
+                    // editing but moved away to new post
+                    if (state.postEdit && state.postEditId === post.id) {
+                      // Do nothing they are clicking in the editor still
+                    } else if (state.postEdit && state.postEditId !== post.id) {
                       handlePostEditFinished();
                       handlePostEdit(post.id);
-                      onChange(RichTextEditor.createValueFromString(post.contents, 'html'));  
-                    }
 
-                    // Change the component if not already in edit
-                    if (!state.postEdit) {
+                      const htmlToDraft = require('html-to-draftjs').default;
+
+                      const contentBlock = htmlToDraft(post.contents);
+                      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                      const editorState = EditorState.createWithContent(contentState);
+                      onEditorStateChange(editorState);
+                    } else if (!state.postEdit) {
+                      // not editing yet so set up the editor
                       handlePostEdit(post.id);
-                      onChange(RichTextEditor.createValueFromString(post.contents, 'html'));  
+                      const htmlToDraft = require('html-to-draftjs').default;
+
+                      const contentBlock = htmlToDraft(post.contents);
+                      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                      const editorState = EditorState.createWithContent(contentState);
+                      onEditorStateChange(editorState);
                     }
                   }}
                   background="white" 
                   height="small"
+                  overflow="auto"
                   border={{ color: 'black', size: 'small' }}>
-                  {state.postEdit && post.id == state.postEditId ?                  
-                  (<RichTextEditor
-                    value={state.value ? state.value : RichTextEditor.createEmptyValue()}
-                    name="contents"
-                    placeholder={t('contents')}
-                    onChange={onChange}
-                  />) :
+                  {state.postEdit && post.id === state.postEditId ?   
+                  (
+                  <Editor
+                    editorState={editorState}
+                    toolbarClassName="toolbarClassName"
+                    wrapperClassName="wrapperClassName"
+                    editorClassName="editorClassName"  
+                    toolbarCustomButtons={[<SaveOption post={post} savePostEdit={savePostEdit} />]}
+                    localization={{
+                        locale: 'fr',
+                    }}
+                    mention={{
+                        separator: ' ',
+                        trigger: '@',
+                        suggestions: suggestions,
+                      }}
+                    hashtag={{
+                        separator: ' ',
+                        trigger: '#',
+                      }}  
+                    onEditorStateChange={onEditorStateChange}
+                />
+                  ):
                   (<span dangerouslySetInnerHTML={{__html: post.contents}} />) 
                   }
                 </Box>) :
@@ -102,7 +150,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
               <Icon 
                 size="large" 
                 color="blue" 
-                name="smile" 
+                name="thumbs up" 
                 onClick={()=> {
                   dispatch(
                     likePost(post.id)
@@ -112,7 +160,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
               <Icon 
                 size="large" 
                 color="red" 
-                name="frown" 
+                name="thumbs down" 
                 onClick={()=> {
                   dispatch(
                     dislikePost(post.id)
@@ -220,37 +268,26 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
                 { value: 'ok', key: "done", content: t('ok'), positive: true }
               ]}
             />) : null}
-            {isValidToken && isMyPost(post) ?
-            (<Modal
-              header={t('are-you-sure')}
-              trigger={<Icon size="large" name="save" />}
-              size="mini"
-              basic
-              onActionClick={(event) => {
-                handlePostEditFinished();
-
-                if (event.target.value === 'ok') {
-                  // Save this new value
-                  savePostEdit(post.id);
-                }
-              }}
-              actions={[
-                { value: 'nok', key: 'cancel', content: t('cancel') },
-                { value: 'ok', key: "done", content: t('ok'), positive: true }
-              ]}
-            />) : null}
           </Comment.Actions>
         </Comment.Content>
         {post.replies && post.replies.length > 0 ? (
           <Comment.Group  threaded style={{minWidth:'85%'}}>
-            {renderComments(post.replies, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, RichTextEditor)}
+            {renderComments(post.replies, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions)}
           </Comment.Group>
         ) : null}
       </Comment>
-    ));
+    )})
   }
+
   return output;
 };
+
+const Editor = dynamic(
+  () => {
+    return import('react-draft-wysiwyg').then((mod) => mod.Editor);
+  },
+  { loading: () => null, ssr: false },
+);
 
 class ThreadScroll extends Component {
   static async getInitialProps() {
@@ -263,10 +300,11 @@ class ThreadScroll extends Component {
     modalOpen: false,
     value: null,
     postEdit: false,
-    postEditId: null
+    postEditId: null,
+    editorState: null
   };
 
-  RichTextEditor = null;
+  Editor = null;
 
   handleOpen = () => this.setState({ modalOpen: true });
 
@@ -290,52 +328,60 @@ class ThreadScroll extends Component {
     this.setState({value});
   };
 
-  savePostEdit = (id) => {
-    const { value } = this.state;
+  savePostEdit = (id, value) => {
     const { dispatch } = this.props;   
 
-    const html = this.state.value.toString('html')
-    console.log('html', html)
-
     dispatch(
-      updatePost(id, html)
+      updatePost(id, value)
     );
   };
 
   fetchData = () => {
     const { dispatch, post } = this.props;    
-    const thread = localStorage.getItem("thread");
-    if (!thread) {
+    const module = localStorage.getItem("module");
+    if (!module) {
       return
     }
     setTimeout(() => {
       dispatch(
-        fetchPostsForModule(thread, post.page + 1)
+        fetchPostsForModule(module, post.page + 1, post.sort)
       );
-    }, 1500);
+    }, 500);
   }
 
-  render() {
-    const { post, posts, isValidToken, t } = this.props;
+  onEditorStateChange = (editorState) => {
+    this.setState({
+        editorState,
+    });
+  };
 
-    if (process.browser && !this.RichTextEditor) {
-      this.RichTextEditor = require('react-rte').default;
-      this.setState({ value: this.RichTextEditor.createEmptyValue()})
-    }
-    
+  render() {
+    const { post, searches, posts, isValidToken, t, suggestions } = this.props;
+    const { editorState } = this.state;
+
     return (
       <Comment.Group threaded style={{minWidth:'100%'}}>
         <Header as="h3" dividing>
           {t('comments')}
         </Header>
-        <InfiniteScroll
+        {searches && searches.length > 0 ?
+          (<InfiniteScroll
+          dataLength={searches.length}
+          next={this.fetchData}
+          hasMore={false}
+          loader={<Placeholder />}
+        >
+          {renderComments(searches, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions)}
+          </InfiniteScroll>) : 
+          <InfiniteScroll
           dataLength={posts.length}
           next={this.fetchData}
           hasMore={post.more}
           loader={<Placeholder />}
         >
-          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, this.RichTextEditor)}
-        </InfiniteScroll>
+          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions)}
+        </InfiniteScroll>      
+        }
       </Comment.Group>
     );
   }

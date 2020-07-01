@@ -1,0 +1,55 @@
+// _document is only rendered on the server side and not on the client side
+// Event handlers like onClick can't be added to this file
+import Document, { Head, Main, NextScript } from 'next/document';
+
+// We wrap our scripts below in Fragment to avoid unnecessary mark up
+import React ,{ Fragment } from 'react';
+
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    // Check if in production
+    const isProduction = true;
+    const initialProps = await Document.getInitialProps(ctx);
+    // Pass isProduction flag back through props
+    return { ...initialProps, isProduction };
+  }
+
+  // Function will be called below to inject
+  // script contents onto page
+  setMatomo() {
+    return {
+      __html: `
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="https://simpaticocloud.matomo.cloud/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src='//cdn.matomo.cloud/simpaticocloud.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+      `
+    };
+  }
+
+  render() {
+    const { isProduction } = this.props;
+    return (
+      <html>
+        <body>
+          <Main />
+          <NextScript />
+          {/* We only want to add the scripts if in production */}
+          {isProduction && (
+            <Fragment>
+              {/* We call the function above to inject the contents of the script tag */}
+              <script dangerouslySetInnerHTML={this.setMatomo()} />
+            </Fragment>
+          )}
+        </body>
+      </html>
+    );
+  }
+}

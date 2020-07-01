@@ -112,7 +112,7 @@ function Theme(props) {
               <Modal open={modalOpen} toggle={() => {
                 setModalOpen(false)
               }} >
-                <ModalHeader>theme.title[getCurrentLang()]</ModalHeader>
+                <ModalHeader>{theme.title[getCurrentLang()]}</ModalHeader>
                 <ModalBody>
                   <Row form>
                         <Col lg="3" md="3" sm="3" className="mb-3">

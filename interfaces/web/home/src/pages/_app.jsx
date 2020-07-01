@@ -4,24 +4,19 @@ import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import createSagaMiddleware from "redux-saga";
+import flowRight from 'lodash/flowRight';
 
 import sagas from "../sagas";
 import allReducers from "../reducers";
-import { verifyTokenRequest } from "../actions/auth";
+import { verifyTokenRequest, verifyTokenRequestFailure } from "../actions/auth";
 import '../styles.css'
+import i18n from '../../i18n';
+
+const { withTranslation } = i18n;
 
 const sagaMiddleware = createSagaMiddleware();
 
 let store;
-
-const getUrlParameter = name => {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
-  const results = regex.exec(window.location.search);
-  return results === null
-    ? ""
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
-};
 
 const makeStore = initialState => {
   store = createStore(
@@ -35,14 +30,6 @@ const makeStore = initialState => {
 };
 
 class Simpatico extends App {
-  static async getInitialProps({ Component, ctx, req }) {
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {};
-
-    return { pageProps };
-  }
-
   componentDidMount() {
     // Not on the URL so check the localStorage
     if (localStorage.getItem("token")) {
@@ -53,11 +40,16 @@ class Simpatico extends App {
           role: "participant"
         })
       );
+    } else {
+      // No token, set to false rather than unknown
+      store.dispatch(
+        verifyTokenRequestFailure('no valid token')
+      );
     }
   }
 
   render() {
-    const { Component, pageProps, debate } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <Provider store={store}>
@@ -67,4 +59,10 @@ class Simpatico extends App {
   }
 }
 
-export default withRedux(makeStore)(Simpatico);
+const { appWithTranslation } = i18n;
+
+export default flowRight(
+  withRedux(makeStore),
+  appWithTranslation,
+  withTranslation([`common`])
+)(Simpatico);

@@ -10,6 +10,10 @@ export const FETCH_POSTS_FOR_MODULE_REQUEST = "FETCH_POSTS_FOR_MODULE_REQUEST";
 export const FETCH_POSTS_FOR_MODULE_SUCCESS = "FETCH_POSTS_FOR_MODULE_SUCCESS";
 export const FETCH_POSTS_FOR_MODULE_FAILURE = "FETCH_POSTS_FOR_MODULE_FAILURE";
 
+export const FETCH_ALL_POSTS_FOR_MODULE_REQUEST = "FETCH_ALL_POSTS_FOR_MODULE_REQUEST";
+export const FETCH_ALL_POSTS_FOR_MODULE_SUCCESS = "FETCH_ALL_POSTS_FOR_MODULE_SUCCESS";
+export const FETCH_ALL_POSTS_FOR_MODULE_FAILURE = "FETCH_ALL_POSTS_FOR_MODULE_FAILURE";
+
 export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
 export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
 export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
@@ -26,6 +30,14 @@ export const DELETE_POST_REQUEST = "DELETE_POST_REQUEST";
 export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const DELETE_POST_FAILURE = "DELETE_POST_FAILURE";
 
+export const CHANGE_SORT_ORDER = "CHANGE_SORT_ORDER";
+
+export function changeSortOrder(order) {
+  return {
+    type: CHANGE_SORT_ORDER,
+    order
+  };
+}
 
 export function createPostRequest({ title, contents, module }) {
   return {
@@ -72,24 +84,47 @@ export function replyPostFailure(error) {
   };
 }
 
-export function fetchPostsForModule(module, page) {
+export function fetchPostsForModule(module, page, sort) {
   return {
     type: FETCH_POSTS_FOR_MODULE_REQUEST,
     module,
-    page
+    page,
+    sort
   };
 }
 
-export function fetchPostsForModuleSuccess(posts) {
+export function fetchPostsForModuleSuccess(json) {
   return {
     type: FETCH_POSTS_FOR_MODULE_SUCCESS,
-    posts
+    json
   };
 }
 
 export function fetchPostsForModuleFailure(error) {
   return {
     type: FETCH_POSTS_FOR_MODULE_FAILURE,
+    error
+  };
+}
+
+export function fetchAllPostsForModule(module, sort) {
+  return {
+    type: FETCH_ALL_POSTS_FOR_MODULE_REQUEST,
+    module,
+    sort
+  };
+}
+
+export function fetchAllPostsForModuleSuccess(json) {
+  return {
+    type: FETCH_ALL_POSTS_FOR_MODULE_SUCCESS,
+    json
+  };
+}
+
+export function fetchAllPostsForModuleFailure(error) {
+  return {
+    type: FETCH_ALL_POSTS_FOR_MODULE_FAILURE,
     error
   };
 }

@@ -8,6 +8,8 @@ import DislikePost from "../use_cases/DislikePost";
 import UpdatePost from "../use_cases/UpdatePost";
 import DeletePost from "../use_cases/DeletePost";
 import FetchPostsForModule from "../use_cases/FetchPostsForModule";
+import FetchAllPostsForModule from "../use_cases/FetchAllPostsForModule";
+import CountPostsForModule from "../use_cases/CountPostsForModule";
 import FetchPosts from "../use_cases/FetchPosts";
 import FetchTopContributors from "../use_cases/FetchTopContributors";
 import PostRepository from "../repositories/PostRepository";
@@ -96,15 +98,40 @@ async function deletePost(inputs) {
 
 async function fetchPostsForModule(inputs) {
   // Inputs
-  const { module, page } = inputs;
+  const { module, page, sort } = inputs;
 
   // Treatment
-  const response = await FetchPostsForModule(module, page, {
+  const response = await FetchPostsForModule(module, page, sort, {
     postRepository
   });
 
   const postSerializer = new PostSerializer();
   return postSerializer.serialize(response);
+}
+
+async function fetchAllPostsForModule(inputs) {
+  // Inputs
+  const { module, sort } = inputs;
+
+  // Treatment
+  const response = await FetchAllPostsForModule(module, sort, {
+    postRepository
+  });
+
+  const postSerializer = new PostSerializer();
+  return postSerializer.serialize(response);
+}
+
+async function countPostsForModule(inputs) {
+  // Inputs
+  const { module } = inputs;
+
+  // Treatment
+  const response = await CountPostsForModule(module, {
+    postRepository
+  });
+
+  return response;
 }
 
 async function fetchPosts(inputs) {
@@ -139,6 +166,8 @@ module.exports = {
   likePost,
   dislikePost,
   fetchPostsForModule,
+  fetchAllPostsForModule,
+  countPostsForModule,
   fetchPosts,
   updatePost,
   deletePost,

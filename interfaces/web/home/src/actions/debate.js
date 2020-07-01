@@ -6,6 +6,10 @@ export const FETCH_DEBATE_REQUEST = "FETCH_DEBATE_REQUEST";
 export const FETCH_DEBATE_SUCCESS = "FETCH_DEBATE_SUCCESS";
 export const FETCH_DEBATE_FAILURE = "FETCH_DEBATE_FAILURE";
 
+export const SET_DEBATE_REQUEST = "SET_DEBATE_REQUEST";
+export const SET_DEBATE_SUCCESS = "SET_DEBATE_SUCCESS";
+export const SET_DEBATE_FAILURE = "SET_DEBATE_FAILURE";
+
 export const CREATE_DEBATE_REQUEST = "CREATE_DEBATE_REQUEST";
 export const CREATE_DEBATE_SUCCESS = "CREATE_DEBATE_SUCCESS";
 export const CREATE_DEBATE_FAILURE = "CREATE_DEBATE_FAILURE";
@@ -39,6 +43,13 @@ export function fetchDebatesFailure(error) {
   return {
     type: FETCH_ALLDEBATES_FAILURE,
     error
+  };
+}
+
+export function setDebateRequest(debate) {
+  return {
+    type: SET_DEBATE_REQUEST,
+    debate
   };
 }
 

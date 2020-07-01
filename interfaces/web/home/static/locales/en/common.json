@@ -1,6 +1,11 @@
 {
+  "about": "About",
   "account": "My account",
+  "home": "Home",
   "login": "Login",
   "logout": "Logout",
-  "langSelectLabel": "Language"
+  "langSelectLabel": "Language",
+  "social": "Social",
+  "share": "Share",
+  "signin": "Sign up / Sign in"
 }

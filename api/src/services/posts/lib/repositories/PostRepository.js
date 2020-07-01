@@ -19,8 +19,12 @@ class PostRepository {
     return this.repository.get(postId);
   }
 
-  fetchPostsForModule(module, page) {
-    return this.repository.fetchPostsForModule(module, page);
+  fetchPostsForModule(module, page, sort) {
+    return this.repository.fetchPostsForModule(module, page, sort);
+  }
+
+  fetchAllPostsForModule(module, sort) {
+    return this.repository.fetchAllPostsForModule(module, sort);
   }
 
   fetchPosts(id) {
@@ -29,6 +33,10 @@ class PostRepository {
 
   fetchFetchTopContributors(id) {
     return this.repository.fetchFetchTopContributors(id);
+  }
+
+  countPostsForModule(module) {
+    return this.repository.countPostsForModule(module);
   }
 
   find() {

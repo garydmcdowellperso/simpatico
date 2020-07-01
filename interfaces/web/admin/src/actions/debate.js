@@ -22,6 +22,18 @@ export const UPDATE_LANDING_PAGE_THEMES_REQUEST = "UPDATE_LANDING_PAGE_THEMES_RE
 export const UPDATE_LANDING_PAGE_THEMES_SUCCESS = "UPDATE_LANDING_PAGE_THEMES_SUCCESS";
 export const UPDATE_LANDING_PAGE_THEMES_FAILURE = "UPDATE_LANDING_PAGE_THEMES_FAILURE";
 
+export const UPDATE_LANDING_PAGE_SIDEBAR_REQUEST = "UPDATE_LANDING_PAGE_SIDEBAR_REQUEST";
+export const UPDATE_LANDING_PAGE_SIDEBAR_SUCCESS = "UPDATE_LANDING_PAGE_SIDEBAR_SUCCESS";
+export const UPDATE_LANDING_PAGE_SIDEBAR_FAILURE = "UPDATE_LANDING_PAGE_SIDEBAR_FAILURE";
+
+export const UPDATE_LANDING_PAGE_FOOTER_REQUEST = "UPDATE_LANDING_PAGE_FOOTER_REQUEST";
+export const UPDATE_LANDING_PAGE_FOOTER_SUCCESS = "UPDATE_LANDING_PAGE_FOOTER_SUCCESS";
+export const UPDATE_LANDING_PAGE_FOOTER_FAILURE = "UPDATE_LANDING_PAGE_FOOTER_FAILURE";
+
+export const UPDATE_LANDING_PAGE_METATAGS_REQUEST = "UPDATE_LANDING_PAGE_METATAGS_REQUEST";
+export const UPDATE_LANDING_PAGE_METATAGS_SUCCESS = "UPDATE_LANDING_PAGE_METATAGS_SUCCESS";
+export const UPDATE_LANDING_PAGE_METATAGS_FAILURE = "UPDATE_LANDING_PAGE_METATAGS_FAILURE";
+
 export const UPDATE_CONNECTION_REQUEST = "UPDATE_CONNECTION_REQUEST";
 export const UPDATE_CONNECTION_SUCCESS = "UPDATE_CONNECTION_SUCCESS";
 export const UPDATE_CONNECTION_FAILURE = "UPDATE_CONNECTION_FAILURE";
@@ -202,6 +214,72 @@ export function updateGeneralInfoSuccess(debate) {
 export function updateGeneralInfoFailure(error) {
   return {
     type: UPDATE_GENERAL_INFO_FAILURE,
+    error
+  };
+}
+
+export function updateLandingPageSidebarRequest(debateID, sidebar) {
+  return {
+    type: UPDATE_LANDING_PAGE_SIDEBAR_REQUEST,
+    debateID,
+    sidebar
+  };
+}
+
+export function updateLandingPageSidebarSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_SIDEBAR_SUCCESS,
+    debate
+  };
+}
+
+export function updateLandingPageSidebarFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_SIDEBAR_FAILURE,
+    error
+  };
+}
+
+export function updateLandingPageFooterRequest(debateID, footer) {
+  return {
+    type: UPDATE_LANDING_PAGE_FOOTER_REQUEST,
+    debateID,
+    footer
+  };
+}
+
+export function updateLandingPageFooterSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_FOOTER_SUCCESS,
+    debate
+  };
+}
+
+export function updateLandingPageFooterFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_FOOTER_FAILURE,
+    error
+  };
+}
+
+export function updateLandingPageMetaTagsRequest(debateID, metaTags) {
+  return {
+    type: UPDATE_LANDING_PAGE_METATAGS_REQUEST,
+    debateID,
+    metaTags
+  };
+}
+
+export function updateLandingPageMetaTagsSuccess(debate) {
+  return {
+    type: UPDATE_LANDING_PAGE_METATAGS_SUCCESS,
+    debate
+  };
+}
+
+export function updateLandingPageMetaTagsFailure(error) {
+  return {
+    type: UPDATE_LANDING_PAGE_METATAGS_FAILURE,
     error
   };
 }

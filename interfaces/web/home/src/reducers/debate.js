@@ -2,6 +2,7 @@ import {
   FETCH_ALLDEBATES_REQUEST,
   FETCH_ALLDEBATES_SUCCESS,
   FETCH_ALLDEBATES_FAILURE,
+  SET_DEBATE_REQUEST,
   FETCH_DEBATE_REQUEST,
   FETCH_DEBATE_SUCCESS,
   FETCH_DEBATE_FAILURE,
@@ -48,6 +49,13 @@ export default function debate(state = initialState, action) {
         processing: false,
         error: action.error,
         debates: []
+      };
+    case SET_DEBATE_REQUEST:
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debate: action.debate
       };
     case FETCH_DEBATE_REQUEST:
       return {

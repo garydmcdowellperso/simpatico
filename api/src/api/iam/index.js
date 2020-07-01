@@ -516,6 +516,7 @@ const routes = async fastify => {
                             avatar: { type: "string" },
                             score: { type: "number" },
                             badge: { type: "number" },
+                            accountId: { type: "number" },
                             likes: { 
                                 type: "array",
                                 items: {

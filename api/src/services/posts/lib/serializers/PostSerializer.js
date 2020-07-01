@@ -6,7 +6,7 @@ const _serializeSinglePost = post => {
     title: post.title,
     contents: post.contents,
     user: post.user,
-    timestamp: moment.unix(post.timestamp).format("DD/MM/YYYY hh-mm-ss"),
+    timestamp: moment.unix(post.timestamp).format("DD/MM/YYYY hh:mm:ss"),
     timestamp_unix: post.timestamp,
     module: post.module,
     replies: post.replies && post.replies.map(_serializeSinglePost),
