@@ -4,6 +4,7 @@ async function SendEmail(
   template,
   email,
   substitutions,
+  attachment,
   { emailRepository, templateManager, transportManager }
 ) {
   if (!template) {
@@ -16,10 +17,11 @@ async function SendEmail(
     throw new Error("No substitutions");
   }
 
-  const emailSent = new Email(null, template, email, substitutions);
+  const emailSent = new Email(null, template, email, substitutions, attachment);
 
   const htmlOutput = templateManager.htmlOutput(template, substitutions)
 
+  console.log('attachment', attachment)
   const mailOptions = {
     from: email.from,
     to: email.to,
@@ -27,6 +29,10 @@ async function SendEmail(
     html: htmlOutput.html,
     cc: email.cc,
     bcc: email.bcc,
+    attachments: attachment ? [{
+      filename: 'export.csv',
+      path: attachment
+    }] : null
   };
 
   transportManager.sendMail(mailOptions)

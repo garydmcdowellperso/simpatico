@@ -17,11 +17,6 @@ export default function() {
       to: "/admin/users",
     },
     {
-      title: "Insights",
-      htmlBefore: '<i class="material-icons">emoji_objects</i>',
-      to: "/admin/insights",
-    },
-    {
       title: "Exports",
       htmlBefore: '<i class="material-icons">import_export</i>',
       to: "/admin/exports",

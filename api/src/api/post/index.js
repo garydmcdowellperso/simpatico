@@ -1,6 +1,9 @@
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid'; 
 
 const config = require('../../config');
+
+const { postSchema } = require('../schemas/post');
 
 import PostsController from "../../services/posts/lib/controllers/PostsController";
 import UsersController from "../../services/iam/lib/controllers/UsersController";
@@ -25,23 +28,12 @@ const routes = async fastify => {
                     properties: {
                         title: { type: 'string' },
                         contents: { type: 'string' },
-                        module: { type: 'number' }
+                        module: { type: 'number' },
+                        accountId: { type: 'number' }
                     },
                 },
                 response: {
-                    200: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            title: { type: 'string' },
-                            contents: { type: 'string' },
-                            user: { type: 'string' },
-                            avatar: { type: "string" },
-                            uid: { type: 'number' },
-                            timestamp: { type: "string" },
-                            module: { type: "number" }
-                        }
-                    }
+                    200: postSchema,
                 }
             }
         },
@@ -62,19 +54,19 @@ const routes = async fastify => {
               // Send notification email
               const inputsEmali = {
                 template: {
-                    type: "test",
+                    type: "post",
                     language: "en-US",
-                    name: "creation"
+                    name: "mention"
                 },
                 email: {
                     to: "garydmcdowell@gmail.com",
                     from: "noreply@simpatico.cloud",
-                    subject: "Activate your account"
+                    subject: "You have been mentioned in a post"
                 },
                 substitutions: {
                     firstname: "Gary",
                     lastname: "McDowell",
-                    url: `https://0040d099ab7e.ngrok.io/api/v1/activate?token=`
+                    url: `https://49646ddc7fe9.ngrok.io/thread/?module=${request.body.module}#${response.id}`
                 }
               };
 
@@ -108,22 +100,7 @@ const routes = async fastify => {
                     },
                 },
                 response: {
-                    200: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            title: { type: 'string' },
-                            contents: { type: 'string' },
-                            user: { type: 'string' },
-                            avatar: { type: "string" },
-                            uid: { type: 'number' },
-                            timestamp: { type: "string" },
-                            module: { type: "number" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" },
-                            deleted: { type: "boolean" }
-                        }
-                    }
+                    200: postSchema,
                 }
             },
         },
@@ -163,22 +140,7 @@ const routes = async fastify => {
                     },
                 },
                 response: {
-                    200: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            title: { type: 'string' },
-                            contents: { type: 'string' },
-                            user: { type: 'string' },
-                            avatar: { type: "string" },
-                            uid: { type: 'number' },
-                            timestamp: { type: "string" },
-                            module: { type: "number" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" },
-                            deleted: { type: "boolean" }
-                        }
-                    }
+                    200: postSchema,
                 }
             },
         },
@@ -219,22 +181,7 @@ const routes = async fastify => {
                     },
                 },
                 response: {
-                    200: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            title: { type: 'string' },
-                            contents: { type: 'string' },
-                            user: { type: 'string' },
-                            avatar: { type: "string" },
-                            uid: { type: 'number' },
-                            timestamp: { type: "string" },
-                            module: { type: "number" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" },
-                            deleted: { type: "boolean" }
-                        }
-                    }
+                    200: postSchema,
                 }
             },
         },
@@ -274,22 +221,7 @@ const routes = async fastify => {
                     },
                 },
                 response: {
-                    200: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            title: { type: 'string' },
-                            contents: { type: 'string' },
-                            user: { type: 'string' },
-                            avatar: { type: "string" },
-                            uid: { type: 'number' },
-                            timestamp: { type: "string" },
-                            module: { type: "number" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" },
-                            deleted: { type: "boolean" }
-                        }
-                    }
+                    200: postSchema,
                 }
             },
         },
@@ -330,66 +262,41 @@ const routes = async fastify => {
             }
             },
             response: {
-                200: {
-                    type: "object",
-                    properties: {
-                      id: { type: "number" },
-                      title: { type: "string" },
-                      contents: { type: "string" },
-                      user: { type: "string" },
-                      avatar: { type: "string" },
-                      timestamp: { type: "string" },
-                      deleted: { type: "boolean" },
-                      replies: {
-                          type: "array",
-                          items: {
-                            type: "object",
-                            properties: {
-                                id: { type: "number" },
-                                title: { type: "string" },
-                                contents: { type: "string" },
-                                user: { type: "string" },
-                                avatar: { type: "string" },
-                                timestamp: { type: "string" }
-                            }
-                          }
-                      }
-                    }
-                }
+                200: postSchema,
             }
         }
         },
         async request => {
-        fastify.log.info(
-            { user: request.user, body: request.body },
-            "[src#api#replyPost] Entering"
-        );
+          fastify.log.info(
+              { user: request.user, body: request.body },
+              "[src#api#replyPost] Entering"
+          );
 
-        const timestamp = moment().format("X");
-        const inputs = { ...request.body, timestamp, user: request.user.uid };
-        const response = await PostsController.replyPost(inputs);
+          const timestamp = moment().format("X");
+          const inputs = { ...request.body, timestamp, user: request.user.uid };
+          const response = await PostsController.replyPost(inputs);
 
-        // Replace user which is an ID with a name
-        const userinputs = { uid: request.user.uid };
-        const user = await UsersController.fetchUser(userinputs);
+          // Replace user which is an ID with a name
+          const userinputs = { uid: request.user.uid };
+          const user = await UsersController.fetchUser(userinputs);
 
-        response.user = user["first-name"];
-        response.avatar = user.avatar;
+          response.user = user["first-name"];
+          response.avatar = user.avatar;
 
-        if (response.replies) {
-            const replies = await response.replies.map(async reply => {
-            const userInputs = { uid: reply.user };
-            const replyUser = await UsersController.fetchUser(userInputs);
+          if (response.replies) {
+              const replies = await response.replies.map(async reply => {
+                const userInputs = { uid: reply.user };
+                const replyUser = await UsersController.fetchUser(userInputs);
 
-            reply.user = replyUser["first-name"];
-            reply.avatar = replyUser.avatar;
+                reply.user = replyUser["first-name"];
+                reply.avatar = replyUser.avatar;
 
-            return reply;
-            });
-            await Promise.all(replies);
-        }
+                return reply;
+              });
+              await Promise.all(replies);
+          }
 
-        return response;
+          return response;
         }
     );
 
@@ -413,41 +320,7 @@ const routes = async fastify => {
               more: { type: "boolean" },
               posts: {
                 type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      id: { type: "number" },
-                      title: { type: "string" },
-                      contents: { type: "string" },
-                      user: { type: "string" },
-                      uid: { type: "number" },
-                      avatar: { type: "string" },
-                      timestamp: { type: "string" },
-                      timestamp_unix: { type: "string" },
-                      module: { type: "number" },
-                      likes: { type: "number" },
-                      dislikes: { type: "number" },
-                      deleted: { type: "boolean" },
-                      replies: {
-                        type: "array",
-                        items: {
-                          type: "object",
-                          properties: {
-                            id: { type: "number" },
-                            title: { type: "string" },
-                            contents: { type: "string" },
-                            user: { type: "string" },
-                            uid: { type: "number" },
-                            avatar: { type: "string" },
-                            timestamp: { type: "string" },
-                            timestamp_unix: { type: "string" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" }      
-                          }
-                        }
-                      }
-                    }
-                  }
+                  items: postSchema,
                 }
               }
             }
@@ -534,41 +407,7 @@ const routes = async fastify => {
             properties: {
               posts: {
                 type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      id: { type: "number" },
-                      title: { type: "string" },
-                      contents: { type: "string" },
-                      user: { type: "string" },
-                      uid: { type: "number" },
-                      avatar: { type: "string" },
-                      timestamp: { type: "string" },
-                      timestamp_unix: { type: "string" },
-                      module: { type: "number" },
-                      likes: { type: "number" },
-                      dislikes: { type: "number" },
-                      deleted: { type: "boolean" },
-                      replies: {
-                        type: "array",
-                        items: {
-                          type: "object",
-                          properties: {
-                            id: { type: "number" },
-                            title: { type: "string" },
-                            contents: { type: "string" },
-                            user: { type: "string" },
-                            uid: { type: "number" },
-                            avatar: { type: "string" },
-                            timestamp: { type: "string" },
-                            timestamp_unix: { type: "string" },
-                            likes: { type: "number" },
-                            dislikes: { type: "number" }      
-                          }
-                        }
-                      }
-                    }
-                  }
+                  items: postSchema,
                 }
               }
             }
@@ -640,41 +479,7 @@ const routes = async fastify => {
         response: {
           200: {
             type: "array",
-            items: {
-              type: "object",
-              properties: {
-                id: { type: "number" },
-                title: { type: "string" },
-                contents: { type: "string" },
-                user: { type: "string" },
-                avatar: { type: "string" },
-                uid: { type: "number" },
-                timestamp: { type: "string" },
-                timestamp_unix: { type: "string" },
-                module: { type: "number" },
-                likes: { type: "number" },
-                dislikes: { type: "number" },
-                deleted: { type: "boolean" },
-                replies: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      id: { type: "number" },
-                      title: { type: "string" },
-                      contents: { type: "string" },
-                      user: { type: "string" },
-                      avatar: { type: "string" },
-                      uid: { type: "number" },
-                      timestamp: { type: "string" },
-                      timestamp_unix: { type: "string" },
-                      likes: { type: "number" },
-                      dislikes: { type: "number" }      
-                    }
-                  }
-                }
-              }
-            }
+            items: postSchema,
           }
         }
       }
@@ -700,17 +505,17 @@ const routes = async fastify => {
           resp.avatar = user.avatar;
 
           if (resp.replies) {
-            const replies = await resp.replies.map(async reply => {
-              const userInputs = { uid: reply.user };
-              const replyUser = await UsersController.fetchUser(userInputs);
+              const replies = await resp.replies.map(async reply => {
+                const userInputs = { uid: reply.user };
+                const replyUser = await UsersController.fetchUser(userInputs);
 
-              resp.uid = resp.user;
-              reply.user = replyUser["first-name"];
-              resp.avatar = user.avatar;
+                resp.uid = resp.user;
+                reply.user = replyUser["first-name"];
+                resp.avatar = user.avatar;
 
-              return reply;
-            });
-            await Promise.all(replies);
+                return reply;
+              });
+              await Promise.all(replies);
           }
 
           return resp;
@@ -741,6 +546,7 @@ const routes = async fastify => {
               properties: {
                 id: { type: "number" },
                 user: { type: "string" },
+                module: { type: "number" },
                 avatar: { type: "string" },
                 contributions: { type: "number" },
               }
@@ -778,6 +584,110 @@ const routes = async fastify => {
     }
   );
 
+  fastify.post(
+    '/exportPostsForModule',
+    {
+        config,
+        preValidation: [fastify.authenticate],
+        schema: {
+            description: 'csv export of data, transferred by email',
+            tags: ['api'],
+            body: {
+                type: 'object',
+                properties: {
+                    module: { type: 'number' },
+                    fields: { 
+                      type: 'object' 
+                    },
+                },
+            },
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        status: { type: 'string' },
+                        message: { type: 'string' }
+                    }
+                }
+            }
+        }
+    },
+    async (request, reply) => {
+        fastify.log.info(
+        { user: request.user, body: request.body },
+        "[src#api#exportPostsForModule] Entering"
+        );
+
+        const inputs = {...request.body};
+
+        reply
+          .code(200)
+          .header('Content-Type', 'application/json; charset=utf-8')
+          .send({ status: 'ok', message: 'processing' })
+
+        inputs.sort = 'Sort Ascending';
+
+        const response = await PostsController.fetchAllPostsForModule(inputs);
+
+        if (response.length > 0) {
+          const resps = await response.map(async resp => {
+            if (resp.replies === null) {
+              delete resp.replies;
+            }
+            // Add name of user 
+            const userinputs = { uid: resp.user };
+            const user = await UsersController.fetchUser(userinputs);
+            
+            resp.uid = resp.user;
+            resp.user = user["first-name"];
+            resp.avatar = user.avatar;
+  
+            if (resp.replies) {
+              const replies = await resp.replies.map(async reply => {
+                const userInputs = { uid: reply.user };
+                const replyUser = await UsersController.fetchUser(userInputs);
+  
+                resp.uid = resp.user;
+                reply.user = replyUser["first-name"];
+                resp.avatar = replyUser.avatar;
+  
+                return reply;
+              });
+              await Promise.all(replies);
+            }
+  
+            return resp;
+          });
+          const posts = await Promise.all(resps);
+
+          console.log('posts', posts)
+          // Serialize object to CSV
+          const filename = uuidv4(); 
+          await PostsController.serializePostToCSV(posts, request.body.fields, filename)
+
+          // Send notification email
+          const inputsEmali = {
+            template: {
+                type: "export",
+                language: "en-US",
+                name: "default"
+            },
+            email: {
+                to: "garydmcdowell@gmail.com",
+                from: "noreply@simpatico.cloud",
+                subject: "Export ready"
+            },
+            substitutions: {
+                firstname: "Gary",
+                lastname: "McDowell"
+            },
+            attachment: `/tmp/${filename}.csv`
+          };
+
+          await EmailController.sendEmail(inputsEmali);
+        }
+    }
+  );
 }
 
 module.exports = routes;

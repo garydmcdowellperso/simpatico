@@ -6,6 +6,11 @@ export const FETCH_TOP_CONTRIBUTORS_REQUEST = "FETCH_TOP_CONTRIBUTORS_REQUEST";
 export const FETCH_TOP_CONTRIBUTORS_SUCCESS = "FETCH_TOP_CONTRIBUTORS_SUCCESS";
 export const FETCH_TOP_CONTRIBUTORS_FAILURE = "FETCH_TOP_CONTRIBUTORS_FAILURE";  
 
+export const EXPORT_POSTS_FOR_MODULE_REQUEST = "EXPORT_POSTS_FOR_MODULE_REQUEST";
+export const EXPORT_POSTS_FOR_MODULE_SUCCESS = "EXPORT_POSTS_FOR_MODULE_SUCCESS";
+export const EXPORT_POSTS_FOR_MODULE_FAILURE = "EXPORT_POSTS_FOR_MODULE_FAILURE";  
+
+
 export function fetchPostsRequest(accountId) {
   return {
     type: FETCH_POSTS_REQUEST,
@@ -48,4 +53,23 @@ export function fetchTopContributorsFailure(error) {
   };
 }
 
+export function exportPostsForModuleRequest(data) {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_REQUEST,
+    data
+  };
+}
+
+export function exportPostsForModuleSuccess() {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_SUCCESS
+  };
+}
+
+export function exportPostsForModuleFailure(error) {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_FAILURE,
+    error
+  };
+}
 

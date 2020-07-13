@@ -13,6 +13,7 @@ class Debate {
     this.connection = connection;
     this.deleted = deleted;
     this.accountId = accountId;
+    this.trackingId = trackingId;
   }
 }
 

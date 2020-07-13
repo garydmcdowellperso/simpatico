@@ -5,6 +5,8 @@ const debateSchema = {
        name: { type: 'string' },
        slug: { type: 'string' },
        debateType: { type: 'string' },
+       accountId: { type: 'number' },
+       trackingId: { type: 'number' },
        languages: { 
          type: 'object',
          properties: {

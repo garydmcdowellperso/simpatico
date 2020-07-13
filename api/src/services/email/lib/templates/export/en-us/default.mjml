@@ -1,0 +1,38 @@
+<mjml>
+  <mj-body>
+
+    <!-- Company Header -->
+    <mj-section background-color="#000000">
+      <mj-column>
+        <mj-text  font-style="italic"
+                  font-size="20px"
+                  color="#ffffff">
+          Simpatico
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Intro text -->
+    <mj-section background-url="https://source.unsplash.com/random"
+                background-color="#fafafa"
+                background-repeat="no-repeat">
+          <mj-column width="400">
+            <mj-text color="#000000">
+                   Hello {{ firstname }} {{ lastname }},
+            </mj-text>
+            <mj-text color="#000000">
+                   Your export is attached to this email
+            </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Social icons -->
+    <mj-section background-color="#e7e7e7">
+      <mj-column>
+        <mj-social>
+          <mj-social-element name="facebook" />
+        </mj-social>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

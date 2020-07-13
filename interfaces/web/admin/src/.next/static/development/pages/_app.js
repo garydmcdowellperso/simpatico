@@ -4733,6 +4733,146 @@ createSymbol('LOCATION');
 
 /***/ }),
 
+/***/ "../node_modules/@socialgouv/matomo-next/lib/index.js":
+/*!************************************************************!*\
+  !*** ../node_modules/@socialgouv/matomo-next/lib/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.init = init;
+exports.push = push;
+exports["default"] = void 0;
+
+var _router = _interopRequireDefault(__webpack_require__(/*! next/router */ "../node_modules/next/dist/client/router.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var isExcludedUrl = function isExcludedUrl(url, patterns) {
+  var excluded = false;
+  patterns.forEach(function (pattern) {
+    if (url.match(pattern)) {
+      excluded = true;
+    }
+  });
+  return excluded;
+}; // initialize the tracker
+
+
+function init(_ref) {
+  var url = _ref.url,
+      siteId = _ref.siteId,
+      _ref$jsTrackerFile = _ref.jsTrackerFile,
+      jsTrackerFile = _ref$jsTrackerFile === void 0 ? "matomo.js" : _ref$jsTrackerFile,
+      _ref$phpTrackerFile = _ref.phpTrackerFile,
+      phpTrackerFile = _ref$phpTrackerFile === void 0 ? "matomo.php" : _ref$phpTrackerFile,
+      _ref$excludeUrlsPatte = _ref.excludeUrlsPatterns,
+      excludeUrlsPatterns = _ref$excludeUrlsPatte === void 0 ? [] : _ref$excludeUrlsPatte;
+  window._paq = window._paq || [];
+
+  if (!url) {
+    console.warn("Matomo disabled, please provide matomo url");
+    return;
+  }
+
+  var previousPath = ""; // order is important -_- so campaign are detected
+
+  var excludedUrl = typeof window !== "undefined" && isExcludedUrl(window.location.pathname, excludeUrlsPatterns);
+
+  if (excludedUrl) {
+    if (typeof window !== "undefined") {
+      console.log("matomo: exclude track ".concat(window.location.pathname));
+    }
+  } else {
+    push(["trackPageView"]);
+  }
+
+  push(["enableLinkTracking"]);
+  push(["setTrackerUrl", "".concat(url, "/").concat(phpTrackerFile)]);
+  push(["setSiteId", siteId]);
+  /**
+   * for intial loading we use the location.pathname
+   * as the first url visited.
+   * Once user navigate accross the site,
+   * we rely on Router.pathname
+   */
+
+  var scriptElement = document.createElement("script");
+  var refElement = document.getElementsByTagName("script")[0];
+  scriptElement.type = "text/javascript";
+  scriptElement.async = true;
+  scriptElement.defer = true;
+  scriptElement.src = "".concat(url, "/").concat(jsTrackerFile);
+  refElement.parentNode.insertBefore(scriptElement, refElement);
+  previousPath = location.pathname;
+
+  _router["default"].events.on("routeChangeComplete", function (path) {
+    var excludedUrl = isExcludedUrl(path, excludeUrlsPatterns);
+
+    if (excludedUrl) {
+      console.log("matomo: exclude track ".concat(path));
+      return;
+    } // We use only the part of the url without the querystring to ensure piwik is happy
+    // It seems that piwik doesn't track well page with querystring
+
+
+    var _path$split = path.split("?"),
+        _path$split2 = _slicedToArray(_path$split, 1),
+        pathname = _path$split2[0]; // In order to ensure that the page title had been updated,
+    // we delayed pushing the tracking to the next tick.
+
+
+    setTimeout(function () {
+      var q = _router["default"].query.q;
+
+      if (previousPath) {
+        push(["setReferrerUrl", "".concat(previousPath)]);
+      }
+
+      push(["setCustomUrl", pathname]);
+      push(["setDocumentTitle", document.title]);
+      push(["deleteCustomVariables", "page"]);
+      push(["setGenerationTimeMs", 0]);
+
+      if (/^\/recherche/.test(pathname) || /^\/search/.test(pathname)) {
+        push(["trackSiteSearch", q]);
+      } else {
+        push(["trackPageView"]);
+      }
+
+      previousPath = pathname;
+    }, 0);
+  });
+} // to push custom events
+
+
+function push(args) {
+  window._paq.push(args);
+}
+
+var _default = init;
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "../node_modules/core-js/library/fn/array/is-array.js":
 /*!************************************************************!*\
   !*** ../node_modules/core-js/library/fn/array/is-array.js ***!
@@ -30290,7 +30430,7 @@ function updatePageFailure(error) {
 /*!**************************!*\
   !*** ./actions/posts.js ***!
   \**************************/
-/*! exports provided: FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE, FETCH_TOP_CONTRIBUTORS_REQUEST, FETCH_TOP_CONTRIBUTORS_SUCCESS, FETCH_TOP_CONTRIBUTORS_FAILURE, fetchPostsRequest, fetchPostsSuccess, fetchPostsFailure, fetchTopContributorsRequest, fetchTopContributorsSuccess, fetchTopContributorsFailure */
+/*! exports provided: FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE, FETCH_TOP_CONTRIBUTORS_REQUEST, FETCH_TOP_CONTRIBUTORS_SUCCESS, FETCH_TOP_CONTRIBUTORS_FAILURE, EXPORT_POSTS_FOR_MODULE_REQUEST, EXPORT_POSTS_FOR_MODULE_SUCCESS, EXPORT_POSTS_FOR_MODULE_FAILURE, fetchPostsRequest, fetchPostsSuccess, fetchPostsFailure, fetchTopContributorsRequest, fetchTopContributorsSuccess, fetchTopContributorsFailure, exportPostsForModuleRequest, exportPostsForModuleSuccess, exportPostsForModuleFailure */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30301,18 +30441,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_TOP_CONTRIBUTORS_REQUEST", function() { return FETCH_TOP_CONTRIBUTORS_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_TOP_CONTRIBUTORS_SUCCESS", function() { return FETCH_TOP_CONTRIBUTORS_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_TOP_CONTRIBUTORS_FAILURE", function() { return FETCH_TOP_CONTRIBUTORS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EXPORT_POSTS_FOR_MODULE_REQUEST", function() { return EXPORT_POSTS_FOR_MODULE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EXPORT_POSTS_FOR_MODULE_SUCCESS", function() { return EXPORT_POSTS_FOR_MODULE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EXPORT_POSTS_FOR_MODULE_FAILURE", function() { return EXPORT_POSTS_FOR_MODULE_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPostsRequest", function() { return fetchPostsRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPostsSuccess", function() { return fetchPostsSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPostsFailure", function() { return fetchPostsFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTopContributorsRequest", function() { return fetchTopContributorsRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTopContributorsSuccess", function() { return fetchTopContributorsSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTopContributorsFailure", function() { return fetchTopContributorsFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exportPostsForModuleRequest", function() { return exportPostsForModuleRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exportPostsForModuleSuccess", function() { return exportPostsForModuleSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exportPostsForModuleFailure", function() { return exportPostsForModuleFailure; });
 var FETCH_POSTS_REQUEST = "FETCH_POSTS_REQUEST";
 var FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
 var FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE";
 var FETCH_TOP_CONTRIBUTORS_REQUEST = "FETCH_TOP_CONTRIBUTORS_REQUEST";
 var FETCH_TOP_CONTRIBUTORS_SUCCESS = "FETCH_TOP_CONTRIBUTORS_SUCCESS";
 var FETCH_TOP_CONTRIBUTORS_FAILURE = "FETCH_TOP_CONTRIBUTORS_FAILURE";
+var EXPORT_POSTS_FOR_MODULE_REQUEST = "EXPORT_POSTS_FOR_MODULE_REQUEST";
+var EXPORT_POSTS_FOR_MODULE_SUCCESS = "EXPORT_POSTS_FOR_MODULE_SUCCESS";
+var EXPORT_POSTS_FOR_MODULE_FAILURE = "EXPORT_POSTS_FOR_MODULE_FAILURE";
 function fetchPostsRequest(accountId) {
   return {
     type: FETCH_POSTS_REQUEST,
@@ -30349,6 +30498,23 @@ function fetchTopContributorsFailure(error) {
     error: error
   };
 }
+function exportPostsForModuleRequest(data) {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_REQUEST,
+    data: data
+  };
+}
+function exportPostsForModuleSuccess() {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_SUCCESS
+  };
+}
+function exportPostsForModuleFailure(error) {
+  return {
+    type: EXPORT_POSTS_FOR_MODULE_FAILURE,
+    error: error
+  };
+}
 
 /***/ }),
 
@@ -30356,7 +30522,7 @@ function fetchTopContributorsFailure(error) {
 /*!**************************!*\
   !*** ./actions/stats.js ***!
   \**************************/
-/*! exports provided: FETCH_STATS_REQUEST, FETCH_STATS_SUCCESS, FETCH_STATS_FAILURE, fetchStatsRequest, fetchStatsSuccess, fetchStatsFailure */
+/*! exports provided: FETCH_STATS_REQUEST, FETCH_STATS_SUCCESS, FETCH_STATS_FAILURE, FETCH_USERSBYDEVICE_REQUEST, FETCH_USERSBYDEVICE_SUCCESS, FETCH_USERSBYDEVICE_FAILURE, FETCH_VISITORSBYDAYFORMONTH_REQUEST, FETCH_VISITORSBYDAYFORMONTH_SUCCESS, FETCH_VISITORSBYDAYFORMONTH_FAILURE, fetchStatsRequest, fetchStatsSuccess, fetchStatsFailure, fetchUsersByDeviceRequest, fetchUsersByDeviceSuccess, fetchUsersByDeviceFailure, fetchVisitorsByDayForMonthRequest, fetchVisitorsByDayForMonthSuccess, fetchVisitorsByDayForMonthFailure */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30364,12 +30530,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_REQUEST", function() { return FETCH_STATS_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_SUCCESS", function() { return FETCH_STATS_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_STATS_FAILURE", function() { return FETCH_STATS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERSBYDEVICE_REQUEST", function() { return FETCH_USERSBYDEVICE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERSBYDEVICE_SUCCESS", function() { return FETCH_USERSBYDEVICE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USERSBYDEVICE_FAILURE", function() { return FETCH_USERSBYDEVICE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_VISITORSBYDAYFORMONTH_REQUEST", function() { return FETCH_VISITORSBYDAYFORMONTH_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_VISITORSBYDAYFORMONTH_SUCCESS", function() { return FETCH_VISITORSBYDAYFORMONTH_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_VISITORSBYDAYFORMONTH_FAILURE", function() { return FETCH_VISITORSBYDAYFORMONTH_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsRequest", function() { return fetchStatsRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsSuccess", function() { return fetchStatsSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStatsFailure", function() { return fetchStatsFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersByDeviceRequest", function() { return fetchUsersByDeviceRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersByDeviceSuccess", function() { return fetchUsersByDeviceSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsersByDeviceFailure", function() { return fetchUsersByDeviceFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVisitorsByDayForMonthRequest", function() { return fetchVisitorsByDayForMonthRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVisitorsByDayForMonthSuccess", function() { return fetchVisitorsByDayForMonthSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVisitorsByDayForMonthFailure", function() { return fetchVisitorsByDayForMonthFailure; });
 var FETCH_STATS_REQUEST = "FETCH_STATS_REQUEST";
 var FETCH_STATS_SUCCESS = "FETCH_STATS_SUCCESS";
 var FETCH_STATS_FAILURE = "FETCH_STATS_FAILURE";
+var FETCH_USERSBYDEVICE_REQUEST = "FETCH_USERSBYDEVICE_REQUEST";
+var FETCH_USERSBYDEVICE_SUCCESS = "FETCH_USERSBYDEVICE_SUCCESS";
+var FETCH_USERSBYDEVICE_FAILURE = "FETCH_USERSBYDEVICE_FAILURE";
+var FETCH_VISITORSBYDAYFORMONTH_REQUEST = "FETCH_VISITORSBYDAYFORMONTH_REQUEST";
+var FETCH_VISITORSBYDAYFORMONTH_SUCCESS = "FETCH_VISITORSBYDAYFORMONTH_SUCCESS";
+var FETCH_VISITORSBYDAYFORMONTH_FAILURE = "FETCH_VISITORSBYDAYFORMONTH_FAILURE";
 function fetchStatsRequest(accountId) {
   return {
     type: FETCH_STATS_REQUEST,
@@ -30385,6 +30569,43 @@ function fetchStatsSuccess(stats) {
 function fetchStatsFailure(error) {
   return {
     type: FETCH_STATS_FAILURE,
+    error: error
+  };
+}
+function fetchUsersByDeviceRequest(accountId) {
+  return {
+    type: FETCH_USERSBYDEVICE_REQUEST,
+    accountId: accountId
+  };
+}
+function fetchUsersByDeviceSuccess(devices) {
+  return {
+    type: FETCH_USERSBYDEVICE_SUCCESS,
+    devices: devices
+  };
+}
+function fetchUsersByDeviceFailure(error) {
+  return {
+    type: FETCH_USERSBYDEVICE_FAILURE,
+    error: error
+  };
+}
+function fetchVisitorsByDayForMonthRequest(accountId, month) {
+  return {
+    type: FETCH_VISITORSBYDAYFORMONTH_REQUEST,
+    accountId: accountId,
+    month: month
+  };
+}
+function fetchVisitorsByDayForMonthSuccess(visitors) {
+  return {
+    type: FETCH_VISITORSBYDAYFORMONTH_SUCCESS,
+    visitors: visitors
+  };
+}
+function fetchVisitorsByDayForMonthFailure(error) {
+  return {
+    type: FETCH_VISITORSBYDAYFORMONTH_FAILURE,
     error: error
   };
 }
@@ -30590,10 +30811,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! redux-saga */ "../node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
 /* harmony import */ var lodash_flowRight__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lodash/flowRight */ "../node_modules/lodash/flowRight.js");
 /* harmony import */ var lodash_flowRight__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(lodash_flowRight__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
-/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
-/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../i18n */ "../i18n.js");
+/* harmony import */ var _socialgouv_matomo_next__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @socialgouv/matomo-next */ "../node_modules/@socialgouv/matomo-next/lib/index.js");
+/* harmony import */ var _socialgouv_matomo_next__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_socialgouv_matomo_next__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../actions/auth */ "./actions/auth.js");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../i18n */ "../i18n.js");
 
 
 
@@ -30610,20 +30833,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var withTranslation = _i18n__WEBPACK_IMPORTED_MODULE_15__["default"].withTranslation;
+
+var withTranslation = _i18n__WEBPACK_IMPORTED_MODULE_16__["default"].withTranslation;
 var sagaMiddleware = Object(redux_saga__WEBPACK_IMPORTED_MODULE_10__["default"])();
 var store;
 
-var getUrlParameter = function getUrlParameter(name) {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  var regex = new RegExp("[\\?&]".concat(name, "=([^&#]*)"));
-  var results = regex.exec(window.location.search);
-  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-};
-
 var makeStore = function makeStore(initialState) {
-  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_13__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
-  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_12__["default"]);
+  store = Object(redux__WEBPACK_IMPORTED_MODULE_7__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_14__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_7__["applyMiddleware"])(sagaMiddleware));
+  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_13__["default"]);
   return store;
 };
 
@@ -30641,10 +30858,14 @@ function (_App) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Simpatico, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // Not on the URL so check the localStorage
+      Object(_socialgouv_matomo_next__WEBPACK_IMPORTED_MODULE_12__["init"])({
+        url: 'http://localhost',
+        siteId: 1
+      }); // Not on the URL so check the localStorage
+
       if (localStorage.getItem("token")) {
         // Ask server to verify and set cookie
-        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_14__["verifyTokenRequest"])({
+        store.dispatch(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_15__["verifyTokenRequest"])({
           token: localStorage.getItem("token"),
           role: "administrator"
         }));
@@ -30680,7 +30901,7 @@ function (_App) {
   return Simpatico;
 }(next_app__WEBPACK_IMPORTED_MODULE_5___default.a);
 
-var appWithTranslation = _i18n__WEBPACK_IMPORTED_MODULE_15__["default"].appWithTranslation;
+var appWithTranslation = _i18n__WEBPACK_IMPORTED_MODULE_16__["default"].appWithTranslation;
 /* harmony default export */ __webpack_exports__["default"] = (lodash_flowRight__WEBPACK_IMPORTED_MODULE_11___default()(Object(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_9__["default"])(makeStore), appWithTranslation, withTranslation(["common"]))(Simpatico));
 
 /***/ }),
@@ -31545,6 +31766,24 @@ function posts() {
         contributors: []
       });
 
+    case _actions_posts__WEBPACK_IMPORTED_MODULE_1__["EXPORT_POSTS_FOR_MODULE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_posts__WEBPACK_IMPORTED_MODULE_1__["EXPORT_POSTS_FOR_MODULE_SUCCESS"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: ""
+      });
+
+    case _actions_posts__WEBPACK_IMPORTED_MODULE_1__["EXPORT_POSTS_FOR_MODULE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
     default:
       return state;
   }
@@ -31575,8 +31814,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var initialState = {
   posts: null,
   pageviews: null,
+  reactions: null,
+  signups: null,
+  shares: null,
   processing: false,
-  error: ""
+  error: "",
+  devices: [],
+  visitors: []
 };
 function stats() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -31595,7 +31839,10 @@ function stats() {
         processing: false,
         error: "",
         posts: action.stats.posts,
-        pageviews: action.stats.pageviews
+        pageviews: action.stats.pageviews,
+        reactions: action.stats.reactions,
+        shares: action.stats.shares,
+        signups: action.stats.signups
       });
 
     case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_FAILURE"]:
@@ -31603,6 +31850,48 @@ function stats() {
         processing: false,
         error: action.error,
         stats: []
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERSBYDEVICE_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERSBYDEVICE_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        devices: action.devices
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERSBYDEVICE_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        devices: []
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_VISITORSBYDAYFORMONTH_REQUEST"]:
+      return _objectSpread({}, state, {
+        processing: true,
+        error: ""
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_VISITORSBYDAYFORMONTH_SUCCESS"]:
+      // Parse out json and update the store
+      return _objectSpread({}, state, {
+        processing: false,
+        error: "",
+        visitors: action.visitors
+      });
+
+    case _actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_VISITORSBYDAYFORMONTH_FAILURE"]:
+      return _objectSpread({}, state, {
+        processing: false,
+        error: action.error,
+        visitors: []
       });
 
     default:
@@ -32276,9 +32565,22 @@ function* fetchTopContributors(action) {
   yield r;
 }
 
+function* exportPostsForModule(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/exportPostsForModule", JSON.stringify({
+    module: action.data.module,
+    fields: action.data.fields
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_posts__WEBPACK_IMPORTED_MODULE_1__["exportPostsForModuleSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_posts__WEBPACK_IMPORTED_MODULE_1__["exportPostsForModuleFailure"])(err));
+  });
+  yield r;
+}
+
 function* postsSaga() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_posts__WEBPACK_IMPORTED_MODULE_1__["FETCH_POSTS_REQUEST"], fetchPosts);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_posts__WEBPACK_IMPORTED_MODULE_1__["FETCH_TOP_CONTRIBUTORS_REQUEST"], fetchTopContributors);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_posts__WEBPACK_IMPORTED_MODULE_1__["EXPORT_POSTS_FOR_MODULE_REQUEST"], exportPostsForModule);
 }
 
 /***/ }),
@@ -32309,8 +32611,28 @@ function* fetchStats(action) {
   yield r;
 }
 
+function* fetchUsersByDevice(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchUsersByDevice?id=".concat(action.accountId)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchUsersByDeviceSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchUsersByDeviceFailure"])(err));
+  });
+  yield r;
+}
+
+function* fetchVisitorsByDayForMonth(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/fetchVisitorsByDayForMonth?id=".concat(action.accountId, "&month=").concat(action.month)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchVisitorsByDayForMonthSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["fetchVisitorsByDayForMonthFailure"])(err));
+  });
+  yield r;
+}
+
 function* statsSaga() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_STATS_REQUEST"], fetchStats);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_USERSBYDEVICE_REQUEST"], fetchUsersByDevice);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_stats__WEBPACK_IMPORTED_MODULE_1__["FETCH_VISITORSBYDAYFORMONTH_REQUEST"], fetchVisitorsByDayForMonth);
 }
 
 /***/ }),

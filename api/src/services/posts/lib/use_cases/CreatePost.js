@@ -6,6 +6,7 @@ async function CreatePost(
   user,
   timestamp,
   module,
+  accountId,
   { postRepository }
 ) {
   if (!title) {
@@ -23,8 +24,11 @@ async function CreatePost(
   if (!module) {
     throw new Error("No module");
   }
+  if (!accountId) {
+    throw new Error("No accountId");
+  }
 
-  const post = new Post(null, title, contents, user, timestamp, module, null, false);
+  const post = new Post(null, title, contents, user, timestamp, module, accountId, null, false);
 
   return postRepository.persist(post);
 }

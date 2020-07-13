@@ -89,7 +89,8 @@ class TopPost extends Component {
                     createPostRequest({
                       title: values.title,
                       contents: content,
-                      module: localStorage.getItem("module")
+                      module: localStorage.getItem("module"),
+                      accountId: localStorage.getItem("accountId")
                     })
                   );
 

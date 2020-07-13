@@ -39,12 +39,13 @@ export function changeSortOrder(order) {
   };
 }
 
-export function createPostRequest({ title, contents, module }) {
+export function createPostRequest({ title, contents, module, accountId }) {
   return {
     type: CREATE_POST_REQUEST,
     title,
     contents,
-    module
+    module, 
+    accountId
   };
 }
 

@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { useDispatch, useSelector } from "react-redux";
+import { init } from "@socialgouv/matomo-next";
 
 
 import Header from "../components/Header";
@@ -38,6 +39,10 @@ function Home({ debateServer }) {
   const debate = useSelector(state => state.debate.debate);
   const { posts } = useSelector(state => state.posts);
   const { isValidToken, accountId } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    init({ url: 'http://localhost', siteId: debate.trackingId });
+  }, []);
 
   useEffect(() => {
     if (debate && debate.debateType === 'private') {

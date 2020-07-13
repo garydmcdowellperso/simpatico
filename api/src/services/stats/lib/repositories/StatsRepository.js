@@ -19,6 +19,18 @@ class StatsRepository {
     return this.repository.getByAccountId(accountId);
   }
 
+  getLatestByAccountId(accountId) {
+    return this.repository.getLatestByAccountId(accountId);
+  }
+
+  getByDebateId(debateId) {
+    return this.repository.getByDebateId(debateId);
+  }
+
+  getLatestByDebateId(debateId) {
+    return this.repository.getLatestByDebateId(debateId);
+  }
+
   find() {
     return this.repository.find();
   }

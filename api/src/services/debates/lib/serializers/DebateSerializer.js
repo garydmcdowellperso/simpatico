@@ -15,7 +15,8 @@ const _serializeSingleDebate = debate => {
     metaTags: debate.metaTags,
     connection: debate.connection,
     deleted: debate.deleted,
-    accountId: debate.accountId
+    accountId: debate.accountId,
+    trackingId: debate.trackingId
   };
 };
 

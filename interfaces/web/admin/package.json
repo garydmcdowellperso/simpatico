@@ -21,6 +21,7 @@
     "@material-ui/icons": "4.9.1",
     "@next/bundle-analyzer": "9.0.5",
     "@react-page/react-page": "^0.18.11",
+    "@socialgouv/matomo-next": "^1.1.2",
     "@stardust-ui/docs-components": "0.40.0",
     "@zeit/next-css": "1.0.1",
     "babel-plugin-transform-class-properties": "6.24.1",

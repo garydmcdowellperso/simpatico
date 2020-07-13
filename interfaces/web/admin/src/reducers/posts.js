@@ -4,7 +4,10 @@ import {
   FETCH_POSTS_FAILURE,
   FETCH_TOP_CONTRIBUTORS_REQUEST,
   FETCH_TOP_CONTRIBUTORS_SUCCESS,
-  FETCH_TOP_CONTRIBUTORS_FAILURE
+  FETCH_TOP_CONTRIBUTORS_FAILURE,
+  EXPORT_POSTS_FOR_MODULE_REQUEST,
+  EXPORT_POSTS_FOR_MODULE_SUCCESS,
+  EXPORT_POSTS_FOR_MODULE_FAILURE,
 } from "../actions/posts";
 
 const initialState = {
@@ -60,6 +63,24 @@ export default function posts(state = initialState, action) {
         processing: true,
         error: "",
         contributors: []
+      };    
+    case EXPORT_POSTS_FOR_MODULE_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case EXPORT_POSTS_FOR_MODULE_SUCCESS:
+      return {
+        ...state,
+        processing: false,
+        error: ""
+      };
+    case EXPORT_POSTS_FOR_MODULE_FAILURE:
+      return {
+        ...state,
+        processing: true,
+        error: ""
       };    
     default:
       return state;

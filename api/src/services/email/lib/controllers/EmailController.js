@@ -35,7 +35,7 @@ function readFileAsync(path) {
 
 async function sendEmail(inputs) {
   // Inputs
-  const { template, email, substitutions } = inputs;
+  const { template, email, substitutions, attachment } = inputs;
 
   // Read the template from the input pârams
   const templateRaw = await readFileAsync(
@@ -43,7 +43,7 @@ async function sendEmail(inputs) {
   );
   
   // Treatment
-  const response = await SendEmail(templateRaw, email, substitutions, {
+  const response = await SendEmail(templateRaw, email, substitutions, attachment, {
     emailRepository,
     templateManager,
     transportManager

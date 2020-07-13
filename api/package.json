@@ -25,10 +25,12 @@
     "@babel/plugin-syntax-class-properties": "7.2.0",
     "@babel/preset-env": "7.5.5",
     "@babel/runtime": "7.5.5",
+    "axios": "^0.19.2",
     "babel-preset-airbnb": "4.0.1",
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
     "core-js": "3.2.1",
+    "csv-writer": "^1.6.0",
     "fastify": "2.7.1",
     "fastify-blipp": "2.0.0",
     "fastify-circuit-breaker": "0.1.0",
@@ -51,7 +53,8 @@
     "nodemailer": "^6.4.6",
     "pino-elasticsearch": "4.1.0",
     "regenerator-runtime": "0.13.3",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",

@@ -5,11 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import PageTitle from "./common/PageTitle";
 import SmallStats from "./common/SmallStats";
-import UsersOverview from "./blog/UsersOverview";
-import UsersByDevice from "./blog/UsersByDevice";
+import UsersOverview from "./UsersOverview";
+import UsersByDevice from "./UsersByDevice";
 import Contributions from "./Contributions";
 import TopContributors from "./TopContributors";
-import ActionableItems from "./blog/ActionableItems";
 import Placeholder from "./common/Placeholder";
 
 import { fetchStatsRequest } from "../actions/stats";
@@ -18,8 +17,7 @@ import { fetchPostsRequest, fetchTopContributorsRequest } from "../actions/posts
 export default function Overview(props) {
   const dispatch = useDispatch();
 
-  const posts = useSelector(state => state.stats.posts)
-  const pageviews = useSelector(state => state.stats.pageviews)
+  const { posts, pageviews, reactions, signups, shares } = useSelector(state => state.stats)
   const isValidToken = useSelector(state => state.auth.isValidToken)
 
   const contributions = useSelector(state => state.posts.posts)
@@ -98,16 +96,85 @@ export default function Overview(props) {
           </Col>
         )
       } 
+
+      {reactions ?
+        (
+          <Col className="col-lg mb-4" {...reactions.attrs}>
+            <SmallStats
+              id={`small-stats-reactions`}
+              variation="1"
+              chartData={reactions.datasets}
+              chartLabels={reactions.chartLabels}
+              label="Reactions"
+              value={reactions.value}
+              percentage={reactions.percentage}
+              increase={reactions.increase}
+              decrease={reactions.decrease}
+            />
+          </Col>
+        ) :
+        (
+          <Col className="col-lg mb-4">
+            <Placeholder />
+          </Col>
+        )
+      } 
+
+      {signups ?
+        (
+          <Col className="col-lg mb-4" {...signups.attrs}>
+            <SmallStats
+              id={`small-stats-signups`}
+              variation="1"
+              chartData={signups.datasets}
+              chartLabels={signups.chartLabels}
+              label="Signups"
+              value={signups.value}
+              percentage={signups.percentage}
+              increase={signups.increase}
+              decrease={signups.decrease}
+            />
+          </Col>
+        ) :
+        (
+          <Col className="col-lg mb-4">
+            <Placeholder />
+          </Col>
+        )
+      } 
+
+      {shares ?
+        (
+          <Col className="col-lg mb-4" {...shares.attrs}>
+            <SmallStats
+              id={`small-stats-shares`}
+              variation="1"
+              chartData={shares.datasets}
+              chartLabels={shares.chartLabels}
+              label="Shares"
+              value={shares.value}
+              percentage={shares.percentage}
+              increase={shares.increase}
+              decrease={shares.decrease}
+            />
+          </Col>
+        ) :
+        (
+          <Col className="col-lg mb-4">
+            <Placeholder />
+          </Col>
+        )
+      } 
       </Row>     
       <Row>
         {/* Users Overview */}
         <Col lg="8" md="12" sm="12" className="mb-4">
-          <UsersOverview />
+          <UsersOverview title="Visitors by debate" />
         </Col>
 
         {/* Users by Device */}
         <Col lg="4" md="6" sm="12" className="mb-4">
-          <UsersByDevice />
+          <UsersByDevice title="Users by Device"/>
         </Col>
       </Row>
       <Row>
@@ -121,12 +188,7 @@ export default function Overview(props) {
           <TopContributors title="Top Contributors" contributors={contributors} />
         </Col>
 
-        {/* Actionable items */}
-        <Col lg="6" md="12" sm="12" className="mb-4">
-          <ActionableItems />
-        </Col>
-
-      </Row>
+        </Row>
     </Container>
   )
 }

@@ -109,7 +109,6 @@ export default function Footer(props) {
             const newPlaceHolderNameFrench = [];
             const newPlaceHolderNameSpanish = [];
 
-            console.log('HERE')
             if (debate.footer.sections) {
                 debate.footer.sections.map((section, idx) => {
                     if (section.page && section.page !== 0) {

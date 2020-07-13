@@ -6,7 +6,7 @@ class NodeMailerManager {
       service: 'SendGrid',
       auth: {
         user: 'apikey',
-        pass: 'XXXX'
+        pass: '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'
       }
     });
   

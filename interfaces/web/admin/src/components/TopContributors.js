@@ -10,11 +10,13 @@ import {
   Col,
   FormSelect
 } from "shards-react";
+import Link from 'next/link'
 
 function TopContributors(props) {
 
   const { title, contributors } = props;
 
+  console.log('contributors', contributors)
   return (
     <Card small>
       <CardHeader className="border-bottom">
@@ -28,7 +30,9 @@ function TopContributors(props) {
             <ListGroupItem key={idx} className="d-flex px-3">
               {/* Avatar */}
               <div className="blog-comments__avatar mr-3">
-                <img src={contributor.avatar} alt={contributor.user} />
+                <Link href={`/admin/profile?userId=${contributor.id}`}>
+                  <a><img src={contributor.avatar} alt={contributor.user} /></a>
+                </Link>
               </div>
 
               <span className="text-semibold text-fiord-blue">{contributor.user}</span>
@@ -39,32 +43,6 @@ function TopContributors(props) {
           ))}
         </ListGroup>
       </CardBody>
-
-      <CardFooter className="border-top">
-        <Row>
-          {/* Time Span */}
-          <Col>
-            <FormSelect
-              size="sm"
-              value="last-week"
-              style={{ maxWidth: "130px" }}
-              onChange={() => {}}
-            >
-              <option value="last-week">All Time</option>
-              <option value="last-week">Last Week</option>
-              <option value="today">Today</option>
-              <option value="last-month">Last Month</option>
-              <option value="last-year">Last Year</option>
-            </FormSelect>
-          </Col>
-
-          {/* View Full Report */}
-          <Col className="text-right view-report">
-            {/* eslint-disable-next-line */}
-            <a href="#">Full report &rarr;</a>
-          </Col>
-        </Row>
-      </CardFooter>
     </Card>
   )
 }

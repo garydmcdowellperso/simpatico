@@ -4,11 +4,14 @@ const _serializeSingleStat = stat => {
   return {
     id: stat.id,
     accountId: stat.accountId,
+    debateId: stat.debateId,
     posts: stat.posts,
     pageviews: stat.pageviews,
     reactions: stat.reactions,
     signups: stat.signups,
-    shares: stat.shares
+    shares: stat.shares,
+    timestamp: stat.timestamp,
+    deleted: stat.deleted
   };
 };
 

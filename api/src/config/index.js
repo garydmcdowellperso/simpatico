@@ -12,6 +12,10 @@ const config = {
     port: process.env.PORT || "5000",
     docPrefix: process.env.DOC_URL_PREFIX || "doc"
   },
+  matomo: {
+    server: 'localhost',
+    token: '9ab164f139278c6d37480c8055405e95'
+  },
   db: {
     dbname:
       process.env.NODE_ENV === "test"

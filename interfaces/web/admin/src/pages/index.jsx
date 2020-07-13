@@ -13,7 +13,7 @@ import "../assets/shards-dashboards.1.1.0.min.css";
 export default ({ noNavbar, noFooter }) => (
   <div>
     <Head>
-      <title>My styled page</title>
+      <title>Simpatico Admin</title>
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" />

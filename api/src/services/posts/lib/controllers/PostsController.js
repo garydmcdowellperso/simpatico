@@ -1,4 +1,5 @@
 import PostSerializer from "../serializers/PostSerializer";
+import PostCSVSerializer from "../serializers/PostCSVSerializer";
 import TopContributorsSerializer from "../serializers/TopContributorsSerializer";
 
 import CreatePost from "../use_cases/CreatePost";
@@ -20,10 +21,10 @@ const postRepository = new PostRepository(new PostRepositoryMongo());
 
 async function createPost(inputs) {
   // Inputs
-  const { title, contents, user, timestamp, module } = inputs;
+  const { title, contents, user, timestamp, module, accountId } = inputs;
 
   // Treatment
-  const response = await CreatePost(title, contents, user, timestamp, module, {
+  const response = await CreatePost(title, contents, user, timestamp, module, accountId, {
     postRepository
   });
 
@@ -122,6 +123,11 @@ async function fetchAllPostsForModule(inputs) {
   return postSerializer.serialize(response);
 }
 
+async function serializePostToCSV(posts, fields, filename) {
+  const postCSVSerializer = new PostCSVSerializer();
+  return postCSVSerializer.serialize(posts, fields, filename);
+}
+
 async function countPostsForModule(inputs) {
   // Inputs
   const { module } = inputs;
@@ -171,5 +177,6 @@ module.exports = {
   fetchPosts,
   updatePost,
   deletePost,
-  fetchTopContributors
+  fetchTopContributors,
+  serializePostToCSV
 };

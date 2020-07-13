@@ -33,7 +33,8 @@ function* createPostRequest(action) {
     JSON.stringify({
       title: action.title,
       contents: action.contents,
-      module: action.module
+      module: action.module,
+      accountId: action.accountId
     })
   )
     .then(json => put(createPostSuccess(json)))

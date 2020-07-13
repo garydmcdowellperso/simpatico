@@ -99,7 +99,6 @@ function Theme(props) {
     handleUpdate(newThemes)
   }
 
-  console.log('theme', theme)
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a">
@@ -736,8 +735,6 @@ export default function Themes(props) {
 
   const { debate } = props;
 
-  console.log('debate', debate)
-  
   const dispatch = useDispatch();
 
   useEffect(() => { // Fire once, get pages for debate

@@ -48,7 +48,7 @@ const routes = async fastify => {
                     httpOnly: true,
                     secure: true,
                     path: "/",
-                    domain: "0040d099ab7e.ngrok.io"
+                    domain: "49646ddc7fe9.ngrok.io"
                 });
 
                 reply.send({
@@ -192,7 +192,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "0040d099ab7e.ngrok.io"
+                            domain: "49646ddc7fe9.ngrok.io"
                         });
     
                         reply.send({
@@ -256,7 +256,7 @@ const routes = async fastify => {
             // Send activattion email
             const inputsEmali = {
                 template: {
-                    type: "test",
+                    type: "account",
                     language: "en-US",
                     name: "creation"
                 },
@@ -268,7 +268,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://0040d099ab7e.ngrok.io/api/v1/activate?token=${response.token}`
+                    url: `https://49646ddc7fe9.ngrok.io/api/v1/activate?token=${response.token}`
                 }
             };
 
@@ -366,7 +366,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "0040d099ab7e.ngrok.io"
+                domain: "49646ddc7fe9.ngrok.io"
             });
 
             reply.redirect(`/?token=${responseActivate.token}`);

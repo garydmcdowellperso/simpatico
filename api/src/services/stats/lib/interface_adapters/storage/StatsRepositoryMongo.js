@@ -27,13 +27,12 @@ class StatsRepositoryMongo {
       { returnOriginal: false }
     );
 
-    console.log("_getValueForNextSequence", sequenceDoc.value.sequence_value);
     return sequenceDoc.value.sequence_value;
   }
 
   async persist(statsEntity) {
     const augmentedEntity = {
-      ...pstatsEntity,
+      ...statsEntity,
       id: await this._getValueForNextSequence()
     };
 
@@ -51,7 +50,19 @@ class StatsRepositoryMongo {
   }
 
   getByAccountId(accountId) {
-    return this.collection.findOne({ accountId });
+    return this.collection.find({ accountId }).toArray();
+  }
+
+  getLatestByAccountId(accountId) {
+    return this.collection.findOne({ accountId }).sort({ _id: -1 });
+  }
+
+  getByDebateId(debateId) {
+    return this.collection.find({ debateId }).toArray();
+  }
+
+  getLatestByDebateId(debateId) {
+    return this.collection.find({ debateId }).sort({ _id: -1 }).toArray();
   }
 
   find() {

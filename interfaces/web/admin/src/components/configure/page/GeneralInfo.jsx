@@ -45,7 +45,6 @@ class GeneralInfo extends Component {
       editorState: null
     };
   
-    RichTextEditor = null;
     Editor = null;
 
     handleOnSubmit = () => {
