@@ -39,10 +39,9 @@ async function CreateUser(
   const hashedPassword = await encryptionManager.hash(password);
 
   const token = accessTokenManager.generate({ 
-    uid: existingUser.id,
-    accountId: existingUser.accountId,
-    debateId: existingUser.accountId,
-    role: existingUser.role
+    accountId: accountId,
+    debateId: debateId,
+    role: role
   });
 
   const user = new User(null, debateId ? [debateId] : [], accountId, firstName, lastName, email, hashedPassword, false, token, [role], "", "", 0, 0, [], [], []);
