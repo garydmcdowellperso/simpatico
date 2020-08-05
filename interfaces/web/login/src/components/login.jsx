@@ -7,7 +7,6 @@ import flowRight from 'lodash/flowRight';
 
 import { loginRequest } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
-import { Footer } from './common/Footer';
 
 const { withTranslation } = nextI18NextInstance;
 
