@@ -66,7 +66,7 @@ const routes = async fastify => {
             // Send activattion email
             const inputsEmali = {
                 template: {
-                    type: "test",
+                    type: "accounts",
                     language: "en-US",
                     name: "creation"
                 },
