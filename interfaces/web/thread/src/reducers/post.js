@@ -74,6 +74,12 @@ export default function post(state = initialState, action) {
         posts: newPosts,
         processingPosts: false
       };
+    case CREATE_POST_FAILURE:
+      return {
+        ...state,
+        processingPosts: false,
+        error: action.error
+      };
     case REPLY_POST_SUCCESS:
       // Replace existing post with returned one
       newPosts = cloneDeep(state.posts);

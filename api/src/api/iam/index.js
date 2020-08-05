@@ -2,6 +2,7 @@ const config = require('../../config');
 
 import UsersController from "../../services/iam/lib/controllers/UsersController";
 import EmailController from "../../services/email/lib/controllers/EmailController";
+import DebatesController from "../../services/debates/lib/controllers/DebatesController";
 
 /**
  * Defines all the routes
@@ -9,6 +10,252 @@ import EmailController from "../../services/email/lib/controllers/EmailControlle
  * @returns {Object} Different per route
  */
 const routes = async fastify => {
+    fastify.post(
+        "/changePassword",
+        {
+            config,
+            schema: {
+                description: "Changes a users password for a debate",
+                tags: ["api"],
+                summary: "Changes a users password for a debate",
+                body: {
+                    type: 'object',
+                    properties: {
+                        email: { type: 'string' },
+                        password: { type: 'string' },
+                        debateName: { type: 'string' },
+                        token: { type: 'string' },
+                    },
+                },    
+                response: {
+                    200: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string" },
+                            token: { type: "string" },
+                            accountId: { type: 'number' }
+                        },
+                    },
+                },
+            },
+        },
+        async (request, reply) => {
+            fastify.log.info(
+                { body: request.body }, "[src#api#iam#changePassword] Entering");
+    
+            const inputs = {...request.body};
+            inputs.name = request.body.debateName;
+
+            try {
+                const response = await UsersController.login(inputs);
+
+                const user = await UsersController.fetchUserByEmail(inputs);
+
+                // Check token still matches
+                if (user.token !== request.body.token) {
+                    throw new Error("Invald token");
+                }
+
+                // Can they acceess this debate ?
+                if (!request.body.debateName) {
+                    throw new Error("No debate provided");
+                }
+
+                if (request.body.debateName) {
+                    const debate = await DebatesController.fetchDebate(inputs);
+
+                    let debateFound;
+                    debateFound = user.debates.map((dbt, idx) =>  {
+                        if (dbt === debate.id) {
+                            return 'found';
+                        }
+                    });
+
+                    if (!debateFound.indexOf('found') === -1) {
+                        throw new Error("Cannot access this debate");
+                    }
+                }
+
+                let roles;
+                if (user.role) {
+                    roles = user.role.map((role, idx) =>  {
+                        if (role === 'participant') {
+                            return 'found';
+                        }
+                    });
+
+                    if (roles.indexOf('found') > -1) {
+                        // Update password, remove token, log them in
+                        inputs.id = user.id;
+
+                        await UsersController.changePasswordSuccess(inputs);
+
+                        reply.setCookie("simpatico", response.token, {
+                            httpOnly: true,
+                            secure: true,
+                            path: "/",
+                            domain: "e8e5120fec0b.ngrok.io"
+                        });
+    
+                        reply.send({
+                            status: 'ok',
+                            token: response.token,
+                            accountId: user.accountId
+                        });        
+
+                    } else {
+                        // Not correct role
+                        throw new Error("User does not have role");
+                    }
+                } else {
+                     throw new Error("User does not have role");
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+    );
+
+    fastify.get(
+        "/verifyChangePasswordToken",
+        {
+            config,
+            schema: {
+                description: "verify a token for change password",
+                tags: ["api"],
+                querystring: {
+                    token: { type: "string" },
+                    email: { type: "string" }
+                },
+                response: {
+                    200: {
+                        type: "object",
+                        properties: {
+                            isValidToken: { type: "boolean" }
+                        }
+                    }
+                }
+            }
+        },
+        async (request, reply) => {
+            fastify.log.info(
+            { query: request.query  },
+            "[src#api#verifyChangePasswordToken] Entering"
+            );
+
+            const inputs = { ...request.query };
+
+            // Check the user exists
+            const user = await UsersController.fetchUserByEmail(inputs)
+            if (!user) {
+                fastify.log.info("[src#api#verifyChangePasswordToken] No usch user");
+        
+                return { isValidToken: false };
+            }
+
+            // Stored token matches sent one
+            console.log(user.token)
+            console.log(request.query.token)
+            if (user.token !== request.query.token) {
+                fastify.log.info("[src#api#verifyChangePasswordToken] Token doesn't match");
+
+                return { isValidToken: false };
+            }
+
+            // Do I really like it, is it, is it wicked ?
+            const isValidToken = await UsersController.verifyChangePasswordToken(inputs);
+
+            reply.send({ isValidToken });
+        }
+    );
+
+    fastify.post(
+        "/forgottenPassword",
+        {
+            config,
+            schema: {
+                description: "Sends a password reset link",
+                tags: ["api"],
+                summary: "Sends a password reset link",
+                body: {
+                    type: 'object',
+                    properties: {
+                        email: { type: 'string' },
+                        debateName: { type: 'string' },
+                    },
+                },    
+                response: {
+                    200: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string" },
+                            token: { type: "string" }
+                        },
+                    },
+                },
+            },
+        },
+        async (request, reply) => {
+            fastify.log.info(
+                { body: request.body }, "[src#api#iam#forgottenPassword] Entering");
+    
+            const inputs = {...request.body};
+            inputs.name = request.body.debateName;
+
+            try {
+                const response = await UsersController.resetPassword(inputs);
+
+                const user = await UsersController.fetchUserByEmail(inputs);
+
+                // Can they acceess this debate ?
+                if (!request.body.debateName) {
+                    throw new Error("No debate provided");
+                }
+
+                if (request.body.debateName) {
+                    const debate = await DebatesController.fetchDebate(inputs);
+
+                    let debateFound;
+                    debateFound = user.debates.map((dbt, idx) =>  {
+                        if (dbt === debate.id) {
+                            return 'found';
+                        }
+                    });
+
+                    if (!debateFound.indexOf('found') === -1) {
+                        throw new Error("Cannot access this debate");
+                    }
+                }
+
+                // Send email
+                const inputsEmali = {
+                    template: {
+                        type: "account",
+                        language: "en-US",
+                        name: "forgottenpassword"
+                    },
+                    email: {
+                        to: request.body.email,
+                        from: "noreply@simpatico.cloud",
+                        subject: "Reset your password"
+                    },
+                    substitutions: {
+                        url: `https://e8e5120fec0b.ngrok.io/login/change?email=${request.body.email}&token=${response.token}`
+                    }
+                };
+
+                await EmailController.sendEmail(inputsEmali);
+
+                return  {
+                    status: 'ok',
+                    reason: ""
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+    );
+
     fastify.post(
         "/loginRequest",
         {
@@ -22,6 +269,7 @@ const routes = async fastify => {
                     properties: {
                         email: { type: 'string' },
                         password: { type: 'string' },
+                        debateName: { type: 'string' },
                     },
                 },    
                 response: {
@@ -40,21 +288,62 @@ const routes = async fastify => {
                 { body: request.body }, "[src#api#iam#loginRequest] Entering");
     
             const inputs = {...request.body};
+            inputs.name = request.body.debateName;
 
             try {
                 const response = await UsersController.login(inputs);
 
-                reply.setCookie("simpatico", response.token, {
-                    httpOnly: true,
-                    secure: true,
-                    path: "/",
-                    domain: "49646ddc7fe9.ngrok.io"
-                });
+                const user = await UsersController.fetchUserByEmail(inputs);
 
-                reply.send({
-                    status: 'ok',
-                    token: response.token
-                });
+                // Can they acceess this debate ?
+                if (!request.body.debateName) {
+                    throw new Error("No debate provided");
+                }
+
+                if (request.body.debateName) {
+                    const debate = await DebatesController.fetchDebate(inputs);
+
+                    let debateFound;
+                    debateFound = user.debates.map((dbt, idx) =>  {
+                        if (dbt === debate.id) {
+                            return 'found';
+                        }
+                    });
+
+                    if (!debateFound.indexOf('found') === -1) {
+                        throw new Error("Cannot access this debate");
+                    }
+                }
+
+                let roles;
+                if (user.role) {
+                    roles = user.role.map((role, idx) =>  {
+                        if (role === 'participant') {
+                            return 'found';
+                        }
+                    });
+
+                    if (roles.indexOf('found') > -1) {
+                        reply.setCookie("simpatico", response.token, {
+                            httpOnly: true,
+                            secure: true,
+                            path: "/",
+                            domain: "e8e5120fec0b.ngrok.io"
+                        });
+    
+                        reply.send({
+                            status: 'ok',
+                            token: response.token,
+                            accountId: user.accountId
+                        });        
+
+                    } else {
+                        // Not correct role
+                        throw new Error("User does not have role");
+                    }
+                } else {
+                    throw new Error("User does not have role");
+                }
             } catch (error) {
                 throw error;
             }
@@ -192,7 +481,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "49646ddc7fe9.ngrok.io"
+                            domain: "e8e5120fec0b.ngrok.io"
                         });
     
                         reply.send({
@@ -268,7 +557,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://49646ddc7fe9.ngrok.io/api/v1/activate?token=${response.token}`
+                    url: `https://e8e5120fec0b.ngrok.io/api/v1/activate?token=${response.token}`
                 }
             };
 
@@ -332,7 +621,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "f84bf21a.ngrok.io"
+                domain: "e8e5120fec0b.ngrok.io"
             });
 
             reply.redirect(`/?token=${responseCreate.token}`);
@@ -366,7 +655,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "49646ddc7fe9.ngrok.io"
+                domain: "e8e5120fec0b.ngrok.io"
             });
 
             reply.redirect(`/?token=${responseActivate.token}`);

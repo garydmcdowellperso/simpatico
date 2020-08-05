@@ -48,7 +48,7 @@ singleton.register(oauthPlugin, {
   // register a fastify url to start the redirect flow
   startRedirectPath: "/login/google",
   // facebook redirect here after the user login
-  callbackUri: "https://49646ddc7fe9.ngrok.io/api/v1/login/google/callback"
+  callbackUri: "https://e8e5120fec0b.ngrok.io/api/v1/login/google/callback"
 });
 
 // Print routes

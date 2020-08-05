@@ -20,6 +20,7 @@ const routes = async fastify => {
         {
             config,
             preValidation: [fastify.authenticate],
+            preHandler: [fastify.authorise],
             schema: {
                 description: 'creates a post',
                 tags: ['api'],
@@ -66,7 +67,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: "Gary",
                     lastname: "McDowell",
-                    url: `https://49646ddc7fe9.ngrok.io/thread/?module=${request.body.module}#${response.id}`
+                    url: `https://e8e5120fec0b.ngrok.io/thread/?module=${request.body.module}#${response.id}`
                 }
               };
 
@@ -304,6 +305,8 @@ const routes = async fastify => {
     "/fetchPostsForModule",
     {
       config,
+      preValidation: [fastify.authenticate],
+      preHandler: [fastify.authorise],
       schema: {
         description: "fetches the posts for a given thread",
         tags: ["api"],
@@ -660,7 +663,6 @@ const routes = async fastify => {
           });
           const posts = await Promise.all(resps);
 
-          console.log('posts', posts)
           // Serialize object to CSV
           const filename = uuidv4(); 
           await PostsController.serializePostToCSV(posts, request.body.fields, filename)

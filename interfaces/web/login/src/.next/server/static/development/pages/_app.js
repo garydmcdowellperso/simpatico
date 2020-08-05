@@ -93,6 +93,73 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "../config.js":
+/*!********************!*\
+  !*** ../config.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  api: {
+    host: process.env.API_HOST || "http://localhost:5000"
+  },
+  server: {
+    host: process.env.SERVER_HOST || "http://localhost",
+    port: parseInt(process.env.PORT, 10) || 1007
+  },
+  i18n: {
+    languages: process.env.LANGUAGES || ["en", "es", "fr"],
+    defaultLanguage: process.env.DEFAULT_LANGUAGE || "fr"
+  }
+});
+
+
+/***/ }),
+
+/***/ "../i18n.js":
+/*!******************!*\
+  !*** ../i18n.js ***!
+  \******************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var next_i18next__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next-i18next */ "next-i18next");
+/* harmony import */ var next_i18next__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_i18next__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config */ "../config.js");
+
+
+
+const {
+  i18n: { languages, defaultLanguage },
+} = _config__WEBPACK_IMPORTED_MODULE_1__["default"];
+
+const fallbackLanguage = defaultLanguage;
+
+// Options list: https://github.com/i18next/i18next-browser-languageDetector#detector-options
+const detectorOptions = {
+  order: ['cookie'],
+  caches: ['cookie'],
+  lookupCookie: 'next-i18next',
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (new next_i18next__WEBPACK_IMPORTED_MODULE_0___default.a({
+  otherLanguages: languages,
+  fallbackLng: fallbackLanguage,
+  defaultNS: 'common',
+  detection: detectorOptions,
+}));
+
+// known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
+// https://github.com/isaachinman/next-i18next/issues/374
+
+
+/***/ }),
+
 /***/ "../next-server/lib/utils":
 /*!*****************************************************!*\
   !*** external "next/dist/next-server/lib/utils.js" ***!
@@ -507,7 +574,7 @@ module.exports = _interopRequireDefault;
 /*!*************************!*\
   !*** ./actions/auth.js ***!
   \*************************/
-/*! exports provided: LOGIN_REQUEST, LOGIN_REQUEST_SUCCESS, LOGIN_REQUEST_FAILURE, CREATE_ACCOUNT_REQUEST, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE, CALLBACK_REQUEST, CALLBACK_REQUEST_SUCCESS, CALLBACK_REQUEST_FAILURE, loginRequest, loginRequestSuccess, loginRequestFailure, createAccountRequest, createAccountSuccess, createAccountFailure, callBackRequest, callBackRequestSuccess, callBackRequestFailure */
+/*! exports provided: LOGIN_REQUEST, LOGIN_REQUEST_SUCCESS, LOGIN_REQUEST_FAILURE, CREATE_ACCOUNT_REQUEST, CREATE_ACCOUNT_SUCCESS, CREATE_ACCOUNT_FAILURE, CALLBACK_REQUEST, CALLBACK_REQUEST_SUCCESS, CALLBACK_REQUEST_FAILURE, FORGOTTEN_PASSWORD_REQUEST, FORGOTTEN_PASSWORD_SUCCESS, FORGOTTEN_PASSWORD_FAILURE, CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_FAILURE, VERIFY_TOKEN_REQUEST, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, FORGOTTEN_PASSWORD_RESET_SENT, forgottenPasswordReset, loginRequest, loginRequestSuccess, loginRequestFailure, createAccountRequest, createAccountSuccess, createAccountFailure, callBackRequest, callBackRequestSuccess, callBackRequestFailure, forgottenPasswordRequest, forgottenPasswordFailure, forgottenPasswordSuccess, changePasswordRequest, changePasswordFailure, changePasswordSuccess, changePasswordVerifyTokenRequest, changePasswordVerifyTokenFailure, changePasswordVerifyTokenSuccess */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -521,6 +588,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CALLBACK_REQUEST", function() { return CALLBACK_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CALLBACK_REQUEST_SUCCESS", function() { return CALLBACK_REQUEST_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CALLBACK_REQUEST_FAILURE", function() { return CALLBACK_REQUEST_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FORGOTTEN_PASSWORD_REQUEST", function() { return FORGOTTEN_PASSWORD_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FORGOTTEN_PASSWORD_SUCCESS", function() { return FORGOTTEN_PASSWORD_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FORGOTTEN_PASSWORD_FAILURE", function() { return FORGOTTEN_PASSWORD_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_PASSWORD_REQUEST", function() { return CHANGE_PASSWORD_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_PASSWORD_SUCCESS", function() { return CHANGE_PASSWORD_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_PASSWORD_FAILURE", function() { return CHANGE_PASSWORD_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VERIFY_TOKEN_REQUEST", function() { return VERIFY_TOKEN_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VERIFY_TOKEN_SUCCESS", function() { return VERIFY_TOKEN_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VERIFY_TOKEN_FAILURE", function() { return VERIFY_TOKEN_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FORGOTTEN_PASSWORD_RESET_SENT", function() { return FORGOTTEN_PASSWORD_RESET_SENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forgottenPasswordReset", function() { return forgottenPasswordReset; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginRequest", function() { return loginRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginRequestSuccess", function() { return loginRequestSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginRequestFailure", function() { return loginRequestFailure; });
@@ -530,6 +608,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "callBackRequest", function() { return callBackRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "callBackRequestSuccess", function() { return callBackRequestSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "callBackRequestFailure", function() { return callBackRequestFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forgottenPasswordRequest", function() { return forgottenPasswordRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forgottenPasswordFailure", function() { return forgottenPasswordFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forgottenPasswordSuccess", function() { return forgottenPasswordSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordRequest", function() { return changePasswordRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordFailure", function() { return changePasswordFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordSuccess", function() { return changePasswordSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordVerifyTokenRequest", function() { return changePasswordVerifyTokenRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordVerifyTokenFailure", function() { return changePasswordVerifyTokenFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePasswordVerifyTokenSuccess", function() { return changePasswordVerifyTokenSuccess; });
 var LOGIN_REQUEST = "LOGIN_REQUEST";
 var LOGIN_REQUEST_SUCCESS = "LOGIN_REQUEST_SUCCESS";
 var LOGIN_REQUEST_FAILURE = "LOGIN_REQUEST_FAILURE";
@@ -539,13 +626,30 @@ var CREATE_ACCOUNT_FAILURE = "CREATE_ACCOUNT_FAILURE";
 var CALLBACK_REQUEST = "CALLBACK_REQUEST";
 var CALLBACK_REQUEST_SUCCESS = "CALLBACK_REQUEST_SUCCESS";
 var CALLBACK_REQUEST_FAILURE = "CALLBACK_REQUEST_FAILURE";
+var FORGOTTEN_PASSWORD_REQUEST = "FORGOTTEN_PASSWORD_REQUEST";
+var FORGOTTEN_PASSWORD_SUCCESS = "FORGOTTEN_PASSWORD_SUCCESS";
+var FORGOTTEN_PASSWORD_FAILURE = "FORGOTTEN_PASSWORD_FAILURE";
+var CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
+var CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
+var CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE";
+var VERIFY_TOKEN_REQUEST = "VERIFY_TOKEN_REQUEST";
+var VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
+var VERIFY_TOKEN_FAILURE = "VERIFY_TOKEN_FAILURE";
+var FORGOTTEN_PASSWORD_RESET_SENT = "FORGOTTEN_PASSWORD_RESET_SENT";
+function forgottenPasswordReset() {
+  return {
+    type: FORGOTTEN_PASSWORD_RESET_SENT
+  };
+}
 function loginRequest(_ref) {
   var email = _ref.email,
-      password = _ref.password;
+      password = _ref.password,
+      debateName = _ref.debateName;
   return {
     type: LOGIN_REQUEST,
     email: email,
-    password: password
+    password: password,
+    debateName: debateName
   };
 }
 function loginRequestSuccess(response) {
@@ -598,6 +702,70 @@ function callBackRequestFailure(error) {
   return {
     type: CALLBACK_REQUEST_FAILURE,
     error: error
+  };
+}
+function forgottenPasswordRequest(_ref2) {
+  var email = _ref2.email,
+      debateName = _ref2.debateName;
+  return {
+    type: FORGOTTEN_PASSWORD_REQUEST,
+    email: email,
+    debateName: debateName
+  };
+}
+function forgottenPasswordFailure(error) {
+  return {
+    type: FORGOTTEN_PASSWORD_FAILURE,
+    error: error
+  };
+}
+function forgottenPasswordSuccess() {
+  return {
+    type: FORGOTTEN_PASSWORD_SUCCESS
+  };
+}
+function changePasswordRequest(_ref3) {
+  var email = _ref3.email,
+      password = _ref3.password,
+      debateName = _ref3.debateName,
+      token = _ref3.token;
+  return {
+    type: CHANGE_PASSWORD_REQUEST,
+    email: email,
+    password: password,
+    debateName: debateName,
+    token: token
+  };
+}
+function changePasswordFailure(error) {
+  return {
+    type: CHANGE_PASSWORD_FAILURE,
+    error: error
+  };
+}
+function changePasswordSuccess(response) {
+  return {
+    type: CHANGE_PASSWORD_SUCCESS,
+    token: response.token
+  };
+}
+function changePasswordVerifyTokenRequest(email, token) {
+  return {
+    type: VERIFY_TOKEN_REQUEST,
+    email: email,
+    token: token
+  };
+}
+function changePasswordVerifyTokenFailure(error) {
+  return {
+    type: VERIFY_TOKEN_FAILURE,
+    error: error
+  };
+}
+function changePasswordVerifyTokenSuccess(response) {
+  return {
+    type: VERIFY_TOKEN_SUCCESS,
+    isValidToken: response.isValidToken
   };
 }
 
@@ -708,14 +876,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-redux */ "react-redux");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "next/router");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! next-redux-wrapper */ "next-redux-wrapper");
-/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! redux-saga */ "redux-saga");
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next-redux-wrapper */ "next-redux-wrapper");
+/* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! redux-saga */ "redux-saga");
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var lodash_flowRight__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lodash/flowRight */ "lodash/flowRight");
+/* harmony import */ var lodash_flowRight__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(lodash_flowRight__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../i18n */ "../i18n.js");
 
 
 
@@ -736,7 +905,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_12___default()();
+
+var withTranslation = _i18n__WEBPACK_IMPORTED_MODULE_15__["default"].withTranslation;
+var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_11___default()();
 
 var makeStore = function makeStore(initialState, options) {
   var store = Object(redux__WEBPACK_IMPORTED_MODULE_8__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_14__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_8__["applyMiddleware"])(sagaMiddleware));
@@ -776,9 +947,8 @@ var Simpatico = /*#__PURE__*/function (_App) {
 
       if (ctx.req) {
         var host = ctx.req.get('host');
-        var res = await fetch("https://49646ddc7fe9.ngrok.io/api/v1/fetchDebate?name=".concat(host));
+        var res = await fetch("https://e8e5120fec0b.ngrok.io/api/v1/fetchDebate?name=".concat(host));
         var debate = await res.json();
-        console.log('debate', debate);
         return {
           pageProps: pageProps,
           debate: debate
@@ -790,7 +960,8 @@ var Simpatico = /*#__PURE__*/function (_App) {
   return Simpatico;
 }(next_app__WEBPACK_IMPORTED_MODULE_6___default.a);
 
-/* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_11___default()(makeStore)(Simpatico));
+var appWithTranslation = _i18n__WEBPACK_IMPORTED_MODULE_15__["default"].appWithTranslation;
+/* harmony default export */ __webpack_exports__["default"] = (lodash_flowRight__WEBPACK_IMPORTED_MODULE_12___default()(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_10___default()(makeStore), appWithTranslation, withTranslation(["common"]))(Simpatico));
 
 /***/ }),
 
@@ -815,6 +986,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 var initialState = {
+  isValidToken: null,
+  sent: false,
+  sending: null,
   token: "",
   processing: false,
   error: "",
@@ -825,6 +999,65 @@ function auth() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["FORGOTTEN_PASSWORD_RESET_SENT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: null,
+        sent: false
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["CHANGE_PASSWORD_REQUEST"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: true
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["CHANGE_PASSWORD_SUCCESS"]:
+      console.log('action', action);
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        token: action.token
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["CHANGE_PASSWORD_FAILURE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        error: action.error
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_REQUEST"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: true
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_SUCCESS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        isValidToken: action.isValidToken
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_FAILURE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        error: action.error
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["FORGOTTEN_PASSWORD_REQUEST"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: true
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["FORGOTTEN_PASSWORD_SUCCESS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        sent: true
+      });
+
+    case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["FORGOTTEN_PASSWORD_FAILURE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sending: false,
+        sent: false,
+        error: action.error
+      });
+
     case _actions_auth__WEBPACK_IMPORTED_MODULE_1__["LOGIN_REQUEST"]:
       return _objectSpread(_objectSpread({}, state), {}, {
         processing: true,
@@ -913,10 +1146,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function* verifyToken(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["get"])("v1/verifyChangePasswordToken?email=".concat(action.email, "&token=").concat(action.token)).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["changePasswordVerifyTokenSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["changePasswordVerifyTokenFailure"])(err));
+  });
+  yield r;
+}
+
+function* forgottenPassword(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/forgottenPassword", JSON.stringify({
+    email: action.email,
+    debateName: action.debateName
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["forgottenPasswordSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["forgottenPasswordFailure"])(err));
+  });
+  yield r;
+}
+
 function* loginRequest(action) {
   var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/loginRequest", JSON.stringify({
     email: action.email,
-    password: action.password
+    password: action.password,
+    debateName: action.debateName
   })).then(function (json) {
     return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["loginRequestSuccess"])(json));
   })["catch"](function (err) {
@@ -942,9 +1197,26 @@ function* createAccount(action) {
   yield r;
 }
 
+function* changePassword(action) {
+  var r = yield Object(_lib_api__WEBPACK_IMPORTED_MODULE_2__["post"])("v1/changePassword", JSON.stringify({
+    email: action.email,
+    password: action.password,
+    debateName: action.debateName,
+    token: action.token
+  })).then(function (json) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["changePasswordSuccess"])(json));
+  })["catch"](function (err) {
+    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["changePasswordFailure"])(err));
+  });
+  yield r;
+}
+
 function* authSaga() {
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["LOGIN_REQUEST"], loginRequest);
   yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["CREATE_ACCOUNT_REQUEST"], createAccount);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["FORGOTTEN_PASSWORD_REQUEST"], forgottenPassword);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["VERIFY_TOKEN_REQUEST"], verifyToken);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeLatest"])(_actions_auth__WEBPACK_IMPORTED_MODULE_1__["CHANGE_PASSWORD_REQUEST"], changePassword);
 }
 
 /***/ }),
@@ -992,6 +1264,28 @@ module.exports = require("isomorphic-unfetch");
 
 /***/ }),
 
+/***/ "lodash/flowRight":
+/*!***********************************!*\
+  !*** external "lodash/flowRight" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash/flowRight");
+
+/***/ }),
+
+/***/ "next-i18next":
+/*!*******************************!*\
+  !*** external "next-i18next" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("next-i18next");
+
+/***/ }),
+
 /***/ "next-redux-wrapper":
 /*!*************************************!*\
   !*** external "next-redux-wrapper" ***!
@@ -1000,17 +1294,6 @@ module.exports = require("isomorphic-unfetch");
 /***/ (function(module, exports) {
 
 module.exports = require("next-redux-wrapper");
-
-/***/ }),
-
-/***/ "next/router":
-/*!******************************!*\
-  !*** external "next/router" ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("next/router");
 
 /***/ }),
 

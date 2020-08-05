@@ -15,10 +15,10 @@ const initialState = {
   lastName: "",
   email: "",
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
-  error: ""
+  error: "",
 };
 
 export default function auth(state = initialState, action) {
@@ -28,7 +28,6 @@ export default function auth(state = initialState, action) {
         ...state,
         processing: true,
         error: "",
-        isValidToken: false,
         token: action.token
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:

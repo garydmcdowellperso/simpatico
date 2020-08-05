@@ -29,7 +29,12 @@ async function Login(
     throw new Error("Wrong password");
   }
 
-  return accessTokenManager.generate({ uid: existingUser.id });
+  return accessTokenManager.generate({ 
+    uid: existingUser.id,
+    accountId: existingUser.accountId,
+    debateId: existingUser.accountId,
+    role: existingUser.role
+  });
 }
 
 export default Login;

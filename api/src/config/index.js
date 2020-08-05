@@ -23,7 +23,10 @@ const config = {
         : process.env.MONGO_DB_NAME || "stargate2-5",
     url: process.env.MONGO_URL || "mongodb://localhost:27017/"
   },
-  jwtSecretKey: process.env.JWT_SECRET_KEY || "shhhhhh!"
+  jwt: {
+    secret: process.env.JWT_SECRET_KEY || "shhhhhh!",
+    expiresIn: process.env.JWT_EXPIRES_IN || 1800
+  }
 };
 
 export default config;

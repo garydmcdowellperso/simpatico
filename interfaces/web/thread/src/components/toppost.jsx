@@ -41,8 +41,10 @@ class TopPost extends Component {
   }
 
   render() {
-    const { suggestions, t, handleToggleInProgress } = this.props;
+    const { suggestions, t, handleToggleInProgress, post: { error } } = this.props;
     const { editorState, active } = this.state;
+   
+    console.log('HERE', error)
 
     return (
       <Accordion>

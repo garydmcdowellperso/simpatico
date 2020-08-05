@@ -1,6 +1,8 @@
 # Overview
 
-connect is a nextjs based React application using api as the backend gateway. It's responsability is authentication only before handing off to another UI
+connect is a nextjs based React application using api as the backend gateway. It's responsability is authentication only before handing off to another UI.
+
+Use to access the administration portal of simpatico
 
 ### Requirements
 

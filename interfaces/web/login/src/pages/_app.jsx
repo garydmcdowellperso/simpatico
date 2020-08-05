@@ -2,12 +2,15 @@ import App from 'next/app';
 import React from 'react';
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
-import { withRouter } from 'next/router';
 import withRedux from "next-redux-wrapper";
 import createSagaMiddleware from "redux-saga";
+import flowRight from 'lodash/flowRight';
 
 import sagas from "../sagas";
 import allReducers from "../reducers";
+import i18n from '../../i18n';
+
+const { withTranslation } = i18n;
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -30,9 +33,8 @@ class Simpatico extends App {
 
     if (ctx.req) {
       const host = ctx.req.get('host');
-      const res = await fetch(`https://49646ddc7fe9.ngrok.io/api/v1/fetchDebate?name=${host}`)
+      const res = await fetch(`https://e8e5120fec0b.ngrok.io/api/v1/fetchDebate?name=${host}`)
       const debate = await res.json()
-      console.log('debate', debate)
       return { pageProps, debate };
     }
   }
@@ -47,4 +49,11 @@ class Simpatico extends App {
   }
 }
 
-export default withRedux(makeStore)(Simpatico);
+const { appWithTranslation } = i18n;
+
+export default flowRight(
+  withRedux(makeStore),
+  appWithTranslation,
+  withTranslation([`common`])
+)(Simpatico);
+

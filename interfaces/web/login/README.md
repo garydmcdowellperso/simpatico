@@ -1,6 +1,8 @@
 # Overview
 
-connect is a nextjs based React application using api as the backend gateway. It's responsability is authentication only before handing off to another UI
+login is a nextjs based React application using api as the backend gateway. It's responsability is authentication only before handing off to another UI
+
+Participant access to debates.
 
 ### Requirements
 

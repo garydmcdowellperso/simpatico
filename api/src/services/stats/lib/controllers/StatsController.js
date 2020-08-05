@@ -15,7 +15,6 @@ import HTTPRequester from "../comms/HTTPRequester";
 
 import StatsRepositoryMongo from "../interface_adapters/storage/StatsRepositoryMongo";
 import HTTPRequesterAxios from "../interface_adapters/http/HTTPRequesterAxios";
-import { push } from "core-js/fn/array";
 
 const statsRepository = new StatsRepository(new StatsRepositoryMongo());
 const httpRequester = new HTTPRequester(new HTTPRequesterAxios());

@@ -4,10 +4,12 @@ import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import flowRight from 'lodash/flowRight';
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 import Main from "./main";
 import nextI18NextInstance from '../../i18n';
 import { fetchUserInfo } from "../actions/auth";
+import ErrorBoundary from './ErrorBoundary';
 
 const { withTranslation } = nextI18NextInstance;
 
@@ -15,6 +17,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
   const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const router = useRouter()
 
   let firstNameLocalStorage;
 
@@ -25,6 +28,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
     firstNameLocalStorage = localStorage.getItem("firstName");
   }
 
+  console.log('isValidToken', isValidToken)
   useEffect(() => {
     if (isValidToken) {
       // So the token is present and valid, do I have the user details?
@@ -36,7 +40,14 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
     if (isValidToken) {
        localStorage.setItem("token", token);
     }
-   }, [isValidToken]);
+
+    // Token not valid - back to login chaps
+    if (isValidToken === false) {
+      if (typeof window !== 'undefined') {
+        window.location.href = `/login/?next=thread/?module=${router.query.module}`;
+      }
+    }
+  }, [isValidToken]);
 
   const onClick = () => {
     setVisible(true);
@@ -83,7 +94,9 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
 
       <Sidebar.Pusher dimmed={visible}>
         <Segment basic>
-          <Main onClick={onClick} isValidToken={isValidToken}/>
+          <ErrorBoundary>
+            <Main onClick={onClick} isValidToken={isValidToken}/>
+          </ErrorBoundary>
         </Segment>
       </Sidebar.Pusher>
     </Sidebar.Pushable>

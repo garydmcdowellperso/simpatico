@@ -4,7 +4,10 @@ import CreateOrLogin from "../use_cases/CreateOrLogin";
 import CreateUser from "../use_cases/CreateUser";
 import Login from "../use_cases/Login";
 import Activate from "../use_cases/Activate";
+import ResetPassword from "../use_cases/ResetPassword";
 import VerifyToken from "../use_cases/VerifyToken";
+import VerifyChangePasswordToken from "../use_cases/VerifyChangePasswordToken";
+import ChangePasswordSuccess from "../use_cases/ChangePasswordSuccess";
 import FetchUserByUID from "../use_cases/FetchUserByID";
 import FetchUserByEmail from "../use_cases/FetchUserByEmail";
 import FetchUserByUserIdAccountId from "../use_cases/FetchUserByUserIdAccountId";
@@ -39,10 +42,42 @@ async function createOrLogin(inputs) {
 
 async function login(inputs) {
   // Input
-  const { email, password } = inputs;
+  const { email, password, debateName } = inputs;
 
   // Treatment
   const token = await Login(email, password, {
+    userRepository,
+    encryptionManager,
+    accessTokenManager
+  });
+
+  // Output
+  const tokenSerializer = new TokenSerializer();
+  return tokenSerializer.serialize(token);
+}
+
+async function resetPassword(inputs) {
+  // Input
+  const { email } = inputs;
+
+  // Treatment
+  const token = await ResetPassword(email, {
+    userRepository,
+    encryptionManager,
+    accessTokenManager
+  });
+
+  // Output
+  const tokenSerializer = new TokenSerializer();
+  return tokenSerializer.serialize(token);
+}
+
+async function changePasswordSuccess(inputs) {
+  // Input
+  const { id, password } = inputs;
+
+  // Treatment
+  const token = await ChangePasswordSuccess(id, password, {
     userRepository,
     encryptionManager,
     accessTokenManager
@@ -165,6 +200,17 @@ async function updateUserInfo(inputs) {
   return userSerializer.serialize(user);
 }
 
+async function verifyChangePasswordToken(inputs) {
+  // Input
+  const { email, token } = inputs;
+
+  // Treatment
+  return VerifyChangePasswordToken(token, {
+    userRepository,
+    accessTokenManager
+  });
+}
+
 module.exports = {
   createOrLogin,
   verifyToken,
@@ -175,5 +221,8 @@ module.exports = {
   activate,
   fetchUserByEmail,
   updateUserInfo,
-  fetchUserAdmin
+  fetchUserAdmin,
+  resetPassword,
+  verifyChangePasswordToken,
+  changePasswordSuccess
 };
