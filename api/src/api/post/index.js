@@ -67,7 +67,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: "Gary",
                     lastname: "McDowell",
-                    url: `https://${config.simpatico.hostname}/thread/?module=${request.body.module}#${response.id}`
+                    url: `https://${config.default.simpatico.hostname}/thread/?module=${request.body.module}#${response.id}`
                 }
               };
 

@@ -94,7 +94,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: config.simpatico.hostname
+                            domain: config.default.simpatico.hostname
                         });
     
                         reply.send({
@@ -240,7 +240,7 @@ const routes = async fastify => {
                         subject: "Reset your password"
                     },
                     substitutions: {
-                        url: `https://${config.simpatico.hostname}/login/change?email=${request.body.email}&token=${response.token}`
+                        url: `https://${config.default.simpatico.hostname}/login/change?email=${request.body.email}&token=${response.token}`
                     }
                 };
 
@@ -328,7 +328,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: config.simpatico.hostname
+                            domain: config.default.simpatico.hostname
                         });
     
                         reply.send({
@@ -481,7 +481,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: config.simpatico.hostname
+                            domain: config.default.simpatico.hostname
                         });
     
                         reply.send({
@@ -557,7 +557,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://${config.simpatico.hostname}/api/v1/activate?token=${response.token}`
+                    url: `https://${config.default.simpatico.hostname}/api/v1/activate?token=${response.token}`
                 }
             };
 
@@ -655,7 +655,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: config.simpatico.hostname
+                domain: config.default.simpatico.hostname
             });
 
             reply.redirect(`/?token=${responseActivate.token}`);
