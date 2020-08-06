@@ -21,7 +21,6 @@ async function SendEmail(
 
   const htmlOutput = templateManager.htmlOutput(template, substitutions)
 
-  console.log('attachment', attachment)
   const mailOptions = {
     from: email.from,
     to: email.to,

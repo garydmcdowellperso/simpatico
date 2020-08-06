@@ -94,7 +94,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "e8e5120fec0b.ngrok.io"
+                            domain: config.simpatico.hostname
                         });
     
                         reply.send({
@@ -240,7 +240,7 @@ const routes = async fastify => {
                         subject: "Reset your password"
                     },
                     substitutions: {
-                        url: `https://e8e5120fec0b.ngrok.io/login/change?email=${request.body.email}&token=${response.token}`
+                        url: `https://${config.simpatico.hostname}/login/change?email=${request.body.email}&token=${response.token}`
                     }
                 };
 
@@ -328,7 +328,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "e8e5120fec0b.ngrok.io"
+                            domain: config.simpatico.hostname
                         });
     
                         reply.send({
@@ -481,7 +481,7 @@ const routes = async fastify => {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            domain: "e8e5120fec0b.ngrok.io"
+                            domain: config.simpatico.hostname
                         });
     
                         reply.send({
@@ -557,7 +557,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://e8e5120fec0b.ngrok.io/api/v1/activate?token=${response.token}`
+                    url: `https://${config.simpatico.hostname}/api/v1/activate?token=${response.token}`
                 }
             };
 
@@ -621,7 +621,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "e8e5120fec0b.ngrok.io"
+                domain: config
             });
 
             reply.redirect(`/?token=${responseCreate.token}`);
@@ -655,7 +655,7 @@ const routes = async fastify => {
                 httpOnly: true,
                 secure: true,
                 path: "/",
-                domain: "e8e5120fec0b.ngrok.io"
+                domain: config.simpatico.hostname
             });
 
             reply.redirect(`/?token=${responseActivate.token}`);

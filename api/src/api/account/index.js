@@ -78,7 +78,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://e8e5120fec0b.ngrok.io/api/v1/activate?token=${responseUser.token}`
+                    url: `https://${config.simpatico.hostname}/api/v1/activate?token=${responseUser.token}`
                 }
             };
 

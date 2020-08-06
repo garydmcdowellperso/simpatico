@@ -67,7 +67,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: "Gary",
                     lastname: "McDowell",
-                    url: `https://e8e5120fec0b.ngrok.io/thread/?module=${request.body.module}#${response.id}`
+                    url: `https://${config.simpatico.hostname}/thread/?module=${request.body.module}#${response.id}`
                 }
               };
 
