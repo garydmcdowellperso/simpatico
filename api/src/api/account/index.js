@@ -78,7 +78,7 @@ const routes = async fastify => {
                 substitutions: {
                     firstname: request.body.firstname,
                     lastname: request.body.lastname,
-                    url: `https://${config.simpatico.hostname}/api/v1/activate?token=${responseUser.token}`
+                    url: `https://${config.default.simpatico.hostname}/api/v1/activate?token=${responseUser.token}`
                 }
             };
 
