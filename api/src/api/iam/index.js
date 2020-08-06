@@ -660,9 +660,9 @@ const routes = async fastify => {
             });
 
             if (response.token.role.includes('administrator')) {
-                reply.redirect(`/admin/?token=${token}`);
+                reply.redirect(`/admin/?token=${response.token.token}`);
             } else {
-                reply.redirect(`/?token=${token}`);
+                reply.redirect(`/?token=${response.token.token}`);
             }
         }
     );
