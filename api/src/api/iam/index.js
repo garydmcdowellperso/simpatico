@@ -651,6 +651,8 @@ const routes = async fastify => {
 
             const { token, role } = await UsersController.activate(inputs);
 
+            console.log('token', token);
+            console.log('role', role);
             reply.setCookie("simpatico", token, {
                 httpOnly: true,
                 secure: true,

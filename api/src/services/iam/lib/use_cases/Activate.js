@@ -39,6 +39,7 @@ async function Activate(
     role: existingUser.role
   });
 
+  console.log('existingUser', existingUser)
   return { token: newToken, role: existingUser.role }
 }
 
