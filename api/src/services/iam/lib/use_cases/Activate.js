@@ -20,7 +20,6 @@ async function Activate(
     throw new Error("User already activated");
   }
 
-
   // Check token exists
   if (!existingUser.token) {
     throw new Error("User already activated");
@@ -33,7 +32,14 @@ async function Activate(
   await userRepository.merge(existingUser);
 
   // Generate token
-  return accessTokenManager.generate({ uid: existingUser.id });
+  const token = await accessTokenManager.generate({ 
+    uid: existingUser.id,
+    accountId: existingUser.accountId,
+    debateId: existingUser.accountId,
+    role: existingUser.role
+  });
+
+  return { token, existingUser.role }
 }
 
 export default Activate;

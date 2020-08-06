@@ -649,7 +649,7 @@ const routes = async fastify => {
 
             const inputs = {...request.query};
 
-            const responseActivate = await UsersController.activate(inputs);
+            const { token, role } = await UsersController.activate(inputs);
 
             reply.setCookie("simpatico", responseActivate.token, {
                 httpOnly: true,
@@ -658,7 +658,11 @@ const routes = async fastify => {
                 domain: config.default.simpatico.hostname
             });
 
-            reply.redirect(`/?token=${responseActivate.token}`);
+            if (role.includes('administrator')) {
+                reply.redirect(`/admin/?token=${token}`);
+            } else {
+                reply.redirect(`/?token=${token}`);
+            }
         }
     );
 
