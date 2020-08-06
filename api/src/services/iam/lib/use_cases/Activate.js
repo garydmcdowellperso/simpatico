@@ -32,14 +32,14 @@ async function Activate(
   await userRepository.merge(existingUser);
 
   // Generate token
-  const token = await accessTokenManager.generate({ 
+  const newToken = await accessTokenManager.generate({ 
     uid: existingUser.id,
     accountId: existingUser.accountId,
     debateId: existingUser.accountId,
     role: existingUser.role
   });
 
-  return { token, existingUser.role }
+  return { token: newToken, role: existingUser.role }
 }
 
 export default Activate;
