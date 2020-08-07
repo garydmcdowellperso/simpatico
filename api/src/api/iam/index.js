@@ -651,7 +651,6 @@ const routes = async fastify => {
 
             const response = await UsersController.activate(inputs);
 
-            console.log('response', response);
             reply.setCookie("simpatico", response.token.token, {
                 httpOnly: true,
                 secure: true,
@@ -671,13 +670,13 @@ const routes = async fastify => {
         "/verifyToken",
         {
             config,
+            preValidation: [fastify.authenticate],
             schema: {
-                description: "verify a provided token",
+                description: "verify a token from the message request",
                 tags: ["api"],
                 body: {
                     type: "object",
                     properties: {
-                        token: { type: "string" },
                         role: { type: "string" }
                     }
                 },
@@ -693,27 +692,16 @@ const routes = async fastify => {
         },
         async (request, reply) => {
             fastify.log.info(
-            { body: request.body },
+            { body: request.body, token: request.cookies.simpatico },
             "[src#api#verifyToken] Entering"
             );
 
             // Do I really like it, is it, is it wicked ?
             const inputs = { ...request.body };
+            inputs.token = request.cookies.simpatico;
             const isValidToken = await UsersController.verifyToken(inputs);
 
-            if (isValidToken) {
-            reply
-                .setCookie("simpatico", request.body.token, {
-                httpOnly: true,
-                secure: true,
-                path: "/"
-                })
-                .send({ isValidToken });
-            }
-
-            if (!isValidToken) {
-                reply.send({ isValidToken });
-            }
+            reply.send({ isValidToken });
         }
     );
     

@@ -43,20 +43,13 @@ class Simpatico extends App {
   componentDidMount() {
     init({ url: config.matomo.host, siteId: 1 });
 
-    // Not on the URL so check the localStorage
-    if (localStorage.getItem("token")) {
-      // Ask server to verify and set cookie
-      store.dispatch(
-        verifyTokenRequest({
-          token: localStorage.getItem("token"),
-          role: "administrator"
-        })
-      );
-    }
-    if (!localStorage.getItem("token")) {
-      // Send them back to login
-      window.location.href ='/connect/';
-    }
+    // First thing we do is to validate their cookie
+    store.dispatch(
+      verifyTokenRequest({
+        token: localStorage.getItem("token"),
+        role: "administrator"
+      })
+    );
   }
 
   render() {
