@@ -10,6 +10,7 @@ import { init } from "@socialgouv/matomo-next";
 import sagas from "../sagas";
 import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
+import config from '../../config';
 
 import i18n from '../../i18n';
 
@@ -40,7 +41,7 @@ class Simpatico extends App {
   }
 
   componentDidMount() {
-    init({ url: 'http://localhost', siteId: 1 });
+    init({ url: config.matomo.host, siteId: 1 });
 
     // Not on the URL so check the localStorage
     if (localStorage.getItem("token")) {
