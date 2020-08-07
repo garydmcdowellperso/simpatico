@@ -38,17 +38,24 @@ async function CreateUser(
 
   const hashedPassword = await encryptionManager.hash(password);
 
+  // Create the user first so we can encode the uid in the token
+  const user = new User(null, debateId ? [debateId] : [], accountId, firstName, lastName, email, hashedPassword, false, null, [role], "", "", 0, 0, [], [], []);
+  await userRepository.persist(user);
+
+  // Get it back out so we can add the token
+  const existingUser = await userRepository.getByEmail(email);
+
   const token = accessTokenManager.generate({ 
+    uid: existingUser.id,
     accountId: accountId,
     debateId: debateId,
     role: role
   });
 
-  const user = new User(null, debateId ? [debateId] : [], accountId, firstName, lastName, email, hashedPassword, false, token, [role], "", "", 0, 0, [], [], []);
+  existingUser.token = token;
+  await userRepository.merge(existingUser);
 
-  const data = await userRepository.persist(user);
-
-  return user;
+  return existingUser;
 }
 
 export default CreateUser;
