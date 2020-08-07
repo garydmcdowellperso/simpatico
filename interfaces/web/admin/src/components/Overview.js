@@ -33,13 +33,13 @@ export default function Overview(props) {
   useEffect(() => {
     if (accountId) {      
       // Go and get some stats
-      dispatch(fetchStatsRequest(accountId);
+      dispatch(fetchStatsRequest(accountId));
 
       // Go and get some posts
-      dispatch(fetchPostsRequest(accountId);
+      dispatch(fetchPostsRequest(accountId));
 
       // Go and get some posts
-      dispatch(fetchTopContributorsRequest(accountId);
+      dispatch(fetchTopContributorsRequest(accountId));
     }
   }, [accountId]);
 
