@@ -11,6 +11,7 @@ import Contributions from "./Contributions";
 import TopContributors from "./TopContributors";
 import Placeholder from "./common/Placeholder";
 
+import { fetchUserInfo } from "../actions/auth";
 import { fetchStatsRequest } from "../actions/stats";
 import { fetchPostsRequest, fetchTopContributorsRequest } from "../actions/posts";
 
@@ -18,23 +19,29 @@ export default function Overview(props) {
   const dispatch = useDispatch();
 
   const { posts, pageviews, reactions, signups, shares } = useSelector(state => state.stats)
-  const isValidToken = useSelector(state => state.auth.isValidToken)
+  const { isValidToken, accountId } = useSelector(state => state.auth)
 
   const contributions = useSelector(state => state.posts.posts)
   const contributors = useSelector(state => state.posts.contributors)
 
   // First time effect
   useEffect(() => {
-    // Go and get some stats
-    dispatch(fetchStatsRequest(localStorage.getItem("accountId")));
-
-    // Go and get some posts
-    dispatch(fetchPostsRequest(localStorage.getItem("accountId")));
-
-    // Go and get some posts
-    dispatch(fetchTopContributorsRequest(localStorage.getItem("accountId")));
-
+    // We can only fetch all our data if we have requested our account info etc first
+    dispatch(fetchUserInfo());
   }, []);
+
+  useEffect(() => {
+    if (accountId) {      
+      // Go and get some stats
+      dispatch(fetchStatsRequest(accountId);
+
+      // Go and get some posts
+      dispatch(fetchPostsRequest(accountId);
+
+      // Go and get some posts
+      dispatch(fetchTopContributorsRequest(accountId);
+    }
+  }, [accountId]);
 
   useEffect(() => {
     if (isValidToken === false) {

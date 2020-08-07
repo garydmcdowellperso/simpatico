@@ -31,21 +31,11 @@ const makeStore = initialState => {
 
 class Simpatico extends App {
   componentDidMount() {
-    // Not on the URL so check the localStorage
-    if (localStorage.getItem("token")) {
-      // Ask server to verify and set cookie
-      store.dispatch(
-        verifyTokenRequest({
-          token: localStorage.getItem("token"),
-          role: "participant"
-        })
-      );
-    } else {
-      // No token, set to false rather than unknown
-      store.dispatch(
-        verifyTokenRequestFailure('no valid token')
-      );
-    }
+    store.dispatch(
+      verifyTokenRequest({
+        role: "participant"
+      })
+    );
   }
 
   render() {

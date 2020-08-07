@@ -14,6 +14,7 @@ const initialState = {
   avatar: "",
   id: null,
   isValidToken: null,
+  accoountId: null,
   token: "",
   processing: false,
   error: ""
@@ -73,6 +74,7 @@ export default function auth(state = initialState, action) {
         error: "",
         firstName: action.json["first-name"],
         lastName: action.json["last-name"],
+        accountId: action.json.accountId,
         email: action.json.email,
         avatar: action.json.avatar,
         id: action.json.id
