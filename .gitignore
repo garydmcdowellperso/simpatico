@@ -16,8 +16,8 @@ interfaces/web/profile/src/.next
 interfaces/web/thread/node_modules
 interfaces/web/thread/src/.next
 
-interfaces/web/admin/node_modules
-interfaces/web/admin/src/.next
+interfaces/web/admin/node_modules/
+interfaces/web/admin/src/.next/
 
 interfaces/web/login/node_modules
 interfaces/web/login/src/.next
