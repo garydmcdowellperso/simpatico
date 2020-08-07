@@ -36,12 +36,15 @@ export default function UsersByDevice(props) {
   const dispatch = useDispatch();
 
   const { devices } = useSelector(state => state.stats)
+  const { accountId } = useSelector(state => state.auth)
 
   // First time effect
   useEffect(() => {
-    // Go and get user device stats
-    dispatch(fetchUsersByDeviceRequest(localStorage.getItem("accountId")));
-  }, []);
+    if (accountId !== null) {
+      // Go and get user device stats
+      dispatch(fetchUsersByDeviceRequest(accountId));
+    }
+  }, [accountId]);
 
   useEffect(() => {
     if (devices && devices.length > 0) {

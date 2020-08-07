@@ -15,6 +15,7 @@ function UsersOverview(props) {
   const dispatch = useDispatch();
 
   const { visitors } = useSelector(state => state.stats)
+  const { accountId } = useSelector(state => state.auth)
 
   const [chartInstance, setChartInstance] = useState(null);
   const [chartData, setChartData] = useState({
@@ -45,9 +46,11 @@ function UsersOverview(props) {
 
   // First time effect
   useEffect(() => {
-    // Go and get user device stats
-    dispatch(fetchVisitorsByDayForMonthRequest(localStorage.getItem("accountId"), 7));
-  }, []);
+    if (accountId !== null) {
+      // Go and get user device stats
+      dispatch(fetchVisitorsByDayForMonthRequest(accountId, 7));
+    }
+  }, [accountId]);
 
   useEffect(() => {
     if (visitors && visitors.length > 0) {

@@ -31,7 +31,7 @@ export default function Overview(props) {
   }, []);
 
   useEffect(() => {
-    if (accountId) {      
+    if (accountId !== null) {      
       // Go and get some stats
       dispatch(fetchStatsRequest(accountId));
 
