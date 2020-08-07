@@ -30,7 +30,7 @@ async function CreateUser(
   }
 
   // Check if the user exists
-  const existingUser = await userRepository.getByEmail(email);
+  let existingUser = await userRepository.getByEmail(email);
 
   if (existingUser) {
     throw new Error("User exists");
@@ -43,7 +43,7 @@ async function CreateUser(
   await userRepository.persist(user);
 
   // Get it back out so we can add the token
-  const existingUser = await userRepository.getByEmail(email);
+  existingUser = await userRepository.getByEmail(email);
 
   const token = accessTokenManager.generate({ 
     uid: existingUser.id,
