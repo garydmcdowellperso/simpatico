@@ -12,17 +12,21 @@ import { fetchUserInfo } from "../actions/auth";
 
 const { withTranslation } = nextI18NextInstance;
 
+function isSubdomain = (url) => {
+  var regex = new RegExp(/^([a-z]+\:\/{2})?([\w-]+\.[\w-]+\.\w+)$/);
+
+  return !!url.match(regex); // make sure it returns boolean
+}
+
 const SlideOutSidebar = (props) => {
   const { debate, t } = props;
 
   const dispatch = useDispatch();
-  
+
   const [visible, setVisible] = useState(false);
 
   const { role, isValidToken, firstName } = useSelector(state => state.auth);
 
-  console.log('debate', debate)
-  console.log('role', role)
   const onClick = () => {
     setVisible(true);
   };
@@ -35,7 +39,12 @@ const SlideOutSidebar = (props) => {
 
   useEffect(() => {
     if (isValidToken === false) {
-      window.location.href = '/connect/';
+      // Direct the user where
+      if (isSubdomain(window.location.hostname)) {
+        window.location.href = '/connect/';
+      } else {
+        window.location.href = '/login/';
+      }
     }
   }, [isValidToken]);
 
