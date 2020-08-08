@@ -43,7 +43,7 @@ console.log('role', role)
       if (isSubdomain(window.location.hostname)) {
         window.location.href = '/login/';
       } else {
-        window.location.href = '/connect';
+        window.location.href = '/connect/';
       }
     }
   }, [isValidToken]);
