@@ -11,6 +11,7 @@ import allReducers from "../reducers";
 import { verifyTokenRequest } from "../actions/auth";
 
 import i18n from '../../i18n';
+import config from '../../config';
 
 const sagaMiddleware = createSagaMiddleware();
 
