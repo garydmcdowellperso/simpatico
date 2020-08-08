@@ -43,7 +43,7 @@ const SlideOutSidebar = (props) => {
       if (isSubdomain(window.location.hostname)) {
         window.location.href = '/login/';
       } else {
-        window.location.href = '/connect/';
+        window.location.href = '/connect';
       }
     }
   }, [isValidToken]);
@@ -62,7 +62,17 @@ const SlideOutSidebar = (props) => {
         width="thin"
       >
         <Menu.Item>
+          {role === "administrator" ? (
           <Icon
+            link
+            name="home"
+            onClick={() => {
+              window.location = "/admin/";
+            }}
+          />
+          <a href="/">{t('home')}</a>
+          ) : (
+            <Icon
             link
             name="home"
             onClick={() => {
@@ -70,6 +80,7 @@ const SlideOutSidebar = (props) => {
             }}
           />
           <a href="/">{t('home')}</a>
+          )}
         </Menu.Item>
         {debate && debate.themes ? debate.themes.map((theme,idx) => {
           return (
