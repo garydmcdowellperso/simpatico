@@ -1,4 +1,4 @@
-async function UpdateUserInfo(id, firstName, lastName, email, bio, avatar, { userRepository }) {
+async function UpdateUserInfo(id, firstName, lastName, bio, avatar, { userRepository }) {
   if (!id) {
     throw new Error("No id");
   }
