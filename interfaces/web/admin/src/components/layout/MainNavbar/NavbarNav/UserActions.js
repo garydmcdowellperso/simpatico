@@ -56,7 +56,7 @@ function UserActions(props) {
       toggleUserActions()
     }}>
       <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
-        {avatar ?
+        {avatar && avatar !== "" ?
         (<img
           className="user-avatar rounded-circle mr-2"
           src={avatar}
