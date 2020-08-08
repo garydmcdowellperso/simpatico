@@ -5,6 +5,7 @@ import config from "../../../../../config";
 class JwtAccessTokenManager {
   generate(payload) {
     return jwt.sign(payload, config.jwt.secret, {
+      algorithm: 'RS256',
       expiresIn: config.jwt.expiresIn
     });
   }

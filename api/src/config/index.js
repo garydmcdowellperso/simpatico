@@ -26,7 +26,7 @@ const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET_KEY || "shhhhhh!",
-    expiresIn: process.env.JWT_EXPIRES_IN || 1800
+    expiresIn: process.env.JWT_EXPIRES_IN || 3600
   }
 };
 
