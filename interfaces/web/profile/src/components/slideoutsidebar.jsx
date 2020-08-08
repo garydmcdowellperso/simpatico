@@ -63,6 +63,7 @@ const SlideOutSidebar = (props) => {
       >
         <Menu.Item>
           {role === "administrator" ? (
+            <>
           <Icon
             link
             name="home"
@@ -71,7 +72,9 @@ const SlideOutSidebar = (props) => {
             }}
           />
           <a href="/">{t('home')}</a>
+          </>
           ) : (
+            <>
             <Icon
             link
             name="home"
@@ -80,6 +83,7 @@ const SlideOutSidebar = (props) => {
             }}
           />
           <a href="/">{t('home')}</a>
+          </>
           )}
         </Menu.Item>
         {debate && debate.themes ? debate.themes.map((theme,idx) => {
