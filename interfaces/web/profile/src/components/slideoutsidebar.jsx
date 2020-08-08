@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import flowRight from 'lodash/flowRight';
+import { useSelector } from "react-redux";
 
 import Main from "./Main";
 import nextI18NextInstance from '../../i18n';
@@ -14,6 +15,9 @@ const SlideOutSidebar = (props) => {
 
   const [visible, setVisible] = useState(false);
 
+  const { role } = useSelector(state => state.auth);
+
+  console.log('role', role)
   const onClick = () => {
     setVisible(true);
   };
