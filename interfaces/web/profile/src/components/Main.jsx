@@ -13,8 +13,6 @@ import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
 
-import { fetchUserInfo } from "../actions/auth";
-
 import { getCurrentLang } from '../lib/utils';
 
 function Main (props) {
@@ -28,10 +26,6 @@ function Main (props) {
     const error = useSelector(state => state.auth.error);
     const processing = useSelector(state => state.auth.processing);
     const { avatar, bio, id, firstName, lastName, email, score, likes, dislikes, contributions, badge } = useSelector(state => state.auth);
-
-    useEffect(() => { // Fire once, get pages for debate
-        dispatch(fetchUserInfo());
-    }, []);
 
     useEffect(() => { // Fire once we get user data
         if (id) {

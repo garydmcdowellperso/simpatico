@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import flowRight from 'lodash/flowRight';
@@ -8,6 +8,8 @@ import Main from "./Main";
 import nextI18NextInstance from '../../i18n';
 import { getCurrentLang } from '../lib/utils';
 
+import { fetchUserInfo } from "../actions/auth";
+
 const { withTranslation } = nextI18NextInstance;
 
 const SlideOutSidebar = (props) => {
@@ -15,7 +17,7 @@ const SlideOutSidebar = (props) => {
 
   const [visible, setVisible] = useState(false);
 
-  const { role, isValidToken } = useSelector(state => state.auth);
+  const { role, isValidToken, firstName } = useSelector(state => state.auth);
 
   console.log('debate', debate)
   console.log('role', role)
@@ -58,7 +60,7 @@ const SlideOutSidebar = (props) => {
           />
           <a href="/">{t('home')}</a>
         </Menu.Item>
-        {debate.themes ? debate.themes.map((theme,idx) => {
+        {debate && debate.themes ? debate.themes.map((theme,idx) => {
           return (
             <Menu.Item key={idx}>
               <Icon link name="talk" />
@@ -68,7 +70,7 @@ const SlideOutSidebar = (props) => {
         }) : null}
         <Menu.Item>
           <Icon link name="power off" />
-          {(typeof window !== 'undefined') && localStorage.getItem("firstName") ? t('logout') : ''}
+          {(typeof window !== 'undefined') && firstName ? t('logout') : ''}
         </Menu.Item>
       </Sidebar>
 
