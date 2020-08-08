@@ -44,12 +44,13 @@ class Simpatico extends App {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    if (ctx.req) {
+    if (ctx.req && isSubdomain(window.location.hostname)) {
       const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
 
-      console.log('res', res)
       const debate = await res.json()
       return { pageProps, debate };
+    } else {
+      return { pageProps, null };
     }
   }
 

@@ -6,17 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Main from "./Main";
 import nextI18NextInstance from '../../i18n';
-import { getCurrentLang } from '../lib/utils';
+import { getCurrentLang, isSubdomain } from '../lib/utils';
 
 import { fetchUserInfo } from "../actions/auth";
 
 const { withTranslation } = nextI18NextInstance;
-
-function isSubdomain(url) {
-  var regex = new RegExp(/^([a-z]+\:\/{2})?([\w-]+\.[\w-]+\.\w+)$/);
-
-  return !!url.match(regex); // make sure it returns boolean
-}
 
 const SlideOutSidebar = (props) => {
   const { debate, t } = props;
