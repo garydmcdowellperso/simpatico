@@ -41,9 +41,9 @@ const SlideOutSidebar = (props) => {
     if (isValidToken === false) {
       // Direct the user where
       if (isSubdomain(window.location.hostname)) {
-        window.location.href = '/connect/';
-      } else {
         window.location.href = '/login/';
+      } else {
+        window.location.href = '/connect/';
       }
     }
   }, [isValidToken]);

@@ -28,7 +28,6 @@ const routes = async fastify => {
                         lastname: { type: 'string' },
                         email: { type: 'string' },
                         password: { type: 'string' },
-                        role: { type: 'string' },
                     },
                 },    
                 response: {
@@ -50,7 +49,6 @@ const routes = async fastify => {
             // Create the account
             const responseAccount = await AccountsController.createAccount(inputs);
 
-            console.log('responseAccount', responseAccount)
             // Create the admin user for the account
             const newInputs = {
                 accountId: responseAccount.id,
@@ -58,7 +56,7 @@ const routes = async fastify => {
                 lastname: request.body.lastname,
                 email: request.body.email,
                 password: request.body.password,
-                role: request.body.role
+                role: ['administrator', 'participant']
             };
 
             const responseUser = await UsersController.createUser(newInputs);

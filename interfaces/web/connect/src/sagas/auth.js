@@ -33,8 +33,7 @@ function* createAccount(action) {
       firstname: action.firstname,
       lastname: action.lastname,
       email: action.email,
-      password: action.password,
-      role: 'administrator'
+      password: action.password
     })
   )
     .then(json => put(createAccountSuccess(json)))
