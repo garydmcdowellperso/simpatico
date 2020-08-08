@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import { Grommet } from "grommet";
 
 import SlideOutSidebar from "../components/slideoutsidebar";
 
@@ -14,7 +13,7 @@ function UserProfileLite(debate) {
   return (
     <div>
       <Head>
-        <title>Home</title>
+        <title>Profile</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
@@ -23,9 +22,7 @@ function UserProfileLite(debate) {
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"></link>
       </Head>
-      <Grommet>
-        {isValidToken ? <SlideOutSidebar debate={debate} /> : <p>Processing</p>}
-      </Grommet>
+      {isValidToken ? <SlideOutSidebar debate={debate} /> : <p>Processing</p>}
     </div>
   );
 }

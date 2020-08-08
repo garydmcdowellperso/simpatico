@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import flowRight from 'lodash/flowRight';
 
-import Main from "./main";
+import Main from "./Main";
 import nextI18NextInstance from '../../i18n';
 import { getCurrentLang } from '../lib/utils';
 
