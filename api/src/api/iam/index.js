@@ -520,8 +520,12 @@ const routes = async fastify => {
                         lastname: { type: 'string' },
                         email: { type: 'string' },
                         password: { type: 'string' },
-                        role: { type: 'string' },
-                    },
+                        role: {
+                            type: "array",
+                            items: {
+                                type: "string"
+                            }
+                        },                    },
                 },    
                 response: {
                     200: {
@@ -800,6 +804,12 @@ const routes = async fastify => {
                             score: { type: "number" },
                             badge: { type: "number" },
                             accountId: { type: "number" },
+                            role: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                }
+                            },
                             likes: { 
                                 type: "array",
                                 items: {
