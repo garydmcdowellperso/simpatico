@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 import flowRight from 'lodash/flowRight';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Main from "./Main";
 import nextI18NextInstance from '../../i18n';
@@ -15,6 +15,8 @@ const { withTranslation } = nextI18NextInstance;
 const SlideOutSidebar = (props) => {
   const { debate, t } = props;
 
+  const dispatch = useDispatch();
+  
   const [visible, setVisible] = useState(false);
 
   const { role, isValidToken, firstName } = useSelector(state => state.auth);

@@ -18,10 +18,7 @@ import { getCurrentLang } from '../lib/utils';
 function Main (props) {
     const { t } = props;
 
-    console.log('getCurrentLang', getCurrentLang())
     const [userDetails, setUserDetails] = useState(null)
-
-    const dispatch = useDispatch();
 
     const error = useSelector(state => state.auth.error);
     const processing = useSelector(state => state.auth.processing);
