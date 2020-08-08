@@ -30,7 +30,7 @@ const SlideOutSidebar = (props) => {
   const onClick = () => {
     setVisible(true);
   };
-
+console.log('role', role)
  // First time effect
   useEffect(() => {
       // We can only fetch all our data if we have requested our account info etc first
@@ -62,7 +62,7 @@ const SlideOutSidebar = (props) => {
         width="thin"
       >
         <Menu.Item>
-          {role === "administrator" ? (
+          {role.includes('administrator') ? (
             <>
           <Icon
             link
