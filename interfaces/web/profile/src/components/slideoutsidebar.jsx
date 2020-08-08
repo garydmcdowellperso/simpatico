@@ -30,8 +30,8 @@ const SlideOutSidebar = (props) => {
   const onClick = () => {
     setVisible(true);
   };
-  console.log('role', role.includes('administrator'))
- // First time effect
+
+  // First time effect
   useEffect(() => {
       // We can only fetch all our data if we have requested our account info etc first
       dispatch(fetchUserInfo());
