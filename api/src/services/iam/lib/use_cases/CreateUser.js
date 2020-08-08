@@ -39,7 +39,7 @@ async function CreateUser(
   const hashedPassword = await encryptionManager.hash(password);
 
   // Create the user first so we can encode the uid in the token
-  const user = new User(null, debateId ? [debateId] : [], accountId, firstName, lastName, email, hashedPassword, false, null, role, "", "", 0, 0, [], [], []);
+  const user = new User(null, debateId ? [debateId] : [], accountId, firstName, lastName, email, hashedPassword, false, null, role, "", 0, 0, 0, 0, [], [], []);
   await userRepository.persist(user);
 
   // Get it back out so we can add the token
