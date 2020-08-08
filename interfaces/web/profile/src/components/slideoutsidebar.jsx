@@ -15,12 +15,25 @@ const SlideOutSidebar = (props) => {
 
   const [visible, setVisible] = useState(false);
 
-  const { role } = useSelector(state => state.auth);
+  const { role, isValidToken } = useSelector(state => state.auth);
 
+  console.log('debate', debate)
   console.log('role', role)
   const onClick = () => {
     setVisible(true);
   };
+
+ // First time effect
+  useEffect(() => {
+      // We can only fetch all our data if we have requested our account info etc first
+      dispatch(fetchUserInfo());
+  }, []);
+
+  useEffect(() => {
+    if (isValidToken === false) {
+      window.location.href = '/connect/';
+    }
+  }, [isValidToken]);
 
   return (
     <Sidebar.Pushable as={Segment}>

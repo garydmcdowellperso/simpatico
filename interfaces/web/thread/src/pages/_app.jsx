@@ -51,18 +51,11 @@ class Simpatico extends App {
       localStorage.setItem("module", getUrlParameter("module"));
     }
 
-    if (!window.location.search.includes("token")) {
-      // Not on the URL so check the localStorage
-      if (localStorage.getItem("token")) {
-        // Ask server to verify and set cookie
-        store.dispatch(
-          verifyTokenRequest({
-            token: localStorage.getItem("token"),
-            role: 'participant'
-          })
-        );
-      }
-    }
+    store.dispatch(
+      verifyTokenRequest({
+        role: 'participant'
+      })
+    );
   }
 
   render() {

@@ -46,7 +46,6 @@ class Simpatico extends App {
     // First thing we do is to validate their cookie
     store.dispatch(
       verifyTokenRequest({
-        token: localStorage.getItem("token"),
         role: "administrator"
       })
     );

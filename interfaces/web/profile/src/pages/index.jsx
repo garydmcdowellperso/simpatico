@@ -7,8 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
 import "../css/dash-min.css";
 
-const isValidToken = true;
-
 function UserProfileLite(debate) {
   return (
     <div>
@@ -22,7 +20,7 @@ function UserProfileLite(debate) {
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"></link>
       </Head>
-      {isValidToken ? <SlideOutSidebar debate={debate} /> : <p>Processing</p>}
+      <SlideOutSidebar debate={debate} />
     </div>
   );
 }

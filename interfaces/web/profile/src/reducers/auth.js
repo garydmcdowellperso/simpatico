@@ -26,7 +26,7 @@ const initialState = {
   dislikes: [],
   contributions: [],
   id: null,
-  isValidToken: false,
+  isValidToken: null,
   token: "",
   processing: false,
   error: ""
@@ -39,7 +39,7 @@ export default function auth(state = initialState, action) {
         ...state,
         processing: true,
         error: "",
-        isValidToken: false,
+        isValidToken: null,
         token: action.token
       };
     case VERIFY_TOKEN_REQUEST_SUCCESS:

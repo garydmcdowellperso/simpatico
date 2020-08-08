@@ -36,6 +36,7 @@ const makeStore = initialState => {
   return store;
 };
 
+
 class Simpatico extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
@@ -43,29 +44,20 @@ class Simpatico extends App {
       : {};
 
     if (ctx.req) {
-      const host = ctx.req.get('host');
-      const res = await fetch(`https://e8e5120fec0b.ngrok.io/api/v1/fetchDebate?name=${host}`)
+      const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
+
+      console.log('res', res)
       const debate = await res.json()
       return { pageProps, debate };
     }
   }
 
   componentDidMount() {
-    // Not on the URL so check the localStorage
-    if (localStorage.getItem("token")) {
-      // Ask server to verify and set cookie
-      store.dispatch(
-        verifyTokenRequest({
-          token: localStorage.getItem("token"),
-          role: "participant"
-        })
-      );
-    }
-
-    if (!localStorage.getItem("token")) {
-      // Why are we here - login dude
-      window.locqtion.href = '/login/';
-    }
+    store.dispatch(
+      verifyTokenRequest({
+        role: "participant"
+      })
+    );
   }
 
   render() {
