@@ -12,7 +12,7 @@ import { fetchUserInfo } from "../actions/auth";
 
 const { withTranslation } = nextI18NextInstance;
 
-function isSubdomain = (url) => {
+function isSubdomain(url) {
   var regex = new RegExp(/^([a-z]+\:\/{2})?([\w-]+\.[\w-]+\.\w+)$/);
 
   return !!url.match(regex); // make sure it returns boolean
