@@ -5,7 +5,7 @@ import config from "../../../../../config";
 class JwtAccessTokenManager {
   generate(payload) {
     return jwt.sign(payload, config.jwt.secret, {
-      algorithm: 'HMAC',
+      algorithm: 'HS256',
       expiresIn: config.jwt.expiresIn
     });
   }
