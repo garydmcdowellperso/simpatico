@@ -62,7 +62,7 @@ console.log('role', role)
         width="thin"
       >
         <Menu.Item>
-          {role.includes('administrator') ? (
+          {role && role.includes('administrator') ? (
             <>
           <Icon
             link
