@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Head from "next/head";
-import { Grommet, ResponsiveContext } from "grommet";
 
 import Create from "../components/create";
 
-const Signup = () => {
+const Signup = (props) => {
   return (
     <div>
       <Head>
@@ -15,9 +14,7 @@ const Signup = () => {
           href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
         />
       </Head>
-      <Grommet>
-        <Create />
-      </Grommet>
+      <Create />
     </div>
   );
 };

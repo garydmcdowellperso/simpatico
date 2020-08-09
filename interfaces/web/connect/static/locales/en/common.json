@@ -1,4 +1,6 @@
 {
+  "account": "Account",
+  "already": "Already an account ?",
   "conect": "Connect",
   "connectwith": "Or connect with",
   "createaccount":  "Create an account",
