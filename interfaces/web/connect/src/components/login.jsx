@@ -1,140 +1,150 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Message,
-  Segment
-} from "semantic-ui-react";
-import { connect } from "react-redux";
-import { Formik } from "formik";
+import React, { useEffect, useState } from 'react'
+import { Button, Container, Form, Grid, Header, Icon, Label, Image, Segment, Transition } from 'semantic-ui-react'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import flowRight from 'lodash/flowRight';
 
 import { loginRequest } from "../actions/auth";
+import nextI18NextInstance from '../../i18n';
 
-class Login extends PureComponent {
-  render() {
-    const { auth: { accountId, token } } = this.props;
-    
+const { withTranslation } = nextI18NextInstance;
+
+function Login(props) {
+  const { t } = props;
+
+  const dispatch = useDispatch();
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  const { token } = useSelector(state => state.auth);
+  const router = useRouter()
+
+  useEffect(() => {
+    // Animations
+    setVisible(true)
+  }, []);
+
+  useEffect(() => {
     if (token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("accountId", accountId);
-      window.location.href = '/admin/';
+      // Cookie automatically set by server
+
+      // Do we have a next to redirect to ?
+      if (router.query && router.query.next) {
+        window.location.href = `/${router.query.next}`;
+      } else {
+        // Redirect to home
+        window.location.href = '/';
+      }
     }
+  }, [token]);
 
-    return (
-      <Grid
-        textAlign="center"
-        style={{ height: "100vh" }}
-        verticalAlign="middle"
-      >
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
-            <Image src={require("../images/intelligence-collective1.png")} /> Log-in to your account
-          </Header>
-          <Button
-            color="google plus"
-            fluid
-            size="large"
-            onClick={() => {
-              window.location = "/api/login/google";
-            }}
-          >
-            <Icon name="google plus" /> Google Plus
-          </Button>
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            validate={values => {
-              const errors = {};
-              if (!values.email) {
-                errors.email = "Required";
-              }
-              if (!values.password) {
-                errors.password = "Required";
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              const { dispatch } = this.props;
+  return (
+    <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='teal' textAlign='center'>
+          <Grid columns={2}>
+            <Grid.Column width={4}>
+              <Image src={require("../images/intelligence-collective1.png")} /> 
+            </Grid.Column>            
+            <Grid.Column width={11  }>
+              {t('login')}
+            </Grid.Column>   
+          </Grid>
+        </Header>
+        <Transition visible={visible} animation='fade' duration={800}>
+          <Form 
+            size='large'               
+            onSubmit={(e, {formData}) => {
+              e.preventDefault();
+                  setSubmitting(true);
+                  dispatch(
+                    loginRequest({
+                      email: email,
+                      password: password
+                    })
+                  );
 
-              dispatch(
-                loginRequest({
-                  email: values.email,
-                  password: values.password
-                })
-              );
-
-              setTimeout(() => {
-                setSubmitting(false);
-              }, 400);
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting
-              /* and other goodies */
-            }) => (
-              <Form onSubmit={handleSubmit}>
-                <Segment stacked>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      type="email"
-                      name="email"
-                      placeholder="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                      icon="user"
-                    />
-                    {errors.email && touched.email && errors.email}
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      type="password"
-                      name="password"
-                      placeholder="password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
-                      icon="lock"
-                    />
-                    {errors.password && touched.password && errors.password}
-                  </Form.Field>
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    color="teal"
-                    fluid
-                    size="large"
-                  >
-                    Submit
+                  setTimeout(() => {
+                    setSubmitting(false);
+                  }, 400);
+              }}
+            >
+            <Segment.Group>
+              <Segment raised >
+                <Form.Input 
+                  fluid 
+                  icon='user' 
+                  iconPosition='left' 
+                  placeholder={t('email')}
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value)
+                  }}
+                />
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder={t('password')}
+                  type='password'
+                  value={password}
+                  onChange={(event) => {
+                    setPassword(event.target.value)
+                  }}
+                />
+                <Button 
+                  type="submit"
+                  color='teal' 
+                  fluid 
+                  size='large' 
+                  animated
+                  disabled={isSubmitting}>
+                    <Button.Content visible>{t('loginbutton')}</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name='right arrow' />
+                    </Button.Content>
                   </Button>
-                </Segment>
-              </Form>
-            )}
-          </Formik>
-          <Message>
-            New to us? <Link href="/connect/signup"><a>Sign Up</a></Link>
-          </Message>
-        </Grid.Column>
-      </Grid>
-    );
-  }
+              </Segment>
+              <Segment>
+              <Grid columns={2}>
+                  <Grid.Column floated='left' width={5}>
+                    <Label as='a' basic  size='mini'>
+                    {t('newtous')} <Link href="/login/signup"><a href='#'>{t('signup')}</a></Link>
+                    </Label>
+                  </Grid.Column>
+                  <Grid.Column floated='right'  width={5}>
+                    <Label as='a' basic  size='mini'>
+                      <Link href="/login/forgotten"><a href='#'>{t('forgotten')}</a></Link>
+                    </Label>
+                  </Grid.Column>
+                </Grid>
+              </Segment>
+              <Segment>
+              <Container textAlign='center'>{t('connectwith')}</Container>
+                <Button animated='vertical'>
+                  <Button.Content hidden>{t('connect')}</Button.Content>
+                  <Button.Content visible>
+                    <Icon color='blue' name='facebook' />
+                  </Button.Content>
+                </Button>
+                <Button animated='vertical'>
+                  <Button.Content hidden>{t('connect')}</Button.Content>
+                  <Button.Content visible>
+                    <Icon color='blue' name='linkedin' />
+                  </Button.Content>
+                </Button>
+              </Segment>
+            </Segment.Group>
+          </Form>
+        </Transition>
+      </Grid.Column>
+    </Grid>
+  )
 }
 
-Login.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
-
-export default connect(state => state)(Login);
+export default flowRight(
+  withTranslation(['common'])
+)(Login);

@@ -1,6 +1,15 @@
 {
-  "account": "My account",
-  "login": "Login",
-  "logout": "Logout",
-  "langSelectLabel": "Language"
+  "conect": "Connect",
+  "connectwith": "Or connect with",
+  "createaccount":  "Create an account",
+  "email": "Email address",
+  "firstname": "First name",
+  "forgotten": "Forgotten password",
+  "lastname": "Last name",
+  "login": "Login to your account",
+  "loginbutton": "Login",
+  "newtous": "New to us ?",
+  "password": "Password",
+  "required": "Required",
+  "signup": "Sign up"
 }

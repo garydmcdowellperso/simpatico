@@ -1,6 +1,16 @@
 {
-  "account": "Mon compte",
-  "login": "Se connecter",
-  "logout": "Se déconnecter",
-  "langSelectLabel": "Langue"
+  "already": "Vous  avez déjà un  compte ?",
+  "conect": "Se connecter",
+  "connectwith": "Ou connecter avec",
+  "createaccount":  "Créer un compte",
+  "email": "Adresse email",
+  "firstname": "Prénom",
+  "forgotten": "Mdp oublié",
+  "lastname": "Nom",
+  "login": "Se connecter à votre compte",
+  "loginbutton": "Se connecter",
+  "newtous": "Pas encore de compte ?",
+  "password": "Mot de passe",
+  "required": "Obligatoire",
+  "signup": "Créer un compte"
 }
