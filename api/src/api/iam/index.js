@@ -23,7 +23,6 @@ const routes = async fastify => {
                     properties: {
                         email: { type: 'string' },
                         password: { type: 'string' },
-                        debateName: { type: 'string' },
                         token: { type: 'string' },
                     },
                 },    
@@ -31,9 +30,7 @@ const routes = async fastify => {
                     200: {
                         type: "object",
                         properties: {
-                            status: { type: "string" },
-                            token: { type: "string" },
-                            accountId: { type: 'number' }
+                            status: { type: "string" }
                         },
                     },
                 },
@@ -44,7 +41,7 @@ const routes = async fastify => {
                 { body: request.body }, "[src#api#iam#changePassword] Entering");
     
             const inputs = {...request.body};
-            inputs.name = request.body.debateName;
+            inputs.name = request.body.debateName ? request.body.debateName : null;
 
             try {
                 const response = await UsersController.login(inputs);
@@ -54,11 +51,6 @@ const routes = async fastify => {
                 // Check token still matches
                 if (user.token !== request.body.token) {
                     throw new Error("Invald token");
-                }
-
-                // Can they acceess this debate ?
-                if (!request.body.debateName) {
-                    throw new Error("No debate provided");
                 }
 
                 if (request.body.debateName) {
@@ -98,9 +90,7 @@ const routes = async fastify => {
                         });
     
                         reply.send({
-                            status: 'ok',
-                            token: response.token,
-                            accountId: user.accountId
+                            status: 'ok'
                         });        
 
                     } else {
@@ -206,12 +196,6 @@ const routes = async fastify => {
 
                 const user = await UsersController.fetchUserByEmail(inputs);
 
-                /*
-                // Can they acceess this debate (if providde)  ?
-                if (!request.body.debateName) {
-                    throw new Error("No debate provided");
-                }
-
                 if (request.body.debateName) {
                     const debate = await DebatesController.fetchDebate(inputs);
 
@@ -226,7 +210,7 @@ const routes = async fastify => {
                         throw new Error("Cannot access this debate");
                     }
                 }
-                */
+
                 // Send email
                 const inputsEmali = {
                     template: {
