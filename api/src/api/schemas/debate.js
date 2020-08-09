@@ -237,7 +237,7 @@ const overviewDefault = {
         "es" : "Spanish"
     },
     "url" : "https://source.unsplash.com/random"
-},;
+};
 
 const connectionDefault = {
     "firstname" : true,
