@@ -33,6 +33,14 @@ function* forgottenPassword(action) {
   yield r;
 }
 
+function* verifyToken(action) {
+  const r = yield get(
+    `v1/verifyChangePasswordToken?email=${action.email}&token=${action.token}`)
+    .then(json => put(changePasswordVerifyTokenSuccess(json)))
+    .catch(err => put(changePasswordVerifyTokenFailure(err)));
+  yield r;
+}
+
 function* loginRequest(action) {
   const r = yield post(
     "v1/loginRequestAdmin",
