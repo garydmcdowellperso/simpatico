@@ -636,7 +636,6 @@ const routes = async fastify => {
         "/activate",
         {
             config,
-            preValidation: [fastify.authenticate],
             schema: {
                 description: "activates an account",
                 tags: ["api"],
