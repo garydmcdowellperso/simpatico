@@ -78,7 +78,6 @@ function Home({ debateServer }) {
         <title>{debate.url}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         {debate && debate.metaTags && debate.metaTags.map((tag, idx) => {
-
             if (tag.type === 'property') {
               return (<meta property={tag.typevalue} content={tag.content} key={idx} />)
             } else  {
@@ -90,7 +89,9 @@ function Home({ debateServer }) {
       <>
         <CssBaseline />
         <Container maxWidth="lg">
-          <Header selected='home' title={debate.url} header={debate.header} />
+          {debate && debate.url ? (
+            <Header selected='home' title={debate.url} header={debate.header} />
+          ) : null }
           <main>
             <Overview data={debate.overview} />
             <Grid container spacing={4}>
