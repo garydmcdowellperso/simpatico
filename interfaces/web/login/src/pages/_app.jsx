@@ -9,6 +9,7 @@ import flowRight from 'lodash/flowRight';
 import sagas from "../sagas";
 import allReducers from "../reducers";
 import i18n from '../../i18n';
+import config from '../../config';
 
 const { withTranslation } = i18n;
 
@@ -33,7 +34,8 @@ class Simpatico extends App {
 
     if (ctx.req) {
       const host = ctx.req.get('host');
-      const res = await fetch(`https://e8e5120fec0b.ngrok.io/api/v1/fetchDebate?name=${host}`)
+      const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
+
       const debate = await res.json()
       return { pageProps, debate };
     }

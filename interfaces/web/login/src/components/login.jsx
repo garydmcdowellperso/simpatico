@@ -30,9 +30,6 @@ function Login(props) {
 
   useEffect(() => {
     if (token) {
-      // Put this into localStorage for the other apps
-      localStorage.setItem("token", token);
-
       // Cookie automatically set by server
 
       // Do we have a next to redirect to ?
