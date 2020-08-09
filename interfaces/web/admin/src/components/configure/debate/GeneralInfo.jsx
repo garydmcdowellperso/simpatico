@@ -112,6 +112,8 @@ function GeneralInfo(props) {
                                     value={name}
                                     onChange={(event) =>{
                                         setName(event.target.value);
+                                        console.log('HERE', `${event.target.value}.simpatico.cloud`)
+                                        setURL(`${event.target.value}.simpatico.cloud`);
                                     }}
                                 />
                             </Col>
