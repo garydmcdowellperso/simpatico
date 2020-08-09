@@ -25,6 +25,7 @@ const SlideOutSidebar = (props) => {
     setVisible(true);
   };
 
+  console.log('role', role)
   // First time effect
   useEffect(() => {
       // We can only fetch all our data if we have requested our account info etc first
