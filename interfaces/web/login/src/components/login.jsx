@@ -27,7 +27,7 @@ function Login(props) {
     setVisible(true)
   }, []);
 
-
+  console.log('debate', debate)
   useEffect(() => {
     if (token) {
       // Cookie automatically set by server
@@ -126,7 +126,7 @@ function Login(props) {
               </Segment>
               <Segment>
               <Container textAlign='center'>{t('connectwith')}</Container>
-              {debate && debate.connection.google || true ?
+              {debate && debate.connection && debate.connection.google || true ?
                 (<Button animated='vertical'>
                   <Button.Content hidden>{t('connect')}</Button.Content>
                   <Button.Content visible>
@@ -134,7 +134,7 @@ function Login(props) {
                   </Button.Content>
                 </Button>) : null
               } 
-              {debate && debate.connection.linkedin || true?
+              {debate && debate.connection && debate.connection.linkedin || true?
                 (<Button animated='vertical'>
                   <Button.Content hidden>{t('connect')}</Button.Content>
                   <Button.Content visible>
