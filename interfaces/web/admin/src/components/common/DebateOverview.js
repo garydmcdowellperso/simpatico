@@ -66,7 +66,7 @@ const DebateOverview = (props) => {
             </Link>
           </Col>
           <Col className="col-lg mb-3">
-              <a href="/">
+              <a href={`https://{debate.url}/`}>
                 <i className="material-icons">play_arrow</i> Goto
               </a>
           </Col>
