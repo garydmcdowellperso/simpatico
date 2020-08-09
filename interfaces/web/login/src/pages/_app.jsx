@@ -38,6 +38,8 @@ class Simpatico extends App {
 
       const debate = await res.json()
       return { pageProps, debate };
+    } else {
+      return { pageProps };
     }
   }
 

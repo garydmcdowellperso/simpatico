@@ -126,7 +126,7 @@ function Login(props) {
               </Segment>
               <Segment>
               <Container textAlign='center'>{t('connectwith')}</Container>
-              {debate.connection.google || true ?
+              {debate && debate.connection.google || true ?
                 (<Button animated='vertical'>
                   <Button.Content hidden>{t('connect')}</Button.Content>
                   <Button.Content visible>
@@ -134,7 +134,7 @@ function Login(props) {
                   </Button.Content>
                 </Button>) : null
               } 
-              {debate.connection.linkedin || true?
+              {debate && debate.connection.linkedin || true?
                 (<Button animated='vertical'>
                   <Button.Content hidden>{t('connect')}</Button.Content>
                   <Button.Content visible>
