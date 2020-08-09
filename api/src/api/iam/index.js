@@ -91,7 +91,7 @@ const routes = async fastify => {
                         });
     
                         reply.send({
-                            status: 'ok'
+                            status: 'ok',
                             token: response.token
                         });        
 
