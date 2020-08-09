@@ -204,7 +204,7 @@ const routes = async fastify => {
             if (!request.user.role.includes('administrator')) {
                 throw new Error("Unauthorised");
             }
-            console.log('user', equest.user)
+            console.log('user', request.user)
             // Create the debate
             const response = await StatsController.createSite(inputs);
             inputs.accountId = request.user.accountId;
