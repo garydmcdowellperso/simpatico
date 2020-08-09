@@ -206,7 +206,8 @@ const routes = async fastify => {
 
                 const user = await UsersController.fetchUserByEmail(inputs);
 
-                // Can they acceess this debate ?
+                /*
+                // Can they acceess this debate (if providde)  ?
                 if (!request.body.debateName) {
                     throw new Error("No debate provided");
                 }
@@ -225,7 +226,7 @@ const routes = async fastify => {
                         throw new Error("Cannot access this debate");
                     }
                 }
-
+                */
                 // Send email
                 const inputsEmali = {
                     template: {
@@ -239,7 +240,7 @@ const routes = async fastify => {
                         subject: "Reset your password"
                     },
                     substitutions: {
-                        url: `https://${config.default.simpatico.hostname}/login/change?email=${request.body.email}&token=${response.token}`
+                        url: request.body.debateName ? `https://${config.default.simpatico.hostname}/login/change?email=${request.body.email}&token=${response.token}` : `https://${config.default.simpatico.hostname}/connect/change?email=${request.body.email}&token=${response.token}`
                     }
                 };
 
