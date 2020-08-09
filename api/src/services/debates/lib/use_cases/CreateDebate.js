@@ -44,7 +44,7 @@ async function CreateDebate(
     throw new Error("No trackingId");
   }
 
-  const debate = new Debate(null, name, url, debateType, languages, header, overview, {}, connectoin, footer, [], false, accountId, trackingId);
+  const debate = new Debate(null, name, url, debateType, languages, header, overview, {}, connection, footer, [], false, accountId, trackingId);
 
   return debateRepository.persist(debate);
 }
