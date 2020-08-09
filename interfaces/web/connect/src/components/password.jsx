@@ -21,22 +21,26 @@ export default function Password(props) {
     );
   }, []);
 
-  const Footer = (t) => (
-    <Segment>
-    <Grid columns={2}>
-      <Grid.Column floated='left' width={5}>
-        <Label as='a' basic  size='mini'>
-        {t('newtous')} <Link href="/login/signup"><a href='#'>t('signup')}</a></Link>
-        </Label>
-      </Grid.Column>
-      <Grid.Column floated='right'  width={5}>
+  const Footer = (props) => {
+    const { t } = props;
+
+    return (
+      <Segment>
+      <Grid columns={2}>
+        <Grid.Column floated='left' width={5}>
           <Label as='a' basic  size='mini'>
-          {t('already')}  <Link href="/login/"><a href='#'>{t('connect')} </a></Link>
+          {t('newtous')} <Link href="/login/signup"><a href='#'>t('signup')}</a></Link>
           </Label>
-      </Grid.Column>
-    </Grid>
-  </Segment>
+        </Grid.Column>
+        <Grid.Column floated='right'  width={5}>
+            <Label as='a' basic  size='mini'>
+            {t('already')}  <Link href="/login/"><a href='#'>{t('connect')} </a></Link>
+            </Label>
+        </Grid.Column>
+      </Grid>
+    </Segment>
   )
+}
 
   return (
     <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -123,7 +127,7 @@ export default function Password(props) {
                   }
                 </Button>
             </Segment>
-            <Footer t={t}/>
+            <Footer />
           </Segment.Group>
           ) : (
             <Segment.Group>
