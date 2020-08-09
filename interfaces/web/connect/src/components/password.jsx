@@ -21,7 +21,7 @@ export default function Password(props) {
     );
   }, []);
 
-  const Footer = () => (
+  const Footer = (t) => (
     <Segment>
     <Grid columns={2}>
       <Grid.Column floated='left' width={5}>
@@ -123,7 +123,7 @@ export default function Password(props) {
                   }
                 </Button>
             </Segment>
-            <Footer />
+            <Footer t={t}/>
           </Segment.Group>
           ) : (
             <Segment.Group>
