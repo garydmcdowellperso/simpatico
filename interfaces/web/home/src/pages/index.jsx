@@ -41,7 +41,7 @@ function Home({ debateServer }) {
   const { isValidToken, accountId } = useSelector(state => state.auth);
 
   useEffect(() => {
-    init({ url: 'http://localhost', siteId: debate.trackingId });
+    init({ url: `https://${config.matomo.host}`, siteId: debate.trackingId });
   }, []);
 
   useEffect(() => {
@@ -74,9 +74,9 @@ function Home({ debateServer }) {
   return (
     <div>
       <Head>
-        <title>{debate.slug}</title>
+        <title>{debate.url}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        {debate.metaTags.map((tag, idx) => {
+        {debate && debate.metaTags && debate.metaTags.map((tag, idx) => {
 
             if (tag.type === 'property') {
               return (<meta property={tag.typevalue} content={tag.content} key={idx} />)
@@ -93,7 +93,7 @@ function Home({ debateServer }) {
           <main>
             <Overview data={debate.overview} />
             <Grid container spacing={4}>
-              {debate.themes.map(theme => (
+              {debate && debate.themes && debate.themes.map(theme => (
                 <Theme key={theme.title[getCurrentLang()]} theme={theme} />
               ))}
             </Grid>
