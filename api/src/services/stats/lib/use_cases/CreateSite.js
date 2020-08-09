@@ -9,7 +9,7 @@ async function CreateSite(
   }
 
   // Call matomo for the visitors
-  return httpRequester.get(`https://${config.matomo.server}/index.php?module=API&method=SitesManager.add&siteName=${name}&format=JSON&token_auth=${config.matomo.token}`)
+  return httpRequester.get(`https://${config.matomo.server}/index.php?module=API&method=SitesManager.addSite&siteName=${name}&format=JSON&token_auth=${config.matomo.token}`)
 }
 
 export default CreateSite;
