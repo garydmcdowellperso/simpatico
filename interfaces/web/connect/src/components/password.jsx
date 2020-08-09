@@ -31,12 +31,12 @@ function Password(props) {
       <Grid columns={2}>
         <Grid.Column floated='left' width={5}>
           <Label as='a' basic  size='mini'>
-          {t('newtous')} <Link href="/login/signup"><a href='#'>t('signup')}</a></Link>
+          {t('newtous')} <Link href="/connect/signup"><a href='#'>t('signup')}</a></Link>
           </Label>
         </Grid.Column>
         <Grid.Column floated='right'  width={5}>
             <Label as='a' basic  size='mini'>
-            {t('already')}  <Link href="/login/"><a href='#'>{t('connect')} </a></Link>
+            {t('already')}  <Link href="/connect/"><a href='#'>{t('connect')} </a></Link>
             </Label>
         </Grid.Column>
       </Grid>
@@ -53,7 +53,7 @@ function Password(props) {
               <Image src={require("../images/intelligence-collective1.png")} /> 
             </Grid.Column>            
             <Grid.Column width={8}>
-              Reset Password
+            {t('resetpassword')}
             </Grid.Column>   
           </Grid>
         </Header>
@@ -62,7 +62,7 @@ function Password(props) {
           onSubmit={e => {
             if (!email) {
               setErrors({
-                email: "Required"
+                email: t('required')
               });
 
               return;
@@ -91,7 +91,7 @@ function Password(props) {
                   iconPosition='left' 
                   label={{ icon: 'asterisk' }}
                   labelPosition='right corner'
-                  placeholder='E-mail address'
+                  placeholder={t('email')}
                   type='email'
                   value={email}
                   onChange={(event) => {
@@ -101,7 +101,7 @@ function Password(props) {
                 />
                 {errors.email ? (      
                   <Label basic color='red' pointing>
-                    Please enter a value
+                    {t('requried')}
                     </Label>) : null}
               </Form.Field>
               <Divider hidden />
@@ -115,7 +115,7 @@ function Password(props) {
                   {!sending ?
                   (
                     <>
-                    <Button.Content visible>Ok</Button.Content>
+                    <Button.Content visible>{t('ok')}</Button.Content>
                     <Button.Content hidden>
                       <Icon name='right arrow' />
                     </Button.Content>  
@@ -137,7 +137,7 @@ function Password(props) {
                 <Grid>
                   <Grid.Column>
                     <Message>
-                    If we found an account associated with that username, we've sent password reset instructions to the primary email address on the account.
+                    {t('resetmessage')}
                     </Message>
                   </Grid.Column>  
                 </Grid>

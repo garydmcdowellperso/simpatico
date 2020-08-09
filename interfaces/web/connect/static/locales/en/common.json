@@ -10,8 +10,11 @@
   "lastname": "Last name",
   "login": "Login to your account",
   "loginbutton": "Login",
+  "ok": "Ok",
   "newtous": "New to us ?",
   "password": "Password",
   "required": "Required",
+  "resetmessage": "If we found an account associated with that username, we've sent password reset instructions to the primary email address on the account.",
+  "resetpassword": "Reset password",
   "signup": "Sign up"
 }

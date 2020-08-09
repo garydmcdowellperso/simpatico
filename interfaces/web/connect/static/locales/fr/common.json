@@ -10,8 +10,11 @@
   "lastname": "Nom",
   "login": "Se connecter à votre compte",
   "loginbutton": "Se connecter",
+  "ok": "Ok",
   "newtous": "Pas encore de compte ?",
   "password": "Mot de passe",
   "required": "Obligatoire",
+  "resetmessage": "Si nous avons trouvé votre compte, nous avons envoyé un email avec des instructions à votre adresse email.",
+  "resetpassword": "Mdp oublié",
   "signup": "Créer un compte"
 }

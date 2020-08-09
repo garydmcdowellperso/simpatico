@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { changePasswordRequest, changePasswordVerifyTokenRequest,  forgottenPasswordReset } from "../actions/auth";
+import nextI18NextInstance from '../../i18n';
+
+const { withTranslation } = nextI18NextInstance;
 
 const getUrlParameter = name => {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -15,7 +18,7 @@ const getUrlParameter = name => {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-export default function ChangePassword(props) {
+function ChangePassword(props) {
   const { t } = props;
 
   const dispatch = useDispatch();
@@ -79,12 +82,12 @@ export default function ChangePassword(props) {
       <Grid columns={2}>
         <Grid.Column floated='left' width={5}>
           <Label as='a' basic  size='mini'>
-            Already have an account? <Link href="/login/"><a href='#'>Connect</a></Link>
+          {t('already')}   <Link href="/connect/"><a href='#'>{t('connect')}</a></Link>
           </Label>
         </Grid.Column>
         <Grid.Column floated='right'  width={5}>
           <Label as='a' basic  size='mini'>
-            <Link href="/login/forgotten"><a href='#'>Forgotten password</a></Link>
+            <Link href="/connect/forgotten"><a href='#'>{t('forgotten')}</a></Link>
           </Label>
         </Grid.Column>
       </Grid>
@@ -281,3 +284,7 @@ export default function ChangePassword(props) {
     </Grid>
   )
 }
+
+export default flowRight(
+  withTranslation(['common'])
+)(ChangePassword);
