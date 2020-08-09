@@ -3,6 +3,7 @@ import { Button, Form, Divider, Grid, Header, Icon, Input, Label, Message, Image
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import flowRight from 'lodash/flowRight';
 
 import { changePasswordRequest, changePasswordVerifyTokenRequest,  forgottenPasswordReset } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
