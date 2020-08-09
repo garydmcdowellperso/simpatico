@@ -37,7 +37,7 @@ import {
 import { get, post, putApi } from "../lib/api";
 
 function* fetchAllDebates(action) {
-  const r = yield get(`v1/fetchAllDebates?id=${action.accountId}`)
+  const r = yield get(`v1/fetchAllDebates`)
     .then(json => put(fetchDebatesSuccess(json)))
     .catch(err => put(fetchDebatesFailure(err)));
   yield r;

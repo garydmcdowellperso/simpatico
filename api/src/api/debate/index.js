@@ -51,12 +51,10 @@ const routes = async fastify => {
         "/fetchAllDebates",
         {
             config,
+            preValidation: [fastify.authenticate],
             schema: {
                 description: "fetches all the debates associated to an account",
                 tags: ["api"],
-                querystring: {
-                    id: { type: "number" },
-                },
                 response: {
                     200: {
                         type: "array",
@@ -66,9 +64,11 @@ const routes = async fastify => {
             }
         },
         async request => {
-            fastify.log.info({ query: request.query }, "[src#api#fetchAllDebates] Entering");
+            fastify.log.info("[src#api#fetchAllDebates] Entering");
 
-            const inputs = { ...request.query };
+            const inputs = { 
+                id: request.user.accountId
+            };
 
             const response = await DebatesController.fetchAllDebates(inputs);
 
@@ -204,7 +204,7 @@ const routes = async fastify => {
             if (!request.user.role.includes('administrator')) {
                 throw new Error("Unauthorised");
             }
-            console.log('user', request.user)
+
             // Create the debate
             const response = await StatsController.createSite(inputs);
             inputs.accountId = request.user.accountId;

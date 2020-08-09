@@ -18,7 +18,7 @@ class Configure extends Component {
     const { dispatch } = this.props;    
     
     dispatch(
-      fetchDebatesRequest(localStorage.getItem("accountId"))
+      fetchDebatesRequest()
     );
   }
 
