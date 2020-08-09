@@ -45,7 +45,7 @@ function GeneralInfo(props) {
                 debateType
             ))
         }
-        if (mode === 'update') 
+        if (mode === 'update') {
             const info = {
                 name,
                 url,
