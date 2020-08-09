@@ -30,7 +30,8 @@ const routes = async fastify => {
                     200: {
                         type: "object",
                         properties: {
-                            status: { type: "string" }
+                            status: { type: "string" },
+                            token: { type: "string" }
                         },
                     },
                 },
@@ -91,6 +92,7 @@ const routes = async fastify => {
     
                         reply.send({
                             status: 'ok'
+                            token: response.token
                         });        
 
                     } else {
