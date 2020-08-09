@@ -19,6 +19,7 @@ function Password(props) {
 
   const { sending, sent } = useSelector(state => state.auth);
 
+  console.log('sent', sent)
   useEffect(() => {
     dispatch(
       forgottenPasswordReset()
