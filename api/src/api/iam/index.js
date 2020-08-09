@@ -180,8 +180,7 @@ const routes = async fastify => {
                 body: {
                     type: 'object',
                     properties: {
-                        email: { type: 'string' },
-                        debateName: { type: 'string' },
+                        email: { type: 'string' }
                     },
                 },    
                 response: {
@@ -200,7 +199,7 @@ const routes = async fastify => {
                 { body: request.body }, "[src#api#iam#forgottenPassword] Entering");
     
             const inputs = {...request.body};
-            inputs.name = request.body.debateName;
+            inputs.name = request.body.debateName ? request.body.debateName : null;
 
             try {
                 const response = await UsersController.resetPassword(inputs);

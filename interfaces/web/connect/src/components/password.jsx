@@ -31,7 +31,7 @@ function Password(props) {
       <Grid columns={2}>
         <Grid.Column floated='left' width={5}>
           <Label as='a' basic  size='mini'>
-          {t('newtous')} <Link href="/connect/signup"><a href='#'>t('signup')}</a></Link>
+          {t('newtous')} <Link href="/connect/signup"><a href='#'>{t('signup')}</a></Link>
           </Label>
         </Grid.Column>
         <Grid.Column floated='right'  width={5}>
