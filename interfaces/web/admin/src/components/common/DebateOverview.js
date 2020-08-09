@@ -6,6 +6,7 @@ import classNames from "classnames";
 const DebateOverview = (props) => {
   const { variation, debate } = props;
 
+  console.log('debate', debate)
   const cardClasses = classNames(
     "stats-small",
     variation && `stats-small--${variation}`
