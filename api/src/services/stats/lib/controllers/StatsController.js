@@ -30,6 +30,7 @@ async function createSite(inputs) {
     httpRequester
   });
 
+  console.log('response', response)
   const siteSerializer = new SiteSerializer();
   return siteSerializer.serialize(response);
 }
