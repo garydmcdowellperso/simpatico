@@ -104,7 +104,7 @@ function ChangePassword(props) {
               <Image src={require("../images/intelligence-collective1.png")} /> 
             </Grid.Column>            
             <Grid.Column width={8}>
-              Change Password
+            {t('changepassword')}
             </Grid.Column>   
           </Grid>
         </Header>
@@ -113,21 +113,21 @@ function ChangePassword(props) {
           onSubmit={e => {
             if (!password) {
               setErrors({
-                password: "Required"
+                password: t('required')
               });
 
               return;
             }
             if (!confirmpassword) {
               setErrors({
-                confirmpassword: "Required"
+                confirmpassword: t('required')
               });
 
               return;
             }
             if (confirmpassword !== password) {
               setErrors({
-                common: "Not the same"
+                common: t('notthesame')
               });
 
               return;
@@ -154,7 +154,7 @@ function ChangePassword(props) {
                   <Grid>
                     <Grid.Column>
                       <Message>
-                      We cannot find this change password request. Maybe you have let your request expipre (24h) or you have requested another change of password (only one valid at a time)
+                      {t('unknown')}
                       </Message>
                     </Grid.Column>  
                   </Grid>
@@ -168,7 +168,7 @@ function ChangePassword(props) {
                 <Grid>
                   <Grid.Column>
                     <Message>
-                    Verifying request
+                    {t('veriyfing')}
                     </Message>
                   </Grid.Column>  
                 </Grid>
@@ -203,7 +203,7 @@ function ChangePassword(props) {
                   iconPosition='left' 
                   label={{ icon: 'asterisk' }}
                   labelPosition='right corner'
-                  placeholder='password'
+                  placeholder={t('password')}
                   type='password'
                   value={password}
                   onChange={(event) => {
@@ -213,7 +213,7 @@ function ChangePassword(props) {
                 />
                 {errors.password ? (      
                   <Label basic color='red' pointing>
-                    Please enter a value
+                    {t('required')}
                     </Label>) : null}
               </Form.Field>
               <Divider hidden />
@@ -224,7 +224,7 @@ function ChangePassword(props) {
                   iconPosition='left' 
                   label={{ icon: 'asterisk' }}
                   labelPosition='right corner'
-                  placeholder='Confirm password'
+                  placeholder={t('confirmpassword')}
                   type='password'
                   value={confirmpassword}
                   onChange={(event) => {
@@ -234,7 +234,7 @@ function ChangePassword(props) {
                 />
                 {errors.email ? (      
                   <Label basic color='red' pointing>
-                    Please enter a value
+                    {t('required')}
                     </Label>) : null}
               </Form.Field>
               <Divider hidden />
@@ -249,7 +249,7 @@ function ChangePassword(props) {
                   {!sending ?
                   (
                     <>
-                    <Button.Content visible>Ok</Button.Content>
+                    <Button.Content visible>{t('ok')}</Button.Content>
                     <Button.Content hidden>
                       <Icon name='right arrow' />
                     </Button.Content>  
@@ -271,7 +271,7 @@ function ChangePassword(props) {
                 <Grid>
                   <Grid.Column>
                     <Message>
-                    Invalid request
+                    {t('invalid')}
                     </Message>
                   </Grid.Column>  
                 </Grid>
@@ -289,3 +289,4 @@ function ChangePassword(props) {
 export default flowRight(
   withTranslation(['common'])
 )(ChangePassword);
+*

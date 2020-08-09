@@ -101,7 +101,7 @@ function Password(props) {
                 />
                 {errors.email ? (      
                   <Label basic color='red' pointing>
-                    {t('requried')}
+                    {t('required')}
                     </Label>) : null}
               </Form.Field>
               <Divider hidden />
