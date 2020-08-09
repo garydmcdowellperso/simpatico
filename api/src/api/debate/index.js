@@ -180,13 +180,7 @@ const routes = async fastify => {
                     },
                 },    
                 response: {
-                    200: {
-                        type: "object",
-                        properties: {
-                            status: { type: "string" },
-                            reason: { type: "string" }
-                        }
-                    }
+                    200: debateSchema
                 }
             }
         },
@@ -215,12 +209,9 @@ const routes = async fastify => {
             inputs.trackingId = response.id;
 
             // Create the debate
-            await DebatesController.createDebate(inputs);
+            const debate = await DebatesController.createDebate(inputs);
 
-            return {
-                status: 'ok',
-                reason: ''
-            }
+            return debate;
         }
     );
 

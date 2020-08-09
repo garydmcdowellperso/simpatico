@@ -38,7 +38,8 @@ const initialState = {
   debates: [],
   processing: false,
   error: "",
-  debate: null
+  debate: null,
+  created: false
 };
 
 export default function debate(state = initialState, action) {
@@ -85,11 +86,12 @@ export default function debate(state = initialState, action) {
         error: action.error,
         debate: null
       };
-      case CREATE_DEBATE_REQUEST:
+    case CREATE_DEBATE_REQUEST:
       return {
         ...state,
         processing: true,
-        error: ""
+        error: "",
+        created: false
       };
     case CREATE_DEBATE_SUCCESS:
       // Parse out json and update the store
@@ -97,14 +99,16 @@ export default function debate(state = initialState, action) {
         ...state,
         processing: false,
         error: "",
-        debate: action.debate
+        debate: action.debate,
+        created: true
       };
     case CREATE_DEBATE_FAILURE:
       return {
         ...state,
         //processing: false,
         error: action.error,
-        debate: []
+        debate: [],
+        created: false
       };      
     case UPDATE_LANDING_PAGE_HEADER_REQUEST:
       return {

@@ -12,8 +12,8 @@ import {
     FormInput,
     FormSelect,
     Row
-} from "shards-react";
-import RingLoader from "react-spinners/RingLoader";
+} from 'shards-react';
+import RingLoader from 'react-spinners/RingLoader';
 import LoadingOverlay from 'react-loading-overlay';
 
 import { createDebateRequest, updateGeneralInfoRequest } from "../../../actions/debate"
@@ -45,7 +45,7 @@ function GeneralInfo(props) {
                 debateType
             ))
         }
-        if (mode === 'update') {
+        if (mode === 'update') 
             const info = {
                 name,
                 url,
@@ -59,9 +59,7 @@ function GeneralInfo(props) {
         }
     }
 
-    // const debate = useSelector(state => state.debate.debate);
-    const error = useSelector(state => state.debate.error);
-    const processing = useSelector(state => state.debate.processing);
+    const { debate, error, processing, created } = useSelector(state => state.debate);
 
     useEffect(() => {
         // Debate exists, transition to edit
@@ -72,6 +70,14 @@ function GeneralInfo(props) {
             setDebateType(debate.debateType);
         }
     }, [debate]);
+
+    useEffect(() => {
+        // Debate exists, transition to edit
+        if (created === true) {
+            // Go back to summary
+            window.location.href = '/admin/configure';
+        }
+    }, [created]);
 
     useEffect(() => {
         // Error somewhere
@@ -112,7 +118,6 @@ function GeneralInfo(props) {
                                     value={name}
                                     onChange={(event) =>{
                                         setName(event.target.value);
-                                        console.log('HERE', `${event.target.value}.simpatico.cloud`)
                                         setURL(`${event.target.value}.simpatico.cloud`);
                                     }}
                                 />
