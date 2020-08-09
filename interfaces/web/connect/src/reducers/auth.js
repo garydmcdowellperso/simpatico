@@ -45,6 +45,23 @@ export default function auth(state = initialState, action) {
         sending: false,
         error: action.error
       };      
+    case VERIFY_TOKEN_REQUEST:
+      return {
+        ...state,
+        sending: true
+      };
+    case VERIFY_TOKEN_SUCCESS:
+      return {
+        ...state,
+        sending: false,
+        isValidToken: action.isValidToken
+      };
+    case VERIFY_TOKEN_FAILURE:
+      return {
+        ...state,
+        sending: false,
+        error: action.error
+      };       
     case LOGIN_REQUEST:
       return {
         ...state,
