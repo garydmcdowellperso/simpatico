@@ -1,7 +1,7 @@
 
 const _serializeSingleSite = site => {
   return {
-    id: stat.value
+    id: site.value
   };
 };
 
