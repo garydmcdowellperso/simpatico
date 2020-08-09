@@ -67,7 +67,7 @@ function Home({ debateServer }) {
 
   const classes = useStyles();
 
-  if (!debate) {
+  if (debate === {}) {
     return (<div/>)
   }
 
