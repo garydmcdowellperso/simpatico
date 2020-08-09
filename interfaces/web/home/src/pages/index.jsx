@@ -71,6 +71,7 @@ function Home({ debateServer }) {
     return (<div/>)
   }
 
+  console.log('debate', debate)
   return (
     <div>
       <Head>
@@ -89,7 +90,7 @@ function Home({ debateServer }) {
       <>
         <CssBaseline />
         <Container maxWidth="lg">
-          <Header selected='home' title={debate.slug} header={debate.header} />
+          <Header selected='home' title={debate.url} header={debate.header} />
           <main>
             <Overview data={debate.overview} />
             <Grid container spacing={4}>
