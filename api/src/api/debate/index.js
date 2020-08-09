@@ -186,6 +186,13 @@ const routes = async fastify => {
             fastify.log.info(request.body, "[src#api#createDebate] Entering");
 
             const inputs = { ...request.body };
+            // Set all langs available
+            inputs.languages = {
+                "english" : true,
+                "french" : true,
+                "spanish" : true
+            };
+
             // Create the debate
             const response = await DebatesController.createDebate(inputs);
 
