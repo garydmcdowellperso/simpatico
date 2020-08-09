@@ -36,7 +36,7 @@ function Login(props) {
         window.location.href = `/${router.query.next}`;
       } else {
         // Redirect to home
-        window.location.href = '/';
+        window.location.href = '/admin/';
       }
     }
   }, [token]);
