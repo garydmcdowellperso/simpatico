@@ -289,4 +289,3 @@ function ChangePassword(props) {
 export default flowRight(
   withTranslation(['common'])
 )(ChangePassword);
-*
