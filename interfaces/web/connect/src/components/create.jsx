@@ -176,12 +176,12 @@ function Create(props) {
                     <Grid columns={2}>
                         <Grid.Column floated='left' width={5}>
                           <Label as='a' basic  size='mini'>
-                          {t('already')} <Link href="/login/"><a href='#'>{t('connect')}</a></Link>
+                          {t('already')} <Link href="/connect/"><a href='#'>{t('connect')}</a></Link>
                           </Label>
                         </Grid.Column>
                         <Grid.Column floated='right'  width={5}>
                           <Label as='a' basic  size='mini'>
-                            <Link href="/login/forgotten"><a href='#'>{t('forgotten')}</a></Link>
+                            <Link href="/connect/forgotten"><a href='#'>{t('forgotten')}</a></Link>
                           </Label>
                         </Grid.Column>
                     </Grid>
