@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Divider, Grid, Header, Icon, Input, Label, Message, Image, Segment } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
+import flowRight from 'lodash/flowRight';
 
 import { forgottenPasswordReset, forgottenPasswordRequest } from "../actions/auth";
+import nextI18NextInstance from '../../i18n';
 
-export default function Password(props) {
+const { withTranslation } = nextI18NextInstance;
+
+function Password(props) {
   const { t } = props;
 
   const dispatch = useDispatch();
@@ -21,9 +25,7 @@ export default function Password(props) {
     );
   }, []);
 
-  const Footer = (props) => {
-    const { t } = props;
-
+  const Footer = () => {
     return (
       <Segment>
       <Grid columns={2}>
@@ -149,3 +151,7 @@ export default function Password(props) {
     </Grid>
   )
 }
+
+export default flowRight(
+  withTranslation(['common'])
+)(Password);
