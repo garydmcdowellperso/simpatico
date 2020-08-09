@@ -24,7 +24,7 @@ async function FetchVisitorsByDayForMonth(
   }
 
   // Call matomo for the visitors
-  return httpRequester.get(`http://${config.matomo.server}/index.php?date=2020-07-01,2020-07-31&expanded=1&filter_limit=300&format=json&format_metrics=1&idSite=1&method=API.get&module=API&period=day&token_auth=${config.matomo.token}`)
+  return httpRequester.get(`https://${config.matomo.server}/index.php?date=2020-07-01,2020-07-31&expanded=1&filter_limit=300&format=json&format_metrics=1&idSite=1&method=API.get&module=API&period=day&token_auth=${config.matomo.token}`)
 }
 
 export default FetchVisitorsByDayForMonth;

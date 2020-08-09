@@ -19,7 +19,7 @@ async function FetchVisitors(
   }
 
   // Call matomo for the visitors
-  return httpRequester.get(`http://${config.matomo.server}/index.php?module=API&method=VisitsSummary.get&idSite=${trackingId}&period=day&date=today&format=JSON&token_auth=${config.matomo.token}`)
+  return httpRequester.get(`https://${config.matomo.server}/index.php?module=API&method=VisitsSummary.get&idSite=${trackingId}&period=day&date=today&format=JSON&token_auth=${config.matomo.token}`)
 }
 
 export default FetchVisitors;

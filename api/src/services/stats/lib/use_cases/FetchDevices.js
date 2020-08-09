@@ -19,7 +19,7 @@ async function FetchDevices(
   }
 
   // Call matomo for the visitors
-  return httpRequester.get(`http://${config.matomo.server}/index.php?module=API&method=DevicesDetection.getType&idSite=1&period=week&date=today&format=JSON&token_auth=${config.matomo.token}`)
+  return httpRequester.get(`https://${config.matomo.server}/index.php?module=API&method=DevicesDetection.getType&idSite=1&period=week&date=today&format=JSON&token_auth=${config.matomo.token}`)
 }
 
 export default FetchDevices;
