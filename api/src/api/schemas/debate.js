@@ -3,7 +3,7 @@ const debateSchema = {
     properties: {
        id: { type: "number" },
        name: { type: 'string' },
-       slug: { type: 'string' },
+       url: { type: 'string' },
        debateType: { type: 'string' },
        accountId: { type: 'number' },
        trackingId: { type: 'number' },

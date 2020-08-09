@@ -4,7 +4,7 @@ const _serializeSingleDebate = debate => {
   return {
     id: debate.id,
     name: debate.name,
-    slug: debate.slug,
+    url: debate.url,
     debateType: debate.debateType,
     languages: debate.languages,
     header: debate.header,

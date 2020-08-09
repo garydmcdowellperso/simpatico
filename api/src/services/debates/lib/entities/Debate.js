@@ -1,8 +1,8 @@
 class Debate {
-  constructor(id = null, name, slug, debateType, languages, header, overview, themes, connection, footer, metaTags, deleted, accountId) {
+  constructor(id = null, name, url, debateType, languages, header, overview, themes, connection, footer, metaTags, deleted, accountId) {
     this.id = id;
     this.name = name;
-    this.slug = slug;
+    this.url = url;
     this.debateType = debateType;
     this.languages = languages;
     this.header = header;

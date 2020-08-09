@@ -2,7 +2,7 @@ import Debate from '../entities/Debate';
 
 async function CreateDebate(
   name,
-  slug,
+  url,
   debateType,
   languages,
   { debateRepository }
@@ -10,8 +10,8 @@ async function CreateDebate(
   if (!name) {
     throw new Error("No name");
   }
-  if (!slug) {
-    throw new Error("No slug");
+  if (!url) {
+    throw new Error("No url");
   }
   if (!debateType) {
     throw new Error("No debateType");
@@ -20,7 +20,7 @@ async function CreateDebate(
     throw new Error("No languages");
   }
 
-  const debate = new Debate(null, name, slug, debateType, languages, false);
+  const debate = new Debate(null, name, url, debateType, languages, false);
 
   return debateRepository.persist(debate);
 }

@@ -25,7 +25,7 @@ function GeneralInfo(props) {
 
     const [disable, setDisable] = useState(false)
     const [name, setName] = useState("")
-    const [slug, setSlug] = useState("")
+    const [url, setURL] = useState("")
     const [debateType, setDebateType] = useState('public')
 
     const dispatch = useDispatch();
@@ -34,21 +34,21 @@ function GeneralInfo(props) {
         if (mode === 'create') {
             dispatch(createDebateRequest(
                 name,
-                slug,
+                url,
                 debateType
             ))
         }
         if (mode === 'clone') {
             dispatch(createDebateRequest(
                 name,
-                slug,
+                url,
                 debateType
             ))
         }
         if (mode === 'update') {
             const info = {
                 name,
-                slug,
+                url,
                 debateType
             };
 
@@ -68,7 +68,7 @@ function GeneralInfo(props) {
         if (debate) {
             // Transfer values to state
             setName(debate.name);
-            setSlug(debate.slug);
+            setSlug(debate.url);
             setDebateType(debate.debateType);
         }
     }, [debate]);
@@ -108,7 +108,7 @@ function GeneralInfo(props) {
                                 <FormInput
                                     id="name"
                                     name="name"
-                                    placeholder="mydebate.simpatico.com"
+                                    placeholder="mydebate"
                                     value={name}
                                     onChange={(event) =>{
                                         setName(event.target.value);
@@ -120,16 +120,16 @@ function GeneralInfo(props) {
                     <FormGroup>
                         <Row form>
                             <Col lg="3" md="3" sm="3" className="mb-3">
-                                <label htmlFor="slug">Slug</label>
+                                <label htmlFor="url">URL</label>
                             </Col>
                             <Col lg="9" md="9" sm="9" className="mb-9">
                                 <FormInput
-                                    id="slug"
-                                    name="slug"
-                                    placeholder="mydebate.simpatico.com/slug"
-                                    value={slug}
+                                    id="url"
+                                    name="url"
+                                    placeholder="mydebate.simpatico.cloud"
+                                    value={url}
                                     onChange={(event) =>{
-                                        setSlug(event.target.value);
+                                        setURL(event.target.value);
                                     }}
                                 />
                             </Col>

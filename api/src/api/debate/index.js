@@ -80,7 +80,7 @@ const routes = async fastify => {
                     type: 'object',
                     properties: {
                         name: { type: 'string' },
-                        slug: { type: 'string' },
+                        url: { type: 'string' },
                         debateType: { type: 'string' }
                     },
                 },    
@@ -159,7 +159,7 @@ const routes = async fastify => {
                     type: 'object',
                     properties: {
                         name: { type: 'string' },
-                        slug: { type: 'string' },
+                        url: { type: 'string' },
                         debateType: { type: 'string' },
                         languages: { 
                             type: 'object',

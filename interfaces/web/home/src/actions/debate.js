@@ -74,11 +74,11 @@ export function fetchDebateFailure(error) {
   };
 }
 
-export function createDebateRequest(name, slug, debateType, languages) {
+export function createDebateRequest(name, url, debateType, languages) {
   return {
     type: CREATE_DEBATE_REQUEST,
     name,
-    slug,
+    url,
     debateType,
     languages
   };

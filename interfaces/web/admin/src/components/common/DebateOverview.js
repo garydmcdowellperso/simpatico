@@ -52,7 +52,7 @@ const DebateOverview = (props) => {
         <div className={innerWrapperClasses}>
           <div className={dataFieldClasses}>
             <span className={labelClasses}>{debate.name}</span>
-            <h6 className={valueClasses}>{debate.slug}</h6>
+            <h6 className={valueClasses}>{debate.url}</h6>
           </div>
         </div>
       </CardBody>

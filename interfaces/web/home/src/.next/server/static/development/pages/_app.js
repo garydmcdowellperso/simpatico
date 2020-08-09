@@ -720,11 +720,11 @@ function fetchDebateFailure(error) {
     error: error
   };
 }
-function createDebateRequest(name, slug, debateType, languages) {
+function createDebateRequest(name, url, debateType, languages) {
   return {
     type: CREATE_DEBATE_REQUEST,
     name: name,
-    slug: slug,
+    url: url,
     debateType: debateType,
     languages: languages
   };

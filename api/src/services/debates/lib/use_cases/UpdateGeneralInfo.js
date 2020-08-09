@@ -19,7 +19,7 @@ async function UpdateGeneralInfo(
   }
 
   debate.name = info.name;
-  debate.slug = info.slug;
+  debate.url = info.url;
   debate.debateType = info.debateType;
 
   await debateRepository.merge(debate);

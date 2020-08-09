@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router"; 
 
 import PageTitle from "./common/PageTitle";
-import LandingPage from "./configure/debate/LandingPage";
-import Modules from "./configure/debate/Modules";
 import GeneralInfo from "./configure/debate/GeneralInfo";
 
 import nextI18NextInstance from '../../i18n';

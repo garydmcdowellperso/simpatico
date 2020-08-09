@@ -39,7 +39,7 @@ function* createDebate(action) {
   const r = yield post("v1/createDebate",
     JSON.stringify({
       name: action.name,
-      slug: action.slug,
+      url: action.url,
       debateType: action.debateType,
       languages: action.languages
     }))
