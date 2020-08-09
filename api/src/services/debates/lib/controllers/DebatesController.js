@@ -21,7 +21,6 @@ async function createDebate(inputs) {
   // Inputs
   const { name, url, debateType, languages } = inputs;
 
-  console.log('inputs', inputs)
   // Treatment
   const response = await CreateDebate(name, url, debateType, languages, {
     debateRepository
