@@ -59,7 +59,7 @@ function GeneralInfo(props) {
         }
     }
 
-    const { debate, error, processing, created } = useSelector(state => state.debate);
+    const { error, processing, created } = useSelector(state => state.debate);
 
     useEffect(() => {
         // Debate exists, transition to edit
