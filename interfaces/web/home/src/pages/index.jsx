@@ -99,10 +99,12 @@ function Home({ debateServer }) {
             </Grid>
             <Grid container spacing={5} className={classes.mainGrid}>
               <Main title="Latest contributon" posts={posts} />
-              <Sidebar
-                description={debate.sidebar.about[getCurrentLang()]}
-                social={debate.sidebar.social}
-              />
+              {debate && debate.sidebar ? (
+                <Sidebar
+                  description={debate.sidebar.about[getCurrentLang()]}
+                  social={debate.sidebar.social}
+                />
+              ) : null }
             </Grid>
           </main>
         </Container>
