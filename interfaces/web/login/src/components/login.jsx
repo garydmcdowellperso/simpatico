@@ -11,7 +11,7 @@ import nextI18NextInstance from '../../i18n';
 const { withTranslation } = nextI18NextInstance;
 
 function Login(props) {
-  const { debate, t } = props.debate;
+  const { debate, t } = props;
 
   const dispatch = useDispatch();
   const [isSubmitting, setSubmitting] = useState(false);
