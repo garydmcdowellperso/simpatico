@@ -51,6 +51,7 @@ function* fetchDebate(action) {
 }
 
 function* createDebate(action) {
+  console.log('action', action)
   const r = yield post("v1/createDebate",
     JSON.stringify({
       name: action.name,
