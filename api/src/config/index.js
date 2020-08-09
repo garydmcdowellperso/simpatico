@@ -14,8 +14,8 @@ const config = {
     docPrefix: process.env.DOC_URL_PREFIX || "doc"
   },
   matomo: {
-    server: 'localhost',
-    token: '9ab164f139278c6d37480c8055405e95'
+    server: 'https://matomo.simpatico.cloud',
+    token: 'a4302404b514244c30b56e3de1ce2e77'
   },
   db: {
     dbname:

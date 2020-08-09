@@ -186,6 +186,107 @@ const debateSchema = {
      }
 };
 
+const headerDefault = {
+    "share" : true,
+    "sections" : [ 
+        {
+            "languages" : {
+                "en" : "faesatst",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }
+    ]
+};
+
+const overviewDefault = {
+    "title" : {
+        "en" : "English Title",
+        "fr" : "Titre en Francais",
+        "es" : "Spanish"
+    },
+    "description" : {
+        "en" : "English Descripton",
+        "fr" : "Description en Francais",
+        "es" : "Spanish"
+    },
+    "linkText" : {
+        "en" : "Click me",
+        "fr" : "Voir plus",
+        "es" : "Spanish"
+    },
+    "url" : "https://source.unsplash.com/random"
+},;
+
+const connectionDefault = {
+    "firstname" : true,
+    "lastname" : true,
+    "username" : true,
+    "email" : true,
+    "password" : true,
+    "google" : false,
+    "linkedin" : false,
+    "additional_fields" : []
+};
+
+const footerDefault = {
+    "sections" : [ 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }, 
+        {
+            "languages" : {
+                "en" : "",
+                "fr" : "",
+                "es" : ""
+            }
+        }
+    ]
+};
+
 module.exports = {
-    debateSchema
+    debateSchema,
+    headerDefault,
+    overviewDefault,
+    connectionDefault,
+    footerDefault
 };

@@ -1,6 +1,8 @@
 import StatsSerializer from "../serializers/StatsSerializer";
 import VisitorSerializer from "../serializers/VisitorSerializer";
 import DevicesSerializer from "../serializers/DevicesSerializer";
+import SiteSerializer from "../serializers/SiteSerializer";
+import CreateSite from "../use_cases/CreateSite";
 import FetchAllStats from "../use_cases/FetchAllStats";
 import FetchVisitors from "../use_cases/FetchVisitors";
 import FetchDevices from "../use_cases/FetchDevices";
@@ -18,6 +20,19 @@ import HTTPRequesterAxios from "../interface_adapters/http/HTTPRequesterAxios";
 
 const statsRepository = new StatsRepository(new StatsRepositoryMongo());
 const httpRequester = new HTTPRequester(new HTTPRequesterAxios());
+
+async function createSite(inputs) {
+  // Inputs
+  const { name } = inputs;
+
+  // Treatment
+  const response = await CreateSite(name, {
+    httpRequester
+  });
+
+  const siteSerializer = new SiteSerializer();
+  return siteSerializer.serialize(response);
+}
 
 async function fetchStatsByDebateId(inputs) {
   // Inputs
@@ -138,6 +153,7 @@ async function fetchVisitorsByDayForMonth(inputs) {
 }
 
 module.exports = {
+  createSite,
   fetchAllStats,
   fetchVisitors,
   fetchStatsByDebateId,

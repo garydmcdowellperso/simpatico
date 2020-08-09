@@ -19,10 +19,10 @@ const debateRepository = new DebateRepository(new DebateRepositoryMongo());
 
 async function createDebate(inputs) {
   // Inputs
-  const { name, url, debateType, languages } = inputs;
+  const { name, url, debateType, languages, accountId, header, overview, connection, footer, trackingId} = inputs;
 
   // Treatment
-  const response = await CreateDebate(name, url, debateType, languages, {
+  const response = await CreateDebate(name, url, debateType, languages, accountId, header, overview, connection, footer, trackingId, {
     debateRepository
   });
 

@@ -3,9 +3,16 @@ const shell = require('shelljs');
 
 const config = require('../../config');
 
-const { debateSchema } = require('../schemas/debate');
+const { 
+    connectionDefault,
+    overviewDefault,
+    headerDefault, 
+    footerDefault,
+    debateSchema 
+} = require('../schemas/debate');
 
 import DebatesController from "../../services/debates/lib/controllers/DebatesController";
+import StatsController from "../../services/stats/lib/controllers/StatsController";
 
 /**
  * Defines all the routes
@@ -152,6 +159,7 @@ const routes = async fastify => {
         "/createDebate",
         {
             config,
+            preValidation: [fastify.authenticate],
             schema: {
                 description: "creates a new debate",
                 tags: ["api"],
@@ -193,8 +201,22 @@ const routes = async fastify => {
                 "spanish" : true
             };
 
+            if (!request.user.role.includes('administrator')) {
+                throw new Error("Unauthorised");
+            }
+            
             // Create the debate
-            const response = await DebatesController.createDebate(inputs);
+            const response = await StatsController.createSite(inputs);
+            console.log('response', response)
+            inputs.accountId = request.user.accountId;
+            inputs.header = headerDefault;
+            inputs.overview = overviewDefault;
+            inputs.connection = connectionDefault;
+            inputs.footer = footerDefault;
+            inputs.trackingId = response.id;
+
+            // Create the debate
+            await DebatesController.createDebate(inputs);
 
             return {
                 status: 'ok',
