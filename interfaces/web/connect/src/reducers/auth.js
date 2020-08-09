@@ -17,7 +17,7 @@ import {
   CHANGE_PASSWORD_FAILURE,
 } from "../actions/auth";
 
-const initialState = { accountId: null, token: "", processing: false, error: "" };
+const initialState = { isValidToken: null, sent: false, sending: null, token: "", processing: false, error: "", accountCreated: false };
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
@@ -107,7 +107,25 @@ export default function auth(state = initialState, action) {
         error: action.error,
         token: ""
       };
-    default:
+    case FORGOTTEN_PASSWORD_REQUEST:
+      return {
+        ...state,
+        sending: true
+      };
+    case FORGOTTEN_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        sending: false,
+        sent: true
+      };
+    case FORGOTTEN_PASSWORD_FAILURE:
+      return {
+        ...state,
+        sending: false,
+        sent: false,
+        error: action.error
+      };
+      default:
       return state;
   }
 }
