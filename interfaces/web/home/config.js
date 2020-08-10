@@ -3,7 +3,7 @@ export default {
     host: process.env.API_HOST || 'http://localhost:5000'
   },
   matomo: {
-    host: process.env.MATOMO_HOST || 'https://matomo.simpatico.cloud',
+    host: process.env.MATOMO_HOST || 'matomo.simpatico.cloud',
   },
   server: {
     host: process.env.SERVER_HOST || 'http://localhost',
