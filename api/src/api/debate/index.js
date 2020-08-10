@@ -8,6 +8,7 @@ const {
     overviewDefault,
     headerDefault, 
     footerDefault,
+    sidebarDefault,
     debateSchema 
 } = require('../schemas/debate');
 
@@ -243,6 +244,7 @@ const routes = async fastify => {
             inputs.overview = overviewDefault;
             inputs.connection = connectionDefault;
             inputs.footer = footerDefault;
+            inputs.sideBar = sideBarDefault;
             inputs.trackingId = response.id;
 
             // Create the debate

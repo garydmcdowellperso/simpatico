@@ -1,5 +1,5 @@
 class Debate {
-  constructor(id = null, name, url, debateType, languages, header, overview, themes, connection, footer, metaTags, deleted, accountId, trackingId) {
+  constructor(id = null, name, url, debateType, languages, header, overview, themes, connection, footer, metaTags, deleted, accountId, trackingId, sidebar) {
     this.id = id;
     this.name = name;
     this.url = url;
@@ -14,6 +14,7 @@ class Debate {
     this.deleted = deleted;
     this.accountId = accountId;
     this.trackingId = trackingId;
+    this.sidebar = sidebar;
   }
 }
 

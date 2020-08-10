@@ -283,10 +283,33 @@ const footerDefault = {
     ]
 };
 
+const sidebarDefault = {
+    "about" : {
+        "en" : "English",
+        "fr" : "Francais",
+        "es" : "Espagnole"
+    },
+    "social" : [ 
+        {
+            "name" : "",
+            "url" : ""
+        }, 
+        {
+            "name" : "",
+            "url" : ""
+        }, 
+        {
+            "name" : "",
+            "url" : ""
+        }
+    ]
+};
+
 module.exports = {
     debateSchema,
     headerDefault,
     overviewDefault,
     connectionDefault,
+    sidebarDefault,
     footerDefault
 };

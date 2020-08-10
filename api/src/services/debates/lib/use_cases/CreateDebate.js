@@ -11,6 +11,7 @@ async function CreateDebate(
   connection,
   footer,
   trackingId,
+  sidebar,
   { debateRepository }
 ) {
   if (!name) {
@@ -43,8 +44,11 @@ async function CreateDebate(
   if (!trackingId) {
     throw new Error("No trackingId");
   }
+  if (!sidebar) {
+    throw new Error("No sidebar");
+  }
 
-  const debate = new Debate(null, name, url, debateType, languages, header, overview, {}, connection, footer, [], false, accountId, trackingId);
+  const debate = new Debate(null, name, url, debateType, languages, header, overview, {}, connection, footer, [], false, accountId, trackingId, sidebar);
 
   return debateRepository.persist(debate);
 }
