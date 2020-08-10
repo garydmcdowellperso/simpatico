@@ -24,6 +24,7 @@ class Configure extends Component {
   handleDeleteDebate = (debateId) => {
     const { dispatch } = this.props;    
     
+    console.log('debateId', debateId)
     dispatch(
       deleteDebateRequest(debateId)
     );
