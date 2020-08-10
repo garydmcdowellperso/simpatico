@@ -56,7 +56,7 @@ class Simpatico extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, debate, pageProps, store } = this.props;
 
     return (
       <Provider store={store}>
