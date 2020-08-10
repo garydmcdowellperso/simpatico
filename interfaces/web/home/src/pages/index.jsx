@@ -42,7 +42,9 @@ function Home({ debateServer }) {
   const { isValidToken, accountId } = useSelector(state => state.auth);
 
   useEffect(() => {
-    init({ url: `https://${config.matomo.host}`, siteId: debate.trackingId });
+    if (debate && debate.trackingId) {
+      init({ url: `https://${config.matomo.host}`, siteId: debate.trackingId });
+    }
   }, []);
 
   useEffect(() => {

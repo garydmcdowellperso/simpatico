@@ -37,7 +37,7 @@ class Simpatico extends App {
       : {};
 
     if (ctx.req) {
-      const host = ctx.req.get('host');
+      console.log('fetching')
       const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
 
       const debate = await res.json()
