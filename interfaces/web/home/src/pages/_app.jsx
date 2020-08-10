@@ -37,12 +37,20 @@ class Simpatico extends App {
       : {};
 
     if (ctx.req) {
-      console.log('fetching', ctx.req.headers.host)
-      const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
+      const host = ctx.req.headers.host;
+      // Get the name part which is the sub-domain
+      const subdomain =  host.split('.')[1] ? host.split('.')[0] : false;
 
-      const debate = await res.json()
-      console.log('debate', debate)
-      return { pageProps, debate };
+      if (subdomain) {
+        console.log('fetching', ctx.req.headers.host)
+        const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${subdomain}`)
+
+        const debate = await res.json()
+        console.log('debate', debate)
+        return { pageProps, debate };
+      } else {
+        return { pageProps };
+      }
     } else {
       return { pageProps };
     }
