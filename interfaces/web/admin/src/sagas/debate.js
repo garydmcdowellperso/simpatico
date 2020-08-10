@@ -42,7 +42,7 @@ import { get, post, putApi, remove } from "../lib/api";
 function* deleteDebate(action) {
   const r = yield remove(`v1/deleteDebate`,     
   JSON.stringify({
-    debateId: action.debateIdes
+    debateId: action.debateId
   }))
     .then(json => put(deleteDebateSuccess(json)))
     .catch(err => put(deleteDebateFailure(err)));
