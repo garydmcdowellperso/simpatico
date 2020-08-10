@@ -70,11 +70,11 @@ function Home({ debateServer }) {
 
   const classes = useStyles();
 
+  console.log('debate', debate)
   if (debate === {}) {
     return (<div/>)
   }
 
-  console.log('debate', debate)
   return (
     <div>
       <Head>
