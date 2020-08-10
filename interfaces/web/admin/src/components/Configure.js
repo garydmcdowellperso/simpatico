@@ -25,7 +25,7 @@ class Configure extends Component {
     const { dispatch } = this.props;    
     
     dispatch(
-      deleteDebateRequest()
+      deleteDebateRequest(debateId)
     );
   }
 
