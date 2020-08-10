@@ -8,7 +8,7 @@ import DebateOverview from "./common/DebateOverview";
 import SmallStatsCreate from "./common/SmallStatsCreate";
 
 import nextI18NextInstance from '../../i18n';
-import { fetchDebatesRequest } from "../actions/debate";
+import { deleteDebateRequest, fetchDebatesRequest } from "../actions/debate";
 
 const { withTranslation } = nextI18NextInstance;
 
