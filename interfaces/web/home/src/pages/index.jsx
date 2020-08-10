@@ -92,7 +92,7 @@ function Home(debateServer) {
       <>
         <CssBaseline />
         <Container maxWidth="lg">
-          <Header selected='home' title={debate.url} header={debate.header} />
+          <Header selected='home' title={debate.name} header={debate.header} />
           <main>
             <Overview data={debate.overview} />
             <Grid container spacing={4}>
