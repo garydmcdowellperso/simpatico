@@ -14,6 +14,10 @@ async function DeleteDebate(
     throw new Error("Debate does not exist");
   }
 
+  if (debate.accountId !== accountId) {
+    throw new Error("Debate does not belong to this account");
+  }
+
   debate.deleted = true;
 
   await debateRepository.merge(debate);
