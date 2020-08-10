@@ -66,7 +66,7 @@ function GeneralInfo(props) {
         if (debate) {
             // Transfer values to state
             setName(debate.name);
-            setUrl(debate.url);
+            SpeechRecognitionResult(debate.url);
             setDebateType(debate.debateType);
         }
     }, [debate]);
