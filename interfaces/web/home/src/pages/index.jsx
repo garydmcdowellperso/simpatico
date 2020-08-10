@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 function Home({ debateServer }) {
   const dispatch = useDispatch();
 
+  console.log('debateServer', debateServer)
   if (debateServer) {
     // Put the server side fetch into client side store
     dispatch(setDebateRequest(debateServer))
@@ -112,22 +113,6 @@ function Home({ debateServer }) {
       </>) : null }
      </div>
   );
-}
-
-Home.getInitialProps = async ctx => {
-  if (ctx.req) {
-    // Do a check if this debate exists before trying to render (no saga here, server side)
-    const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
-    const debateServer = await res.json()
-
-    return {
-      debateServer
-    };
-  }
-
-  return {
-    debateServer: null
-  }
 }
 
 export default Home;

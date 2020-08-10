@@ -11,6 +11,7 @@ import allReducers from "../reducers";
 import { verifyTokenRequest, verifyTokenRequestFailure } from "../actions/auth";
 import '../styles.css'
 import i18n from '../../i18n';
+import config from '../../config';
 
 const { withTranslation } = i18n;
 
@@ -30,6 +31,22 @@ const makeStore = initialState => {
 };
 
 class Simpatico extends App {
+  static async getInitialProps({ Component, ctx }) {
+    const pageProps = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {};
+
+    if (ctx.req) {
+      const host = ctx.req.get('host');
+      const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
+
+      const debate = await res.json()
+      return { pageProps, debate };
+    } else {
+      return { pageProps };
+    }
+  }
+
   componentDidMount() {
     store.dispatch(
       verifyTokenRequest({
@@ -43,7 +60,7 @@ class Simpatico extends App {
 
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <Component {...pageProps} {...debate} />
       </Provider>
     );
   }
