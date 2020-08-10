@@ -32,7 +32,8 @@ function Home(debateServer) {
   const dispatch = useDispatch();
 
   console.log('debateServer', debateServer)
-  if (debateServer !== {}) {
+  if (Object.keys(debateServer).length > 0) {
+    console.log('dispatching')
     // Put the server side fetch into client side store
     dispatch(setDebateRequest(debateServer))
   }
