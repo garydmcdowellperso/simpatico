@@ -49,7 +49,7 @@ class Configure extends Component {
             </Col>
           {debates.map((debate, idx) => (
             <Col className="col-lg mb-4" key={idx} {...debate.attrs}>
-              <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} delete={this.handleDeleteDebate}/>
+              <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} handleDeleteDebate={this.handleDeleteDebate}/>
             </Col>
           ))}
         </Row>
