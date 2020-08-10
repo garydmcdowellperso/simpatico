@@ -24,7 +24,6 @@ class Configure extends Component {
   handleDeleteDebate = (debateId) => {
     const { dispatch } = this.props;    
     
-    console.log('debateId', debateId)
     dispatch(
       deleteDebateRequest(debateId)
     );
@@ -48,7 +47,7 @@ class Configure extends Component {
                 variation="1"
               />
             </Col>
-          {debates.map((debate, idx) => (
+          {debates && debates.length > 0 && debates.map((debate, idx) => (
             <Col className="col-lg mb-4" key={idx} {...debate.attrs}>
               <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} handleDeleteDebate={this.handleDeleteDebate}/>
             </Col>
