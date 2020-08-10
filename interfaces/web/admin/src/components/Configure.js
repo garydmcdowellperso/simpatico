@@ -1,5 +1,4 @@
 import React, { Component }  from "react";
-import PropTypes from "prop-types";
 import { Container, Row, Col } from "shards-react";
 import flowRight from 'lodash/flowRight';
 import { connect } from "react-redux";
@@ -19,6 +18,14 @@ class Configure extends Component {
     
     dispatch(
       fetchDebatesRequest()
+    );
+  }
+
+  handleDeleteDebate = (debateId) => {
+    const { dispatch } = this.props;    
+    
+    dispatch(
+      deleteDebateRequest()
     );
   }
 
@@ -42,7 +49,7 @@ class Configure extends Component {
             </Col>
           {debates.map((debate, idx) => (
             <Col className="col-lg mb-4" key={idx} {...debate.attrs}>
-              <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} />
+              <DebateOverview id={`debate-${idx}`} variation={"1"} debate={debate} delete={this.handleDeleteDebate}/>
             </Col>
           ))}
         </Row>

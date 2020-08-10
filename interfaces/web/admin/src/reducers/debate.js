@@ -8,6 +8,9 @@ import {
   CREATE_DEBATE_REQUEST,
   CREATE_DEBATE_SUCCESS,
   CREATE_DEBATE_FAILURE,
+  DELETE_DEBATE_REQUEST,
+  DELETE_DEBATE_SUCCESS,
+  DELETE_DEBATE_FAILURE,
   UPDATE_LANDING_PAGE_HEADER_REQUEST,
   UPDATE_LANDING_PAGE_HEADER_SUCCESS,
   UPDATE_LANDING_PAGE_HEADER_FAILURE,
@@ -44,6 +47,26 @@ const initialState = {
 
 export default function debate(state = initialState, action) {
   switch (action.type) {
+    case DELETE_DEBATE_REQUEST:
+      return {
+        ...state,
+        processing: true,
+        error: ""
+      };
+    case DELETE_DEBATE_SUCCESS:
+      // Parse out json and update the store
+      return {
+        ...state,
+        processing: false,
+        error: "",
+        debates: action.debates
+      };
+    case DELETE_DEBATE_FAILURE:
+      return {
+        ...state,
+        processing: false,
+        error: action.error,
+      };   
     case FETCH_ALLDEBATES_REQUEST:
       return {
         ...state,

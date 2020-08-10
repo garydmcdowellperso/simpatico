@@ -32,9 +32,20 @@ import {
   updateConnectionFailure,
   UPDATE_GENERAL_INFO_REQUEST,
   updateGeneralInfoSuccess,
-  updateGeneralInfoFailure
+  updateGeneralInfoFailure,
+  DELETE_DEBATE_REQUEST,
+  deleteDebateSuccess,
+  deleteDebateFailure  
 } from "../actions/debate";
-import { get, post, putApi } from "../lib/api";
+import { get, post, putApi, remove } from "../lib/api";
+
+function* deleteDebate(action) {
+  const r = yield remove(`v1/deleteDebate`)
+    .then(json => put(deleteDebateSuccess(json)))
+    .catch(err => put(deleteDebateFailure(err)));
+  yield r;
+}
+
 
 function* fetchAllDebates(action) {
   const r = yield get(`v1/fetchAllDebates`)
@@ -155,6 +166,7 @@ export default function* authSaga() {
   yield takeLatest(FETCH_DEBATE_REQUEST, fetchDebate);
   yield takeLatest(FETCH_ALLDEBATES_REQUEST, fetchAllDebates);
   yield takeLatest(CREATE_DEBATE_REQUEST, createDebate);
+  yield takeLatest(DELETE_DEBATE_REQUEST, deleteDebate);
   yield takeLatest(UPDATE_LANDING_PAGE_HEADER_REQUEST, updateLandingPageHeader);
   yield takeLatest(UPDATE_LANDING_PAGE_OVERVIEW_REQUEST, updateLandingPageOverview);
   yield takeLatest(UPDATE_LANDING_PAGE_THEMES_REQUEST, updateLandingPageThemes);

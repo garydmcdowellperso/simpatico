@@ -27,7 +27,6 @@ class DebateRepositoryMongo {
       { returnOriginal: false }
     );
 
-    console.log("_getValueForNextSequence", sequenceDoc.value.sequence_value);
     return sequenceDoc.value.sequence_value;
   }
 
@@ -51,15 +50,15 @@ class DebateRepositoryMongo {
   }
 
   get(debateId) {
-    return this.collection.findOne({ id: debateId });
+    return this.collection.findOne({ id: debateId, deleted: false });
   }
 
   getByName(name) {
-    return this.collection.findOne({ name });
+    return this.collection.findOne({ name, deleted: false });
   }
 
   getByAccountId(id) {
-    return this.collection.find({ accountId: id }).toArray();
+    return this.collection.find({ accountId: id, deleted: false }).toArray();
   }
 
   find() {

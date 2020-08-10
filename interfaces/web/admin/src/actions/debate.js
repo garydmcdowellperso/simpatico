@@ -10,6 +10,10 @@ export const CREATE_DEBATE_REQUEST = "CREATE_DEBATE_REQUEST";
 export const CREATE_DEBATE_SUCCESS = "CREATE_DEBATE_SUCCESS";
 export const CREATE_DEBATE_FAILURE = "CREATE_DEBATE_FAILURE";
 
+export const DELETE_DEBATE_REQUEST = "DELETE_DEBATE_REQUEST";
+export const DELETE_DEBATE_SUCCESS = "DELETE_DEBATE_SUCCESS";
+export const DELETE_DEBATE_FAILURE = "DELETE_DEBATE_FAILURE";
+
 export const UPDATE_LANDING_PAGE_HEADER_REQUEST = "UPDATE_LANDING_PAGE_HEADER_REQUEST";
 export const UPDATE_LANDING_PAGE_HEADER_SUCCESS = "UPDATE_LANDING_PAGE_HEADER_SUCCESS";
 export const UPDATE_LANDING_PAGE_HEADER_FAILURE = "UPDATE_LANDING_PAGE_HEADER_FAILURE";
@@ -41,6 +45,27 @@ export const UPDATE_CONNECTION_FAILURE = "UPDATE_CONNECTION_FAILURE";
 export const UPDATE_GENERAL_INFO_REQUEST = "UPDATE_GENERAL_INFO_REQUEST";
 export const UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
 export const UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
+
+export function deleteDebateRequest(debateId) {
+  return {
+    type: DELETE_DEBATE_REQUEST,
+    debateId
+  };
+}
+
+export function deleteDebateSuccess(status) {
+  return {
+    type: DELETE_DEBATE_SUCCESS,
+    status
+  };
+}
+
+export function deleteDebateFailure(error) {
+  return {
+    type: DELETE_DEBATE_FAILURE,
+    error
+  };
+}
 
 export function fetchDebatesRequest() {
   return {

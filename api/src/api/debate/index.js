@@ -20,6 +20,43 @@ import StatsController from "../../services/stats/lib/controllers/StatsControlle
  * @returns {Object} Different per route
  */
 const routes = async fastify => {
+    fastify.delete(
+        "/deleteDebate",
+        {
+            config,
+            preValidation: [fastify.authenticate],
+            schema: {
+                description: "deletes a debate ",
+                tags: ["api"],
+                body: {
+                    type: 'object',
+                    properties: {
+                        debateId: { type: 'number' }
+                    },
+                },    
+                response: {
+                    200: {
+                        type: "array",
+                        items: debateSchema
+                    }
+                }
+            }
+        },
+        async request => {
+            fastify.log.info("[src#api#deleteDebate] Entering");
+
+            if (!request.user.role.includes('administrator')) {
+                throw new Error("Unauthorised");
+            }
+
+            const inputs = { ...request.body };
+            inputs.accountId = request.user.accountId;
+
+            const response = await DebatesController.deleteDebate(inputs);
+            return response;
+        }
+    );
+
     fastify.get(
         "/fetchDebate",
         {

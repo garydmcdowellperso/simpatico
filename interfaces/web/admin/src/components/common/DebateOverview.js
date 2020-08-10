@@ -4,9 +4,8 @@ import Link from 'next/link'
 import classNames from "classnames";
 
 const DebateOverview = (props) => {
-  const { variation, debate } = props;
+  const { variation, debate, handleDeleteDebate } = props;
 
-  console.log('debate', debate)
   const cardClasses = classNames(
     "stats-small",
     variation && `stats-small--${variation}`
@@ -67,7 +66,7 @@ const DebateOverview = (props) => {
             </Link>
           </Col>
           <Col className="col-lg mb-3">
-              <a href={`https://${debate.url}/`}>
+              <a rel='noopener noreferrer' target='_blank' href={`https://${debate.url}/`}>
                 <i className="material-icons">play_arrow</i> Goto
               </a>
           </Col>
@@ -87,7 +86,7 @@ const DebateOverview = (props) => {
           </Col>
           <Col className="col-lg mb-3">
               <a onClick={() => {
-                    console.log('delete')
+                    handleDeleteDebate(debate.id)
                 }}>
                 <i className="material-icons" style={{color:'red'}}>delete</i> Delete
               </a>
