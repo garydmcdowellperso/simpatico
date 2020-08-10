@@ -42,7 +42,6 @@ class Simpatico extends App {
       const subdomain =  host.split('.')[1] ? host.split('.')[0] : false;
 
       if (subdomain) {
-        console.log('fetching', ctx.req.headers.host)
         const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${subdomain}`)
 
         const debate = await res.json()

@@ -63,10 +63,12 @@ function CMSPage(props) {
 
   useEffect(() => { // Fire once, get page and debate
     dispatch(fetchPageRequest(pageId));
-    dispatch(fetchDebateRequest(window.location.hostname));
-  }, []);
 
-  const classes = useStyles();
+    // Get the name part which is the sub-domain
+    const subdomain = window.location.hostname.split('.')[1] ? window.location.hostname.split('.')[0] : false;
+
+    dispatch(fetchDebateRequest(subdomain));
+  }, []);
 
   if (!page || !debate) {
     return (<div/>)
@@ -75,13 +77,13 @@ function CMSPage(props) {
   return (
     <div>
       <Head>
-        <title>{debate.slug}</title>
+        <title>{debate.url}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <>
         <CssBaseline />
         <Container maxWidth="lg">
-          <Header selected={title} title={debate.slug} header={debate.header} />
+          <Header selected={title} title={debate.name} header={debate.header} />
           <main>
             <HTMLRenderer 
                 plugins={plugins} 
@@ -101,11 +103,11 @@ export async function getServerSideProps(ctx) {
   const page = await res.json()
   
   // Do a check if this debatee exists before trying to render (no saga here, server side)
-  const res2 = await fetch(`${config.api.host}/v1/fetchDebate?name=${ctx.req.headers.host}`)
-  const debate = await res2.json()
+  const host = ctx.req.headers.host
+  const subdomain =  host.split('.')[1] ? host.split('.')[0] : false;
 
-  console.log('page', page)
-  console.log('debate', debate)
+  const res2 = await fetch(`${config.api.host}/v1/fetchDebate?name=${subdomain}`)
+  const debate = await res2.json()
 
   return {
     props: {
