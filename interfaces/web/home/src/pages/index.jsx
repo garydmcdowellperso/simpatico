@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Home({ debateServer }) {
+function Home(debateServer) {
   const dispatch = useDispatch();
 
   console.log('debateServer', debateServer)
