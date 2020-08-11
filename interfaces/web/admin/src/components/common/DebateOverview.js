@@ -66,7 +66,7 @@ const DebateOverview = (props) => {
             </Link>
           </Col>
           <Col className="col-lg mb-3">
-              <a rel='noopener noreferrer' target='_blank' href={`https://${debate.url}/`}>
+              <a rel='noopener noreferrer' target='_blank' href={`https://${debate.url}/home/`}>
                 <i className="material-icons">play_arrow</i> Goto
               </a>
           </Col>
