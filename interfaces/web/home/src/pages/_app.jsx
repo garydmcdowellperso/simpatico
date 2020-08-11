@@ -45,7 +45,6 @@ class Simpatico extends App {
         const res = await fetch(`${config.api.host}/v1/fetchDebate?name=${subdomain}`)
 
         const debate = await res.json()
-        console.log('debate', debate)
         return { pageProps, debate };
       } else {
         return { pageProps };
@@ -66,6 +65,8 @@ class Simpatico extends App {
   render() {
     const { Component, debate, pageProps, store } = this.props;
 
+    console.log('pageProps', pageProps)
+    console.log('debate', debate)
     return (
       <Provider store={store}>
         <Component {...pageProps} {...debate} />
