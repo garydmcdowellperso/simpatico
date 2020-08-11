@@ -2,6 +2,7 @@ import DebateSerializer from "../serializers/DebateSerializer";
 import CreateDebate from "../use_cases/CreateDebate";
 import DeleteDebate from "../use_cases/DeleteDebate";
 import FetchDebate from "../use_cases/FetchDebate";
+import FetchDebateByID from "../use_cases/FetchDebateByID";
 import FetchAllDebates from "../use_cases/FetchAllDebates";
 import UpdateLandingPageHeader from "../use_cases/UpdateLandingPageHeader";
 import UpdateLandingPageOverview from "../use_cases/UpdateLandingPageOverview";
@@ -37,6 +38,23 @@ async function fetchDebate(inputs) {
 
   // Treatment
   const response = await FetchDebate(name, {
+    debateRepository
+  });
+
+  if (!response) {
+    return {};
+  }
+
+  const debateSerializer = new DebateSerializer();
+  return debateSerializer.serialize(response);
+}
+
+async function fetchDebateByID(inputs) {
+  // Inputs
+  const { id } = inputs;
+
+  // Treatment
+  const response = await FetchDebateByID(id, {
     debateRepository
   });
 
@@ -214,6 +232,7 @@ module.exports = {
   createDebate,
   deleteDebate,
   fetchDebate,
+  fetchDebateByID,
   fetchAllDebates,
   updateLandingPageHeader,
   updateLandingPageOverview,

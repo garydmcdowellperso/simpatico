@@ -641,17 +641,31 @@ const routes = async fastify => {
 
             const response = await UsersController.activate(inputs);
 
-            reply.setCookie("simpatico", response.token.token, {
-                httpOnly: true,
-                secure: true,
-                path: "/",
-                domain: config.default.simpatico.hostname
-            });
-
-            if (response.token.role.includes('administrator')) {
-                reply.redirect(`/admin/`);
+            // Participant or admin ?
+            if (request.user.role.includes('participant')) {
+                // Token for the debate + redirection
+                const inputs = {
+                    id: request.user.debateId
+                  };
+      
+                const debate = await DebatesController.fetchDebateByID(inputs);
+      
+                reply.setCookie("simpatico", response.token.token, {
+                    httpOnly: true,
+                    secure: true,
+                    path: "/",
+                    domain: debate.url
+                });
+                reply.redirect(debate.url);
             } else {
-                reply.redirect(`/`);
+                reply.setCookie("simpatico", response.token.token, {
+                    httpOnly: true,
+                    secure: true,
+                    path: "/",
+                    domain: config.default.simpatico.hostname
+                });
+
+                reply.redirect(`/admin/`);
             }
         }
     );
