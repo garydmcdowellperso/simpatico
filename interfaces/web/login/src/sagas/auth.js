@@ -63,7 +63,9 @@ function* createUser(action) {
       password: action.password,
       debateId: action.debateId,
       accountId: action.accountId,
-      role: 'participant'
+      role: [
+        'participant'
+      ]
     })
   )
     .then(json => put(createUserSuccess(json)))
