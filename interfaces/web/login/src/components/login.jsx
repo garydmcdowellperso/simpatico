@@ -117,7 +117,7 @@ function Login(props) {
                     {t('newtous')} 
                     <Link 
                       href="/login/signup"
-                      as="/login/signup">
+                      as="/signup">
                         <a href='#'>{t('signup')}</a>
                     </Link>
                     </Label>
