@@ -644,7 +644,7 @@ const routes = async fastify => {
 
             // Participant or admin ?
             const token = request.query.token;
-            const decoded = jwt.verify(token, config.jwt.secret);
+            const decoded = jwt.verify(token, config.default.jwt.secret);
             request.user = decoded;
             
             if (request.user.role.includes('administrator')) {
