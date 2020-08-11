@@ -4,7 +4,7 @@ const config = {
   simpatico: {
     root: process.env.SIMPATICO_ROOT || "/root/simpatico",
     sudo: (trueValue === process.env.SUDO) || (trueValue === "false"),
-    hostname: process.env.SIMPATICO_HOSTNAME || ".simpatico.cloud"
+    hostname: process.env.SIMPATICO_HOSTNAME || "simpatico.cloud"
   },
   nginx: {
     root: process.env.NGINX_ROOT || '/User/gary'
@@ -26,7 +26,8 @@ const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET_KEY || "shhhhhh!",
-    expiresIn: process.env.JWT_EXPIRES_IN || 3600
+    expiresIn: process.env.JWT_EXPIRES_IN || 3600,
+    hostname: process.env.JWT_HOSTNAME || ".simpatico.cloud"
   }
 };
 

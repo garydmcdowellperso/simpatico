@@ -1,4 +1,5 @@
 const config = require('../../config');
+import jwt from "jsonwebtoken";
 
 import UsersController from "../../services/iam/lib/controllers/UsersController";
 import EmailController from "../../services/email/lib/controllers/EmailController";
@@ -642,7 +643,20 @@ const routes = async fastify => {
             const response = await UsersController.activate(inputs);
 
             // Participant or admin ?
-            if (request.user.role.includes('participant')) {
+            const token = request.query.token;
+            const decoded = jwt.verify(token, config.jwt.secret);
+            request.user = decoded;
+            
+            if (request.user.role.includes('administrator')) {
+                reply.setCookie("simpatico", response.token.token, {
+                    httpOnly: true,
+                    secure: true,
+                    path: "/",
+                    domain: config.default.simpatico.hostname
+                });
+
+                reply.redirect(`/admin/`);
+            } else {
                 // Token for the debate + redirection
                 const inputs = {
                     id: request.user.debateId
@@ -657,15 +671,6 @@ const routes = async fastify => {
                     domain: debate.url
                 });
                 reply.redirect(debate.url);
-            } else {
-                reply.setCookie("simpatico", response.token.token, {
-                    httpOnly: true,
-                    secure: true,
-                    path: "/",
-                    domain: config.default.simpatico.hostname
-                });
-
-                reply.redirect(`/admin/`);
             }
         }
     );
