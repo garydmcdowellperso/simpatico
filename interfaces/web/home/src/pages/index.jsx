@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { init } from "@socialgouv/matomo-next";
+import flowRight from 'lodash/flowRight';
 
 
 import Header from "../components/Header";
@@ -19,6 +20,8 @@ import config from '../../config';
 
 import { setDebateRequest } from '../actions/debate';
 import { fetchPostsRequest } from '../actions/posts';
+
+const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
@@ -102,7 +105,7 @@ function Home(debateServer) {
               ))}
             </Grid>
             <Grid container spacing={5} className={classes.mainGrid}>
-              <Main title="Latest contributon" posts={posts} />
+              <Main title="Latest contribution" posts={posts} />
               {debate && debate.sidebar ? (
                 <Sidebar
                   description={debate.sidebar.about[getCurrentLang()]}
@@ -118,4 +121,7 @@ function Home(debateServer) {
   );
 }
 
-export default Home;
+export default flowRight(
+  withTranslation(['common'])
+)(Home);
+
