@@ -16,7 +16,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       Copyright ©
-      <a href="https://simpatico.online/">
+      <a href="https://simpatico.cloud/">
         Simpatico
       </a>{" "}
       {new Date().getFullYear()}

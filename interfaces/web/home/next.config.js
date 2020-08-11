@@ -12,6 +12,7 @@ module.exports = withTM(
     },
     // assetPrefix: "/home",
     publicRuntimeConfig: {
+      assetPrefix: "/home",
       localeSubpaths:
         typeof process.env.LOCALE_SUBPATHS === "string"
           ? process.env.LOCALE_SUBPATHS
