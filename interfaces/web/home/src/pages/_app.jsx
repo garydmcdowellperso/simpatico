@@ -69,7 +69,7 @@ class Simpatico extends App {
     console.log('debate', debate)
     return (
       <Provider store={store}>
-        <Component {...pageProps} {...debate} />
+        <Component {...pageProps} debate={...debate} />
       </Provider>
     );
   }
