@@ -37,7 +37,7 @@ function Home(props) {
   const dispatch = useDispatch();
 
   console.log('debateServer', debateServer)
-  if (JSON.stringify(debateServer) !== '{}') {
+  if (debateServer && JSON.stringify(debateServer) !== '{}') {
     console.log('dispatching')
     // Put the server side fetch into client side store
     dispatch(setDebateRequest(debateServer))
@@ -107,7 +107,7 @@ function Home(props) {
               ))}
             </Grid>
             <Grid container spacing={5} className={classes.mainGrid}>
-              <Main title="Latest contribution" posts={posts} />
+              <Main title={t('latest')} posts={posts} />
               {debate && debate.sidebar ? (
                 <Sidebar
                   description={debate.sidebar.about[getCurrentLang()]}
