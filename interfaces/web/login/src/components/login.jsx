@@ -116,7 +116,7 @@ function Login(props) {
                     <Label as='a' basic  size='mini'>
                     {t('newtous')} 
                     <Link 
-                      href="/login/signup"
+                      href="signup"
                       as="/login/signup">
                         <a href='#'>{t('signup')}</a>
                     </Link>
@@ -124,7 +124,11 @@ function Login(props) {
                   </Grid.Column>
                   <Grid.Column floated='right'  width={5}>
                     <Label as='a' basic  size='mini'>
-                      <Link href="/login/forgotten"><a href='#'>{t('forgotten')}</a></Link>
+                      <Link 
+                        as="/login/signup">
+                        href="forgotten">
+                          <a href='#'>{t('forgotten')}</a>
+                      </Link>
                     </Label>
                   </Grid.Column>
                 </Grid>
