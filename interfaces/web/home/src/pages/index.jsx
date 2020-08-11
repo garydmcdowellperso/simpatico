@@ -31,7 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Home(debateServer) {
+function Home(props) {
+  const { t, debateServer } = props;
+  
   const dispatch = useDispatch();
 
   console.log('debateServer', debateServer)
