@@ -116,8 +116,8 @@ function Login(props) {
                     <Label as='a' basic  size='mini'>
                     {t('newtous')} 
                     <Link 
-                      href="/login/signup"
-                      as="/signup">
+                      href="signup"
+                      as="/login/signup">
                         <a href='#'>{t('signup')}</a>
                     </Link>
                     </Label>
