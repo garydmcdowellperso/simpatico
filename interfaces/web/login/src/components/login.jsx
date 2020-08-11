@@ -125,7 +125,7 @@ function Login(props) {
                   <Grid.Column floated='right'  width={5}>
                     <Label as='a' basic  size='mini'>
                       <Link 
-                        as="/login/signup">
+                        as="/login/signup"
                         href="forgotten">
                           <a href='#'>{t('forgotten')}</a>
                       </Link>
