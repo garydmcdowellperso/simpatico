@@ -77,7 +77,7 @@ function Header(props) {
   if (typeof window !== 'undefined') {
     // Server side rendering protection
     firstNameLocalStorage = localStorage.getItem("firstName");
-  }z
+  }
   // First time effect
   useEffect(() => {
     // Pull info from local storage if available

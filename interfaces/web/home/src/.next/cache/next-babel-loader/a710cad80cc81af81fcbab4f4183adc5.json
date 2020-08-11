@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { all, fork } from \"redux-saga/effects\";\nimport authSaga from \"./auth\";\nexport default function* () {\n  yield all([fork(authSaga)]);\n}","map":null,"metadata":{},"sourceType":"module"}

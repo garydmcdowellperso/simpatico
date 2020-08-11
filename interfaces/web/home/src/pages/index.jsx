@@ -38,7 +38,6 @@ function Home(props) {
 
   console.log('debateServer', debateServer)
   if (debateServer && JSON.stringify(debateServer) !== '{}') {
-    console.log('dispatching')
     // Put the server side fetch into client side store
     dispatch(setDebateRequest(debateServer))
   }
@@ -76,7 +75,6 @@ function Home(props) {
 
   const classes = useStyles();
 
-  console.log('debate', debate)
   if (debate === {}) {
     return (<div/>)
   }
