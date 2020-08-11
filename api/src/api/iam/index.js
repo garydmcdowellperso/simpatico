@@ -664,11 +664,12 @@ const routes = async fastify => {
       
                 const debate = await DebatesController.fetchDebateByID(inputs);
       
+                console.log('debate', debate)
                 reply.setCookie("simpatico", response.token.token, {
                     httpOnly: true,
                     secure: true,
                     path: "/",
-                    domain: debate.url
+                    domain: config.default.simpatico.hostname
                 });
                 reply.redirect(debate.url);
             }
