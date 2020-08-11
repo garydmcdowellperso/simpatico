@@ -5,9 +5,9 @@ import {
   CALLBACK_REQUEST,
   CALLBACK_REQUEST_SUCCESS,
   CALLBACK_REQUEST_FAILURE,
-  CREATE_ACCOUNT_REQUEST,
-  CREATE_ACCOUNT_SUCCESS,
-  CREATE_ACCOUNT_FAILURE,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_FAILURE,
   FORGOTTEN_PASSWORD_REQUEST,
   FORGOTTEN_PASSWORD_SUCCESS,
   FORGOTTEN_PASSWORD_FAILURE,
@@ -48,7 +48,7 @@ export default function auth(state = initialState, action) {
         sending: false,
         error: action.error
       };      
-      case VERIFY_TOKEN_REQUEST:
+    case VERIFY_TOKEN_REQUEST:
       return {
         ...state,
         sending: true
@@ -104,21 +104,21 @@ export default function auth(state = initialState, action) {
         token: "",
         error: action.error
       };
-    case CREATE_ACCOUNT_REQUEST:
+    case CREATE_USER_REQUEST:
       return {
         ...state,
         processing: true,
         accountCreated: false,
         error: ""
       };
-    case CREATE_ACCOUNT_SUCCESS:
+    case CREATE_USER_SUCCESS:
       return {
         ...state,
         processing: false,
         accountCreated: true,
         error: ""
       };
-    case CREATE_ACCOUNT_FAILURE:
+    case CREATE_USER_FAILURE:
       return {
         ...state,
         processing: false,

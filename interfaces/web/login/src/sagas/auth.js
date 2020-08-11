@@ -3,9 +3,9 @@ import {
   LOGIN_REQUEST,
   loginRequestSuccess,
   loginRequestFailure,
-  CREATE_ACCOUNT_REQUEST,
-  createAccountSuccess,
-  createAccountFailure,
+  CREATE_USER_REQUEST,
+  createUserSuccess,
+  createUserFailure,
   FORGOTTEN_PASSWORD_REQUEST,
   forgottenPasswordSuccess,
   forgottenPasswordFailure,
@@ -53,7 +53,7 @@ function* loginRequest(action) {
   yield r;
 }
 
-function* createAccount(action) {
+function* createUser(action) {
   const r = yield post(
     "v1/createUser",
     JSON.stringify({
@@ -66,8 +66,8 @@ function* createAccount(action) {
       role: 'participant'
     })
   )
-    .then(json => put(createAccountSuccess(json)))
-    .catch(err => put(createAccountFailure(err)));
+    .then(json => put(createUserSuccess(json)))
+    .catch(err => put(createUserFailure(err)));
   yield r;
 }
 
@@ -88,7 +88,7 @@ function* changePassword(action) {
 
 export default function* authSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
-  yield takeLatest(CREATE_ACCOUNT_REQUEST, createAccount);
+  yield takeLatest(CREATE_USER_REQUEST, createUser);
   yield takeLatest(FORGOTTEN_PASSWORD_REQUEST, forgottenPassword);
   yield takeLatest(VERIFY_TOKEN_REQUEST, verifyToken);
   yield takeLatest(CHANGE_PASSWORD_REQUEST, changePassword);

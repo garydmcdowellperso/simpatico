@@ -16,7 +16,7 @@ import Link from 'next/link'
 import { useDispatch } from "react-redux";
 import flowRight from 'lodash/flowRight';
 
-import { createAccountRequest } from "../actions/auth";
+import { createUserRequest } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
@@ -74,7 +74,7 @@ function Create(props) {
             }}
             onSubmit={(values, { setSubmitting }) => {
               dispatch(
-                createAccountRequest(
+                createUserRequest(
                   values.firstname,
                   values.lastname,
                   values.email,
@@ -82,7 +82,7 @@ function Create(props) {
                   debate.id,
                   debate.accountId
                 )
-              );
+              ); 
 
               setTimeout(() => {
                 setSubmitting(false);

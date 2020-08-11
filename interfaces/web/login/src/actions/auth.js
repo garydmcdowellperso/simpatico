@@ -2,9 +2,9 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_REQUEST_SUCCESS = "LOGIN_REQUEST_SUCCESS";
 export const LOGIN_REQUEST_FAILURE = "LOGIN_REQUEST_FAILURE";
 
-export const CREATE_ACCOUNT_REQUEST = "CREATE_ACCOUNT_REQUEST";
-export const CREATE_ACCOUNT_SUCCESS = "CREATE_ACCOUNT_SUCCESS";
-export const CREATE_ACCOUNT_FAILURE = "CREATE_ACCOUNT_FAILURE";
+export const CREATE_USER_REQUEST = "CREATE_USER_REQUEST";
+export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
+export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE";
 
 export const CALLBACK_REQUEST = "CALLBACK_REQUEST";
 export const CALLBACK_REQUEST_SUCCESS = "CALLBACK_REQUEST_SUCCESS";
@@ -53,9 +53,9 @@ export function loginRequestFailure(error) {
   };
 }
 
-export function createAccountRequest(firstname, lastname, email, password, debateId, accountId) {
+export function createUserRequest(firstname, lastname, email, password, debateId, accountId) {
   return {
-    type: CREATE_ACCOUNT_REQUEST,
+    type: CREATE_USER_REQUEST,
     firstname,
     lastname,
     email,
@@ -65,15 +65,15 @@ export function createAccountRequest(firstname, lastname, email, password, debat
   };
 }
 
-export function createAccountSuccess() {
+export function createUserSuccess() {
   return {
-    type: CREATE_ACCOUNT_SUCCESS
+    type: CREATE_USER_SUCCESS
   };
 }
 
-export function createAccountFailure(error) {
+export function createUserFailure(error) {
   return {
-    type: CREATE_ACCOUNT_FAILURE,
+    type: CREATE_USER_FAILURE,
     error
   };
 }
