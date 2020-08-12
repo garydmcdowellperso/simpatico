@@ -4,6 +4,7 @@ import translationFR from './static/locales/fr/common.json';
 
 import config from './config';
 
+console.log('translationEN', translationEN)
 const {
   i18n: { languages, defaultLanguage },
 } = config;
