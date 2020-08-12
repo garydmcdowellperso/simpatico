@@ -1,5 +1,6 @@
 import NextI18Next from 'next-i18next';
-const path = require('path')
+import translationEN from './static/locales/en/translation.json';
+import translationFR from './static/locales/fr/translation.json';
 
 import config from './config';
 
@@ -15,12 +16,21 @@ const detectorOptions = {
   caches: []
 };
 
+const resources = {
+  en: {
+    translation: translationEN
+  },
+  fr: {
+    translation: translationFR
+  }
+};
+
 export default new NextI18Next({
+  resources,
   otherLanguages: languages,
   fallbackLng: fallbackLanguage,
   defaultNS: 'common',
-  detection: detectorOptions,
-  localePath: './static/locales'
+  detection: detectorOptions
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
