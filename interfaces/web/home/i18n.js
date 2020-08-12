@@ -1,4 +1,6 @@
 import NextI18Next from 'next-i18next';
+const path = require('path')
+
 import config from './config';
 
 const {
@@ -9,9 +11,8 @@ const fallbackLanguage = defaultLanguage;
 
 // Options list: https://github.com/i18next/i18next-browser-languageDetector#detector-options
 const detectorOptions = {
-  order: ['cookie'],
-  caches: ['cookie'],
-  lookupCookie: 'next-i18next',
+  order: ['navigator'],
+  caches: []
 };
 
 export default new NextI18Next({
@@ -19,6 +20,7 @@ export default new NextI18Next({
   fallbackLng: fallbackLanguage,
   defaultNS: 'common',
   detection: detectorOptions,
+  localePath: path.resolve('./static/locales')
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
