@@ -7,6 +7,7 @@ import {
   Header,
   Icon,
   Image,
+  Message,
   Label,
   Segment,
   Transition
@@ -147,9 +148,6 @@ function Create(props) {
               setTimeout(() => {
                 setSubmitting(false);
               }, 400);
-
-              // Redirect to login
-              window.location.href = "/login/";
             }}
           >
             {({
