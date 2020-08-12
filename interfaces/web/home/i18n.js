@@ -20,7 +20,7 @@ export default new NextI18Next({
   fallbackLng: fallbackLanguage,
   defaultNS: 'common',
   detection: detectorOptions,
-  localPath: '/home/static/locales'
+  localePath: '/home/static/locales'
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
