@@ -13,10 +13,10 @@ import {
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import Link from 'next/link'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import flowRight from 'lodash/flowRight';
 
-import { createUserRequest } from "../actions/auth";
+import { createUserRequest,  forgottenPasswordReset } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
@@ -25,12 +25,58 @@ function Create(props) {
   const { debate, t } = props;
   const [visible, setVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const { sending } = useSelector(state => state.auth);
+
   useEffect(() => {
     // Animations
     setVisible(true)
+
+    dispatch(
+      forgottenPasswordReset()
+    );
   }, []);
 
-  const dispatch = useDispatch();
+  const Footer = () => {
+    return (
+      <>
+        <Segment>
+          <Grid columns={2}>
+              <Grid.Column floated='left' width={5}>
+                <Label as='a' basic  size='mini'>
+                {t('already')} <Link href="/login/"><a href='#'>{t('connect')}</a></Link>
+                </Label>
+              </Grid.Column>
+              <Grid.Column floated='right'  width={5}>
+                <Label as='a' basic  size='mini'>
+                  <Link href="/login/forgotten"><a href='#'>{t('forgotten')}</a></Link>
+                </Label>
+              </Grid.Column>
+          </Grid>
+        </Segment>
+        <Segment>
+          <Container textAlign='center'>{t('connectwith')}</Container>
+          {debate.connection.google || true ?
+            (<Button animated='vertical'>
+              <Button.Content hidden>{t('connect')}</Button.Content>
+              <Button.Content visible>
+                <Icon color='blue' name='facebook' />
+              </Button.Content>
+            </Button>) : null
+          } 
+          {debate.connection.linkedin || true?
+            (<Button animated='vertical'>
+              <Button.Content hidden>{t('connect')}</Button.Content>
+              <Button.Content visible>
+                <Icon color='blue' name='linkedin' />
+              </Button.Content>
+            </Button>) : null
+          } 
+        </Segment>
+      </>
+    )
+  }
 
   return (
     <Grid
@@ -50,6 +96,20 @@ function Create(props) {
           </Grid>
         </Header>
         <Transition visible={visible} animation='fade' duration={800}>
+        {sending === false ? (
+            <Segment.Group>
+              <Segment raised >
+                <Grid>
+                  <Grid.Column>
+                    <Message>
+                    {t('createmessage')}
+                    </Message>
+                  </Grid.Column>  
+                </Grid>
+              </Segment>
+            <Footer />
+          </Segment.Group>
+        ) : (
           <Formik
             initialValues={{ firstname: "", lastname: "", email: "", password: "" }}
             validate={values => {
@@ -160,7 +220,6 @@ function Create(props) {
                       {errors.password && touched.password && errors.password}
                     </Form.Field>
                     {debate.connection.additional_fields.map((field, idx) => {
-                      console.log('field', field)
                         if (field.active) {
                           (<Form.Field>
                             {field.text === 'text' ?
@@ -186,43 +245,11 @@ function Create(props) {
                       Submit
                     </Button>
                   </Segment>
-                  <Segment>
-                    <Grid columns={2}>
-                        <Grid.Column floated='left' width={5}>
-                          <Label as='a' basic  size='mini'>
-                          {t('already')} <Link href="/login/"><a href='#'>{t('connect')}</a></Link>
-                          </Label>
-                        </Grid.Column>
-                        <Grid.Column floated='right'  width={5}>
-                          <Label as='a' basic  size='mini'>
-                            <Link href="/login/forgotten"><a href='#'>{t('forgotten')}</a></Link>
-                          </Label>
-                        </Grid.Column>
-                    </Grid>
-                  </Segment>
-                  <Segment>
-                    <Container textAlign='center'>{t('connectwith')}</Container>
-                    {debate.connection.google || true ?
-                      (<Button animated='vertical'>
-                        <Button.Content hidden>{t('connect')}</Button.Content>
-                        <Button.Content visible>
-                          <Icon color='blue' name='facebook' />
-                        </Button.Content>
-                      </Button>) : null
-                    } 
-                    {debate.connection.linkedin || true?
-                      (<Button animated='vertical'>
-                        <Button.Content hidden>{t('connect')}</Button.Content>
-                        <Button.Content visible>
-                          <Icon color='blue' name='linkedin' />
-                        </Button.Content>
-                      </Button>) : null
-                    } 
-                  </Segment>
+                  <Footer />
                 </Segment.Group>
               </Form>
             )}
-          </Formik>
+          </Formik>)}
         </Transition>
       </Grid.Column>
     </Grid>

@@ -107,22 +107,19 @@ export default function auth(state = initialState, action) {
     case CREATE_USER_REQUEST:
       return {
         ...state,
-        processing: true,
-        accountCreated: false,
+        sending: true,
         error: ""
       };
     case CREATE_USER_SUCCESS:
       return {
         ...state,
-        processing: false,
-        accountCreated: true,
+        sending: false,
         error: ""
       };
     case CREATE_USER_FAILURE:
       return {
         ...state,
-        processing: false,
-        accountCreated: false,
+        sending: false,
         error: action.error
       };
     default:

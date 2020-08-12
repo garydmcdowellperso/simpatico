@@ -1,7 +1,9 @@
 {
+  "already": "Already an account ?",
   "conect": "Connect",
   "connectwith": "Or connect with",
   "createaccount":  "Create an account",
+  "createmessage": "We've sent account activation instructions to the email address provided.",
   "email": "Email address",
   "firstname": "First name",
   "forgotten": "Forgotten password",
