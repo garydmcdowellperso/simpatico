@@ -6,6 +6,7 @@
   "confirmpassword": "Confirmez le mot de passe",
   "changepassword": "Changement mot de passe",
   "createaccount":  "Créer un compte",
+  "createmessage": "Nous avons envoyé un email avec des instructions pour activer votre compte.",
   "email": "Adresse email",
   "firstname": "Prénom",
   "forgotten": "Mdp oublié",

@@ -42,13 +42,6 @@ function Create(props) {
     );
   }, []);
 
-  useEffect(() => {
-    if (sending === false) {
-      // Redirect to login
-      router.push('/login/');
-    }
-  }, [sending]);
-
   const Footer = () => {
     return (
       <>
@@ -109,7 +102,7 @@ function Create(props) {
                 <Grid>
                   <Grid.Column>
                     <Message>
-                    {t('resetmessage')}
+                    {t('createmessage')}
                     </Message>
                   </Grid.Column>  
                 </Grid>
