@@ -83,7 +83,7 @@ function Home(props) {
     <div>
       <Head>
         <title>{debate.url}</title>
-        <link rel="icon" href="/static/favicon.ico" />
+        <link rel="icon" href="/home/static/favicon.ico" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         {debate && debate.metaTags && debate.metaTags.map((tag, idx) => {url
             if (tag.type === 'property') {
