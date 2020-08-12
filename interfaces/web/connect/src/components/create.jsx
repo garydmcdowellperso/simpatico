@@ -44,9 +44,43 @@ function Create(props) {
   useEffect(() => {
     if (sending === false) {
       // Redirect to login
-      router.push('/login');
+      router.push('/login/');
     }
   }, [sending]);
+
+  const Footer = () => {
+    return (
+      <Segment>
+        <Grid columns={2}>
+            <Grid.Column floated='left' width={5}>
+              <Label as='a' basic  size='mini'>
+              {t('already')} <Link href="/connect/"><a href='#'>{t('connect')}</a></Link>
+              </Label>
+            </Grid.Column>
+            <Grid.Column floated='right'  width={5}>
+              <Label as='a' basic  size='mini'>
+                <Link href="/connect/forgotten"><a href='#'>{t('forgotten')}</a></Link>
+              </Label>
+            </Grid.Column>
+        </Grid>
+      </Segment>
+      <Segment>
+        <Container textAlign='center'>{t('connectwith')}</Container>
+          <Button animated='vertical'>
+            <Button.Content hidden>{t('connect')}</Button.Content>
+            <Button.Content visible>
+              <Icon color='blue' name='facebook' />
+            </Button.Content>
+          </Button>
+          <Button animated='vertical'>
+            <Button.Content hidden>{t('connect')}</Button.Content>
+            <Button.Content visible>
+              <Icon color='blue' name='linkedin' />
+            </Button.Content>
+          </Button>
+      </Segment>
+    )
+  }
 
   return (
     <Grid
@@ -66,6 +100,20 @@ function Create(props) {
           </Grid>
         </Header>
         <Transition visible={visible} animation='fade' duration={800}>
+          {sending === false ? (
+            <Segment.Group>
+              <Segment raised >
+                <Grid>
+                  <Grid.Column>
+                    <Message>
+                    {t('resetmessage')}
+                    </Message>
+                  </Grid.Column>  
+                </Grid>
+              </Segment>
+            <Footer />
+          </Segment.Group>
+          ) : (
           <Formik
             initialValues={{ account: "", firstname: "", lastname: "", email: "", password: "" }}
             validate={values => {
@@ -188,39 +236,11 @@ function Create(props) {
                       Submit
                     </Button>
                   </Segment>
-                  <Segment>
-                    <Grid columns={2}>
-                        <Grid.Column floated='left' width={5}>
-                          <Label as='a' basic  size='mini'>
-                          {t('already')} <Link href="/connect/"><a href='#'>{t('connect')}</a></Link>
-                          </Label>
-                        </Grid.Column>
-                        <Grid.Column floated='right'  width={5}>
-                          <Label as='a' basic  size='mini'>
-                            <Link href="/connect/forgotten"><a href='#'>{t('forgotten')}</a></Link>
-                          </Label>
-                        </Grid.Column>
-                    </Grid>
-                  </Segment>
-                  <Segment>
-                    <Container textAlign='center'>{t('connectwith')}</Container>
-                      <Button animated='vertical'>
-                        <Button.Content hidden>{t('connect')}</Button.Content>
-                        <Button.Content visible>
-                          <Icon color='blue' name='facebook' />
-                        </Button.Content>
-                      </Button>
-                      <Button animated='vertical'>
-                        <Button.Content hidden>{t('connect')}</Button.Content>
-                        <Button.Content visible>
-                          <Icon color='blue' name='linkedin' />
-                        </Button.Content>
-                      </Button>
-                  </Segment>
+                  <Footer />
                 </Segment.Group>
               </Form>
             )}
-          </Formik>
+          </Formik>)}
         </Transition>
       </Grid.Column>
     </Grid>
