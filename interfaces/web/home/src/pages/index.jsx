@@ -20,6 +20,7 @@ import config from '../../config';
 
 import { setDebateRequest } from '../actions/debate';
 import { fetchPostsRequest } from '../actions/posts';
+import { fetchUserInfo } from '../actions/auth';
 
 const { withTranslation } = nextI18NextInstance;
 
@@ -36,7 +37,6 @@ function Home(props) {
 
   const dispatch = useDispatch();
 
-  console.log('debateServer', debateServer)
   if (debateServer && JSON.stringify(debateServer) !== '{}') {
     // Put the server side fetch into client side store
     dispatch(setDebateRequest(debateServer))
@@ -50,6 +50,7 @@ function Home(props) {
     if (debate && debate.trackingId) {
       init({ url: `https://${config.matomo.host}`, siteId: debate.trackingId });
     }
+    dispatch(fetchUserInfo());
   }, []);
 
   useEffect(() => {

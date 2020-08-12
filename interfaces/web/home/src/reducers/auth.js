@@ -11,6 +11,7 @@ const initialState = {
   firstName: "",
   lastName: "",
   email: "",
+  avatar: "",
   id: null,
   isValidToken: null,
   token: "",
@@ -64,15 +65,17 @@ export default function auth(state = initialState, action) {
         id: null
       };
     case FETCH_USER_INFO_REQUEST_SUCCESS:
+      // Parse out json and update the store
       return {
         ...state,
         processing: false,
         error: "",
         firstName: action.json["first-name"],
         lastName: action.json["last-name"],
+        accountId: action.json.accountId,
         email: action.json.email,
-        id: action.json.id,
-        accountId: action.json.accountId
+        avatar: action.json.avatar,
+        id: action.json.id
       };
     case FETCH_USER_INFO_REQUEST_FAILURE:
       return {

@@ -59,7 +59,6 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const [shareOpen, setShareOpen] = useState(false);
-  const [firstNameDisplay, setFirstNameDisplay] = useState();
   const classes = useStyles();
 
   const { header, title, selected, t } = props;
@@ -68,54 +67,9 @@ function Header(props) {
     setShareOpen(false);
   }
 
-
   const dispatch = useDispatch();
-  let firstNameLocalStorage;
 
-  const { firstName, lastName, id, isValidToken, token, accountId } = useSelector(state => state.auth);
-
-  if (typeof window !== 'undefined') {
-    // Server side rendering protection
-    firstNameLocalStorage = localStorage.getItem("firstName");
-  }
-  // First time effect
-  useEffect(() => {
-    // Pull info from local storage if available
-    if (firstNameLocalStorage) {
-      setFirstNameDisplay(firstNameLocalStorage);
-    }
-  }, []);
-
-
-  // First time effect and when isValidToken changes
-  useEffect(() => {
-   if (isValidToken) {
-     // So the token is present and valid, do I have the user details?
-     if (!firstNameLocalStorage) {
-       dispatch(fetchUserInfo());
-     }
-   }
-
-   // Sorry token no longer valid, get rid of display name for login
-   if (isValidToken) {
-     if (firstNameLocalStorage) {
-      setFirstNameDisplay();
-     }
-   }
-
-   if (isValidToken) {
-      localStorage.setItem("token", token);
-   }
-  }, [isValidToken]);
-
-  useEffect(() => {
-    // Set localstorage for other apps but also update our local state to force render
-    localStorage.setItem("firstName", firstName);
-    localStorage.setItem("lastName", lastName);
-    localStorage.setItem("uid", id);
-    localStorage.setItem("accountId", accountId);
-    setFirstNameDisplay(firstName);
-  }, [firstName]);
+  const { firstName } = useSelector(state => state.auth);
 
   return (
     <>
@@ -144,7 +98,7 @@ function Header(props) {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        {!firstNameDisplay ?
+        {!firstName ?
           <Button
             variant="outlined"
             size="small"
@@ -154,7 +108,7 @@ function Header(props) {
           >
             {t('signin')}
           </Button>
-        : <UserMenu firstNameDisplay={firstNameDisplay}/>}
+        : <UserMenu firstNameDisplay={firstName}/>}
       </Toolbar>
       <Toolbar
         component="nav"
