@@ -27,7 +27,6 @@ function Login(props) {
     setVisible(true)
   }, []);
 
-  console.log('debate', debate)
   useEffect(() => {
     if (token) {
       // Cookie automatically set by server
@@ -37,7 +36,7 @@ function Login(props) {
         window.location.href = `/${router.query.next}`;
       } else {
         // Redirect to home
-        window.location.href = '/';
+        window.location.href = '/home/';
       }
     }
   }, [token]);
