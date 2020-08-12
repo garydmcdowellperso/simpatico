@@ -24,7 +24,7 @@ const start = () => {
 
       server.use(nextI18NextMiddleware(nextI18next));
 
-      server.use("/static", express.static("static"));
+      server.use("/home/static", express.static("static"));
 
       // healthcheck route for k8s
       server.get("/v1/ping", (req, res) => {
