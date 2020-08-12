@@ -1,6 +1,6 @@
 import NextI18Next from 'next-i18next';
-import translationEN from './static/locales/en/translation.json';
-import translationFR from './static/locales/fr/translation.json';
+import translationEN from './static/locales/en/common.json';
+import translationFR from './static/locales/fr/common.json';
 
 import config from './config';
 
