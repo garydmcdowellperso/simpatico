@@ -671,7 +671,7 @@ const routes = async fastify => {
                     path: "/",
                     domain: config.default.simpatico.hostname
                 });
-                reply.redirect(`https://${debate.url}`);
+                reply.redirect(`https://${debate.url}/home/`);
             }
         }
     );
