@@ -17,9 +17,8 @@ const detectorOptions = {
 export default new NextI18Next({
   otherLanguages: languages,
   fallbackLng: fallbackLanguage,
-  defaultNS: 'common',
-  detection: detectorOptions,
-    
+  defaultNS: 'home',
+  detection: detectorOptions
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
