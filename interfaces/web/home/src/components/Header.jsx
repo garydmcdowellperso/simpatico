@@ -19,7 +19,7 @@ const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
-console.log('getCurrentLang = ()', getCurrentLang = ())
+console.log('getCurrentLang = ()', getCurrentLang())
 const useStyles = makeStyles(theme => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`
