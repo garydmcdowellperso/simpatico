@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import flowRight from 'lodash/flowRight';
 import { useRouter } from 'next/router'
 
-import { createAccountRequest } from "../actions/auth";
+import { createAccountRequest, forgottenPasswordReset } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
 
 const { withTranslation } = nextI18NextInstance;
