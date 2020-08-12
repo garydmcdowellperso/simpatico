@@ -11,6 +11,7 @@ module.exports = withTM(
       return config;
     },
     assetPrefix: "/home",
+    target: 'serverless',
     publicRuntimeConfig: {
       localeSubpaths:
         typeof process.env.LOCALE_SUBPATHS === "string"
