@@ -65,5 +65,5 @@ Sidebar.propTypes = {
 };
 
 export default flowRight(
-  withTranslation(['common'])
+  withTranslation(['home'])
 )(Sidebar);

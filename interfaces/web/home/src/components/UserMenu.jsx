@@ -100,5 +100,5 @@ function UserMenu({t, firstNameDisplay}) {
 }
 
 export default flowRight(
-  withTranslation(['common'])
+  withTranslation(['home'])
 )(UserMenu);

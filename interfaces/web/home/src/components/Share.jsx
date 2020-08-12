@@ -166,5 +166,5 @@ function Share(props) {
 }
 
 export default flowRight(
-    withTranslation(['common'])
+    withTranslation(['home'])
 )(Share);

@@ -124,6 +124,6 @@ function Home(props) {
 }
 
 export default flowRight(
-  withTranslation(['common'])
+  withTranslation(['home'])
 )(Home);
 
