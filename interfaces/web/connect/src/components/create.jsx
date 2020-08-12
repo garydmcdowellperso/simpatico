@@ -50,6 +50,7 @@ function Create(props) {
 
   const Footer = () => {
     return (
+      <>
       <Segment>
         <Grid columns={2}>
             <Grid.Column floated='left' width={5}>
@@ -79,6 +80,7 @@ function Create(props) {
             </Button.Content>
           </Button>
       </Segment>
+      </>
     )
   }
 
