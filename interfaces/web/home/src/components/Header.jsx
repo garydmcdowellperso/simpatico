@@ -136,5 +136,5 @@ Header.propTypes = {
 };
 
 export default flowRight(
-  withTranslation(['common'])
+  withTranslation(['home'])
 )(Header);
