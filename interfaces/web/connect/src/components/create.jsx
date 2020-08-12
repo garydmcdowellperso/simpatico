@@ -13,8 +13,9 @@ import {
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import Link from 'next/link'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux'
 import flowRight from 'lodash/flowRight';
+import { useRouter } from 'next/router'
 
 import { createAccountRequest } from "../actions/auth";
 import nextI18NextInstance from '../../i18n';
@@ -25,12 +26,27 @@ function Create(props) {
   const { t } = props;
   const [visible, setVisible] = useState(false);
 
+  const { sending } = useSelector(state => state.auth);
+
+  const dispatch = useDispatch();
+  const router = useRouter()
+
   useEffect(() => {
     // Animations
     setVisible(true)
+
+    // Resends sending to null
+    dispatch(
+      forgottenPasswordReset()
+    );
   }, []);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (sending === false) {
+      // Redirect to login
+      router.push('/login');
+    }
+  }, [sending]);
 
   return (
     <Grid

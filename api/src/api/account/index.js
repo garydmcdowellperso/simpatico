@@ -71,7 +71,7 @@ const routes = async fastify => {
                 email: {
                     to: request.body.email,
                     from: "noreply@simpatico.cloud",
-                    subject: "󾟙 Activate your account"
+                    subject: "Activate your account"
                 },
                 substitutions: {
                     firstname: request.body.firstname,
