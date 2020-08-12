@@ -19,13 +19,7 @@ export default new NextI18Next({
   otherLanguages: languages,
   fallbackLng: fallbackLanguage,
   defaultNS: 'common',
-  detection: detectorOptions,
-  localePath: path.resolve('./static/locales'),
-  localeSubpaths: {
-    de: 'en',
-    fr: 'fr',
-    en: 'en'
-  }
+  detection: detectorOptions
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'

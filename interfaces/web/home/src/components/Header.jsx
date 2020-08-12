@@ -8,18 +8,18 @@ import SearchIcon from "@material-ui/icons/Search";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Typography from "@material-ui/core/Typography";
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import flowRight from 'lodash/flowRight';
 
 import nextI18NextInstance from '../../i18n';
 import UserMenu from "./UserMenu";
 import Share from "./Share";
-import { fetchUserInfo } from "../actions/auth";
 
 const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
+console.log('getCurrentLang = ()', getCurrentLang = ())
 const useStyles = makeStyles(theme => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`
@@ -66,8 +66,6 @@ function Header(props) {
   function handleShareClose() {
     setShareOpen(false);
   }
-
-  const dispatch = useDispatch();
 
   const { firstName } = useSelector(state => state.auth);
 
