@@ -10,7 +10,7 @@ module.exports = withTM(
       });
       return config;
     },
-    assetPrefix: "/home",
+    // assetPrefix: "/home",
     publicRuntimeConfig: {
       localeSubpaths:
         typeof process.env.LOCALE_SUBPATHS === "string"

@@ -6,7 +6,7 @@
     "start": "babel-node ./index.js",
     "start:dev": "nodemon --exec babel-node ./index.js",
     "start:prod": "NODE_ENV=production babel-node ./index.js",
-    "build": "next build src",
+    "build": "next build",
     "test": "jest",
     "lint": "eslint .",
     "format": "eslint --fix . && prettier --write '**/*.js' '**/*.jsx' && echo 'format done.'"

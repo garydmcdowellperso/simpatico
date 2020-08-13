@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Head from 'next/head'
+import PropTypes from 'prop-types'
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { init } from "@socialgouv/matomo-next";
-import flowRight from 'lodash/flowRight';
 
 
 import Header from "../components/Header";
@@ -123,7 +123,13 @@ function Home(props) {
   );
 }
 
-export default flowRight(
-  withTranslation(['home'])
-)(Home);
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['home'],
+})
+
+Home.propTypes = {
+  t: PropTypes.func.isRequired,
+}
+
+export default withTranslation(['home'])(Home);
 

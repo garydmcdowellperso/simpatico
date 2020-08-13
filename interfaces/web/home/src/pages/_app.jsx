@@ -47,7 +47,139 @@ class Simpatico extends App {
         const debate = await res.json()
         return { pageProps, debate };
       } else {
-        return { pageProps };
+        const debate = {
+          "_id" : "5f314c57599e7b54c7675890",
+          "id" : 9,
+          "name" : "gary",
+          "url" : "gary.simpatico.cloud",
+          "debateType" : "public",
+          "languages" : {
+              "english" : true,
+              "french" : true,
+              "spanish" : true
+          },
+          "header" : {
+              "share" : true,
+              "sections" : [ 
+                  {
+                      "page" : 1,
+                      "languages" : {
+                          "en" : "Here1",
+                          "fr" : "Here1",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }
+              ]
+          },
+          "overview" : {
+              "title" : {
+                  "en" : "English Title",
+                  "fr" : "Titre en Francais",
+                  "es" : "Spanish"
+              },
+              "description" : {
+                  "en" : "English Descripton",
+                  "fr" : "Description en Francais",
+                  "es" : "Spanish"
+              },
+              "linkText" : {
+                  "en" : "Click me",
+                  "fr" : "Voir plus",
+                  "es" : "Spanish"
+              },
+              "url" : "https://source.unsplash.com/random"
+          },
+          "themes" : [],
+          "footer" : {
+              "sections" : [ 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }, 
+                  {
+                      "languages" : {
+                          "en" : "",
+                          "fr" : "",
+                          "es" : ""
+                      }
+                  }
+              ]
+          },
+          "metaTags" : [],
+          "connection" : {
+              "firstname" : true,
+              "lastname" : true,
+              "username" : true,
+              "email" : true,
+              "password" : true,
+              "google" : false,
+              "linkedin" : false,
+              "additional_fields" : []
+          },
+          "deleted" : false,
+          "accountId" : 36,
+          "trackingId" : 15,
+          "sidebar" : {
+              "about" : {
+                  "en" : "This is my about info",
+                  "fr" : "This is my about info",
+                  "es" : "Espagnole"
+              },
+              "social" : [ 
+                  {
+                      "name" : "",
+                      "url" : ""
+                  }, 
+                  {
+                      "name" : "",
+                      "url" : ""
+                  }, 
+                  {
+                      "name" : "",
+                      "url" : ""
+                  }
+              ]
+          }
+      };
+        return { pageProps, debate };
       }
     } else {
       return { pageProps };
@@ -77,6 +209,5 @@ const { appWithTranslation } = i18n;
 
 export default flowRight(
   withRedux(makeStore),
-  appWithTranslation,
-  withTranslation([`common`])
+  appWithTranslation
 )(Simpatico);
