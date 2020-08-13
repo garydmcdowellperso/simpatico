@@ -33,7 +33,10 @@ const start = () => {
       // Proxy api calls
       server.use("/api", proxy(apiHost));
 
-      server.get("*", (req, res) => handle(req, res));
+      server.get("*", (req, res) => {
+        console.log('req.i18n',  req.i18n)
+        handle(req, res)
+      });
 
       server.listen(serverPort, err => {
         if (err) throw err;

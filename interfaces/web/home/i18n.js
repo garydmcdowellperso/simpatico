@@ -20,8 +20,7 @@ export default new NextI18Next({
   defaultNS: 'home',
   detection: detectorOptions,
   debug: true,
-  useSuspense: false,
-  initImmediate: true
+  useSuspense: false
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
