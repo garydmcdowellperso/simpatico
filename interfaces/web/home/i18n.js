@@ -14,14 +14,18 @@ const detectorOptions = {
   caches: []
 };
 
-export default new NextI18Next({
+const myinst = new NextI18Next({
   otherLanguages: languages,
   fallbackLng: fallbackLanguage,
   defaultNS: 'home',
   detection: detectorOptions,
   debug: true,
-  useSuspense: false
+  useSuspense: false,
+  preload: ['fr']
 });
+export default myinst;
+
+console.log('NextI18Next',myinst)
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
 // https://github.com/isaachinman/next-i18next/issues/374
