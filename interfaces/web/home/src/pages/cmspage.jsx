@@ -78,6 +78,7 @@ function CMSPage(props) {
     <div>
       <Head>
         <title>{debate.url}</title>
+        <link rel="icon" href="/home/static/favicon.ico" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <>

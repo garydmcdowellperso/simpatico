@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from 'next/link'
+import { Transition } from 'semantic-ui-react'
 
 import nextI18NextInstance from '../../i18n';
 
@@ -41,31 +42,39 @@ const useStyles = makeStyles(theme => ({
 
 export default function Overview(props) {
   const classes = useStyles();
+  const [visible, setVisible] = useState(false);
 
   const overview = props.data;
 
+  useEffect(() => {
+    // Animations
+    setVisible(true)
+  }, []);
+
   return (
-    <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${overview.url})` }}>
-      {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={overview.url} alt={overview.title} />}
-      <div className={classes.overlay} />
-      <Grid container>
-        <Grid item md={6}>
-          <div className={classes.mainFeaturedPostContent}>
-            <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {overview.title[getCurrentLang()]}
-            </Typography>
-            <Typography variant="h5" color="inherit" paragraph>
-              {overview.description[getCurrentLang()]}
-            </Typography>
-            <Link 
-              href={{ pathname: 'cmspage', query: { page: overview.page } }}>
-              <a>{overview.linkText[getCurrentLang()]}</a>
-            </Link>
-          </div>
+    <Transition visible={visible} animation='fade' duration={800}>
+      <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${overview.url})` }}>
+        {/* Increase the priority of the hero background image */}
+        {<img style={{ display: 'none' }} src={overview.url} alt={overview.title} />}
+        <div className={classes.overlay} />
+        <Grid container>
+          <Grid item md={6}>
+            <div className={classes.mainFeaturedPostContent}>
+              <Typography component="h1" variant="h3" color="inherit" gutterBottom>
+                {overview.title[getCurrentLang()]}
+              </Typography>
+              <Typography variant="h5" color="inherit" paragraph>
+                {overview.description[getCurrentLang()]}
+              </Typography>
+              <Link 
+                href={{ pathname: 'cmspage', query: { page: overview.page } }}>
+                <a>{overview.linkText[getCurrentLang()]}</a>
+              </Link>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Transition>
   );
 }
 

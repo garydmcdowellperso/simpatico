@@ -12,7 +12,7 @@ const {
 
 const start = () => {
   const dev = process.env.NODE_ENV !== "production";
-  const app = next({ dev, dir: "./src" });
+  const app = next({ dev, dir: "./" });
   const handle = app.getRequestHandler();
 
   app
