@@ -13,8 +13,6 @@ import '../styles.css'
 import i18n from '../../i18n';
 import config from '../../config';
 
-const { withTranslation } = i18n;
-
 const sagaMiddleware = createSagaMiddleware();
 
 let store;

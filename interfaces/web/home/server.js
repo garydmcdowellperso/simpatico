@@ -2,10 +2,8 @@
 import express from "express";
 import proxy from "express-http-proxy";
 import next from "next";
-import nextI18NextMiddleware from "next-i18next/middleware";
 
 import config from "./config";
-import nextI18next from "./i18n";
 
 const {
   server: { port: serverPort, host: serverHost },
@@ -22,8 +20,6 @@ const start = () => {
     .then(() => {
       const server = express();
 
-      server.use(nextI18NextMiddleware(nextI18next));
-
       server.use("/static", express.static("static"));
 
       // healthcheck route for k8s
@@ -34,7 +30,6 @@ const start = () => {
       server.use("/api", proxy(apiHost));
 
       server.get("*", (req, res) => {
-        console.log('req.i18n',  req.i18n)
         handle(req, res)
       });
 

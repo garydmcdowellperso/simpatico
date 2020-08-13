@@ -8,14 +8,13 @@ import Container from "@material-ui/core/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { init } from "@socialgouv/matomo-next";
 
-
 import Header from "../components/Header";
 import Overview from "../components/Overview";
 import Theme from "../components/Theme";
 import Main from "../components/Main";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import nextI18NextInstance from '../../i18n';
+import { withTranslation } from '../../i18n';
 import config from '../../config';
 
 import { setDebateRequest } from '../actions/debate';
@@ -25,6 +24,7 @@ import { fetchUserInfo } from '../actions/auth';
 const { withTranslation } = nextI18NextInstance;
 
 const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
+console.log('getCurrentLang', getCurrentLang())
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -131,5 +131,5 @@ Home.propTypes = {
   t: PropTypes.func.isRequired,
 }
 
-export default withTranslation(['home'])(Home);
+export default withTranslation('home')(Home);
 
