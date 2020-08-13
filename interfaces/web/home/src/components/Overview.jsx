@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from 'next/link'
-import { Transition } from 'semantic-ui-react'
+import Fade from '@material-ui/core/Fade';
 
 import nextI18NextInstance from '../../i18n';
 
@@ -52,7 +52,7 @@ export default function Overview(props) {
   }, []);
 
   return (
-    <Transition visible={visible} animation='fade' duration={800}>
+	  <Fade in={visible} style={{ transitionDelay: visible? '1000ms' : '0ms' }}>
       <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${overview.url})` }}>
         {/* Increase the priority of the hero background image */}
         {<img style={{ display: 'none' }} src={overview.url} alt={overview.title} />}
@@ -74,7 +74,7 @@ export default function Overview(props) {
           </Grid>
         </Grid>
       </Paper>
-    </Transition>
+    </Fade>
   );
 }
 
