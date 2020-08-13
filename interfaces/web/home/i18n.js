@@ -18,7 +18,9 @@ export default new NextI18Next({
   otherLanguages: languages,
   fallbackLng: fallbackLanguage,
   defaultNS: 'home',
-  detection: detectorOptions
+  detection: detectorOptions,
+  debug: true,
+  ignoreRoutes: []
 });
 
 // known bug showing 'react-i18next:: i18n.languages were undefined or empty undefined'
