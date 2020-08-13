@@ -14,7 +14,7 @@ import Theme from "../components/Theme";
 import Main from "../components/Main";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { withTranslation } from '../../i18n';
+import nextI18NextInstance from '../../i18n';
 import config from '../../config';
 
 import { setDebateRequest } from '../actions/debate';
