@@ -36,6 +36,7 @@ import {
   UPDATE_GENERAL_INFO_SUCCESS,
   UPDATE_GENERAL_INFO_FAILURE,
   RESET_UPDATING,
+  RESET_ERROR,
 } from "../actions/debate";
 
 const initialState = {
@@ -49,11 +50,16 @@ const initialState = {
 
 export default function debate(state = initialState, action) {
   switch (action.type) {
-  case RESET_UPDATING:
-    return {
-      ...state,
-      updating: null
-    };
+    case RESET_UPDATING:
+      return {
+        ...state,
+        updating: null
+      };
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: null
+      };  
     case DELETE_DEBATE_REQUEST:
       return {
         ...state,

@@ -14,6 +14,15 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BuildIcon from '@material-ui/icons/Build';
 import ReactCountryFlag from "react-country-flag"
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 import { fetchAllModulesForDebateRequest } from "../../../actions/modules"
 import { updateLandingPageThemesRequest, resetUpdating } from "../../../actions/debate";
@@ -32,6 +41,10 @@ import {
 } from "shards-react";
 
 const getCurrentLang = () =>  'en';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles({
   card: {
@@ -732,6 +745,8 @@ function NewTheme(props) {
 export default function Themes(props) {
   const [themes, setThemes] = useState([])
   const [changes, setChanges] = useState(0)
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { debate } = props;
 
@@ -765,6 +780,28 @@ export default function Themes(props) {
 
   return (
     <>
+    {error ? (
+    <Dialog
+        fullScreen={fullScreen}
+        TransitionComponent={Transition}
+        open={true}
+        onClose={() => {
+          dispatch(resetError());
+        }}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">{"An error has occured"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            We're very sorry but an unexpected error has occured, our geeks have been notified and will get right on  this
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Hmmph, Ok
+          </Button>
+        </DialogActions>
+    </Dialog>) : null}
     <Row>
       <Col lg="1" md="1" sm="1" className="mb-1" />
       <Col lg="10" md="10" sm="10" className="mb-10">
