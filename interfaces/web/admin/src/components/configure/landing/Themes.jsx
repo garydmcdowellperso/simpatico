@@ -776,7 +776,7 @@ export default function Themes(props) {
     }
   }, [updating]);
   
-  const { error, updating, modules } = useSelector(state => state.debate);
+  const { error, updating } = useSelector(state => state.debate);
   const { modules } = useSelector(state => state.modules);
 
   console.log('error', error)
