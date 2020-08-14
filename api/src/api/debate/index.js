@@ -12,7 +12,7 @@ const {
     debateSchema 
 } = require('../schemas/debate');
 
-import ModulesController from "../../services/modules/lib/controllers/ModulesController";
+import ModulesController from "../../services/modules/lib/controllers/ModuleController";
 import DebatesController from "../../services/debates/lib/controllers/DebatesController";
 import StatsController from "../../services/stats/lib/controllers/StatsController";
 
@@ -454,7 +454,7 @@ const routes = async fastify => {
                 module.inuse = True;
                 await ModulesController.updateModule(module);
             })
-            
+
             return response;
         }
     );
