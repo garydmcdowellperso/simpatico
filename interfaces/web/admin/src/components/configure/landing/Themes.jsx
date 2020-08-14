@@ -778,6 +778,8 @@ export default function Themes(props) {
   
   const { error, updating, modules } = useSelector(state => state.modules);
 
+  console.log('error', error)
+  console.log('updating', updating)
   return (
     <>
     {error ? (

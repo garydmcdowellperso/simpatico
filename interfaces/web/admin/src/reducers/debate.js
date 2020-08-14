@@ -195,6 +195,14 @@ export default function debate(state = initialState, action) {
         error: ""
       };
     case UPDATE_LANDING_PAGE_THEMES_SUCCESS:
+      if (action && action.json && action.json.statusCode !== 200) {
+        return {
+          ...state,
+          updating: false,
+          error: action.json.statusText
+        };
+      }
+
       // Parse out json and update the store
       return {
         ...state,
