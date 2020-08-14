@@ -3,6 +3,7 @@ api/coverage
 api/node_modules
 api/junit.xml
 api/.DS_Store
+api/dist
 
 interfaces/web/connect/node_modules
 interfaces/web/connect/src/.next
