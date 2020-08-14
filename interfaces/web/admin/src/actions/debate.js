@@ -47,7 +47,7 @@ export const UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
 export const UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
 
 export const RESET_UPDATING = "RESET_UPDATING";
-export const RESET_UPDATING = "RESET_ERROR";
+export const RESET_ERROR = "RESET_ERROR";
 
 export function resetError() {
   return {
