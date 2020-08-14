@@ -46,6 +46,14 @@ export const UPDATE_GENERAL_INFO_REQUEST = "UPDATE_GENERAL_INFO_REQUEST";
 export const UPDATE_GENERAL_INFO_SUCCESS = "UPDATE_GENERAL_INFO_SUCCESS";
 export const UPDATE_GENERAL_INFO_FAILURE = "UPDATE_GENERAL_INFO_FAILURE";
 
+export const RESET_UPDATING = "RESET_UPDATING";
+
+export function resetUpdating() {
+  return {
+    type: RESET_UPDATING
+  };
+}
+
 export function deleteDebateRequest(debateId) {
   return {
     type: DELETE_DEBATE_REQUEST,

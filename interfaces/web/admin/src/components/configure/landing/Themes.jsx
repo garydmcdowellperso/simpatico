@@ -16,7 +16,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import ReactCountryFlag from "react-country-flag"
 
 import { fetchAllModulesForDebateRequest } from "../../../actions/modules"
-import { updateLandingPageThemesRequest } from "../../../actions/debate";
+import { updateLandingPageThemesRequest, resetUpdating } from "../../../actions/debate";
 
 import { 
   Button as ShardButton,
@@ -739,8 +739,8 @@ export default function Themes(props) {
 
   useEffect(() => { // Fire once, get pages for debate
     dispatch(fetchAllModulesForDebateRequest(debate.id)); //Don't need ID
+    dispatch(resetUpdating());
   }, []);
-
 
   function handleUpdate(themes) {
     setThemes(themes);    
@@ -754,10 +754,14 @@ export default function Themes(props) {
     setThemes(debate.themes);    
   }, [debate]);
 
-
-  const error = useSelector(state => state.modules.error);
-  const processing = useSelector(state => state.modules.processing);
-  const modules = useSelector(state => state.modules.modules);
+  useEffect(() => {
+    if (updating === false) {
+      setChanges(0);    
+      dispatch(resetUpdating());
+    }
+  }, [updating]);
+  
+  const { error, updating, modules } = useSelector(state => state.modules);
 
   return (
     <>
@@ -782,7 +786,7 @@ export default function Themes(props) {
               onClick={() => {
                 dispatch(updateLandingPageThemesRequest(debate.id, themes));
               }}
-              >Update Modules ({changes})</ShardButton>) : null }
+              >Update Themes ({changes})</ShardButton>) : null }
         </Col>
     </Row>
     </>

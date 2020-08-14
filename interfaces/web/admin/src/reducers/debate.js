@@ -35,6 +35,7 @@ import {
   UPDATE_GENERAL_INFO_REQUEST,
   UPDATE_GENERAL_INFO_SUCCESS,
   UPDATE_GENERAL_INFO_FAILURE,
+  RESET_UPDATING,
 } from "../actions/debate";
 
 const initialState = {
@@ -42,11 +43,17 @@ const initialState = {
   processing: false,
   error: "",
   debate: null,
-  created: false
+  created: false,
+  updating: false
 };
 
 export default function debate(state = initialState, action) {
   switch (action.type) {
+  case RESET_UPDATING:
+    return {
+      ...state,
+      updating: null
+    };
     case DELETE_DEBATE_REQUEST:
       return {
         ...state,
@@ -178,21 +185,21 @@ export default function debate(state = initialState, action) {
     case UPDATE_LANDING_PAGE_THEMES_REQUEST:
       return {
         ...state,
-        processing: true,
+        updating: true,
         error: ""
       };
     case UPDATE_LANDING_PAGE_THEMES_SUCCESS:
       // Parse out json and update the store
       return {
         ...state,
-        processing: false,
+        updating: false,
         error: "",
         debate: action.debate
       };
     case UPDATE_LANDING_PAGE_THEMES_FAILURE:
       return {
         ...state,
-        processing: false,
+        updating: false,
         error: action.error,
         debate: null
       };
