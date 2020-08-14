@@ -195,6 +195,7 @@ export default function debate(state = initialState, action) {
         error: ""
       };
     case UPDATE_LANDING_PAGE_THEMES_SUCCESS:
+      console.log('here', action)
       if (action && action.json && action.json.statusCode !== 200) {
         return {
           ...state,
@@ -211,6 +212,8 @@ export default function debate(state = initialState, action) {
         debate: action.debate
       };
     case UPDATE_LANDING_PAGE_THEMES_FAILURE:
+      console.log('here', action)
+
       return {
         ...state,
         updating: false,
