@@ -12,6 +12,7 @@ const {
     debateSchema 
 } = require('../schemas/debate');
 
+import ModulesController from "../../services/modules/lib/controllers/ModulesController";
 import DebatesController from "../../services/debates/lib/controllers/DebatesController";
 import StatsController from "../../services/stats/lib/controllers/StatsController";
 
@@ -369,6 +370,7 @@ const routes = async fastify => {
         "/updateLandingPageThemes",
         {
             config,
+            preValidation: [fastify.authenticateAdmin],
             schema: {
                 description: "updates the themes for a debate landing page",
                 tags: ["api"],
@@ -421,10 +423,38 @@ const routes = async fastify => {
         async request => {
             fastify.log.info(request.body, "[src#api#updateLandingPageThemes] Entering");
 
+            const debateInputs = {
+                id: debateID
+            }
+
+            const debate = await DebatesController.fetchDebateByID(debateInputs);
+            if (!debate) {
+                throw new Error("Debate not found");
+            }
+
+            if (debate.accountId != request.user.accountId) {
+                throw new Error("Unauthorised");
+            }
+
             const inputs = { ...request.body };
             // Update the debate landing page themes
             const response = await DebatesController.updateLandingPageThemes(inputs);
 
+            // Tell the modules they are in use
+            request.body.themes.map(async (theme) => {
+                const moduleInputs = {
+                    id: theme.module
+                }
+                const module = await ModulesController.fetchModule(inputs);
+
+                if (!module) {
+                    throw new Error("Module not found");
+                }
+
+                module.inuse = True;
+                await ModulesController.updateModule(module);
+            })
+            
             return response;
         }
     );
