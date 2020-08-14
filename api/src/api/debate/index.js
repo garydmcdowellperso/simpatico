@@ -446,7 +446,7 @@ const routes = async fastify => {
                 const moduleInputs = {
                     id: theme.module
                 }
-                const module = await ModulesController.fetchModule(inputs);
+                const module = await ModulesController.fetchModule(moduleInputs);
 
                 if (!module) {
                     throw new Error("Module not found");
