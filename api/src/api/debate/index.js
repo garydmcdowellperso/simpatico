@@ -442,6 +442,7 @@ const routes = async fastify => {
 
             // Tell the modules they are in use
             request.body.themes.map(async (theme) => {
+                console.log('theme', theme)
                 const moduleInputs = {
                     id: theme.module
                 }
