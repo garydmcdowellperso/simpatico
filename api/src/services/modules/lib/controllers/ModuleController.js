@@ -49,7 +49,7 @@ async function createModule(inputs) {
   const { moduleType, title, debateId, help, posts, contributons, participants, inuse, deleted, name } = inputs;
 
   // Treatment
-  const response = await CreateModule(moduleType, title, debateId, help, inuse, posts, contributons, participants, name, {
+  const response = await CreateModule(moduleType, title, debateId, help, inuse, posts, contributons, participants, deleted, name, {
     moduleRepository
   });
 
