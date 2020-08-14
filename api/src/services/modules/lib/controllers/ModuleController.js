@@ -46,10 +46,10 @@ async function fetchModule(inputs) {
 
 async function createModule(inputs) {
   // Inputs
-  const { moduleType, title, debateId, help, posts, contributons, participants, inuse, deleted } = inputs;
+  const { moduleType, title, debateId, help, posts, contributons, participants, inuse, deleted, name } = inputs;
 
   // Treatment
-  const response = await CreateModule(moduleType, title, debateId, help, false, 0, 0, 0, false, {
+  const response = await CreateModule(moduleType, title, debateId, help, inuse, posts, contributons, participants, name, {
     moduleRepository
   });
 

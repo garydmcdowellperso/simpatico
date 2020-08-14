@@ -1,5 +1,4 @@
 import Module from '../entities/Module';
-
 async function CreateModule(
   moduleType,
   title,
