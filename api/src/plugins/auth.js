@@ -18,7 +18,7 @@ const authPlugin = fp(async fastify => {
       const token = request.cookies.simpatico;
       const decoded = jwt.verify(token, config.jwt.secret);
 
-      if (!decoded.normalize.includes('admiinstrator')) {
+      if (!decoded.role.includes('administrator')) {
         reply.code(401).send('Unauthorised')
       } else {
         request.user = decoded;

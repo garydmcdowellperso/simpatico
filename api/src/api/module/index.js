@@ -82,6 +82,7 @@ const routes = async fastify => {
             if (!debate) {
                 throw new Error("Debate not found");
             }
+	    console.log('request.user', request.user)
             if (debate.accountId != request.user.accountId) {
                 throw new Error("Unauthorised");
             }
