@@ -452,7 +452,7 @@ const routes = async fastify => {
                     throw new Error("Module not found");
                 }
 
-                module.inuse = True;
+                module.inuse = true;
                 await ModulesController.updateModule(module);
             })
 
