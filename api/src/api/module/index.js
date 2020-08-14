@@ -82,11 +82,11 @@ const routes = async fastify => {
                 id: request.body.debateId
             };
 
-            const debate = DebatesController.fetchDebateByID(debateInputs);
+            const debate = await DebatesController.fetchDebateByID(debateInputs);
             if (!debate) {
                 throw new Error("Debate not found");
             }
-	    console.log('request.user', request.user)
+	        console.log('request.user', request.user)
             console.log('debate', debate)
             if (debate.accountId != request.user.accountId) {
                 throw new Error("Unauthorised");
