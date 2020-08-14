@@ -13,12 +13,13 @@ export const callApi = (route, method, body, options) => {
 
   return fetch(`/api/${route}`, options).then(response => {
     if (!response.ok) {
+      console.log('response', response)
       if (response.status === 401 || response.status === 403) {
         // Log the user out
         window.location.href = '/admin/'
       }
 
-      if (response.status === 400 || response.status === 502 || response.status === 500) {
+      if (response.status === 400) {
         return response.json().then(error => {
           throw new Error(error.response);
         });
