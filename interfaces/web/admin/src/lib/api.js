@@ -18,7 +18,7 @@ export const callApi = (route, method, body, options) => {
         window.location.href = '/admin/'
       }
 
-      if (response.status === 400) {
+      if (response.status === 400 || response.status === 502 || response.status === 500) {
         return response.json().then(error => {
           throw new Error(error.response);
         });
