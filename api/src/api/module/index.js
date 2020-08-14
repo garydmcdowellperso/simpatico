@@ -12,6 +12,7 @@ const routes = async fastify => {
         "/createModule",
         {
             config,
+            preValidation: [fastify.authenticateAdmin],
             schema: {
                 description: "creates a new module",
                 tags: ["api"],
@@ -76,6 +77,11 @@ const routes = async fastify => {
             fastify.log.info(request.body, "[src#api#createModule] Entering");
 
             const inputs = { ...request.body };
+            inputs.posts = 0;
+            inputs.contributons = 0;
+            inputs.participants = 0;
+            inputs.inuse = false;
+            inputs.deleted = false;
 
             // Create the module
             const response = await ModuleController.createModule(inputs);

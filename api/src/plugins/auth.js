@@ -13,6 +13,20 @@ const authPlugin = fp(async fastify => {
       reply.send(err);
     }
   });
+  fastify.decorate("authenticateAdmin", async (request, reply) => {
+    try {
+      const token = request.cookies.simpatico;
+      const decoded = jwt.verify(token, config.jwt.secret);
+
+      if (!decoded.normalize.includes('admiinstrator')) {
+        reply.code(401).send('Unauthorised')
+      } else {
+        request.user = decoded;
+      }
+    } catch (err) {
+      reply.send(err);
+    }
+  });
   fastify.decorate("authorise", async (request, reply) => {
     // Check query params against token
     if (request.query) {
