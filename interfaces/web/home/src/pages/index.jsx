@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 function Home(props) {
   const { t, debateServer } = props;
 
+  console.log('debateServer',  debateServer)
   const dispatch = useDispatch();
 
   if (debateServer && JSON.stringify(debateServer) !== '{}') {
