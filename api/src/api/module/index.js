@@ -1,6 +1,7 @@
 const config = require('../../config');
 
 import ModuleController from "../../services/modules/lib/controllers/ModuleController";
+import DebatesController from "../../services/debates/lib/controllers/DebatesController";
 
 /**
  * Defines all the routes
@@ -75,6 +76,15 @@ const routes = async fastify => {
         },
         async request => {
             fastify.log.info(request.body, "[src#api#createModule] Entering");
+
+            // Check you have access to this debate
+            const debate = DebatesController.fetchDebateByID(request.body.debateId);
+            if (!debate) {
+                throw new Error("Debate not found");
+            }
+            if (debate.accountId != request.user.accountId) {
+                throw new Error("Unauthorised");
+            }
 
             const inputs = { ...request.body };
             inputs.posts = 0;
