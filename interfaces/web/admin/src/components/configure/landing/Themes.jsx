@@ -780,7 +780,7 @@ export default function Themes(props) {
 
   return (
     <>
-    {error (
+    {error ? (
     <Dialog
         fullScreen={fullScreen}
         TransitionComponent={Transition}
