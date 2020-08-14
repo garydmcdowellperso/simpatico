@@ -424,7 +424,7 @@ const routes = async fastify => {
             fastify.log.info(request.body, "[src#api#updateLandingPageThemes] Entering");
 
             const debateInputs = {
-                id: debateID
+                id: request.body.debateID
             }
 
             const debate = await DebatesController.fetchDebateByID(debateInputs);
