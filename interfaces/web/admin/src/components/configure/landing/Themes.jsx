@@ -797,7 +797,9 @@ export default function Themes(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={() => {
+            dispatch(resetError());
+          }} color="primary" autoFocus>
             Hmmph, Ok
           </Button>
         </DialogActions>
