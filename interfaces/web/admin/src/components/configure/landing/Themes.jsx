@@ -25,7 +25,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
 import { fetchAllModulesForDebateRequest } from "../../../actions/modules"
-import { updateLandingPageThemesRequest, resetUpdating } from "../../../actions/debate";
+import { updateLandingPageThemesRequest, resetError, resetUpdating } from "../../../actions/debate";
 
 import { 
   Button as ShardButton,
