@@ -78,10 +78,16 @@ const routes = async fastify => {
             fastify.log.info(request.body, "[src#api#createModule] Entering");
 
             // Check you have access to this debate
-            const debate = DebatesController.fetchDebateByID(request.body.debateId);
+            const debateInputs = {
+                id: request.body.debateId
+            };
+
+            const debate = DebatesController.fetchDebateByID(debateInputs);
             if (!debate) {
                 throw new Error("Debate not found");
             }
+            console.log('debate', debate)
+            console.log('request.user.accountId', request.user.accountId)
             if (debate.accountId != request.user.accountId) {
                 throw new Error("Unauthorised");
             }
