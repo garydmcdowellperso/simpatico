@@ -326,9 +326,7 @@ const routes = async fastify => {
               page: { type: "number" },
               more: { type: "boolean" },
               posts: {
-                type: "array",
-                  items: postSchema,
-                }
+                type: "array"
               }
             }
           }
