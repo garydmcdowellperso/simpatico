@@ -25,14 +25,13 @@ const Span = styled.span`
   padding: .67857143em 1em;
 `;
 
-const isMyPost = (post) => {
+const isMyPost = (post, id) => {
   if (!post) return false;
 
-  if (typeof window !== 'undefined') {
-    if (post.uid === parseInt(localStorage.getItem("uid"), 10)) {
-      return true;
-    }
+  if (post.uid === id) {
+    return true;
   }
+
   return false;
 }
 
@@ -51,7 +50,7 @@ function SaveOption(props) {
   );
 }
 
-const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions) => {
+const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions, id) => {
   let output;
 
   if (posts && posts.length > 0) {
@@ -79,7 +78,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
           <Box direction="row" fill="horizontal" flex="grow">
             <Box width="small" flex="grow">
               <Form reply>
-                {isValidToken && isMyPost(post) ?
+                {isValidToken && isMyPost(post, id) ?
                 (<Box 
                   onClick={() => {
                     // editing but moved away to new post
@@ -180,7 +179,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
             </Box>
           </Box>
           <Comment.Actions>
-            {isValidToken && !isMyPost(post) ?
+            {isValidToken && !isMyPost(post, id) ?
             (<Modal
               trigger={
                 <Icon size="large" name="share" onClick={handleOpen} />
@@ -247,7 +246,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
                 </Modal.Description>
               </Modal.Content>
             </Modal>) : null}
-            {isValidToken && isMyPost(post) ?
+            {isValidToken && isMyPost(post, id) ?
             (<Modal
               header={t('are-you-sure')}
               trigger={<Icon size="large" name="trash alternate" />}
@@ -272,7 +271,7 @@ const renderComments = (posts, dispatch, handleOpen, handleClose, handlePostEdit
         </Comment.Content>
         {post.replies && post.replies.length > 0 ? (
           <Comment.Group  threaded style={{minWidth:'85%'}}>
-            {renderComments(post.replies, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions)}
+            {renderComments(post.replies, dispatch, handleOpen, handleClose, handlePostEdit, handlePostEditFinished, onChange, savePostEdit, state, isValidToken, t, editorState, onEditorStateChange, suggestions, id)}
           </Comment.Group>
         ) : null}
       </Comment>
@@ -356,8 +355,7 @@ class ThreadScroll extends Component {
   };
 
   render() {
-    const { post, searches, posts, isValidToken, t, suggestions } = this.props;
-    console.log('props', this.props)
+    const { post, searches, posts, isValidToken, t, suggestions, auth: { id } } = this.props;
     const { editorState } = this.state;
 
     return (
@@ -372,7 +370,7 @@ class ThreadScroll extends Component {
           hasMore={false}
           loader={<Placeholder />}
         >
-          {renderComments(searches, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions)}
+          {renderComments(searches, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions, id)}
           </InfiniteScroll>) : 
           <InfiniteScroll
           dataLength={posts.length}
@@ -380,7 +378,7 @@ class ThreadScroll extends Component {
           hasMore={post.more}
           loader={<Placeholder />}
         >
-          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions)}
+          {renderComments(posts, this.props.dispatch, this.handleOpen, this.handleClose, this.handlePostEdit, this.handlePostEditFinished, this.onChange, this.savePostEdit, this.state, isValidToken, t, editorState, this.onEditorStateChange, suggestions, id)}
         </InfiniteScroll>      
         }
       </Comment.Group>
