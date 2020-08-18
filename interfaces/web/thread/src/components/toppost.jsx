@@ -10,6 +10,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import dynamic from 'next/dynamic'
+import styles from './toppost.module.css'
 
 import { createPostRequest } from "../actions/post";
 import nextI18NextInstance from '../../i18n';
