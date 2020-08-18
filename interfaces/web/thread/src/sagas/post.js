@@ -108,7 +108,6 @@ function* updatePost(action) {
 }
 
 function* deletePost(action) {
-  console.log('HERE')
   const r = yield remove(
     "v1/deletePost",
     JSON.stringify({

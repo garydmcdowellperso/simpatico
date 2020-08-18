@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
 
-import Post from "../../entities/Post";
 import config from "../../../../../config";
 
 class PostRepositoryMongo {
@@ -27,7 +26,6 @@ class PostRepositoryMongo {
       { returnOriginal: false }
     );
 
-    console.log("_getValueForNextSequence", sequenceDoc.value.sequence_value);
     return sequenceDoc.value.sequence_value;
   }
 

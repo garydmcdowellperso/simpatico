@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import { Grommet } from "grommet";
 
 import SlideOutSidebar from "../components/slideoutsidebar";
 import { fetchAllPostsForModule, fetchPostsForModule } from "../actions/post";
@@ -48,9 +47,7 @@ function Home(props) {
           href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
         />
       </Head>
-      <Grommet>
-        <SlideOutSidebar isValidToken={isValidToken} />
-      </Grommet>
+      <SlideOutSidebar isValidToken={isValidToken} />
     </div>
   );
 }

@@ -19,14 +19,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
   const dispatch = useDispatch();
   const router = useRouter()
 
-  let firstNameLocalStorage;
-
   const { firstName, token } = useSelector(state => state.auth);
-
-  if (typeof window !== 'undefined') {
-    // Server side rendering protection
-    firstNameLocalStorage = localStorage.getItem("firstName");
-  }
 
   console.log('isValidToken', isValidToken)
   useEffect(() => {
@@ -37,10 +30,6 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
       }
     }
   
-    if (isValidToken) {
-       localStorage.setItem("token", token);
-    }
-
     // Token not valid - back to login chaps
     if (isValidToken === false) {
       if (typeof window !== 'undefined') {
