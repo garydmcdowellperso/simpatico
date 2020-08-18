@@ -87,7 +87,6 @@ function Main(props) {
   useEffect(() => {
     if (window && window.location.hash) {
       const elmnt = document.getElementById(window.location.hash.substr(1));
-      console.log('elmnt', elmnt)
       if (elmnt) {
         elmnt.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }  
