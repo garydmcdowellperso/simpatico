@@ -24,10 +24,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
   console.log('isValidToken', isValidToken)
   useEffect(() => {
     if (isValidToken) {
-      // So the token is present and valid, do I have the user details?
-      if (!firstNameLocalStorage) {
-        dispatch(fetchUserInfo());
-      }
+      dispatch(fetchUserInfo());
     }
   
     // Token not valid - back to login chaps
@@ -70,7 +67,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
           <Link href="/profile/">
             <Icon link name="user" />
           </Link>
-          {(typeof window !== 'undefined') ? localStorage.getItem("firstName") : ''}
+          {firstName ? firstName : ''}
         </Menu.Item>) : 
         (<Menu.Item>
           <Link href="/connect/">
