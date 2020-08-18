@@ -21,7 +21,6 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
 
   const { firstName, token } = useSelector(state => state.auth);
 
-  console.log('isValidToken', isValidToken)
   useEffect(() => {
     if (isValidToken) {
       dispatch(fetchUserInfo());

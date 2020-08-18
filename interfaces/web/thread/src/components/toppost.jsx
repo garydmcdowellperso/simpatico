@@ -44,8 +44,6 @@ class TopPost extends Component {
     const { suggestions, t, handleToggleInProgress, post: { error } } = this.props;
     const { editorState, active } = this.state;
    
-    console.log('HERE', error)
-
     return (
       <Accordion>
         <Accordion.Title
