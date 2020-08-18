@@ -51,7 +51,7 @@ const routes = async fastify => {
               accountId: request.user.accountId
             };
             const response = await PostsController.createPost(inputs);
-
+            console.log('response', response)
             // Send off notifications if we have mentions
             const regex = /(data-mention data-value=\"[a-zA-Z0-9]*\")+/gm;
             const found = request.body.contents.match(regex);
