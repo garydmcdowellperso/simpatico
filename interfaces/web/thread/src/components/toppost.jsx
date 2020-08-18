@@ -44,6 +44,10 @@ class TopPost extends Component {
     const { suggestions, t, handleToggleInProgress, post: { error } } = this.props;
     const { editorState, active } = this.state;
    
+    const editorClassName = {
+      background: 'white'
+    };
+
     return (
       <Accordion>
         <Accordion.Title
@@ -89,8 +93,7 @@ class TopPost extends Component {
                     createPostRequest({
                       title: values.title,
                       contents: content,
-                      module: localStorage.getItem("module"),
-                      accountId: localStorage.getItem("accountId")
+                      module: localStorage.getItem("module")
                     })
                   );
 
@@ -129,7 +132,7 @@ class TopPost extends Component {
                           editorState={editorState ? editorState : EditorState.createEmpty()}
                           toolbarClassName="toolbarClassName"
                           wrapperClassName="wrapperClassName"
-                          editorClassName="editorClassName"
+                          editorClassName={editorClassName}
                           localization={{
                               locale: 'fr',
                           }}

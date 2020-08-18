@@ -86,7 +86,6 @@ const routes = async fastify => {
             response.user = user["first-name"];
             response.avatar = user.avatar;
 
-            console.log('response', response)
             return response;
         }
     );
