@@ -60,7 +60,7 @@ const SlideOutSidebar = ({ isValidToken, t }) => {
               window.location = "/";
             }}
           />
-          <a href="/">{t('home')}</a>
+          <a href="/home/">{t('home')}</a>
         </Menu.Item>
         {isValidToken ?
         (<Menu.Item>
