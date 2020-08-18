@@ -326,11 +326,12 @@ const routes = async fastify => {
               page: { type: "number" },
               more: { type: "boolean" },
               posts: {
-                type: "array"
+                type: "array",
               }
             }
           }
         }
+      }
     },
     async request => {
       fastify.log.info("[src#api#fetchPostsForModule] Entering");
