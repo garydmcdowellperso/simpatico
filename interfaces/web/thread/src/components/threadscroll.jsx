@@ -18,7 +18,7 @@ import { deletePost, dislikePost, fetchPostsForModule, likePost, updatePost } fr
 
 const { withTranslation } = nextI18NextInstance;
 
-const getCurrentLang = () => nextI18NextInstance.i18n.language || '';
+const getCurrentLang = () => nextI18NextInstance.i18n.language || 'en';
 
 const Span = styled.span`
   background: #fff;
@@ -357,6 +357,7 @@ class ThreadScroll extends Component {
 
   render() {
     const { post, searches, posts, isValidToken, t, suggestions } = this.props;
+    console.log('props', this.props)
     const { editorState } = this.state;
 
     return (
