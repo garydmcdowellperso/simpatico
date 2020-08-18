@@ -10,7 +10,6 @@ import {
 import { get, post } from "../lib/api";
 
 function* verifyTokenRequest(action) {
-  console.log('verifyTokenRequest', action)
   const r = yield post(
     "v1/verifyToken",
     JSON.stringify({
