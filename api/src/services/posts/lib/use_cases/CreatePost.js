@@ -28,7 +28,7 @@ async function CreatePost(
     throw new Error("No accountId");
   }
 
-  const post = new Post(null, title, contents, user, timestamp, module, accountId, 0, 0, 0, null, false);
+  const post = new Post(null, title, contents, user, timestamp, module, accountId, 0, 0, 0, [], false);
 
   return postRepository.persist(post);
 }
