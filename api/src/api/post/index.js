@@ -346,6 +346,7 @@ const routes = async fastify => {
       const response = await PostsController.fetchPostsForModule(inputs);
       const count = await PostsController.countPostsForModule(inputs);
 
+      console.log('response', response)
       let more = false;
 
       if (response.length > 0) {
