@@ -389,7 +389,11 @@ const routes = async fastify => {
         return final;
       }
 
-      return [];
+      return {
+         more,
+	 page: 0,
+	 posts: []
+      }
     }
   );
 
