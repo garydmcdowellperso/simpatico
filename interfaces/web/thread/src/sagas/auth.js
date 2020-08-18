@@ -13,7 +13,6 @@ function* verifyTokenRequest(action) {
   const r = yield post(
     "v1/verifyToken",
     JSON.stringify({
-      token: action.token,
       role: action.role
     })
   )
