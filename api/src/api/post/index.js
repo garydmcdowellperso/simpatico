@@ -30,7 +30,6 @@ const routes = async fastify => {
                         title: { type: 'string' },
                         contents: { type: 'string' },
                         module: { type: 'number' },
-                        accountId: { type: 'number' }
                     },
                 },
                 response: {
@@ -45,7 +44,12 @@ const routes = async fastify => {
             );
 
             const timestamp = moment().format("X");
-            const inputs = { ...request.body, timestamp, user: request.user.uid };
+            const inputs = { 
+              ...request.body, 
+              timestamp, 
+              user: request.user.uid,
+              accountId: request.user.accountId
+            };
             const response = await PostsController.createPost(inputs);
 
             // Send off notifications if we have mentions
