@@ -34,8 +34,8 @@ func (r *AMQPAdapter) Close() {
 }
 
 func sendText(data string) {
-	accountSid := "AC4e58a9183ff1bb1bf6612c15f4d6f3c3"
-	authToken := "53c491ce22880582276d12e780e48b16"
+	accountSid := "XXXXX"
+	authToken := "XXXXX"
 	urlStr := "https://api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages.json"
 
 	msgData := url.Values{}
